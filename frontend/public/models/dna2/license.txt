@@ -1,0 +1,11 @@
+Model Information:
+* title:	Stylized simply visualization of DNA
+* source:	https://sketchfab.com/3d-models/stylized-simply-visualization-of-dna-51f5ab2ffc364f60be00289eb6909535
+* author:	Leon_dp (https://sketchfab.com/leondp)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Stylized simply visualization of DNA" (https://sketchfab.com/3d-models/stylized-simply-visualization-of-dna-51f5ab2ffc364f60be00289eb6909535) by Leon_dp (https://sketchfab.com/leondp) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

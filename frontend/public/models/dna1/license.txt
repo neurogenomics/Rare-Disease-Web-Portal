@@ -1,0 +1,11 @@
+Model Information:
+* title:	DNA
+* source:	https://sketchfab.com/3d-models/dna-45f0707098b140468d993d54a258d5f3
+* author:	arlindo.matheus (https://sketchfab.com/arlindo.matheus)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "DNA" (https://sketchfab.com/3d-models/dna-45f0707098b140468d993d54a258d5f3) by arlindo.matheus (https://sketchfab.com/arlindo.matheus) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
