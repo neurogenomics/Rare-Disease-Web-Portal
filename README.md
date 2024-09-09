@@ -75,7 +75,20 @@ npm run dev
 
 ## Previews
 ### Home Page
+![home_page](/Images/HomePage.png)
 ### Search by Phenotype Page
+![phenotype_page_overview](/Images/PhenotypePage_Overview.png)
+![phenotype_page_cellgene](/Images/PhenotypePage_CellGene.png)
+![phenotype_page_cell](/Images/PhenotypePage_Cell.png)
+![phenotype_page_disease](/Images/PhenotypePage_Disease.png)
+![phenotype_page_gene](/Images/PhenotypePage_Gene.png)
 ### Search by Celltype Page
+![cell_page_phenotype](/Images/CellPage_Phenotype.png)
+![cell_page_gene](/Images/CellPage_Gene.png)
 ### Search by Gene Page
+![gene_page_cell](/Images/GenePage_Cell.png)
+![gene_page_disease](/Images/GenePage_Disease.png)
+![gene_page_phenotype](/Images/GenePage_Phenotype.png)
 ### Search by Severity Page
+![severity_page_overview](/Images/SeverityPage_Overview.png)
+![severity_page_details](/Images/SeverityPage_Details.png)
