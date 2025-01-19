@@ -13,6 +13,7 @@ import PhenotypeTree from "../components/PhenotypeTree.jsx";
 import PhenotypeTableDisease from "../components/PhenotypeTableDisease.jsx";
 import PhenotypeTableDisease1 from "../components/PhenotypeTableDisease1.jsx";
 import PhenotypeTableDisease2 from "../components/PhenotypeTableDisease2.jsx";
+import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -52,7 +53,7 @@ export default function phenotypePage() {
             children: info.node.dataRef.key,
         });
 
-        fetch(`https://ontology.jax.org/api/hp/terms/${info.node.dataRef.key}`)
+        fetch(`${ONTOLOGY_API_URL}/api/hp/terms/${info.node.dataRef.key}`)
             .then((res) => res.json())
             .then(async (result) => {
                 itemsTemp.push({
@@ -77,7 +78,7 @@ export default function phenotypePage() {
                 });
                 try {
                     await fetch(
-                        `http://127.0.0.1:8000/api/hpo-definitionNew/${info.node.dataRef.key}`
+                        `${BASE_API_URL}/api/hpo-definitionNew/${info.node.dataRef.key}`
                     )
                         .then((res) => res.json())
                         .then((result1) => {
@@ -108,7 +109,7 @@ export default function phenotypePage() {
         itemsTemp.push({ label: "Phenotype ID", key: "1", children: data });
         setData(data);
         debugger;
-        fetch(`https://ontology.jax.org/api/hp/terms/${data}`)
+        fetch(`${ONTOLOGY_API_URL}/api/hp/terms/${data}`)
             .then((res) => {
                 return res.json();
             })
@@ -134,9 +135,7 @@ export default function phenotypePage() {
                     children: result.xrefs.join(", "),
                 });
                 try {
-                    await fetch(
-                        `http://127.0.0.1:8000/api/hpo-definitionNew/${data}`
-                    )
+                    await fetch(`${BASE_API_URL}/api/hpo-definitionNew/${data}`)
                         .then((res) => res.json())
                         .then((result1) => {
                             console.log("dddddd- ", result1);

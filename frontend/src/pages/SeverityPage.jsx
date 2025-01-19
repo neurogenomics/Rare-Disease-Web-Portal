@@ -22,6 +22,7 @@ import {
 } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import { FormControlLabel } from "@mui/material";
+import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -312,7 +313,7 @@ export default function SeverityPage() {
         setLoading(true);
         const queryParams = new URLSearchParams(sliderValues).toString();
         debugger;
-        const url = `http://127.0.0.1:8000/api/severity?${queryParams}&pageSize=${tableParams.pagination?.pageSize}&current=${tableParams.pagination?.current}`;
+        const url = `${BASE_API_URL}/api/severity?${queryParams}&pageSize=${tableParams.pagination?.pageSize}&current=${tableParams.pagination?.current}`;
         console.log("Submitting request to URL:", url);
         try {
             const response = await axios.get(url);
@@ -323,7 +324,7 @@ export default function SeverityPage() {
                 response.data.map(async (item, index) => {
                     if (index < 10) {
                         const definitionResponse = await axios.get(
-                            `https://ontology.jax.org/api/hp/terms/${item.hpo_id}`
+                            `${ONTOLOGY_API_URL}/api/hp/terms/${item.hpo_id}`
                         );
                         return {
                             ...item,

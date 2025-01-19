@@ -17,6 +17,7 @@ import {
 import { Column } from "@ant-design/plots";
 import { DownloadOutlined } from "@ant-design/icons";
 import * as d3 from "d3";
+import { BASE_API_URL } from "../../config.js";
 
 const suitsDta =
     '[{"source":"Microsoft","target":"Amazon","type":"1"},{"source":"Microsoft","target":"HTC","type":"licensing"},{"source":"Samsung","target":"Apple","type":"suit"},{"source":"Motorola","target":"Apple","type":"suit"},{"source":"Nokia","target":"Apple","type":"resolved"},{"source":"HTC","target":"Apple","type":"suit"},{"source":"Kodak","target":"Apple","type":"suit"},{"source":"Microsoft","target":"Barnes & Noble","type":"suit"},{"source":"Microsoft","target":"Foxconn","type":"suit"},{"source":"Oracle","target":"Google","type":"suit"},{"source":"Apple","target":"HTC","type":"suit"},{"source":"Microsoft","target":"Inventec","type":"suit"},{"source":"Samsung","target":"Kodak","type":"resolved"},{"source":"LG","target":"Kodak","type":"resolved"},{"source":"RIM","target":"Kodak","type":"suit"},{"source":"Sony","target":"LG","type":"suit"},{"source":"Kodak","target":"LG","type":"resolved"},{"source":"Apple","target":"Nokia","type":"resolved"},{"source":"Qualcomm","target":"Nokia","type":"resolved"},{"source":"Apple","target":"Motorola","type":"suit"},{"source":"Microsoft","target":"Motorola","type":"suit"},{"source":"Motorola","target":"Microsoft","type":"suit"},{"source":"Huawei","target":"ZTE","type":"suit"},{"source":"Ericsson","target":"ZTE","type":"suit"},{"source":"Kodak","target":"Samsung","type":"resolved"},{"source":"Apple","target":"Samsung","type":"suit"},{"source":"Kodak","target":"RIM","type":"suit"},{"source":"Nokia","target":"Qualcomm","type":"suit"}]';
@@ -353,7 +354,7 @@ export default function CelltypePage() {
     const handleSubmit = async (event) => {
         setLoading(true);
         const queryParams = new URLSearchParams(sliderValues).toString();
-        const url = `http://127.0.0.1:8000/api/cell?${queryParams}`;
+        const url = `${BASE_API_URL}/api/cell?${queryParams}`;
         console.log("Submitting request to URL:", url);
         try {
             const response = await axios.get(url);
@@ -379,7 +380,7 @@ export default function CelltypePage() {
                 });
             }
 
-            fetch(`http://127.0.0.1:8000/api/hpj`)
+            fetch(`${BASE_API_URL}/api/hpj`)
                 .then((res) => res.json())
                 .then((results) => {
                     NetWork(results, node);
@@ -389,7 +390,7 @@ export default function CelltypePage() {
         }
 
         fetch(
-            `http://127.0.0.1:8000/gene1/${sliderValues.celltype_name}/${sliderValues.db_type}`
+            `${BASE_API_URL}/gene1/${sliderValues.celltype_name}/${sliderValues.db_type}`
         )
             .then((res) => res.json())
             .then((results) => {
@@ -405,7 +406,7 @@ export default function CelltypePage() {
     const onload = async (event) => {
         setLoading(true);
         const queryParams = new URLSearchParams(event).toString();
-        const url = `http://127.0.0.1:8000/api/cell?${queryParams}`;
+        const url = `${BASE_API_URL}/api/cell?${queryParams}`;
         console.log("Submitting request to URL:", url);
         try {
             const response = await axios.get(url);
@@ -431,7 +432,7 @@ export default function CelltypePage() {
                 });
             }
 
-            fetch(`http://127.0.0.1:8000/api/hpj`)
+            fetch(`${BASE_API_URL}/api/hpj`)
                 .then((res) => res.json())
                 .then((results) => {
                     NetWork(results, node);

@@ -3,6 +3,7 @@ import { DownloadOutlined, SearchOutlined } from "@ant-design/icons";
 import { Spin, Button, Input, Space, Table } from "antd";
 import Highlighter from "react-highlight-words";
 import { Column } from "@ant-design/plots";
+import { BASE_API_URL } from "../../config.js";
 
 const DemoColumn = (data) => {
     const chartRef = useRef();
@@ -34,7 +35,7 @@ const PhenotypeTableDisease = (hpid) => {
         let hppp = hpid.hpid;
         console.log("hpid changehhhhhhhh", hppp);
         console.log("hpid change", JSON.stringify(hpid));
-        fetch(`http://127.0.0.1:8000/gene/${hppp}/${hpid.dbType}`)
+        fetch(`${BASE_API_URL}/gene/${hppp}/${hpid.dbType}`)
             .then((res) => res.json())
             .then((results) => {
                 debugger;

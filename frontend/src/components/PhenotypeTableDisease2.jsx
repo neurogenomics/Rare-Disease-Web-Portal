@@ -3,6 +3,7 @@ import { DownloadOutlined, SearchOutlined } from "@ant-design/icons";
 import { Spin, Button, Input, Space, Table, Modal } from "antd";
 import Highlighter from "react-highlight-words";
 import { Column } from "@ant-design/plots";
+import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
 
 const DemoColumn = (data) => {
     const chartRef = useRef();
@@ -117,7 +118,7 @@ const PhenotypeTableDisease = (hpid) => {
         console.log("hpid changehhhhhhhh", hppp);
         console.log("hpid change", JSON.stringify(hpid));
         fetch(
-            `http://127.0.0.1:8000/api/cellByHpoid1?hpo_id=${hppp}&db_type=${hpid.dbType}`
+            `${BASE_API_URL}/api/cellByHpoid1?hpo_id=${hppp}&db_type=${hpid.dbType}`
         )
             .then((res) => res.json())
             .then((data) => {
@@ -141,7 +142,7 @@ const PhenotypeTableDisease = (hpid) => {
         console.log("hpid changehhhhhhhh", hppp);
         console.log("hpid change", JSON.stringify(hpid));
         fetch(
-            `http://127.0.0.1:8000/api/cellByHpoid1?hpo_id=${hppp}&db_type=${db_type}`
+            `${BASE_API_URL}/api/cellByHpoid1?hpo_id=${hppp}&db_type=${db_type}`
         )
             .then((res) => res.json())
             .then((data) => {
@@ -464,7 +465,7 @@ const PhenotypeTableDisease = (hpid) => {
                         onSelect: (record, selected, selectedRows) => {
                             let newData = [];
                             fetch(
-                                `http://127.0.0.1:8000/gene1/${record.celltype_name}/${record.celltype_database}`
+                                `${BASE_API_URL}/gene1/${record.celltype_name}/${record.celltype_database}`
                             )
                                 .then((res) => res.json())
                                 .then(async (results) => {
@@ -476,7 +477,7 @@ const PhenotypeTableDisease = (hpid) => {
                                         );
                                     });
                                     await fetch(
-                                        `https://ontology.jax.org/api/network/annotation/${record.hpo_id}`
+                                        `${ONTOLOGY_API_URL}/api/network/annotation/${record.hpo_id}`
                                     )
                                         .then((res) => res.json())
                                         .then(({ genes }) => {

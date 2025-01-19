@@ -1,6 +1,7 @@
 import React from "react";
 import { Tree, Input } from "antd";
 import axios from "axios";
+import { BASE_API_URL } from "../../config.js";
 
 const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
@@ -72,7 +73,7 @@ class SearchTree extends React.Component {
             loading: true,
         });
         let res = [];
-        const url = `http://127.0.0.1:8000/api/cell/type?celltype_name=${e}&db_type=${this.props.db_type}`;
+        const url = `${BASE_API_URL}/api/cell/type?celltype_name=${e}&db_type=${this.props.db_type}`;
 
         return axios.get(url).then((response) => {
             debugger;
@@ -94,7 +95,7 @@ class SearchTree extends React.Component {
         });
         let res = [];
         debugger;
-        const url = `http://127.0.0.1:8000/api/cell/type?celltype_name=${e.target.value}&db_type=${this.props.db_type}`;
+        const url = `${BASE_API_URL}/api/cell/type?celltype_name=${e.target.value}&db_type=${this.props.db_type}`;
 
         return axios.get(url).then((response) => {
             console.log("Response data:", response.data.length);

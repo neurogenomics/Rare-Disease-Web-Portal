@@ -1,6 +1,7 @@
 import React from "react";
 import { Tree, Input } from "antd";
 import axios from "axios";
+import { ONTOLOGY_API_URL } from "../../config.js";
 
 const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
@@ -69,7 +70,7 @@ class SearchTree extends React.Component {
             loading: true,
         });
         let res = [];
-        const url = `https://ontology.jax.org/api/network/search/gene?q=${e}&limit=-1`;
+        const url = `${ONTOLOGY_API_URL}/api/network/search/gene?q=${e}&limit=-1`;
 
         return axios.get(url).then((response) => {
             console.log("Response data:", response.data.results.length);
@@ -98,7 +99,7 @@ class SearchTree extends React.Component {
             loading: true,
         });
         let res = [];
-        const url = `https://ontology.jax.org/api/network/search/gene?q=${e.target.value}&limit=100`;
+        const url = `${ONTOLOGY_API_URL}/api/network/search/gene?q=${e.target.value}&limit=100`;
 
         return axios.get(url).then((response) => {
             console.log("Response data:", response.data.results.length);

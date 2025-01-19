@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Tree, Input } from "antd";
 import axios from "axios";
+import { ONTOLOGY_API_URL } from "../../config.js";
 
 const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
@@ -58,7 +59,7 @@ class SearchTree extends React.Component {
     }
     fetchData = (param) => {
         let res = [];
-        const url = `https://ontology.jax.org/api/hp/terms/${param}/children`;
+        const url = `${ONTOLOGY_API_URL}/api/hp/terms/${param}/children`;
 
         return axios.get(url).then((response) => {
             console.log("Response data:", response.data);
@@ -88,7 +89,7 @@ class SearchTree extends React.Component {
 
     onChange = (e) => {
         let res = [];
-        const url = `https://ontology.jax.org/api/hp/search?q=${e.target.value}&limit=50`;
+        const url = `${ONTOLOGY_API_URL}/api/hp/search?q=${e.target.value}&limit=50`;
 
         return axios.get(url).then((response) => {
             console.log("Response data:", response.data.terms.length);
@@ -157,7 +158,7 @@ class SearchTree extends React.Component {
 
     onSearch = (e) => {
         let res = [];
-        const url = `https://ontology.jax.org/api/hp/search?q=${e}&limit=50`;
+        const url = `${ONTOLOGY_API_URL}/api/hp/search?q=${e}&limit=50`;
 
         return axios.get(url).then((response) => {
             console.log("Response data:", response.data.terms.length);

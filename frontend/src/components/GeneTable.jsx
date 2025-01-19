@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { Spin, Button, Input, Space, Table } from "antd";
 import Highlighter from "react-highlight-words";
+import { ONTOLOGY_API_URL } from "../../config.js";
 
 // Component to display a table of phenotypes related to a disease
 const PhenotypeTableDisease = (hpid) => {
@@ -17,7 +18,7 @@ const PhenotypeTableDisease = (hpid) => {
         let hppp = hpid.hpid;
         console.log("hpid changehhhhhhhh", hppp);
         console.log("hpid change", JSON.stringify(hpid));
-        fetch(`https://ontology.jax.org/api/network/annotation/${hppp}`)
+        fetch(`${ONTOLOGY_API_URL}/api/network/annotation/${hppp}`)
             .then((res) => res.json())
             .then(({ phenotypes }) => {
                 setData(phenotypes);
