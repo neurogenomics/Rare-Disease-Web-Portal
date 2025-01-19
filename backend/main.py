@@ -10,19 +10,15 @@ from database import (
     fetch_hpoADJ_full,
 )
 from fastapi.middleware.cors import CORSMiddleware
+from config import CORS_ORIGINS
 
 # Create an instance of the FastAPI application
 app = FastAPI()
 
-# Define the list of allowed origins for CORS
-origins = [
-    "http://localhost:5173",
-]
-
 # Add CORS middleware to the FastAPI application
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

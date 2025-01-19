@@ -2,9 +2,10 @@ import pprint
 from annotated_types.test_cases import cases
 from model import SeverityData
 from pymongo import MongoClient
+from config import MONGODB_URI
 
 # Establish a connection to the MongoDB server
-client = MongoClient("mongodb://localhost:27017/")
+client = MongoClient(MONGODB_URI)
 
 # Access specific collections within the RareDiseaseData database
 celltype1 = client["RareDiseaseData"]["hpo_celltype_DescartesHuman"]
