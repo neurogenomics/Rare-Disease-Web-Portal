@@ -19,7 +19,7 @@ mdurl==0.1.2
 motor==3.5.1
 numpy==2.0.1
 pydantic==2.8.2
-pydantic_core==2.20.1
+pydantic-core==2.20.1
 Pygments==2.18.0
 pymongo==4.8.0
 python-dotenv==1.0.1
