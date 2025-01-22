@@ -266,11 +266,13 @@ export default function SeverityPage() {
             title: "Most Associated Celltype",
             dataIndex: "celltype_name",
             key: "celltype_name",
+            render: (text) => text ? text: <i>None</i>
         },
         {
             title: "Celltype Database",
             dataIndex: "celltype_database",
             key: "celltype_database",
+            render: (text) => text ? text: <i>NA</i>
         },
     ];
     const [sliderValues, setSliderValues] = useState({
