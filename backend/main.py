@@ -10,7 +10,7 @@ from database import (
     fetch_hpoADJ_full,
 )
 from fastapi.middleware.cors import CORSMiddleware
-from config import CORS_ORIGINS
+from config import CORS_ORIGINS, HOST, PORT
 
 # Create an instance of the FastAPI application
 app = FastAPI()
@@ -268,8 +268,4 @@ def gene1(Gene_name: str, db_type: str):
 
 
 if __name__ == "__main__":
-    # Run in local
-    uvicorn.run(app, host="127.0.0.1", port=8000)
-
-    # Run in server
-    # uvicorn.run(app, host="0.0.0.0", port=8900)
+    uvicorn.run(app, host=HOST, port=PORT)
