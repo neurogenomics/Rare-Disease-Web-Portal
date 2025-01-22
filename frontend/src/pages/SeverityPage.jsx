@@ -287,8 +287,8 @@ export default function SeverityPage() {
         reduced_fertility: [0, 3],
         congenital_onset: [0, 3],
         severity_class: [0, 3],
-        with1: false,
-        without: false,
+        with1: true,
+        without: true,
     });
 
     const handleSliderChange = (name, value) => {
@@ -541,6 +541,7 @@ export default function SeverityPage() {
                                     marginLeft: 25,
                                 }}
                                 onChange={onChange}
+                                checked={sliderValues.with1}
                             >
                                 With Associated Celltype
                             </Checkbox>
@@ -552,6 +553,7 @@ export default function SeverityPage() {
                                     marginLeft: 27,
                                 }}
                                 onChange={onChange1}
+                                checked={sliderValues.without}
                             >
                                 Without Associated Celltype
                             </Checkbox>
