@@ -247,9 +247,21 @@ def fetch_severity_data(
         },
     }
     if with1 and not without:
-        query = {**query, "celltype_name": {"$ne": ""}}
+        query = {
+            **query,
+            "$and": [
+                {"celltype_name": {"$ne": ""}}, # Non-empty field
+                {"celltype_name": {"$exists": True}},  # Field exists
+            ],
+        }
     if not with1 and without:
-        query = {**query, "celltype_name": ""}
+        query = {
+            **query,
+            "$or": [
+                {"celltype_name": ""}, # Empty field
+                {"celltype_name": {"$exists": False}},  # Field does not exist
+            ],
+        }
     cursor = (
         severity.find(query)
         .sort("severity_score_gpt", 1)
