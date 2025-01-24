@@ -290,11 +290,15 @@ export default function CelltypePage() {
             dataIndex: "hpo_name",
             key: "hpo_name",
         },
-
         {
             title: "Severity Score",
             dataIndex: "severity_score_gpt",
             key: "severity_score_gpt",
+        },
+        {
+            title: "Q-Value",
+            dataIndex: "q",
+            key: "q",
         },
         {
             title: "Severity Tier",
