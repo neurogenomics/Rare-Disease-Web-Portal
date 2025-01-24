@@ -313,11 +313,10 @@ const PhenotypeTableDisease = (hpid) => {
             dataIndex: "hpo_id",
             key: "hpo_id",
         },
-
         {
-            title: "Database",
-            dataIndex: "celltype_database",
-            key: "celltype_database",
+            title: "Q-Value",
+            dataIndex: "q",
+            key: "q",
         },
     ];
     const expandedRowRender = (record, index, indent, expanded) => {
