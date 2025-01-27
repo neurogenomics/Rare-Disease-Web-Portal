@@ -312,6 +312,15 @@ export default function SeverityPage() {
         }));
     };
     const handleSubmit = async () => {
+        // Check if neither checkboxes are checked
+        if (!sliderValues.with1 && !sliderValues.without) {
+            alert(
+                "Please select at least one checkbox to specify " +
+                "the associated cell type condition."
+            );
+            return;
+        }
+
         setLoading(true);
         const queryParams = new URLSearchParams(sliderValues).toString();
         debugger;
