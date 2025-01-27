@@ -186,6 +186,10 @@ export default function phenotypePage() {
                 onCollapse={(value) => setCollapsed(value)}
             >
                 <div className="demo-logo-vertical" />
+                <h1 style={{ fontSize: '1.1em', fontWeight: 'bold', color: '#FFFFFF' }}>
+                    Select database
+                </h1>
+                <hr style={{ marginBottom: 7, border: "none" }} />
                 <Radio.Group
                     buttonStyle="solid"
                     value={size}

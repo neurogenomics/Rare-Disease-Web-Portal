@@ -539,6 +539,10 @@ export default function CelltypePage() {
                 onCollapse={(value) => setCollapsed(value)}
             >
                 <form onSubmit={handleSubmit}>
+                    <h1 style={{ fontSize: '1.1em', fontWeight: 'bold' }}>
+                        Select database
+                    </h1>
+                    <hr style={{ marginBottom: 7, border: "none" }} />
                     <Radio.Group
                         buttonStyle="solid"
                         value={size}
