@@ -274,7 +274,9 @@ def fetch_severity_data(
         document["id"] = str(document.pop("_id"))
         results.append(document)
 
-    results[0]["total"] = total_count
+    if len(results) > 0:
+        results[0]["total"] = total_count
+
     return results
 
 
