@@ -13,8 +13,9 @@ import PhenotypeTree from "../components/GeneTree.jsx";
 import PhenotypeTableDisease from "../components/GeneTable.jsx";
 import PhenotypeTableDisease1 from "../components/GeneTable1.jsx";
 import PhenotypeTableDisease2 from "../components/GeneTable2.jsx";
+import CustomFooter from "../components/utilities/Footer.jsx";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 const items = [
     {
@@ -235,13 +236,7 @@ export default function phenotypePage() {
                         />
                     </div>
                 </Content>
-                <Footer
-                    style={{
-                        textAlign: "center",
-                    }}
-                >
-                    Neurogenomics Lab ©{new Date().getFullYear()}
-                </Footer>
+                <CustomFooter />
             </Layout>
         </Layout>
     );

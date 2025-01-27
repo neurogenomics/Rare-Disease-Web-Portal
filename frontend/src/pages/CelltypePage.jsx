@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PhenotypeTree from "../components/CellTree.jsx";
+import CustomFooter from "../components/utilities/Footer.jsx";
 import axios from "axios";
 import {
     Breadcrumb,
@@ -40,7 +41,7 @@ const DemoColumn = (data) => {
     return <Column {...config} ref={chartRef} />;
 };
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 export default function CelltypePage() {
     const [data, setData] = useState([]);
@@ -703,13 +704,7 @@ export default function CelltypePage() {
                         />
                     </div>
                 </Content>
-                <Footer
-                    style={{
-                        textAlign: "center",
-                    }}
-                >
-                    Neurogenomics Lab ©{new Date().getFullYear()}
-                </Footer>
+                <CustomFooter />
             </Layout>
         </Layout>
     );

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import SeveritySlider from "../components/SeveritySlider.jsx";
 import SeveritySlider1 from "../components/SeveritySlider1.jsx";
 import SeverityNetWork from "../components/SeverityNetWork.jsx";
+import CustomFooter from "../components/utilities/Footer.jsx";
 import axios from "axios";
 import {
     Breadcrumb,
@@ -24,7 +25,7 @@ import { DownloadOutlined } from "@ant-design/icons";
 import { FormControlLabel } from "@mui/material";
 import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 export default function SeverityPage() {
     const [data, setData] = useState([]);
@@ -659,13 +660,7 @@ export default function SeverityPage() {
                         </Spin>
                     </div>
                 </Content>
-                <Footer
-                    style={{
-                        textAlign: "center",
-                    }}
-                >
-                    Neurogenomics Lab ©{new Date().getFullYear()}
-                </Footer>
+                <CustomFooter />
             </Layout>
         </Layout>
     );
