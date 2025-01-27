@@ -36,7 +36,7 @@ const generateList = (data) => {
 
 class SearchTree extends React.Component {
     state = {
-        expandedKeys: ["0"],
+        expandedKeys: ["HP:0000001"],
         searchValue: "",
         autoExpandParent: true,
         gData: [
@@ -56,6 +56,7 @@ class SearchTree extends React.Component {
             console.log("初始化加载");
             this.onSearch(param);
         }
+        this.on
     }
     fetchData = (param) => {
         let res = [];
@@ -187,8 +188,10 @@ class SearchTree extends React.Component {
                     onSelect={this.onSelect}
                     onExpand={this.onExpand}
                     expandedKeys={expandedKeys}
+                    selectedKeys={expandedKeys}
                     autoExpandParent={autoExpandParent}
                     loadData={this.onLoadData}
+                    onLoad={this.onSelect}
                 >
                     {this.loop(gData)}
                 </Tree>
