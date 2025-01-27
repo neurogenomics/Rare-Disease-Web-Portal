@@ -14,6 +14,7 @@ import PhenotypeTableDisease from "../components/PhenotypeTableDisease.jsx";
 import PhenotypeTableDisease1 from "../components/PhenotypeTableDisease1.jsx";
 import PhenotypeTableDisease2 from "../components/PhenotypeTableDisease2.jsx";
 import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
+import NotFound from "../components/utilities/Texts.jsx";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -59,22 +60,22 @@ export default function phenotypePage() {
                 itemsTemp.push({
                     label: "Definition",
                     key: "1",
-                    children: result.definition,
+                    children: result.definition || <NotFound />,
                 });
                 itemsTemp.push({
                     label: "Synonyms",
                     key: "3",
-                    children: result.synonyms.join(" - "),
+                    children: result.synonyms.join(" - ") || <NotFound />,
                 });
                 itemsTemp.push({
                     label: "Comment",
                     key: "2",
-                    children: result.comment,
+                    children: result.comment || <NotFound />,
                 });
                 itemsTemp.push({
                     label: "Cross References",
                     key: "4",
-                    children: result.xrefs.join(", "),
+                    children: result.xrefs.join(", ") || <NotFound />,
                 });
                 try {
                     await fetch(
@@ -86,12 +87,12 @@ export default function phenotypePage() {
                             itemsTemp.push({
                                 label: "Severity Score",
                                 key: "5",
-                                children: result1[0].severity_score_gpt,
+                                children: result1[0].severity_score_gpt || <NotFound />,
                             });
                             itemsTemp.push({
                                 label: "Severity Tier",
                                 key: "6",
-                                children: result1[0].severity_class,
+                                children: result1[0].severity_class || <NotFound />,
                             });
                         });
                 } catch (e) {
