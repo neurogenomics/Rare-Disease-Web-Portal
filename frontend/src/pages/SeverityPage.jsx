@@ -38,6 +38,7 @@ export default function SeverityPage() {
             pageSize: 10,
         },
     });
+    const [checkboxAlert, setCheckboxAlert] = useState(false);
 
     useEffect(() => {
         handleSubmit();
@@ -267,13 +268,13 @@ export default function SeverityPage() {
             title: "Most Associated Celltype",
             dataIndex: "celltype_name",
             key: "celltype_name",
-            render: (text) => text ? text: <i>None</i>
+            render: (text) => (text ? text : <i>None</i>),
         },
         {
             title: "Celltype Database",
             dataIndex: "celltype_database",
             key: "celltype_database",
-            render: (text) => text ? text: <i>NA</i>
+            render: (text) => (text ? text : <i>NA</i>),
         },
     ];
     const [sliderValues, setSliderValues] = useState({
@@ -315,13 +316,15 @@ export default function SeverityPage() {
     const handleSubmit = async () => {
         // Check if neither checkboxes are checked
         if (!sliderValues.with1 && !sliderValues.without) {
-            alert(
-                "Please select at least one checkbox to specify " +
-                "the associated cell type condition."
-            );
+            // alert(
+            //     "Please select at least one checkbox to specify " +
+            //     "the associated cell type condition."
+            // );
+            setCheckboxAlert(true);
             return;
         }
 
+        setCheckboxAlert(false);
         setLoading(true);
         const queryParams = new URLSearchParams(sliderValues).toString();
         debugger;
@@ -543,6 +546,14 @@ export default function SeverityPage() {
                             />
                         </div>
                         <div style={{ margin: 29, textAlign: "left" }}>
+                            {checkboxAlert && (
+                                <Alert
+                                    className="mb-5"
+                                    message="Please select atleast one celltype condition."
+                                    type="error"
+                                    showIcon
+                                />
+                            )}
                             <Checkbox
                                 style={{
                                     marginBottom: 20,
