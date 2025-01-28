@@ -443,11 +443,12 @@ export default function SeverityPage() {
                     background: "#FFF",
                     marginTop: 20,
                     marginBottom: 20,
-                    marginLeft: 50,
+                    marginLeft: 30,
                     marginRight: 30,
                     textAlign: "center",
                     borderRadius: borderRadiusLG,
-                    padding: 20,
+                    padding: 10,
+                    paddingTop: 30,
                 }}
                 width={350}
                 collapsed={collapsed}
@@ -457,6 +458,7 @@ export default function SeverityPage() {
                 <form onSubmit={handleSubmit}>
                     <center>
                         <div>
+                            <p className="text-xl font-semibold text-left mb-2 ml-5">Filters</p>
                             <SeveritySlider1
                                 name="Severity Tier"
                                 onChange={(value) =>

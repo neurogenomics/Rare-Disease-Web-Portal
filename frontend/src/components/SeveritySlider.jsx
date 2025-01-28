@@ -37,8 +37,8 @@ export default function SeveritySlider({ name, onChange }) {
     };
 
     return (
-        <Box sx={{ width: 200 }}>
-            <Typography variant="h7" gutterBottom>
+        <Box sx={{ width: 210 }}>
+            <Typography variant="subtitle2" gutterBottom sx={{ marginTop: 1.5, marginBottom: -0.5 }}>
                 {name}
             </Typography>
             <Slider
