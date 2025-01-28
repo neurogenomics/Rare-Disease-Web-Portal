@@ -157,7 +157,7 @@ class SearchTree extends React.Component {
                 <Search
                     size="large"
                     style={{ marginBottom: 16 }}
-                    placeholder="input search text"
+                    placeholder="Search gene name"
                     onChange={this.onChange}
                     onSearch={this.onSearch}
                     loading={loading}
