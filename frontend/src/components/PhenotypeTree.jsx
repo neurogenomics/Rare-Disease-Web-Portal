@@ -56,7 +56,7 @@ class SearchTree extends React.Component {
             console.log("初始化加载");
             this.onSearch(param);
         }
-        this.on
+        this.on;
     }
     fetchData = (param) => {
         let res = [];
@@ -177,24 +177,35 @@ class SearchTree extends React.Component {
         let { expandedKeys, autoExpandParent, gData } = this.state;
         generateList(gData);
         return (
-            <div style={{ marginBottom: "200px" }}>
+            <div style={{ marginBottom: "20px" }}>
                 <Search
                     style={{ marginBottom: 16 }}
-                    placeholder="Search"
+                    placeholder="Search phenotype tree"
                     onChange={this.onChange}
                     onSearch={this.onSearch}
                 />
-                <Tree
-                    onSelect={this.onSelect}
-                    onExpand={this.onExpand}
-                    expandedKeys={expandedKeys}
-                    selectedKeys={expandedKeys}
-                    autoExpandParent={autoExpandParent}
-                    loadData={this.onLoadData}
-                    onLoad={this.onSelect}
+                <div
+                    style={{
+                        background: "#fff",
+                        padding: "10px",
+                        borderRadius: "4px",
+                    }}
                 >
-                    {this.loop(gData)}
-                </Tree>
+                    <p className="font-semibold m-0.5 mb-2 ml-2">
+                        Phenotype Tree
+                    </p>
+                    <Tree
+                        onSelect={this.onSelect}
+                        onExpand={this.onExpand}
+                        expandedKeys={expandedKeys}
+                        selectedKeys={expandedKeys}
+                        autoExpandParent={autoExpandParent}
+                        loadData={this.onLoadData}
+                        onLoad={this.onSelect}
+                    >
+                        {this.loop(gData)}
+                    </Tree>
+                </div>
             </div>
         );
     }
