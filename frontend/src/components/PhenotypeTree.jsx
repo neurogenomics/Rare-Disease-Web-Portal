@@ -37,6 +37,7 @@ const generateList = (data) => {
 class SearchTree extends React.Component {
     state = {
         expandedKeys: ["HP:0000001"],
+        selectedKeys: [""],
         searchValue: "",
         autoExpandParent: true,
         gData: [
@@ -45,6 +46,7 @@ class SearchTree extends React.Component {
                 key: "HP:0000001",
             },
         ],
+        load_counter: 0,
     };
     constructor(props) {
         super(props);
@@ -75,10 +77,20 @@ class SearchTree extends React.Component {
     };
 
     onSelect = (selectedKeys, info) => {
+        this.setState({ selectedKeys });
         console.log("selected", selectedKeys, info);
         console.log("selected", this.props);
         this.props.onGetData(selectedKeys[0], info);
         console.log(this.state.expandedKeys);
+    };
+
+    onFirstLoad = (selectedKeys, info) => {
+        let { load_counter } = this.state;
+        console.log(load_counter);
+        if (load_counter == 0) {
+            this.onSelect(selectedKeys, info);
+        }
+        this.setState({ load_counter: load_counter + 1 });
     };
 
     onExpand = (expandedKeys) => {
@@ -174,7 +186,8 @@ class SearchTree extends React.Component {
     };
 
     render() {
-        let { expandedKeys, autoExpandParent, gData } = this.state;
+        let { expandedKeys, selectedKeys, autoExpandParent, gData } =
+            this.state;
         generateList(gData);
         return (
             <div style={{ marginBottom: "20px" }}>
@@ -195,13 +208,14 @@ class SearchTree extends React.Component {
                         Phenotype Tree
                     </p>
                     <Tree
+                        style={{ maxHeight: 550, overflowY: "auto" }}
                         onSelect={this.onSelect}
                         onExpand={this.onExpand}
                         expandedKeys={expandedKeys}
-                        selectedKeys={expandedKeys}
+                        selectedKeys={selectedKeys}
                         autoExpandParent={autoExpandParent}
                         loadData={this.onLoadData}
-                        onLoad={this.onSelect}
+                        onLoad={this.onFirstLoad}
                     >
                         {this.loop(gData)}
                     </Tree>
