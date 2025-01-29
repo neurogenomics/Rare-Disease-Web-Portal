@@ -39,13 +39,13 @@ const generateList = (data) => {
 
 class SearchTree extends React.Component {
     state = {
-        expandedKeys: ["1"],
+        expandedKeys: [""],
         searchValue: "",
         autoExpandParent: true,
         gData: [
             {
-                title: " ",
-                key: "1",
+                title: "ALL",
+                key: "All",
             },
         ],
         loading: false,
@@ -61,6 +61,10 @@ class SearchTree extends React.Component {
         console.log(this.state.expandedKeys);
     };
 
+    componentDidMount() {
+        this.onSearch("")
+    }
+
     onExpand = (expandedKeys) => {
         this.setState({
             expandedKeys,
@@ -75,8 +79,12 @@ class SearchTree extends React.Component {
         let res = [];
         const url = `${BASE_API_URL}/api/cell/type?celltype_name=${e}&db_type=${this.props.db_type}`;
 
+        // Include All if the query is empty or contains All or its equivalent
+        if (e === "" || e.toLowerCase() === "all") {
+            res.push({ key: "All", title: "ALL" });
+        }
+
         return axios.get(url).then((response) => {
-            debugger;
             console.log("Response data:", response.data.length);
             for (let i = 0; i < response.data.length; i++) {
                 let item = response.data[i];
@@ -90,24 +98,7 @@ class SearchTree extends React.Component {
     };
 
     onChange = (e) => {
-        this.setState({
-            loading: true,
-        });
-        let res = [];
-        debugger;
-        const url = `${BASE_API_URL}/api/cell/type?celltype_name=${e.target.value}&db_type=${this.props.db_type}`;
-
-        return axios.get(url).then((response) => {
-            console.log("Response data:", response.data.length);
-            for (let i = 0; i < response.data.length; i++) {
-                let item = response.data[i];
-                res.push({ key: item, title: item });
-            }
-            this.setState({
-                gData: res,
-                loading: false,
-            });
-        });
+        this.onSearch(e.target.value); // Call onSearch
     };
 
     loop = (data) =>
@@ -147,12 +138,11 @@ class SearchTree extends React.Component {
         }
         if (jump) {
             return (
-                <div style={{ marginBottom: "20px" }}>
+                <div style={{ marginBottom: "10px" }}>
                     <Search
                         value={jump}
-                        size="large"
                         style={{ marginBottom: 16 }}
-                        placeholder="Search for cell type"
+                        placeholder="Search for specific cell type"
                         onChange={this.onChange}
                         onSearch={this.onSearch}
                         loading={loading}
@@ -169,23 +159,32 @@ class SearchTree extends React.Component {
             );
         }
         return (
-            <div style={{ marginBottom: "20px" }}>
+            <div style={{ marginBottom: "10px" }}>
                 <Search
-                    size="large"
                     style={{ marginBottom: 16 }}
-                    placeholder="Search for cell type"
+                    placeholder="Search for specific cell type"
                     onChange={this.onChange}
                     onSearch={this.onSearch}
                     loading={loading}
                 />
-                <Tree
-                    style={{ height: 500, overflowY: "auto" }}
-                    onSelect={this.onSelect}
-                    expandedKeys={expandedKeys}
-                    autoExpandParent={autoExpandParent}
+                <div
+                    style={{
+                        background: "#fff",
+                        padding: "10px",
+                        borderRadius: "4px",
+                    }}
                 >
-                    {this.loop(gData)}
-                </Tree>
+                    <p className="font-semibold m-0.5 mb-2 ml-2">Cell Types</p>
+                    <Tree
+                        style={{ maxHeight: 500, overflowY: "auto" }}
+                        onSelect={this.onSelect}
+                        expandedKeys={expandedKeys}
+                        autoExpandParent={autoExpandParent}
+                        defaultSelectedKeys={["All"]}
+                    >
+                        {this.loop(gData)}
+                    </Tree>
+                </div>
             </div>
         );
     }

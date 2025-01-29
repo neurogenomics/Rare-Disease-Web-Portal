@@ -210,6 +210,7 @@ export default function CelltypePage() {
             };
             onload(eve);
         }
+        handleSubmit(); // Submit default key on page load
     }, []);
     const expandedRowRender = (record, index, indent, expanded) => {
         const columns = [
@@ -517,6 +518,17 @@ export default function CelltypePage() {
         }
     };
 
+    // Override q-value input addon style to alter background color and padding
+    // Work around: addonBg prop not working
+    useEffect(() => {
+        document
+            .querySelectorAll(".ant-input-number-group-addon")
+            .forEach((el) => {
+                el.style.background = "#f0f0f0";
+                el.style.padding = "0 20px";
+            });
+    }, []);
+
     return (
         <Layout
             style={{
@@ -525,22 +537,19 @@ export default function CelltypePage() {
             }}
         >
             <Sider
-                style={{
-                    background: "#FFF",
-                    marginTop: 20,
-                    marginBottom: 20,
-                    marginLeft: 50,
-                    marginRight: 30,
-                    textAlign: "left",
-                    borderRadius: borderRadiusLG,
-                    padding: 20,
-                }}
-                width={356}
+                style={{ background: "#0F172AFF", margin: 20 }}
+                width={400}
                 collapsed={collapsed}
                 onCollapse={(value) => setCollapsed(value)}
             >
                 <form onSubmit={handleSubmit}>
-                    <h1 style={{ fontSize: '1.1em', fontWeight: 'bold' }}>
+                    <h1
+                        style={{
+                            fontSize: "1.1em",
+                            fontWeight: "bold",
+                            color: "#FFFFFF",
+                        }}
+                    >
                         Select database
                     </h1>
                     <hr style={{ marginBottom: 7, border: "none" }} />
@@ -549,10 +558,16 @@ export default function CelltypePage() {
                         value={size}
                         onChange={handleSizeChange}
                     >
-                        <Radio.Button value="DescartesHuman">
+                        <Radio.Button
+                            style={{ width: 200 }}
+                            value="DescartesHuman"
+                        >
                             DescartesHuman
                         </Radio.Button>
-                        <Radio.Button value="HumanCellLandscape">
+                        <Radio.Button
+                            style={{ width: 200 }}
+                            value="HumanCellLandscape"
+                        >
                             HumanCellLandscape
                         </Radio.Button>
                     </Radio.Group>
@@ -561,9 +576,6 @@ export default function CelltypePage() {
                     <PhenotypeTree onGetData={getData} db_type={size} />
                     <center>
                         <div style={{ textAlign: "left" }}>
-                            <label style={{ marginTop: 20 }}>
-                                q value threshold:
-                            </label>
                             <hr style={{ marginBottom: 10, border: "none" }} />
                             <InputNumber
                                 name="q"
@@ -572,7 +584,10 @@ export default function CelltypePage() {
                                 }}
                                 defaultValue="0.005"
                                 step="0.0005"
+                                max="1"
+                                min="0.00000001"
                                 onChange={handleSliderChange}
+                                addonBefore="Q-Value"
                                 stringMode
                             />
                             <Button
