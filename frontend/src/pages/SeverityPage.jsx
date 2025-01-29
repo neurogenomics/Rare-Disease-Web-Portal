@@ -20,9 +20,11 @@ import {
     Checkbox,
     Tag,
     Card,
+    InputNumber,
+    Collapse
 } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
-import { FormControlLabel } from "@mui/material";
+import { SettingsOutlined } from "@mui/icons-material";
 import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
 
 const { Header, Content, Sider } = Layout;
@@ -39,6 +41,7 @@ export default function SeverityPage() {
         },
     });
     const [checkboxAlert, setCheckboxAlert] = useState(false);
+    const [decimalPoints, setDecimalPoints] = useState(3);
 
     useEffect(() => {
         handleSubmit();
@@ -54,6 +57,9 @@ export default function SeverityPage() {
         if (pagination.pageSize !== tableParams.pagination?.pageSize) {
             setData([]);
         }
+    };
+    const handleDecimalChange = (decimalPoints) => {
+        setDecimalPoints(decimalPoints);
     };
     const expandedRowRender = (record, index, indent, expanded) => {
         const columns = [
@@ -247,6 +253,9 @@ export default function SeverityPage() {
             title: "Severity Score",
             dataIndex: "severity_score_gpt",
             key: "severity_score_gpt",
+            render: (text) => {
+                return text.toFixed(decimalPoints);
+            },
         },
         {
             title: "Severity Tier",
@@ -316,10 +325,6 @@ export default function SeverityPage() {
     const handleSubmit = async () => {
         // Check if neither checkboxes are checked
         if (!sliderValues.with1 && !sliderValues.without) {
-            // alert(
-            //     "Please select at least one checkbox to specify " +
-            //     "the associated cell type condition."
-            // );
             setCheckboxAlert(true);
             return;
         }
@@ -431,6 +436,33 @@ export default function SeverityPage() {
         }
     };
 
+    // Advanced Settings
+    const genExtra = () => <SettingsOutlined />; // Settings icon
+    const advancedSettingsChildren = [
+        <InputNumber
+            min={1}
+            max={10}
+            defaultValue={decimalPoints}
+            addonBefore={"Decimal Points"}
+            style={{ width: "100%" }}
+            onChange={handleDecimalChange}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Prevent the default behavior of the Enter key
+                }
+            }}
+        />,
+    ];
+    const advancedSettingsMain = [
+        {
+            key: "1",
+            title: "Advanced Settings",
+            label: <p className="font-semibold">Advanced Settings</p>,
+            children: advancedSettingsChildren,
+            extra: genExtra(),
+        },
+    ];
+
     return (
         <Layout
             style={{
@@ -458,7 +490,9 @@ export default function SeverityPage() {
                 <form onSubmit={handleSubmit}>
                     <center>
                         <div>
-                            <p className="text-xl font-semibold text-left mb-2 ml-5">Filters</p>
+                            <p className="text-xl font-semibold text-left mb-2 ml-5">
+                                Filters
+                            </p>
                             <SeveritySlider1
                                 name="Severity Tier"
                                 onChange={(value) =>
@@ -581,8 +615,12 @@ export default function SeverityPage() {
                                 Without Associated Celltype
                             </Checkbox>
                         </div>
-
                         <div style={{ margin: 29 }}>
+                            <Collapse
+                                items={advancedSettingsMain}
+                                size="small"
+                                style={{ background: colorBgContainer }}
+                            />
                             <Button
                                 name="Search"
                                 style={{

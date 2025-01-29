@@ -8,6 +8,8 @@ import {
     Descriptions,
     Radio,
     Card,
+    Collapse,
+    InputNumber,
 } from "antd";
 import PhenotypeTree from "../components/GeneTree.jsx";
 import PhenotypeTableDisease from "../components/GeneTable.jsx";
@@ -15,7 +17,7 @@ import PhenotypeTableDisease1 from "../components/GeneTable1.jsx";
 import PhenotypeTableDisease2 from "../components/GeneTable2.jsx";
 import CustomFooter from "../components/utilities/Footer.jsx";
 import NotFound from "../components/utilities/Texts.jsx";
-import { LaunchOutlined } from "@mui/icons-material";
+import { LaunchOutlined, SettingsOutlined } from "@mui/icons-material";
 
 const { Header, Content, Sider } = Layout;
 
@@ -39,10 +41,14 @@ export default function phenotypePage() {
     const [data, setData] = useState(null);
     const [gene, setGene] = useState(null);
     const [size, setSize] = useState("DescartesHuman");
+    const [decimalPoints, setDecimalPoints] = useState(3);
     const handleSizeChange = (e) => {
         setSize(e.target.value);
     };
     const [desItem, setDesItem] = useState(items);
+    const handleDecimalChange = (decimalPoints) => {
+        setDecimalPoints(decimalPoints);
+    };
 
     const parseNCBIGeneID = (id, with_link = true) => {
         const prefixString = "NCBIGene:";
@@ -148,6 +154,33 @@ export default function phenotypePage() {
         );
     };
 
+    // Advanced Settings
+    const genExtra = () => <SettingsOutlined />; // Settings icon
+    const advancedSettingsChildren = [
+        <InputNumber
+            min={1}
+            max={10}
+            defaultValue={decimalPoints}
+            addonBefore={"Decimal Points"}
+            style={{ width: "100%" }}
+            onChange={handleDecimalChange}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Prevent the default behavior of the Enter key
+                }
+            }}
+        />,
+    ];
+    const advancedSettingsMain = [
+        {
+            key: "1",
+            title: "Advanced Settings",
+            label: <p className="font-semibold">Advanced Settings</p>,
+            children: advancedSettingsChildren,
+            extra: genExtra(),
+        },
+    ];
+
     return (
         <Layout
             style={{
@@ -190,6 +223,11 @@ export default function phenotypePage() {
                 <br />
                 <br />
                 <PhenotypeTree onGetData={getData} />
+                <Collapse
+                    items={advancedSettingsMain}
+                    size="small"
+                    style={{ background: colorBgContainer }}
+                />
             </Sider>
             <Layout>
                 <Content
@@ -240,7 +278,10 @@ export default function phenotypePage() {
                             <Descriptions
                                 column={1}
                                 size={"small"}
-                                labelStyle={{ color: "#0f172a", width: "200px" }}
+                                labelStyle={{
+                                    color: "#0f172a",
+                                    width: "200px",
+                                }}
                                 style={{
                                     margin: "16px 0",
                                 }}
@@ -262,6 +303,7 @@ export default function phenotypePage() {
                                                 <PhenotypeTableDisease2
                                                     hpid={gene}
                                                     dbType={size}
+                                                    decimalPoints={decimalPoints}
                                                 />
                                             ),
                                         };
@@ -293,8 +335,9 @@ export default function phenotypePage() {
                                 })}
                             />
                         </div>
-                        ) : selectGeneAlert() }
-                    
+                    ) : (
+                        selectGeneAlert()
+                    )}
                 </Content>
                 <CustomFooter />
             </Layout>

@@ -46,7 +46,7 @@ class SearchTree extends React.Component {
                 key: "HP:0000001",
             },
         ],
-        load_counter: 0,
+        first_load: true,
     };
     constructor(props) {
         super(props);
@@ -85,12 +85,11 @@ class SearchTree extends React.Component {
     };
 
     onFirstLoad = (selectedKeys, info) => {
-        let { load_counter } = this.state;
-        console.log(load_counter);
-        if (load_counter == 0) {
+        let { first_load } = this.state;
+        if (first_load) {
             this.onSelect(selectedKeys, info);
         }
-        this.setState({ load_counter: load_counter + 1 });
+        this.setState({ first_load: false });
     };
 
     onExpand = (expandedKeys) => {

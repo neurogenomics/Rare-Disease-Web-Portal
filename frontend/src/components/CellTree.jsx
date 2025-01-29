@@ -176,7 +176,7 @@ class SearchTree extends React.Component {
                 >
                     <p className="font-semibold m-0.5 mb-2 ml-2">Cell Types</p>
                     <Tree
-                        style={{ maxHeight: 500, overflowY: "auto" }}
+                        style={{ maxHeight: 450, overflowY: "auto" }}
                         onSelect={this.onSelect}
                         expandedKeys={expandedKeys}
                         autoExpandParent={autoExpandParent}

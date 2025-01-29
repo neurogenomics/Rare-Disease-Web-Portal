@@ -14,11 +14,14 @@ import {
     Tabs,
     Tag,
     Card,
+    Collapse,
 } from "antd";
 import { Column } from "@ant-design/plots";
-import { DownloadOutlined } from "@ant-design/icons";
+import { DownloadOutlined, SearchOutlined } from "@ant-design/icons";
 import * as d3 from "d3";
 import { BASE_API_URL } from "../../config.js";
+import { SettingsOutlined } from "@mui/icons-material";
+import NotFound from "../components/utilities/Texts.jsx";
 
 const suitsDta =
     '[{"source":"Microsoft","target":"Amazon","type":"1"},{"source":"Microsoft","target":"HTC","type":"licensing"},{"source":"Samsung","target":"Apple","type":"suit"},{"source":"Motorola","target":"Apple","type":"suit"},{"source":"Nokia","target":"Apple","type":"resolved"},{"source":"HTC","target":"Apple","type":"suit"},{"source":"Kodak","target":"Apple","type":"suit"},{"source":"Microsoft","target":"Barnes & Noble","type":"suit"},{"source":"Microsoft","target":"Foxconn","type":"suit"},{"source":"Oracle","target":"Google","type":"suit"},{"source":"Apple","target":"HTC","type":"suit"},{"source":"Microsoft","target":"Inventec","type":"suit"},{"source":"Samsung","target":"Kodak","type":"resolved"},{"source":"LG","target":"Kodak","type":"resolved"},{"source":"RIM","target":"Kodak","type":"suit"},{"source":"Sony","target":"LG","type":"suit"},{"source":"Kodak","target":"LG","type":"resolved"},{"source":"Apple","target":"Nokia","type":"resolved"},{"source":"Qualcomm","target":"Nokia","type":"resolved"},{"source":"Apple","target":"Motorola","type":"suit"},{"source":"Microsoft","target":"Motorola","type":"suit"},{"source":"Motorola","target":"Microsoft","type":"suit"},{"source":"Huawei","target":"ZTE","type":"suit"},{"source":"Ericsson","target":"ZTE","type":"suit"},{"source":"Kodak","target":"Samsung","type":"resolved"},{"source":"Apple","target":"Samsung","type":"suit"},{"source":"Kodak","target":"RIM","type":"suit"},{"source":"Nokia","target":"Qualcomm","type":"suit"}]';
@@ -44,12 +47,11 @@ const DemoColumn = (data) => {
 const { Header, Content, Sider } = Layout;
 
 export default function CelltypePage() {
+    // Set states
     const [data, setData] = useState([]);
-
     const [data1, setData1] = useState([]);
-
-    const [dataSet, setDataSet] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [decimalPoints, setDecimalPoints] = useState(3);
 
     const ref = useRef();
 
@@ -232,37 +234,37 @@ export default function CelltypePage() {
             Target: "database",
         });
         data1.push({
-            Value: record.estimate,
+            Value: parseFloat(record.estimate).toFixed(decimalPoints),
             Target: "estimate",
         });
 
         data1.push({
-            Value: record.std_error,
+            Value: parseFloat(record.std_error).toFixed(decimalPoints),
             Target: "std_error",
         });
         data1.push({
-            Value: record.statistic,
+            Value: parseFloat(record.statistic).toFixed(decimalPoints),
             Target: "statistic",
         });
         data1.push({
-            Value: record.q,
+            Value: parseFloat(record.q).toFixed(decimalPoints),
             Target: "q",
         });
         data1.push({
-            Value: record.fold_change,
+            Value: parseFloat(record.fold_change).toFixed(decimalPoints),
             Target: "fold_change",
         });
 
         data1.push({
-            Value: record.p,
+            Value: parseFloat(record.p).toFixed(decimalPoints),
             Target: "p",
         });
         data1.push({
-            Value: record.model_estimate,
+            Value: parseFloat(record.model_estimate).toFixed(decimalPoints),
             Target: "model_estimate",
         });
         data1.push({
-            Value: record.model_statistic,
+            Value: parseFloat(record.model_statistic).toFixed(decimalPoints),
             Target: "model_statistic",
         });
 
@@ -291,22 +293,31 @@ export default function CelltypePage() {
             title: "HPO Name",
             dataIndex: "hpo_name",
             key: "hpo_name",
+            render: (text) => {
+                return text || <NotFound />;
+            },
         },
         {
             title: "Severity Score",
             dataIndex: "severity_score_gpt",
             key: "severity_score_gpt",
+            render: (text) => {
+                return parseFloat(text).toFixed(decimalPoints);
+            },
         },
         {
             title: "Q-Value",
             dataIndex: "q",
             key: "q",
+            render: (text) => {
+                return parseFloat(text).toFixed(decimalPoints);
+            },
         },
         {
             title: "Severity Tier",
             dataIndex: "severity_class",
             key: "severity_class",
-            render: (text, record) => {
+            render: (text) => {
                 if (text === 0) {
                     return <Tag color="green">mild</Tag>;
                 } else if (text === 1) {
@@ -315,6 +326,8 @@ export default function CelltypePage() {
                     return <Tag color="red">severe</Tag>;
                 } else if (text === 3) {
                     return <Tag color="purple">profound</Tag>;
+                } else {
+                    return <Tag color="default">NA</Tag>;
                 }
             },
         },
@@ -336,6 +349,9 @@ export default function CelltypePage() {
             sorter: (a, b) =>
                 a.expression_specificity - b.expression_specificity,
             sortDirections: ["descend", "ascend"],
+            render: (text) => {
+                return parseFloat(text).toFixed(decimalPoints);
+            },
         },
     ];
     const [sliderValues, setSliderValues] = useState({
@@ -344,6 +360,7 @@ export default function CelltypePage() {
         fold_change: "1",
         celltype_name: "All",
     });
+    const [activeCellType, setActiveCellType] = useState("All");
 
     const handleSliderChange = (name) => {
         setSliderValues((prevValues) => ({
@@ -356,6 +373,9 @@ export default function CelltypePage() {
             ...prevValues,
             fold_change: name,
         }));
+    };
+    const handleDecimalChange = (decimalPoints) => {
+        setDecimalPoints(decimalPoints);
     };
     const handleSubmit = async (event) => {
         setLoading(true);
@@ -407,6 +427,7 @@ export default function CelltypePage() {
                 setData1(results);
                 setLoading(false);
             });
+        setActiveCellType(sliderValues.celltype_name);
     };
 
     const onload = async (event) => {
@@ -518,6 +539,33 @@ export default function CelltypePage() {
         }
     };
 
+    // Advanced Settings
+    const genExtra = () => <SettingsOutlined />; // Settings icon
+    const advancedSettingsChildren = [
+        <InputNumber
+            min={1}
+            max={10}
+            defaultValue={decimalPoints}
+            addonBefore={"Decimal Points"}
+            style={{ width: "100%" }}
+            onChange={handleDecimalChange}
+            onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault(); // Prevent the default behavior of the Enter key
+                }
+            }}
+        />,
+    ];
+    const advancedSettingsMain = [
+        {
+            key: "1",
+            title: "Advanced Settings",
+            label: <p className="font-semibold">Advanced Settings</p>,
+            children: advancedSettingsChildren,
+            extra: genExtra(),
+        },
+    ];
+
     // Override q-value input addon style to alter background color and padding
     // Work around: addonBg prop not working
     useEffect(() => {
@@ -525,7 +573,7 @@ export default function CelltypePage() {
             .querySelectorAll(".ant-input-number-group-addon")
             .forEach((el) => {
                 el.style.background = "#f0f0f0";
-                el.style.padding = "0 20px";
+                el.style.padding = "0px 20px";
             });
     }, []);
 
@@ -590,8 +638,17 @@ export default function CelltypePage() {
                                 addonBefore="Q-Value"
                                 stringMode
                             />
+                            <br />
+                            <br />
+                            <Collapse
+                                items={advancedSettingsMain}
+                                size="small"
+                                style={{ background: colorBgContainer }}
+                            />
                             <Button
                                 name="Search"
+                                size="large"
+                                icon={<SearchOutlined />}
                                 style={{
                                     marginTop: 20,
                                     marginBottom: 20,
@@ -604,7 +661,7 @@ export default function CelltypePage() {
                                     handleSubmit(event);
                                 }}
                             >
-                                Search
+                                <p className="font-semibold">Search</p>
                             </Button>
                         </div>
                     </center>
@@ -650,6 +707,16 @@ export default function CelltypePage() {
                             borderRadius: borderRadiusLG,
                         }}
                     >
+                        <h2
+                            style={{
+                                fontSize: 22,
+                                fontWeight: "bold",
+                                color: "#6357d3",
+                            }}
+                        >
+                            {activeCellType}
+                        </h2>
+                        <br />
                         <Tabs
                             type="card"
                             items={new Array(2).fill(null).map((_, i) => {

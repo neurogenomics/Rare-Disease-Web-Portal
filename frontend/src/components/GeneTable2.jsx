@@ -189,6 +189,9 @@ const PhenotypeTableDisease = (hpid) => {
             sorter: (a, b) =>
                 a.expression_specificity - b.expression_specificity,
             sortDirections: ["descend", "ascend"],
+            render: (text) => {
+                return text.toFixed(hpid.decimalPoints);
+            }
         },
     ];
     const download = () => {

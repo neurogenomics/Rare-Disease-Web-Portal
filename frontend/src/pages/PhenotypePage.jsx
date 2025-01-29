@@ -8,6 +8,8 @@ import {
     Descriptions,
     Radio,
     Card,
+    Collapse,
+    InputNumber
 } from "antd";
 import PhenotypeTree from "../components/PhenotypeTree.jsx";
 import PhenotypeTableDisease from "../components/PhenotypeTableDisease.jsx";
@@ -16,6 +18,7 @@ import PhenotypeTableDisease2 from "../components/PhenotypeTableDisease2.jsx";
 import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
 import CustomFooter from "../components/utilities/Footer.jsx";
 import NotFound from "../components/utilities/Texts.jsx";
+import { SettingsOutlined } from "@mui/icons-material";
 
 const { Header, Content, Sider } = Layout;
 
@@ -40,9 +43,27 @@ export default function phenotypePage() {
     const [size, setSize] = useState("DescartesHuman");
 
     const [desItem, setDesItem] = useState(items);
+    const [decimalPoints, setDecimalPoints] = useState(3);
 
     const handleSizeChange = (e) => {
         setSize(e.target.value);
+    };
+    const handleDecimalChange = (decimalPoints) => {
+        setDecimalPoints(decimalPoints);
+
+        // Update severity score
+        setDesItem((prev) => {
+            return prev.map((item) => {
+                if (item.key === "5" && typeof !isNaN(parseFloat(item.children))) {
+                    console.log("YES");
+                    return {
+                        ...item,
+                        children: parseFloat(item.children).toFixed(decimalPoints),
+                    };
+                }
+                return item;
+            });
+        });
     };
     const getData = (data, info) => {
         console.log(`data from Child2 - ${info.node.dataRef.name}`);
@@ -88,12 +109,16 @@ export default function phenotypePage() {
                             itemsTemp.push({
                                 label: "Severity Score",
                                 key: "5",
-                                children: result1[0].severity_score_gpt || <NotFound />,
+                                children: result1[0].severity_score_gpt.toFixed(decimalPoints) || (
+                                    <NotFound />
+                                ),
                             });
                             itemsTemp.push({
                                 label: "Severity Tier",
                                 key: "6",
-                                children: result1[0].severity_class || <NotFound />,
+                                children: result1[0].severity_class || (
+                                    <NotFound />
+                                ),
                             });
                         });
                 } catch (e) {
@@ -174,6 +199,33 @@ export default function phenotypePage() {
         }
     }, []);
 
+    // Advanced Settings
+    const genExtra = () => <SettingsOutlined />; // Settings icon
+    const advancedSettingsChildren = [
+        <InputNumber
+            min={1}
+            max={10}
+            defaultValue={decimalPoints}
+            addonBefore={"Decimal Points"}
+            style={{ width: "100%" }}
+            onChange={handleDecimalChange}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Prevent the default behavior of the Enter key
+                }
+            }}
+        />,
+    ];
+    const advancedSettingsMain = [
+        {
+            key: "1",
+            title: "Advanced Settings",
+            label: <p className="font-semibold">Advanced Settings</p>,
+            children: advancedSettingsChildren,
+            extra: genExtra(),
+        },
+    ];
+
     return (
         <Layout
             style={{
@@ -188,7 +240,13 @@ export default function phenotypePage() {
                 onCollapse={(value) => setCollapsed(value)}
             >
                 <div className="demo-logo-vertical" />
-                <h1 style={{ fontSize: '1.1em', fontWeight: 'bold', color: '#FFFFFF' }}>
+                <h1
+                    style={{
+                        fontSize: "1.1em",
+                        fontWeight: "bold",
+                        color: "#FFFFFF",
+                    }}
+                >
                     Select database
                 </h1>
                 <hr style={{ marginBottom: 7, border: "none" }} />
@@ -210,6 +268,11 @@ export default function phenotypePage() {
                 <br />
                 <br />
                 <PhenotypeTree onGetData={getData} />
+                <Collapse
+                    items={advancedSettingsMain}
+                    size="small"
+                    style={{ background: colorBgContainer }}
+                />
             </Sider>
             <Layout>
                 <Content
@@ -287,6 +350,7 @@ export default function phenotypePage() {
                                             <PhenotypeTableDisease2
                                                 hpid={data}
                                                 dbType={size}
+                                                decimalPoints={decimalPoints}
                                             />
                                         ),
                                     };

@@ -317,6 +317,7 @@ const PhenotypeTableDisease = (hpid) => {
             title: "Q-Value",
             dataIndex: "q",
             key: "q",
+            render: (num) => num.toFixed(hpid.decimalPoints),
         },
     ];
     const expandedRowRender = (record, index, indent, expanded) => {
