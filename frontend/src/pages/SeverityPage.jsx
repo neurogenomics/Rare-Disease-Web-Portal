@@ -21,9 +21,9 @@ import {
     Tag,
     Card,
     InputNumber,
-    Collapse
+    Collapse,
 } from "antd";
-import { DownloadOutlined } from "@ant-design/icons";
+import { DownloadOutlined, SearchOutlined  } from "@ant-design/icons";
 import { SettingsOutlined } from "@mui/icons-material";
 import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
 
@@ -447,7 +447,7 @@ export default function SeverityPage() {
             style={{ width: "100%" }}
             onChange={handleDecimalChange}
             onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                     e.preventDefault(); // Prevent the default behavior of the Enter key
                 }
             }}
@@ -623,6 +623,8 @@ export default function SeverityPage() {
                             />
                             <Button
                                 name="Search"
+                                size="large"
+                                icon={<SearchOutlined />}
                                 style={{
                                     marginTop: 20,
                                     marginBottom: 20,
@@ -635,7 +637,7 @@ export default function SeverityPage() {
                                     handleSubmit(event);
                                 }}
                             >
-                                Search
+                                <p className="font-semibold">Search</p>
                             </Button>
                         </div>
                     </center>
