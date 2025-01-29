@@ -4,7 +4,7 @@ import {
     Layout,
     Tabs,
     theme,
-    Badge,
+    Alert,
     Descriptions,
     Radio,
     Card,
@@ -14,6 +14,8 @@ import PhenotypeTableDisease from "../components/GeneTable.jsx";
 import PhenotypeTableDisease1 from "../components/GeneTable1.jsx";
 import PhenotypeTableDisease2 from "../components/GeneTable2.jsx";
 import CustomFooter from "../components/utilities/Footer.jsx";
+import NotFound from "../components/utilities/Texts.jsx";
+import { LaunchOutlined } from "@mui/icons-material";
 
 const { Header, Content, Sider } = Layout;
 
@@ -40,8 +42,34 @@ export default function phenotypePage() {
     const handleSizeChange = (e) => {
         setSize(e.target.value);
     };
-
     const [desItem, setDesItem] = useState(items);
+
+    const parseNCBIGeneID = (id, with_link = true) => {
+        const prefixString = "NCBIGene:";
+
+        // Check for valid NCBI Gene ID
+        if (!id.startsWith(prefixString)) {
+            return <NotFound />;
+        }
+
+        const geneID = id.substring(prefixString.length);
+
+        if (with_link) {
+            return (
+                <a
+                    href={`https://www.ncbi.nlm.nih.gov/gene?Cmd=DetailsSearch&Term=${geneID}`}
+                    target="_blank"
+                >
+                    {geneID}{" "}
+                    <LaunchOutlined
+                        className="align-super"
+                        style={{ fontSize: "10px", color: "gray" }}
+                    />
+                </a>
+            );
+        }
+    };
+
     const getData = (data, info) => {
         if (!info.node.dataRef.id.includes("NCBIGene")) {
             return false;
@@ -52,10 +80,15 @@ export default function phenotypePage() {
         setGene(info.node.dataRef.name);
         let itemsTemp = [];
         itemsTemp.push({
-            label: "GENE Name",
+            label: "Gene Name",
             key: "1",
             children: info.node.dataRef.name,
         });
+        itemsTemp.push({
+            label: "NCBI Gene ID",
+            key: "1",
+            children: parseNCBIGeneID(info.node.dataRef.id),
+        })
 
         fetch(
             `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id=${info.node.dataRef.id.substring(
@@ -79,8 +112,9 @@ export default function phenotypePage() {
                                 itemsTemp.push({
                                     label: "Synonyms",
                                     key: "3",
-                                    children:
-                                        result.result[resultKey][resultKey1],
+                                    children: result.result[resultKey][
+                                        resultKey1
+                                    ] || <NotFound />,
                                 });
                             }
                             if (resultKey1 === "summary") {
@@ -88,7 +122,7 @@ export default function phenotypePage() {
                                     label: "Definition",
                                     key: "2",
                                     children:
-                                        result.result[resultKey][resultKey1],
+                                        result.result[resultKey][resultKey1] || <NotFound />,
                                 });
                             }
                         }
@@ -99,6 +133,19 @@ export default function phenotypePage() {
             });
         setDesItem(items);
         return false;
+    };
+
+    const selectGeneAlert = () => {
+        return (
+            <Alert
+                className="mb-5"
+                width="50%"
+                message="Get Started"
+                description="Search and select a gene from the list on the left to explore its relationships with different cell types, diseases, and phenotypes."
+                type="info"
+                showIcon
+            />
+        );
     };
 
     return (
@@ -115,7 +162,13 @@ export default function phenotypePage() {
                 onCollapse={(value) => setCollapsed(value)}
             >
                 <div className="demo-logo-vertical" />
-                <h1 style={{ fontSize: '1.1em', fontWeight: 'bold', color: '#FFFFFF' }}>
+                <h1
+                    style={{
+                        fontSize: "1.1em",
+                        fontWeight: "bold",
+                        color: "#FFFFFF",
+                    }}
+                >
                     Select database
                 </h1>
                 <hr style={{ marginBottom: 7, border: "none" }} />
@@ -166,79 +219,82 @@ export default function phenotypePage() {
                         </p>
                     </Card>
                     <br />
-                    <div
-                        style={{
-                            padding: 24,
-                            minHeight: 360,
-                            background: colorBgContainer,
-                            borderRadius: borderRadiusLG,
-                        }}
-                    >
-                        <h2
+                    {gene != null ? (
+                        <div
                             style={{
-                                fontSize: 22,
-                                fontWeight: "bold",
-                                color: "#6357d3",
+                                padding: 24,
+                                minHeight: 360,
+                                background: colorBgContainer,
+                                borderRadius: borderRadiusLG,
                             }}
                         >
-                            {dataRef != null ? dataRef.name : "All"}
-                        </h2>
-                        <Descriptions
-                            column={1}
-                            size={"small"}
-                            labelStyle={{ color: "#0f172a", width: "200px" }}
-                            style={{
-                                margin: "16px 0",
-                            }}
-                            bordered
-                            items={desItem}
-                        />
+                            <h2
+                                style={{
+                                    fontSize: 22,
+                                    fontWeight: "bold",
+                                    color: "#6357d3",
+                                }}
+                            >
+                                {dataRef != null ? dataRef.name : ""}
+                            </h2>
+                            <Descriptions
+                                column={1}
+                                size={"small"}
+                                labelStyle={{ color: "#0f172a", width: "200px" }}
+                                style={{
+                                    margin: "16px 0",
+                                }}
+                                bordered
+                                items={desItem}
+                            />
 
-                        <Tabs
-                            onChange={onChange}
-                            type="card"
-                            items={new Array(3).fill(null).map((_, i) => {
-                                let id = String(i + 1);
-                                if (i === 0) {
-                                    id = "Cell Associations";
-                                    return {
-                                        label: `${id}`,
-                                        key: id,
-                                        children: (
-                                            <PhenotypeTableDisease2
-                                                hpid={gene}
-                                                dbType={size}
-                                            />
-                                        ),
-                                    };
-                                }
-                                if (i === 1) {
-                                    id = "Disease Associations";
-                                    return {
-                                        label: `${id}`,
-                                        key: id,
-                                        children: (
-                                            <PhenotypeTableDisease1
-                                                hpid={data}
-                                            />
-                                        ),
-                                    };
-                                }
-                                if (i === 2) {
-                                    id = "HPO Associations";
-                                    return {
-                                        label: `${id}`,
-                                        key: id,
-                                        children: (
-                                            <PhenotypeTableDisease
-                                                hpid={data}
-                                            />
-                                        ),
-                                    };
-                                }
-                            })}
-                        />
-                    </div>
+                            <Tabs
+                                onChange={onChange}
+                                type="card"
+                                items={new Array(3).fill(null).map((_, i) => {
+                                    let id = String(i + 1);
+                                    if (i === 0) {
+                                        id = "Cell Associations";
+                                        return {
+                                            label: `${id}`,
+                                            key: id,
+                                            children: (
+                                                <PhenotypeTableDisease2
+                                                    hpid={gene}
+                                                    dbType={size}
+                                                />
+                                            ),
+                                        };
+                                    }
+                                    if (i === 1) {
+                                        id = "Disease Associations";
+                                        return {
+                                            label: `${id}`,
+                                            key: id,
+                                            children: (
+                                                <PhenotypeTableDisease1
+                                                    hpid={data}
+                                                />
+                                            ),
+                                        };
+                                    }
+                                    if (i === 2) {
+                                        id = "HPO Associations";
+                                        return {
+                                            label: `${id}`,
+                                            key: id,
+                                            children: (
+                                                <PhenotypeTableDisease
+                                                    hpid={data}
+                                                />
+                                            ),
+                                        };
+                                    }
+                                })}
+                            />
+                        </div>
+                        ) : selectGeneAlert() }
+                    
                 </Content>
                 <CustomFooter />
             </Layout>

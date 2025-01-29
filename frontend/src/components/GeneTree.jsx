@@ -41,7 +41,7 @@ class SearchTree extends React.Component {
         autoExpandParent: true,
         gData: [
             {
-                title: "Gene List",
+                title: "",
                 key: "1",
             },
         ],
@@ -80,21 +80,16 @@ class SearchTree extends React.Component {
                 item.title = item.id.substring(0, 7) + " " + item.name;
                 res.push(item);
             }
-            let newdata = [
-                {
-                    title: "Gene List",
-                    key: "1",
-                },
-            ];
-            newdata[0].children = res;
             this.setState({
-                gData: newdata,
+                gData: res,
                 loading: false,
             });
         });
     };
 
     onChange = (e) => {
+        console.log(e);
+        console.log(e.target.value);
         this.setState({
             loading: true,
         });
@@ -106,22 +101,26 @@ class SearchTree extends React.Component {
             for (let i = 0; i < response.data.results.length; i++) {
                 let item = response.data.results[i];
                 item.key = item.id;
-                item.title = item.id + " - " + item.name;
+                // item.title = item.id + " - " + item.name;
+                item.title = item.name;
                 res.push(item);
             }
-            let newdata = [
-                {
-                    title: "Gene List",
-                    key: "1",
-                },
-            ];
-            newdata[0].children = res;
             this.setState({
-                gData: newdata,
+                gData: res,
                 loading: false,
             });
         });
     };
+
+    componentDidMount() {
+        // Search "NCBI" by default
+        let e = {
+            target: {
+                value: "NCBI",
+            },
+        }
+        this.onChange(e);
+    }
 
     loop = (data) =>
         data.map((item) => {
@@ -153,22 +152,33 @@ class SearchTree extends React.Component {
         let { expandedKeys, autoExpandParent, gData, loading } = this.state;
         generateList(gData);
         return (
-            <div style={{ marginBottom: "200px" }}>
+            <div style={{ marginBottom: "16px" }}>
                 <Search
-                    size="large"
                     style={{ marginBottom: 16 }}
                     placeholder="Search gene name"
                     onChange={this.onChange}
                     onSearch={this.onSearch}
                     loading={loading}
                 />
-                <Tree
-                    onSelect={this.onSelect}
-                    expandedKeys={expandedKeys}
-                    autoExpandParent={autoExpandParent}
+                <div
+                    style={{
+                        background: "#fff",
+                        padding: "10px",
+                        borderRadius: "4px",
+                    }}
                 >
-                    {this.loop(gData)}
-                </Tree>
+                    <p className="font-semibold m-0.5 mb-2 ml-2">
+                        Genes Names
+                    </p>
+                    <Tree
+                        style={{ maxHeight: 500, overflowY: "auto" }}
+                        onSelect={this.onSelect}
+                        expandedKeys={expandedKeys}
+                        autoExpandParent={autoExpandParent}
+                    >
+                        {this.loop(gData)}
+                    </Tree>
+                </div>
             </div>
         );
     }
