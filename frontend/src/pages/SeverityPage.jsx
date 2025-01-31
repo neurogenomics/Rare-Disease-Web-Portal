@@ -26,6 +26,7 @@ import {
 import { DownloadOutlined, SearchOutlined } from "@ant-design/icons";
 import { SettingsOutlined } from "@mui/icons-material";
 import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
+import NotFound from "../components/utilities/Texts.jsx";
 
 const { Header, Content, Sider } = Layout;
 
@@ -216,9 +217,10 @@ export default function SeverityPage() {
             <>
                 <Alert
                     message="Definition:"
-                    description={record.definition}
+                    description={record.definition || <NotFound />}
                     type="info"
                 />
+                <br />
                 <Table
                     columns={columns}
                     dataSource={data1}
