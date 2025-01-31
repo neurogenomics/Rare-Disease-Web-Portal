@@ -277,6 +277,7 @@ export default function CelltypePage() {
             title: "HPO ID",
             dataIndex: "hpo_id",
             key: "hpo_id",
+            sorter: (a, b) => a.hpo_id.substring("HP:".length) - b.hpo_id.substring("HP:".length),
             render: (text, record) => {
                 return (
                     <a
@@ -293,6 +294,7 @@ export default function CelltypePage() {
             title: "HPO Name",
             dataIndex: "hpo_name",
             key: "hpo_name",
+            sorter: (a, b) => a.hpo_name.localeCompare(b.hpo_name),
             render: (text) => {
                 return text || <NotFound />;
             },
@@ -301,6 +303,7 @@ export default function CelltypePage() {
             title: "Severity Score",
             dataIndex: "severity_score_gpt",
             key: "severity_score_gpt",
+            sorter: (a, b) => a.severity_score_gpt - b.severity_score_gpt,
             render: (text) => {
                 return parseFloat(text).toFixed(decimalPoints);
             },
@@ -309,6 +312,7 @@ export default function CelltypePage() {
             title: "Q-Value",
             dataIndex: "q",
             key: "q",
+            sorter: (a, b) => a.q - b.q,
             render: (text) => {
                 return parseFloat(text).toFixed(decimalPoints);
             },
@@ -339,7 +343,7 @@ export default function CelltypePage() {
             dataIndex: "gene",
             key: "gene",
             width: "30%",
-            sorter: (a, b) => a.gene.length - b.gene.length,
+            sorter: (a, b) => a.gene.localeCompare(b.gene),
         },
 
         {
@@ -348,7 +352,6 @@ export default function CelltypePage() {
             key: "expression_specificity",
             sorter: (a, b) =>
                 a.expression_specificity - b.expression_specificity,
-            sortDirections: ["descend", "ascend"],
             render: (text) => {
                 return parseFloat(text).toFixed(decimalPoints);
             },
@@ -747,6 +750,7 @@ export default function CelltypePage() {
                                                         defaultExpandedRowKeys:
                                                             ["0"],
                                                     }}
+                                                    showSorterTooltip={true}
                                                     dataSource={data}
                                                     size="small"
                                                 />
@@ -777,6 +781,7 @@ export default function CelltypePage() {
                                                     columns={columns1}
                                                     dataSource={data1}
                                                     size="small"
+                                                    showSorterTooltip={true}
                                                 />
                                             </Spin>
                                         ),

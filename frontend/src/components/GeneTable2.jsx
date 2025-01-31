@@ -177,7 +177,8 @@ const PhenotypeTableDisease = (hpid) => {
             dataIndex: "celltype",
             key: "celltype",
             width: "30%",
-            sorter: (a, b) => a.celltype.length - b.celltype.length,
+            sorter: (a, b) => a.celltype.localeCompare(b.celltype),
+            sortDirections: ["ascend", "descend"],
             ...getColumnSearchProps("celltype"),
         },
 
@@ -241,6 +242,7 @@ const PhenotypeTableDisease = (hpid) => {
                 columns={columns}
                 dataSource={data}
                 sortDirections={["descend", "ascend"]}
+                showSorterTooltip={true}
             />
         </Spin>
     );

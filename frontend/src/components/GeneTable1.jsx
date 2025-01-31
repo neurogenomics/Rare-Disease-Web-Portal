@@ -154,7 +154,7 @@ const PhenotypeTableDisease = (hpid) => {
             dataIndex: "id",
             key: "id",
             width: "30%",
-            sorter: (a, b) => a.id.length - b.id.length,
+            sorter: (a, b) => a.id.substring("ORPHA:".length) - b.id.substring("ORPHA:".length),
             ...getColumnSearchProps("id"),
             render: (text) => {
                 const model = text.split(":")[0];
@@ -187,8 +187,7 @@ const PhenotypeTableDisease = (hpid) => {
             dataIndex: "name",
             key: "name",
             ...getColumnSearchProps("name"),
-            sorter: (a, b) => a.name.length - b.name.length,
-            sortDirections: ["descend", "ascend"],
+            sorter: (a, b) => a.name.localeCompare(b.name),
         },
     ];
     return (
@@ -196,7 +195,7 @@ const PhenotypeTableDisease = (hpid) => {
             <Table
                 columns={columns}
                 dataSource={data}
-                sortDirections={["descend", "ascend"]}
+                showSorterTooltip={true}
             />
         </Spin>
     );

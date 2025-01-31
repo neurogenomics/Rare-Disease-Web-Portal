@@ -296,6 +296,8 @@ const PhenotypeTableDisease = (hpid) => {
             title: "CellType Name",
             dataIndex: "celltype_name",
             key: "celltype_name",
+            sorter: (a, b) => a.celltype_name.localeCompare(b.celltype_name),
+            sortDirections: ['ascend', 'descend'],
             render: (text, record) => {
                 return (
                     <a
@@ -312,11 +314,14 @@ const PhenotypeTableDisease = (hpid) => {
             title: "HPO ID",
             dataIndex: "hpo_id",
             key: "hpo_id",
+            sorter: (a, b) => a.hpo_id.localeCompare(b.hpo_id),
         },
         {
             title: "Q-Value",
             dataIndex: "q",
             key: "q",
+            sorter: (a, b) => a.q - b.q,
+            sortDirections: ['ascend', 'descend'],
             render: (num) => num.toFixed(hpid.decimalPoints),
         },
     ];
@@ -505,6 +510,7 @@ const PhenotypeTableDisease = (hpid) => {
                     }}
                     dataSource={data}
                     sortDirections={["descend", "ascend"]}
+                    showSorterTooltip={true}
                 />
             </Spin>
             <Modal

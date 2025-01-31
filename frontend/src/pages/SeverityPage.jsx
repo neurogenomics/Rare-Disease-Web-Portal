@@ -23,7 +23,7 @@ import {
     InputNumber,
     Collapse,
 } from "antd";
-import { DownloadOutlined, SearchOutlined  } from "@ant-design/icons";
+import { DownloadOutlined, SearchOutlined } from "@ant-design/icons";
 import { SettingsOutlined } from "@mui/icons-material";
 import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
 
@@ -232,6 +232,9 @@ export default function SeverityPage() {
             title: "HPO ID",
             dataIndex: "hpo_id",
             key: "hpo_id",
+            sorter: (a, b) =>
+                a.hpo_id.substring("HP:".length) -
+                b.hpo_id.substring("HP:".length),
             render: (text) => {
                 return (
                     <a
@@ -248,11 +251,13 @@ export default function SeverityPage() {
             title: "HPO Name",
             dataIndex: "hpo_name",
             key: "hpo_name",
+            sorter: (a, b) => a.hpo_name.localeCompare(b.hpo_name),
         },
         {
             title: "Severity Score",
             dataIndex: "severity_score_gpt",
             key: "severity_score_gpt",
+            sorter: (a, b) => a.severity_score_gpt - b.severity_score_gpt,
             render: (text) => {
                 return text.toFixed(decimalPoints);
             },
@@ -277,6 +282,11 @@ export default function SeverityPage() {
             title: "Most Associated Celltype",
             dataIndex: "celltype_name",
             key: "celltype_name",
+            sorter: (a, b) => {
+                const aCelltype = a.celltype_name ? a.celltype_name : "";
+                const bCelltype = b.celltype_name ? b.celltype_name : "";
+                return aCelltype.localeCompare(bCelltype);
+            },
             render: (text) => (text ? text : <i>None</i>),
         },
         {
@@ -709,6 +719,7 @@ export default function SeverityPage() {
                                 dataSource={data}
                                 size="small"
                                 onChange={handleTableChange}
+                                showSorterTooltip={true}
                             />
                         </Spin>
                     </div>
