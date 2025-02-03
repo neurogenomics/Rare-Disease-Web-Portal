@@ -4,6 +4,8 @@ import PhenotypePage from "./pages/PhenotypePage";
 import CelltypePage from "./pages/CelltypePage";
 import GenePage from "./pages/GenePage";
 import SeverityPage from "./pages/SeverityPage";
+import PublicationsPage from "./pages/PublicationsPage";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
     return (
@@ -19,6 +21,8 @@ function App() {
                     element={<SeverityPage />}
                 />
                 <Route path="/severity" element={<SeverityPage />} />
+                <Route path="/publications" element={<PublicationsPage />} />
+                <Route path="/about" element={<AboutPage />} />
             </Routes>
         </BrowserRouter>
     );

@@ -16,6 +16,7 @@ import PhenotypeTableDisease from "../components/PhenotypeTableDisease.jsx";
 import PhenotypeTableDisease1 from "../components/PhenotypeTableDisease1.jsx";
 import PhenotypeTableDisease2 from "../components/PhenotypeTableDisease2.jsx";
 import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
+import CustomHeader from "../components/utilities/Header.jsx";
 import CustomFooter from "../components/utilities/Footer.jsx";
 import NotFound from "../components/utilities/Texts.jsx";
 import { SettingsOutlined } from "@mui/icons-material";
@@ -227,6 +228,8 @@ export default function phenotypePage() {
     ];
 
     return (
+        <>
+        <CustomHeader activePageKey="phenotype" />
         <Layout
             style={{
                 minHeight: "100vh",
@@ -286,7 +289,7 @@ export default function phenotypePage() {
                         }}
                     >
                         <Breadcrumb.Item href={"/"}>Home</Breadcrumb.Item>
-                        <Breadcrumb.Item>Phenotype</Breadcrumb.Item>
+                        <Breadcrumb.Item>Search by Phenotype</Breadcrumb.Item>
                     </Breadcrumb>
                     <Card
                         style={{
@@ -386,5 +389,6 @@ export default function phenotypePage() {
                 <CustomFooter />
             </Layout>
         </Layout>
+        </>
     );
 }

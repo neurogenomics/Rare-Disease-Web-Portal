@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import SeveritySlider from "../components/SeveritySlider.jsx";
 import SeveritySlider1 from "../components/SeveritySlider1.jsx";
 import SeverityNetWork from "../components/SeverityNetWork.jsx";
+import CustomHeader from "../components/utilities/Header.jsx";
 import CustomFooter from "../components/utilities/Footer.jsx";
 import axios from "axios";
 import {
@@ -476,6 +477,8 @@ export default function SeverityPage() {
     ];
 
     return (
+        <>
+        <CustomHeader activePageKey="severity" />
         <Layout
             style={{
                 minHeight: "100vh",
@@ -668,7 +671,7 @@ export default function SeverityPage() {
                         }}
                     >
                         <Breadcrumb.Item href={"/"}>Home</Breadcrumb.Item>
-                        <Breadcrumb.Item>Severity</Breadcrumb.Item>
+                        <Breadcrumb.Item>Search by Severity</Breadcrumb.Item>
                     </Breadcrumb>
 
                     <Card
@@ -729,5 +732,6 @@ export default function SeverityPage() {
                 <CustomFooter />
             </Layout>
         </Layout>
+        </>
     );
 }

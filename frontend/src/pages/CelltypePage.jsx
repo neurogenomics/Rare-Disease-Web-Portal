@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PhenotypeTree from "../components/CellTree.jsx";
+import CustomHeader from "../components/utilities/Header.jsx";
 import CustomFooter from "../components/utilities/Footer.jsx";
 import axios from "axios";
 import {
@@ -581,6 +582,8 @@ export default function CelltypePage() {
     }, []);
 
     return (
+        <>
+        <CustomHeader activePageKey="celltype" />
         <Layout
             style={{
                 minHeight: "100vh",
@@ -684,7 +687,7 @@ export default function CelltypePage() {
                         }}
                     >
                         <Breadcrumb.Item href={"/"}>Home</Breadcrumb.Item>
-                        <Breadcrumb.Item>CellType</Breadcrumb.Item>
+                        <Breadcrumb.Item>Search by Cell Type</Breadcrumb.Item>
                     </Breadcrumb>
                     <Card
                         style={{
@@ -794,5 +797,6 @@ export default function CelltypePage() {
                 <CustomFooter />
             </Layout>
         </Layout>
+        </>
     );
 }

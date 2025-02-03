@@ -18,6 +18,7 @@ import PhenotypeTableDisease2 from "../components/GeneTable2.jsx";
 import CustomFooter from "../components/utilities/Footer.jsx";
 import NotFound from "../components/utilities/Texts.jsx";
 import { LaunchOutlined, SettingsOutlined } from "@mui/icons-material";
+import CustomHeader from "../components/utilities/Header.jsx";
 
 const { Header, Content, Sider } = Layout;
 
@@ -182,6 +183,8 @@ export default function phenotypePage() {
     ];
 
     return (
+        <>
+        <CustomHeader activePageKey="gene" />
         <Layout
             style={{
                 minHeight: "100vh",
@@ -241,7 +244,7 @@ export default function phenotypePage() {
                         }}
                     >
                         <Breadcrumb.Item href={"/"}>Home</Breadcrumb.Item>
-                        <Breadcrumb.Item>Gene</Breadcrumb.Item>
+                        <Breadcrumb.Item>Search by Gene</Breadcrumb.Item>
                     </Breadcrumb>
                     <Card
                         style={{
@@ -252,7 +255,7 @@ export default function phenotypePage() {
                             Genes are linked to cell types and phenotypes,
                             revealing their role in rare diseases. This page
                             provides visualizations of gene-cell
-                            type，gene-disease，and gene-phenotype
+                            type, gene-disease, and gene-phenotype
                             relationships.
                         </p>
                     </Card>
@@ -342,5 +345,6 @@ export default function phenotypePage() {
                 <CustomFooter />
             </Layout>
         </Layout>
+        </>
     );
 }

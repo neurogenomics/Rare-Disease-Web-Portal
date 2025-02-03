@@ -17,7 +17,7 @@ export default function HomeOption() {
                     minWidth="250px"
                 />
                 <VioletButton
-                    name="Search by CellType"
+                    name="Search by Cell Type"
                     path="/celltype"
                     minWidth="250px"
                 />
