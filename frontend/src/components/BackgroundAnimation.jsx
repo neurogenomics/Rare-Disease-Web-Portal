@@ -2,7 +2,8 @@ import React, { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Sphere } from "@react-three/drei";
 import { DnaModel } from "./DnaModel";
-import { DnaModel2 } from "./DnaModel2";
+// import { DnaModel2 } from "./DnaModel2";
+import { useSpring, animated } from "@react-spring/three";
 
 const MIN_RADIUS = 7.5;
 const MAX_RADIUS = 15;
@@ -102,10 +103,44 @@ function BackgroundAnimation() {
                 <directionalLight />
                 <pointLight position={[-30, 0, -30]} power={10.0} />
                 <PointCircle />
-                <DnaModel scale={0.55} />
-                {/* <DnaModel2 scale={0.02} /> */}
+                <AnimatedDnaModel scale={0.7} />
             </Canvas>
         </div>
+    );
+}
+
+function AnimatedPoint({ position, color }) { // Changed function name from Point to AnimatedPoint
+    const { scale } = useSpring({
+        from: { scale: 0 },
+        to: { scale: 1 },
+        config: { duration: 1000 },
+    });
+
+    return (
+        <animated.mesh position={position} scale={scale}>
+            <Sphere args={[0.1, 10, 10]}>
+                <meshStandardMaterial
+                    emissive={color}
+                    emissiveIntensity={0.5}
+                    roughness={0.5}
+                    color={color}
+                />
+            </Sphere>
+        </animated.mesh>
+    );
+}
+
+function AnimatedDnaModel(props) { // New function
+    const { scale } = useSpring({
+        from: { scale: props.scale - 0.03 },
+        to: { scale: props.scale },
+        config: { duration: 5000 },
+    });
+
+    return (
+        <animated.group scale={scale}>
+            <DnaModel {...props} />
+        </animated.group>
     );
 }
 
@@ -121,14 +156,14 @@ function PointCircle() {
     return (
         <group ref={ref}>
             {pointsInner.map((point) => (
-                <Point
+                <AnimatedPoint
                     key={point.idx}
                     position={point.position}
                     color={point.color}
                 />
             ))}
             {pointsOuter.map((point) => (
-                <Point
+                <AnimatedPoint
                     key={point.idx}
                     position={point.position}
                     color={point.color}
