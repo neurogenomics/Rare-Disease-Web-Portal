@@ -101,7 +101,6 @@ const CustomHeader = ({ activePageKey }) => {
                     padding: 0,
                     display: "flex",
                     alignItems: "center",
-                    position: "relative",
                 }}
                 theme="light"
             >
