@@ -33,11 +33,10 @@ export default function PublicationsPage() {
             </div>
             <Content className="relative z-10 p-12 bg-center">
                 <div className="bg-white bg-opacity-95 p-10 rounded-lg shadow-lg">
-                    <h1 className="text-4xl font-bold flex items-center">
+                    <h1 className="text-4xl font-bold flex items-center mb-3">
                         <ArticleOutlinedIcon fontSize="large" className="mr-4" />
                         Publications
                     </h1>
-                    <br />
                     <br />
                     <div className="space-y-8 font-mono" style= {{ marginLeft: "3.4em" }}>
                         {publications.map((pub, index) => (

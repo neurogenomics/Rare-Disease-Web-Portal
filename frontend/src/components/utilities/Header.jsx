@@ -91,7 +91,7 @@ const CustomHeader = ({ activePageKey }) => {
                     },
                     Layout: {
                         headerHeight: "3.2em",
-                    }
+                    },
                 },
             }}
         >
@@ -105,9 +105,19 @@ const CustomHeader = ({ activePageKey }) => {
                 }}
                 theme="light"
             >
-                <p style={{ textAlign: "center", marginLeft: "2em" }}>
-                    Neurogenomics Lab
-                </p>
+                <div
+                    style={{
+                        textAlign: "left",
+                        marginLeft: "2em",
+                        lineHeight: 1,
+                        fontFamily: "Arial, sans-serif",
+                    }}
+                >
+                    <span style={{ fontWeight: "bold", display: "block", fontSize: "20px" }}>
+                        Rare Disease
+                    </span>
+                    <span style={{ fontSize: "15px" }}>Browser</span>
+                </div>
                 <Menu
                     theme="dark"
                     mode="horizontal"
