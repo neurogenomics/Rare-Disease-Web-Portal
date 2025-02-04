@@ -5,6 +5,8 @@ import { ONTOLOGY_API_URL } from "../../config.js";
 
 const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
+const searchParams = new URLSearchParams(window.location.search);
+let jump = searchParams.get("jump");
 
 const getParentKey = (title, tree) => {
     let parentKey;
@@ -36,9 +38,9 @@ const generateList = (data) => {
 
 class SearchTree extends React.Component {
     state = {
-        expandedKeys: ["HP:0000001"],
-        selectedKeys: [""],
-        searchValue: "",
+        expandedKeys: ((jump) ? [jump] : [""]),
+        selectedKeys: ((jump) ? [jump] : [""]),
+        searchValue: ((jump) ? jump : ""),
         autoExpandParent: true,
         gData: [
             {
@@ -52,13 +54,10 @@ class SearchTree extends React.Component {
         super(props);
     }
     componentDidMount() {
-        const searchParams = new URLSearchParams(window.location.search);
-        const param = searchParams.get("jump");
-        if (param) {
-            console.log("初始化加载");
-            this.onSearch(param);
+        if (jump) {
+            this.onSearch(jump);
         }
-        this.on;
+        this.onFirstLoad(this.state.selectedKeys, {});
     }
     fetchData = (param) => {
         let res = [];
@@ -86,8 +85,12 @@ class SearchTree extends React.Component {
 
     onFirstLoad = (selectedKeys, info) => {
         let { first_load } = this.state;
-        if (first_load) {
+        if (first_load && jump) {
             this.onSelect(selectedKeys, info);
+            this.setState({
+                expandedKeys: [jump],
+                autoExpandParent: false,
+            });
         }
         this.setState({ first_load: false });
     };

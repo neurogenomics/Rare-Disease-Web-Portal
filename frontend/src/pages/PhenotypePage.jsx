@@ -37,6 +37,10 @@ const onChange = (key) => {
     console.log(key);
 };
 export default function phenotypePage() {
+    const searchParams = new URLSearchParams(window.location.search);
+    const jump = searchParams.get("jump");
+    const url_db_type = searchParams.get("db_type");
+
     const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer, borderRadiusLG },
@@ -44,7 +48,7 @@ export default function phenotypePage() {
 
     const [data, setData] = useState(null);
     const [dataRef, setDataRef] = useState(null);
-    const [size, setSize] = useState("DescartesHuman");
+    const [size, setSize] = useState(url_db_type || "DescartesHuman");
 
     const [desItem, setDesItem] = useState(items);
     const [decimalPoints, setDecimalPoints] = useState(3);
@@ -74,143 +78,84 @@ export default function phenotypePage() {
             });
         });
     };
-    const getData = (data, info) => {
-        console.log(`data from Child2 - ${info.node.dataRef.name}`);
-        setDataRef(info.node.dataRef);
-        setData(info.node.dataRef.key);
+
+    const fetchData = async (key) => {
         let itemsTemp = [];
         itemsTemp.push({
             label: "Phenotype ID",
             key: "1",
-            children: (<LinkHPOID hpoId={info.node.dataRef.key} />),
+            children: <LinkHPOID hpoId={key} />,
         });
 
-        fetch(`${ONTOLOGY_API_URL}/api/hp/terms/${info.node.dataRef.key}`)
-            .then((res) => res.json())
-            .then(async (result) => {
-                itemsTemp.push({
-                    label: "Definition",
-                    key: "1",
-                    children: result.definition || <NotFound />,
-                });
-                itemsTemp.push({
-                    label: "Synonyms",
-                    key: "3",
-                    children: result.synonyms.join(" - ") || <NotFound />,
-                });
-                itemsTemp.push({
-                    label: "Comment",
-                    key: "2",
-                    children: result.comment || <NotFound />,
-                });
-                itemsTemp.push({
-                    label: "Cross References",
-                    key: "4",
-                    children: result.xrefs.join(", ") || <NotFound />,
-                });
-                try {
-                    await fetch(
-                        `${BASE_API_URL}/api/hpo-definitionNew/${info.node.dataRef.key}`
-                    )
-                        .then((res) => res.json())
-                        .then((result1) => {
-                            console.log("dddddd- ", result1);
-                            itemsTemp.push({
-                                label: "Severity Score",
-                                key: "5",
-                                children: result1[0].severity_score_gpt.toFixed(
-                                    decimalPoints
-                                ) || <NotFound />,
-                            });
-                            itemsTemp.push({
-                                label: (
-                                    <>
-                                        Severity Tier <SeverityTierInfo />
-                                    </>
-                                ),
-                                key: "6",
-                                children: (
-                                    <SeverityTierHover
-                                        tier={result1[0].severity_class}
-                                    />
-                                ) || <NotFound />,
-                            });
-                        });
-                } catch (e) {
-                    console.log("error", e);
-                }
-                setDesItem(itemsTemp);
-                return false;
+        const result = await fetch(`${ONTOLOGY_API_URL}/api/hp/terms/${key}`).then((res) => res.json());
+
+        itemsTemp.push({
+            label: "Definition",
+            key: "1",
+            children: result.definition || <NotFound />,
+        });
+        itemsTemp.push({
+            label: "Synonyms",
+            key: "3",
+            children: result.synonyms.join(" - ") || <NotFound />,
+        });
+        itemsTemp.push({
+            label: "Comment",
+            key: "2",
+            children: result.comment || <NotFound />,
+        });
+        itemsTemp.push({
+            label: "Cross References",
+            key: "4",
+            children: result.xrefs.join(", ") || <NotFound />,
+        });
+
+        try {
+            const result1 = await fetch(`${BASE_API_URL}/api/hpo-definitionNew/${key}`).then((res) => res.json());
+            itemsTemp.push({
+                label: "Severity Score",
+                key: "5",
+                children: result1[0].severity_score_gpt.toFixed(decimalPoints) || <NotFound />,
             });
-        setDesItem(items);
+            itemsTemp.push({
+                label: (
+                    <>
+                        Severity Tier <SeverityTierInfo />
+                    </>
+                ),
+                key: "6",
+                children: <SeverityTierHover tier={result1[0].severity_class} /> || <NotFound />,
+            });
+        } catch (e) {
+            console.log("error", e);
+        }
+
+        return { itemsTemp, result };
+    };
+
+    const getData = async (data, info) => {
+        console.log(`data from Child2 - ${info.node.dataRef}`);
+        console.log(info.node.dataRef)
+        setDataRef(info.node.dataRef.title);
+        setData(info.node.dataRef.key);
+
+        const { itemsTemp } = await fetchData(info.node.dataRef.key);
+        setDesItem(itemsTemp);
         return false;
     };
 
-    const onload = (data) => {
-        let itemsTemp = [];
-        itemsTemp.push({ label: "Phenotype ID", key: "1", children: data });
+    const onload = async (data) => {
         setData(data);
-        debugger;
-        fetch(`${ONTOLOGY_API_URL}/api/hp/terms/${data}`)
-            .then((res) => {
-                return res.json();
-            })
-            .then(async (result) => {
-                itemsTemp.push({
-                    label: "Definition",
-                    key: "1",
-                    children: result.definition,
-                });
-                itemsTemp.push({
-                    label: "Synonyms",
-                    key: "3",
-                    children: result.synonyms.join(" - "),
-                });
-                itemsTemp.push({
-                    label: "Comment",
-                    key: "2",
-                    children: result.comment,
-                });
-                itemsTemp.push({
-                    label: "Cross References",
-                    key: "4",
-                    children: result.xrefs.join(", "),
-                });
-                try {
-                    await fetch(`${BASE_API_URL}/api/hpo-definitionNew/${data}`)
-                        .then((res) => res.json())
-                        .then((result1) => {
-                            console.log("dddddd- ", result1);
-                            itemsTemp.push({
-                                label: "Severity Score",
-                                key: "5",
-                                children: result1[0].severity_score_gpt,
-                            });
-                            itemsTemp.push({
-                                label: "Severity Tier",
-                                key: "6",
-                                children: result1[0].severity_class,
-                            });
-                        });
-                } catch (e) {
-                    console.log("error", e);
-                }
-                setDesItem(itemsTemp);
-                itemsTemp.title = result.name;
-                setDataRef(itemsTemp);
-                return false;
-            });
-        setDesItem(items);
+
+        const { itemsTemp, result } = await fetchData(data);
+        setDataRef(result.name);
+        setDesItem(itemsTemp);
         return false;
     };
 
     useEffect(() => {
-        console.log("初始化加载");
-        const searchParams = new URLSearchParams(window.location.search);
-        const param = searchParams.get("jump");
-
-        if (param) {
-            onload(param);
+        if (jump) {
+            onload(jump);
         }
     }, []);
 
@@ -346,7 +291,7 @@ export default function phenotypePage() {
                                     color: "#6357d3",
                                 }}
                             >
-                                {dataRef != null ? dataRef.title : "All"}
+                                {dataRef != null ? dataRef : "All"}
                             </h2>
                             <Descriptions
                                 column={1}
