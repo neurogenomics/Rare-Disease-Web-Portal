@@ -62,7 +62,8 @@ class SearchTree extends React.Component {
     };
 
     componentDidMount() {
-        this.onSearch("")
+        const defaultSearchQuery = (jump) ? jump : "";
+        this.onSearch(defaultSearchQuery);
     }
 
     onExpand = (expandedKeys) => {
@@ -136,31 +137,10 @@ class SearchTree extends React.Component {
         if (jump) {
             cot++;
         }
-        if (jump) {
-            return (
-                <div style={{ marginBottom: "10px" }}>
-                    <Search
-                        value={jump}
-                        style={{ marginBottom: 16 }}
-                        placeholder="Search for specific cell type"
-                        onChange={this.onChange}
-                        onSearch={this.onSearch}
-                        loading={loading}
-                    />
-                    <Tree
-                        style={{ height: 500, overflowY: "auto" }}
-                        onSelect={this.onSelect}
-                        expandedKeys={expandedKeys}
-                        autoExpandParent={autoExpandParent}
-                    >
-                        {this.loop(gData)}
-                    </Tree>
-                </div>
-            );
-        }
         return (
             <div style={{ marginBottom: "10px" }}>
                 <Search
+                    value={(jump) ? jump : null}
                     style={{ marginBottom: 16 }}
                     placeholder="Search for specific cell type"
                     onChange={this.onChange}
@@ -180,7 +160,7 @@ class SearchTree extends React.Component {
                         onSelect={this.onSelect}
                         expandedKeys={expandedKeys}
                         autoExpandParent={autoExpandParent}
-                        defaultSelectedKeys={["All"]}
+                        defaultSelectedKeys={(jump) ? [jump] : ["All"]}
                     >
                         {this.loop(gData)}
                     </Tree>

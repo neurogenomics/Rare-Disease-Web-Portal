@@ -200,10 +200,21 @@ export default function CelltypePage() {
         svg.call(zoom);
     }
 
+    const searchParams = new URLSearchParams(window.location.search);
+    const db_type = searchParams.get("db_type");
+    const jump = searchParams.get("jump");
+
+    const [sliderValues, setSliderValues] = useState({
+        db_type: (db_type) ? db_type : "DescartesHuman",
+        q: "0.05",
+        fold_change: "1",
+        celltype_name: (jump) ? jump : "All",
+    });
+    const [activeCellType, setActiveCellType] = useState("");
+
     useEffect(() => {
-        const searchParams = new URLSearchParams(window.location.search);
-        const db_type = searchParams.get("db_type");
-        const jump = searchParams.get("jump");
+        
+        console.log(searchParams, db_type, jump);
 
         if (db_type) {
             setSize(db_type);
@@ -213,10 +224,13 @@ export default function CelltypePage() {
                 fold_change: "0",
                 celltype_name: jump,
             };
+            setSliderValues(eve);
+            setActiveCellType(jump);
             onload(eve);
         }
         handleSubmit(); // Submit default key on page load
     }, []);
+
     const expandedRowRender = (record, index, indent, expanded) => {
         const columns = [
             {
@@ -356,13 +370,6 @@ export default function CelltypePage() {
             },
         },
     ];
-    const [sliderValues, setSliderValues] = useState({
-        db_type: "DescartesHuman",
-        q: "0.05",
-        fold_change: "1",
-        celltype_name: "All",
-    });
-    const [activeCellType, setActiveCellType] = useState("All");
 
     const handleSliderChange = (name) => {
         setSliderValues((prevValues) => ({
