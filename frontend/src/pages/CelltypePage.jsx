@@ -23,6 +23,8 @@ import * as d3 from "d3";
 import { BASE_API_URL } from "../../config.js";
 import { SettingsOutlined } from "@mui/icons-material";
 import NotFound from "../components/utilities/Texts.jsx";
+import SeverityTierHover from "../components/info/SeverityTierHover.jsx";
+import SeverityTierInfo from "../components/info/SeverityTierInfo.jsx";
 
 const suitsDta =
     '[{"source":"Microsoft","target":"Amazon","type":"1"},{"source":"Microsoft","target":"HTC","type":"licensing"},{"source":"Samsung","target":"Apple","type":"suit"},{"source":"Motorola","target":"Apple","type":"suit"},{"source":"Nokia","target":"Apple","type":"resolved"},{"source":"HTC","target":"Apple","type":"suit"},{"source":"Kodak","target":"Apple","type":"suit"},{"source":"Microsoft","target":"Barnes & Noble","type":"suit"},{"source":"Microsoft","target":"Foxconn","type":"suit"},{"source":"Oracle","target":"Google","type":"suit"},{"source":"Apple","target":"HTC","type":"suit"},{"source":"Microsoft","target":"Inventec","type":"suit"},{"source":"Samsung","target":"Kodak","type":"resolved"},{"source":"LG","target":"Kodak","type":"resolved"},{"source":"RIM","target":"Kodak","type":"suit"},{"source":"Sony","target":"LG","type":"suit"},{"source":"Kodak","target":"LG","type":"resolved"},{"source":"Apple","target":"Nokia","type":"resolved"},{"source":"Qualcomm","target":"Nokia","type":"resolved"},{"source":"Apple","target":"Motorola","type":"suit"},{"source":"Microsoft","target":"Motorola","type":"suit"},{"source":"Motorola","target":"Microsoft","type":"suit"},{"source":"Huawei","target":"ZTE","type":"suit"},{"source":"Ericsson","target":"ZTE","type":"suit"},{"source":"Kodak","target":"Samsung","type":"resolved"},{"source":"Apple","target":"Samsung","type":"suit"},{"source":"Kodak","target":"RIM","type":"suit"},{"source":"Nokia","target":"Qualcomm","type":"suit"}]';
@@ -278,7 +280,9 @@ export default function CelltypePage() {
             title: "HPO ID",
             dataIndex: "hpo_id",
             key: "hpo_id",
-            sorter: (a, b) => a.hpo_id.substring("HP:".length) - b.hpo_id.substring("HP:".length),
+            sorter: (a, b) =>
+                a.hpo_id.substring("HP:".length) -
+                b.hpo_id.substring("HP:".length),
             render: (text, record) => {
                 return (
                     <a
@@ -310,30 +314,24 @@ export default function CelltypePage() {
             },
         },
         {
+            title: (
+                <>
+                    Severity Tier <SeverityTierInfo />
+                </>
+            ),
+            dataIndex: "severity_class",
+            key: "severity_class",
+            render: (text) => {
+                return <SeverityTierHover tier={text} />;
+            },
+        },
+        {
             title: "Q-Value",
             dataIndex: "q",
             key: "q",
             sorter: (a, b) => a.q - b.q,
             render: (text) => {
                 return parseFloat(text).toFixed(decimalPoints);
-            },
-        },
-        {
-            title: "Severity Tier",
-            dataIndex: "severity_class",
-            key: "severity_class",
-            render: (text) => {
-                if (text === 0) {
-                    return <Tag color="green">mild</Tag>;
-                } else if (text === 1) {
-                    return <Tag color="orange">moderate</Tag>;
-                } else if (text === 2) {
-                    return <Tag color="red">severe</Tag>;
-                } else if (text === 3) {
-                    return <Tag color="purple">profound</Tag>;
-                } else {
-                    return <Tag color="default">NA</Tag>;
-                }
             },
         },
     ];
@@ -583,220 +581,232 @@ export default function CelltypePage() {
 
     return (
         <>
-        <CustomHeader activePageKey="celltype" />
-        <Layout
-            style={{
-                minHeight: "100vh",
-                backgroundColor: "#0F172AFF",
-            }}
-        >
-            <Sider
-                style={{ background: "#0F172AFF", margin: 20 }}
-                width={400}
-                collapsed={collapsed}
-                onCollapse={(value) => setCollapsed(value)}
+            <CustomHeader activePageKey="celltype" />
+            <Layout
+                style={{
+                    minHeight: "100vh",
+                    backgroundColor: "#0F172AFF",
+                }}
             >
-                <form onSubmit={handleSubmit}>
-                    <h1
-                        style={{
-                            fontSize: "1.1em",
-                            fontWeight: "bold",
-                            color: "#FFFFFF",
-                        }}
-                    >
-                        Select database
-                    </h1>
-                    <hr style={{ marginBottom: 7, border: "none" }} />
-                    <Radio.Group
-                        buttonStyle="solid"
-                        value={size}
-                        onChange={handleSizeChange}
-                    >
-                        <Radio.Button
-                            style={{ width: 200 }}
-                            value="DescartesHuman"
-                        >
-                            DescartesHuman
-                        </Radio.Button>
-                        <Radio.Button
-                            style={{ width: 200 }}
-                            value="HumanCellLandscape"
-                        >
-                            HumanCellLandscape
-                        </Radio.Button>
-                    </Radio.Group>
-                    <br />
-                    <br />
-                    <PhenotypeTree onGetData={getData} db_type={size} />
-                    <center>
-                        <div style={{ textAlign: "left" }}>
-                            <hr style={{ marginBottom: 10, border: "none" }} />
-                            <InputNumber
-                                name="q"
-                                style={{
-                                    width: "100%",
-                                }}
-                                defaultValue="0.005"
-                                step="0.0005"
-                                max="1"
-                                min="0.00000001"
-                                onChange={handleSliderChange}
-                                addonBefore="Q-Value"
-                                stringMode
-                            />
-                            <br />
-                            <br />
-                            <Collapse
-                                items={advancedSettingsMain}
-                                size="small"
-                                style={{ background: colorBgContainer }}
-                            />
-                            <Button
-                                name="Search"
-                                size="large"
-                                icon={<SearchOutlined />}
-                                style={{
-                                    marginTop: 20,
-                                    marginBottom: 20,
-                                    backgroundColor: "#c8bbec",
-                                }}
-                                type="submit"
-                                block
-                                onClick={(event) => {
-                                    console.log("Button clicked");
-                                    handleSubmit(event);
-                                }}
-                            >
-                                <p className="font-semibold">Search</p>
-                            </Button>
-                        </div>
-                    </center>
-                </form>
-            </Sider>
-            <Layout>
-                <Content
-                    style={{
-                        margin: "0 16px",
-                        height: "200px",
-                        overflow: "auto",
-                    }}
+                <Sider
+                    style={{ background: "#0F172AFF", margin: 20 }}
+                    width={400}
+                    collapsed={collapsed}
+                    onCollapse={(value) => setCollapsed(value)}
                 >
-                    <Breadcrumb
-                        style={{
-                            margin: "16px 0",
-                        }}
-                    >
-                        <Breadcrumb.Item href={"/"}>Home</Breadcrumb.Item>
-                        <Breadcrumb.Item>Search by Cell Type</Breadcrumb.Item>
-                    </Breadcrumb>
-                    <Card
-                        style={{
-                            width: "100%",
-                        }}
-                    >
-                        <p>
-                            Each cell type has been mapped to specific
-                            phenotypes and genes, providing insight into the
-                            cellular mechanisms underlying rare diseases. This
-                            page allows users to search for any cell type and
-                            view its associations with phenotypes and genes. The
-                            strength of these relationships is displayed using
-                            visualizations like bar charts and network graphs.{" "}
-                        </p>
-                    </Card>
-                    <br />
-                    <div
-                        style={{
-                            padding: 24,
-                            minHeight: 360,
-                            background: colorBgContainer,
-                            borderRadius: borderRadiusLG,
-                        }}
-                    >
-                        <h2
+                    <form onSubmit={handleSubmit}>
+                        <h1
                             style={{
-                                fontSize: 22,
+                                fontSize: "1.1em",
                                 fontWeight: "bold",
-                                color: "#6357d3",
+                                color: "#FFFFFF",
                             }}
                         >
-                            {activeCellType}
-                        </h2>
+                            Select database
+                        </h1>
+                        <hr style={{ marginBottom: 7, border: "none" }} />
+                        <Radio.Group
+                            buttonStyle="solid"
+                            value={size}
+                            onChange={handleSizeChange}
+                        >
+                            <Radio.Button
+                                style={{ width: 200 }}
+                                value="DescartesHuman"
+                            >
+                                DescartesHuman
+                            </Radio.Button>
+                            <Radio.Button
+                                style={{ width: 200 }}
+                                value="HumanCellLandscape"
+                            >
+                                HumanCellLandscape
+                            </Radio.Button>
+                        </Radio.Group>
                         <br />
-                        <Tabs
-                            type="card"
-                            items={new Array(2).fill(null).map((_, i) => {
-                                let id = String(i + 1);
-                                if (i === 0) {
-                                    id = "Phenotype Associations";
-                                    return {
-                                        label: `${id}`,
-                                        key: id,
-                                        children: (
-                                            <Spin spinning={loading}>
-                                                <Button
-                                                    style={{
-                                                        float: "right",
-                                                        width: 50,
-                                                    }}
-                                                    type="primary"
-                                                    icon={<DownloadOutlined />}
-                                                    size="small"
-                                                    onClick={download1}
-                                                />
-                                                <br />
-                                                <svg id={"svgMain"} ref={ref} />
-                                                <Table
-                                                    columns={columns}
-                                                    expandable={{
-                                                        expandedRowRender,
-                                                        defaultExpandedRowKeys:
-                                                            ["0"],
-                                                    }}
-                                                    showSorterTooltip={true}
-                                                    dataSource={data}
-                                                    size="small"
-                                                />
-                                            </Spin>
-                                        ),
-                                    };
-                                }
-                                if (i === 1) {
-                                    id = "Gene Associations";
-                                    return {
-                                        label: `${id}`,
-                                        key: id,
-                                        children: (
-                                            <Spin spinning={loading}>
-                                                <Button
-                                                    style={{
-                                                        float: "right",
-                                                        width: 50,
-                                                    }}
-                                                    type="primary"
-                                                    icon={<DownloadOutlined />}
-                                                    size="small"
-                                                    onClick={download}
-                                                />
-                                                <br />
-                                                <DemoColumn data={data1} />
-                                                <Table
-                                                    columns={columns1}
-                                                    dataSource={data1}
-                                                    size="small"
-                                                    showSorterTooltip={true}
-                                                />
-                                            </Spin>
-                                        ),
-                                    };
-                                }
-                            })}
-                        />
-                    </div>
-                </Content>
-                <CustomFooter />
+                        <br />
+                        <PhenotypeTree onGetData={getData} db_type={size} />
+                        <center>
+                            <div style={{ textAlign: "left" }}>
+                                <hr
+                                    style={{ marginBottom: 10, border: "none" }}
+                                />
+                                <InputNumber
+                                    name="q"
+                                    style={{
+                                        width: "100%",
+                                    }}
+                                    defaultValue="0.005"
+                                    step="0.0005"
+                                    max="1"
+                                    min="0.00000001"
+                                    onChange={handleSliderChange}
+                                    addonBefore="Q-Value"
+                                    stringMode
+                                />
+                                <br />
+                                <br />
+                                <Collapse
+                                    items={advancedSettingsMain}
+                                    size="small"
+                                    style={{ background: colorBgContainer }}
+                                />
+                                <Button
+                                    name="Search"
+                                    size="large"
+                                    icon={<SearchOutlined />}
+                                    style={{
+                                        marginTop: 20,
+                                        marginBottom: 20,
+                                        backgroundColor: "#c8bbec",
+                                    }}
+                                    type="submit"
+                                    block
+                                    onClick={(event) => {
+                                        console.log("Button clicked");
+                                        handleSubmit(event);
+                                    }}
+                                >
+                                    <p className="font-semibold">Search</p>
+                                </Button>
+                            </div>
+                        </center>
+                    </form>
+                </Sider>
+                <Layout>
+                    <Content
+                        style={{
+                            margin: "0 16px",
+                            height: "200px",
+                            overflow: "auto",
+                        }}
+                    >
+                        <Breadcrumb
+                            style={{
+                                margin: "16px 0",
+                            }}
+                        >
+                            <Breadcrumb.Item href={"/"}>Home</Breadcrumb.Item>
+                            <Breadcrumb.Item>
+                                Search by Cell Type
+                            </Breadcrumb.Item>
+                        </Breadcrumb>
+                        <Card
+                            style={{
+                                width: "100%",
+                            }}
+                        >
+                            <p>
+                                Each cell type has been mapped to specific
+                                phenotypes and genes, providing insight into the
+                                cellular mechanisms underlying rare diseases.
+                                This page allows users to search for any cell
+                                type and view its associations with phenotypes
+                                and genes. The strength of these relationships
+                                is displayed using visualizations like bar
+                                charts and network graphs.{" "}
+                            </p>
+                        </Card>
+                        <br />
+                        <div
+                            style={{
+                                padding: 24,
+                                minHeight: 360,
+                                background: colorBgContainer,
+                                borderRadius: borderRadiusLG,
+                            }}
+                        >
+                            <h2
+                                style={{
+                                    fontSize: 22,
+                                    fontWeight: "bold",
+                                    color: "#6357d3",
+                                }}
+                            >
+                                {activeCellType}
+                            </h2>
+                            <br />
+                            <Tabs
+                                type="card"
+                                items={new Array(2).fill(null).map((_, i) => {
+                                    let id = String(i + 1);
+                                    if (i === 0) {
+                                        id = "Phenotype Associations";
+                                        return {
+                                            label: `${id}`,
+                                            key: id,
+                                            children: (
+                                                <Spin spinning={loading}>
+                                                    <Button
+                                                        style={{
+                                                            float: "right",
+                                                            width: 50,
+                                                        }}
+                                                        type="primary"
+                                                        icon={
+                                                            <DownloadOutlined />
+                                                        }
+                                                        size="small"
+                                                        onClick={download1}
+                                                    />
+                                                    <br />
+                                                    <svg
+                                                        id={"svgMain"}
+                                                        ref={ref}
+                                                    />
+                                                    <Table
+                                                        columns={columns}
+                                                        expandable={{
+                                                            expandedRowRender,
+                                                            defaultExpandedRowKeys:
+                                                                ["0"],
+                                                        }}
+                                                        showSorterTooltip={true}
+                                                        dataSource={data}
+                                                        size="small"
+                                                    />
+                                                </Spin>
+                                            ),
+                                        };
+                                    }
+                                    if (i === 1) {
+                                        id = "Gene Associations";
+                                        return {
+                                            label: `${id}`,
+                                            key: id,
+                                            children: (
+                                                <Spin spinning={loading}>
+                                                    <Button
+                                                        style={{
+                                                            float: "right",
+                                                            width: 50,
+                                                        }}
+                                                        type="primary"
+                                                        icon={
+                                                            <DownloadOutlined />
+                                                        }
+                                                        size="small"
+                                                        onClick={download}
+                                                    />
+                                                    <br />
+                                                    <DemoColumn data={data1} />
+                                                    <Table
+                                                        columns={columns1}
+                                                        dataSource={data1}
+                                                        size="small"
+                                                        showSorterTooltip={true}
+                                                    />
+                                                </Spin>
+                                            ),
+                                        };
+                                    }
+                                })}
+                            />
+                        </div>
+                    </Content>
+                    <CustomFooter />
+                </Layout>
             </Layout>
-        </Layout>
         </>
     );
 }

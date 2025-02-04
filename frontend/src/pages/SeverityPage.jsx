@@ -28,6 +28,8 @@ import { DownloadOutlined, SearchOutlined } from "@ant-design/icons";
 import { SettingsOutlined } from "@mui/icons-material";
 import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
 import NotFound from "../components/utilities/Texts.jsx";
+import SeverityTierHover from "../components/info/SeverityTierHover.jsx";
+import SeverityTierInfo from "../components/info/SeverityTierInfo.jsx";
 
 const { Header, Content, Sider } = Layout;
 
@@ -266,19 +268,15 @@ export default function SeverityPage() {
             },
         },
         {
-            title: "Severity Tier",
+            title: (
+                <>
+                    Severity Tier <SeverityTierInfo />
+                </>
+            ),
             dataIndex: "severity_class",
             key: "severity_class",
-            render: (text, record) => {
-                if (text === 0) {
-                    return <Tag color="green">mild</Tag>;
-                } else if (text === 1) {
-                    return <Tag color="orange">moderate</Tag>;
-                } else if (text === 2) {
-                    return <Tag color="red">severe</Tag>;
-                } else if (text === 3) {
-                    return <Tag color="purple">profound</Tag>;
-                }
+            render: (text) => {
+                return <SeverityTierHover tier={text} />;
             },
         },
         {
@@ -478,260 +476,265 @@ export default function SeverityPage() {
 
     return (
         <>
-        <CustomHeader activePageKey="severity" />
-        <Layout
-            style={{
-                minHeight: "100vh",
-                backgroundColor: "#0F172AFF",
-            }}
-        >
-            <Sider
+            <CustomHeader activePageKey="severity" />
+            <Layout
                 style={{
-                    background: "#FFF",
-                    marginTop: 20,
-                    marginBottom: 20,
-                    marginLeft: 30,
-                    marginRight: 30,
-                    textAlign: "center",
-                    borderRadius: borderRadiusLG,
-                    padding: 10,
-                    paddingTop: 30,
+                    minHeight: "100vh",
+                    backgroundColor: "#0F172AFF",
                 }}
-                width={350}
-                collapsed={collapsed}
-                onCollapse={(value) => setCollapsed(value)}
             >
-                <div className="demo-logo-vertical" />
-                <form onSubmit={handleSubmit}>
-                    <center>
-                        <div>
-                            <p className="text-xl font-semibold text-left mb-2 ml-5">
-                                Filters
-                            </p>
-                            <SeveritySlider1
-                                name="Severity Tier"
-                                onChange={(value) =>
-                                    handleSliderChange("severity_class", value)
-                                }
-                            />
-                            <SeveritySlider
-                                name="Intellectual Disability"
-                                onChange={(value) =>
-                                    handleSliderChange(
-                                        "Intellectual Disability",
-                                        value
-                                    )
-                                }
-                            />
-                            <SeveritySlider
-                                name="Death"
-                                onChange={(value) =>
-                                    handleSliderChange("Death", value)
-                                }
-                            />
-                            <SeveritySlider
-                                name="Impaired Mobility"
-                                onChange={(value) =>
-                                    handleSliderChange(
-                                        "Impaired Mobility",
-                                        value
-                                    )
-                                }
-                            />
-                            <SeveritySlider
-                                name="Physical Malformations"
-                                onChange={(value) =>
-                                    handleSliderChange(
-                                        "Physical Malformations",
-                                        value
-                                    )
-                                }
-                            />
-                            <SeveritySlider
-                                name="Blindness"
-                                onChange={(value) =>
-                                    handleSliderChange("Blindness", value)
-                                }
-                            />
-                            <SeveritySlider
-                                name="Sensory Impairments"
-                                onChange={(value) =>
-                                    handleSliderChange(
-                                        "Sensory Impairments",
-                                        value
-                                    )
-                                }
-                            />
-                            <SeveritySlider
-                                name="Immunodeficiency"
-                                onChange={(value) =>
-                                    handleSliderChange(
-                                        "Immunodeficiency",
-                                        value
-                                    )
-                                }
-                            />
-                            <SeveritySlider
-                                name="Cancer"
-                                onChange={(value) =>
-                                    handleSliderChange("Cancer", value)
-                                }
-                            />
-                            <SeveritySlider
-                                name="Reduced Fertility"
-                                onChange={(value) =>
-                                    handleSliderChange(
-                                        "Reduced Fertility",
-                                        value
-                                    )
-                                }
-                            />
-                            <SeveritySlider
-                                name="Congenital Onset"
-                                onChange={(value) =>
-                                    handleSliderChange(
-                                        "Congenital Onset",
-                                        value
-                                    )
-                                }
-                            />
-                        </div>
-                        <div style={{ margin: 29, textAlign: "left" }}>
-                            {checkboxAlert && (
-                                <Alert
-                                    className="mb-5"
-                                    message="Please select atleast one celltype condition."
-                                    type="error"
-                                    showIcon
-                                />
-                            )}
-                            <Checkbox
-                                style={{
-                                    marginBottom: 20,
-                                    transform: "scale(1.2)",
-                                    fontWeight: 400,
-                                    marginLeft: 25,
-                                }}
-                                onChange={onChange}
-                                checked={sliderValues.with1}
-                            >
-                                With Associated Celltype
-                            </Checkbox>
-                            <Checkbox
-                                style={{
-                                    marginBottom: 20,
-                                    transform: "scale(1.2)",
-                                    fontWeight: 400,
-                                    marginLeft: 27,
-                                }}
-                                onChange={onChange1}
-                                checked={sliderValues.without}
-                            >
-                                Without Associated Celltype
-                            </Checkbox>
-                        </div>
-                        <div style={{ margin: 29 }}>
-                            <Collapse
-                                items={advancedSettingsMain}
-                                size="small"
-                                style={{ background: colorBgContainer }}
-                            />
-                            <Button
-                                name="Search"
-                                size="large"
-                                icon={<SearchOutlined />}
-                                style={{
-                                    marginTop: 20,
-                                    marginBottom: 20,
-                                    backgroundColor: "#c8bbec",
-                                }}
-                                type="submit"
-                                block
-                                onClick={(event) => {
-                                    console.log("Button clicked");
-                                    handleSubmit(event);
-                                }}
-                            >
-                                <p className="font-semibold">Search</p>
-                            </Button>
-                        </div>
-                    </center>
-                </form>
-            </Sider>
-            <Layout>
-                <Content
+                <Sider
                     style={{
-                        margin: "0 16px",
-                        overflow: "auto",
+                        background: "#FFF",
+                        marginTop: 20,
+                        marginBottom: 20,
+                        marginLeft: 30,
+                        marginRight: 30,
+                        textAlign: "center",
+                        borderRadius: borderRadiusLG,
+                        padding: 10,
+                        paddingTop: 30,
                     }}
+                    width={350}
+                    collapsed={collapsed}
+                    onCollapse={(value) => setCollapsed(value)}
                 >
-                    <Breadcrumb
+                    <div className="demo-logo-vertical" />
+                    <form onSubmit={handleSubmit}>
+                        <center>
+                            <div>
+                                <p className="text-xl font-semibold text-left mb-2 ml-5">
+                                    Filters
+                                </p>
+                                <SeveritySlider1
+                                    name="Severity Tier"
+                                    onChange={(value) =>
+                                        handleSliderChange(
+                                            "severity_class",
+                                            value
+                                        )
+                                    }
+                                />
+                                <SeveritySlider
+                                    name="Intellectual Disability"
+                                    onChange={(value) =>
+                                        handleSliderChange(
+                                            "Intellectual Disability",
+                                            value
+                                        )
+                                    }
+                                />
+                                <SeveritySlider
+                                    name="Death"
+                                    onChange={(value) =>
+                                        handleSliderChange("Death", value)
+                                    }
+                                />
+                                <SeveritySlider
+                                    name="Impaired Mobility"
+                                    onChange={(value) =>
+                                        handleSliderChange(
+                                            "Impaired Mobility",
+                                            value
+                                        )
+                                    }
+                                />
+                                <SeveritySlider
+                                    name="Physical Malformations"
+                                    onChange={(value) =>
+                                        handleSliderChange(
+                                            "Physical Malformations",
+                                            value
+                                        )
+                                    }
+                                />
+                                <SeveritySlider
+                                    name="Blindness"
+                                    onChange={(value) =>
+                                        handleSliderChange("Blindness", value)
+                                    }
+                                />
+                                <SeveritySlider
+                                    name="Sensory Impairments"
+                                    onChange={(value) =>
+                                        handleSliderChange(
+                                            "Sensory Impairments",
+                                            value
+                                        )
+                                    }
+                                />
+                                <SeveritySlider
+                                    name="Immunodeficiency"
+                                    onChange={(value) =>
+                                        handleSliderChange(
+                                            "Immunodeficiency",
+                                            value
+                                        )
+                                    }
+                                />
+                                <SeveritySlider
+                                    name="Cancer"
+                                    onChange={(value) =>
+                                        handleSliderChange("Cancer", value)
+                                    }
+                                />
+                                <SeveritySlider
+                                    name="Reduced Fertility"
+                                    onChange={(value) =>
+                                        handleSliderChange(
+                                            "Reduced Fertility",
+                                            value
+                                        )
+                                    }
+                                />
+                                <SeveritySlider
+                                    name="Congenital Onset"
+                                    onChange={(value) =>
+                                        handleSliderChange(
+                                            "Congenital Onset",
+                                            value
+                                        )
+                                    }
+                                />
+                            </div>
+                            <div style={{ margin: 29, textAlign: "left" }}>
+                                {checkboxAlert && (
+                                    <Alert
+                                        className="mb-5"
+                                        message="Please select atleast one celltype condition."
+                                        type="error"
+                                        showIcon
+                                    />
+                                )}
+                                <Checkbox
+                                    style={{
+                                        marginBottom: 20,
+                                        transform: "scale(1.2)",
+                                        fontWeight: 400,
+                                        marginLeft: 25,
+                                    }}
+                                    onChange={onChange}
+                                    checked={sliderValues.with1}
+                                >
+                                    With Associated Celltype
+                                </Checkbox>
+                                <Checkbox
+                                    style={{
+                                        marginBottom: 20,
+                                        transform: "scale(1.2)",
+                                        fontWeight: 400,
+                                        marginLeft: 27,
+                                    }}
+                                    onChange={onChange1}
+                                    checked={sliderValues.without}
+                                >
+                                    Without Associated Celltype
+                                </Checkbox>
+                            </div>
+                            <div style={{ margin: 29 }}>
+                                <Collapse
+                                    items={advancedSettingsMain}
+                                    size="small"
+                                    style={{ background: colorBgContainer }}
+                                />
+                                <Button
+                                    name="Search"
+                                    size="large"
+                                    icon={<SearchOutlined />}
+                                    style={{
+                                        marginTop: 20,
+                                        marginBottom: 20,
+                                        backgroundColor: "#c8bbec",
+                                    }}
+                                    type="submit"
+                                    block
+                                    onClick={(event) => {
+                                        console.log("Button clicked");
+                                        handleSubmit(event);
+                                    }}
+                                >
+                                    <p className="font-semibold">Search</p>
+                                </Button>
+                            </div>
+                        </center>
+                    </form>
+                </Sider>
+                <Layout>
+                    <Content
                         style={{
-                            margin: "16px 0",
+                            margin: "0 16px",
+                            overflow: "auto",
                         }}
                     >
-                        <Breadcrumb.Item href={"/"}>Home</Breadcrumb.Item>
-                        <Breadcrumb.Item>Search by Severity</Breadcrumb.Item>
-                    </Breadcrumb>
+                        <Breadcrumb
+                            style={{
+                                margin: "16px 0",
+                            }}
+                        >
+                            <Breadcrumb.Item href={"/"}>Home</Breadcrumb.Item>
+                            <Breadcrumb.Item>
+                                Search by Severity
+                            </Breadcrumb.Item>
+                        </Breadcrumb>
 
-                    <Card
-                        style={{
-                            width: "100%",
-                        }}
-                    >
-                        <p>
-                            Each phenotype in the HPO has had its severity
-                            scored. This was done based on a scoring system
-                            derived by clinicians, such that phenotypes which
-                            cause intellectual disability and death are
-                            profoundly severe, while those which just reduce
-                            fertility are mild. Our annotation of this was
-                            described in this preprint. Justifications for why
-                            each phenotype is associated with a severity
-                            modifier, can be seen by expanding the entries in
-                            the table below.
-                        </p>
-                    </Card>
-                    <br />
-                    <Button
-                        style={{ float: "right", width: 50 }}
-                        type="primary"
-                        icon={<DownloadOutlined />}
-                        size="small"
-                        onClick={download}
-                    />
-                    <br />
-                    <div
-                        style={{
-                            padding: 24,
-                            minHeight: 360,
-                            background: colorBgContainer,
-                            borderRadius: borderRadiusLG,
-                        }}
-                    >
-                        <SeverityNetWork data1={dataSet} />
+                        <Card
+                            style={{
+                                width: "100%",
+                            }}
+                        >
+                            <p>
+                                Each phenotype in the HPO has had its severity
+                                scored. This was done based on a scoring system
+                                derived by clinicians, such that phenotypes
+                                which cause intellectual disability and death
+                                are profoundly severe, while those which just
+                                reduce fertility are mild. Our annotation of
+                                this was described in this preprint.
+                                Justifications for why each phenotype is
+                                associated with a severity modifier, can be seen
+                                by expanding the entries in the table below.
+                            </p>
+                        </Card>
+                        <br />
+                        <Button
+                            style={{ float: "right", width: 50 }}
+                            type="primary"
+                            icon={<DownloadOutlined />}
+                            size="small"
+                            onClick={download}
+                        />
+                        <br />
+                        <div
+                            style={{
+                                padding: 24,
+                                minHeight: 360,
+                                background: colorBgContainer,
+                                borderRadius: borderRadiusLG,
+                            }}
+                        >
+                            <SeverityNetWork data1={dataSet} />
 
-                        <Spin spinning={loading}>
-                            {" "}
-                            <Table
-                                pagination={tableParams.pagination}
-                                style={{ height: 500 }}
-                                columns={columns}
-                                expandable={{
-                                    expandedRowRender,
-                                    defaultExpandedRowKeys: ["0"],
-                                }}
-                                dataSource={data}
-                                size="small"
-                                onChange={handleTableChange}
-                                showSorterTooltip={true}
-                            />
-                        </Spin>
-                    </div>
-                </Content>
-                <CustomFooter />
+                            <Spin spinning={loading}>
+                                {" "}
+                                <Table
+                                    pagination={tableParams.pagination}
+                                    style={{ height: 500 }}
+                                    columns={columns}
+                                    expandable={{
+                                        expandedRowRender,
+                                        defaultExpandedRowKeys: ["0"],
+                                    }}
+                                    dataSource={data}
+                                    size="small"
+                                    onChange={handleTableChange}
+                                    showSorterTooltip={true}
+                                />
+                            </Spin>
+                        </div>
+                    </Content>
+                    <CustomFooter />
+                </Layout>
             </Layout>
-        </Layout>
         </>
     );
 }

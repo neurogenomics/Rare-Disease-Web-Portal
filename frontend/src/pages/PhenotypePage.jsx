@@ -9,7 +9,7 @@ import {
     Radio,
     Card,
     Collapse,
-    InputNumber
+    InputNumber,
 } from "antd";
 import PhenotypeTree from "../components/PhenotypeTree.jsx";
 import PhenotypeTableDisease from "../components/PhenotypeTableDisease.jsx";
@@ -20,6 +20,9 @@ import CustomHeader from "../components/utilities/Header.jsx";
 import CustomFooter from "../components/utilities/Footer.jsx";
 import NotFound from "../components/utilities/Texts.jsx";
 import { SettingsOutlined } from "@mui/icons-material";
+import SeverityTierHover from "../components/info/SeverityTierHover.jsx";
+import SeverityTierInfo from "../components/info/SeverityTierInfo.jsx";
+import LinkHPOID from "../components/link/LinkHPOID.jsx";
 
 const { Header, Content, Sider } = Layout;
 
@@ -55,11 +58,16 @@ export default function phenotypePage() {
         // Update severity score
         setDesItem((prev) => {
             return prev.map((item) => {
-                if (item.key === "5" && typeof !isNaN(parseFloat(item.children))) {
+                if (
+                    item.key === "5" &&
+                    typeof !isNaN(parseFloat(item.children))
+                ) {
                     console.log("YES");
                     return {
                         ...item,
-                        children: parseFloat(item.children).toFixed(decimalPoints),
+                        children: parseFloat(item.children).toFixed(
+                            decimalPoints
+                        ),
                     };
                 }
                 return item;
@@ -74,7 +82,7 @@ export default function phenotypePage() {
         itemsTemp.push({
             label: "Phenotype ID",
             key: "1",
-            children: info.node.dataRef.key,
+            children: (<LinkHPOID hpoId={info.node.dataRef.key} />),
         });
 
         fetch(`${ONTOLOGY_API_URL}/api/hp/terms/${info.node.dataRef.key}`)
@@ -110,16 +118,22 @@ export default function phenotypePage() {
                             itemsTemp.push({
                                 label: "Severity Score",
                                 key: "5",
-                                children: result1[0].severity_score_gpt.toFixed(decimalPoints) || (
-                                    <NotFound />
-                                ),
+                                children: result1[0].severity_score_gpt.toFixed(
+                                    decimalPoints
+                                ) || <NotFound />,
                             });
                             itemsTemp.push({
-                                label: "Severity Tier",
-                                key: "6",
-                                children: result1[0].severity_class || (
-                                    <NotFound />
+                                label: (
+                                    <>
+                                        Severity Tier <SeverityTierInfo />
+                                    </>
                                 ),
+                                key: "6",
+                                children: (
+                                    <SeverityTierHover
+                                        tier={result1[0].severity_class}
+                                    />
+                                ) || <NotFound />,
                             });
                         });
                 } catch (e) {
@@ -211,7 +225,7 @@ export default function phenotypePage() {
             style={{ width: "100%" }}
             onChange={handleDecimalChange}
             onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                     e.preventDefault(); // Prevent the default behavior of the Enter key
                 }
             }}
@@ -229,166 +243,177 @@ export default function phenotypePage() {
 
     return (
         <>
-        <CustomHeader activePageKey="phenotype" />
-        <Layout
-            style={{
-                minHeight: "100vh",
-                backgroundColor: "#0F172AFF",
-            }}
-        >
-            <Sider
-                style={{ background: "#0F172AFF", margin: 20 }}
-                width={400}
-                collapsed={collapsed}
-                onCollapse={(value) => setCollapsed(value)}
+            <CustomHeader activePageKey="phenotype" />
+            <Layout
+                style={{
+                    minHeight: "100vh",
+                    backgroundColor: "#0F172AFF",
+                }}
             >
-                <div className="demo-logo-vertical" />
-                <h1
-                    style={{
-                        fontSize: "1.1em",
-                        fontWeight: "bold",
-                        color: "#FFFFFF",
-                    }}
+                <Sider
+                    style={{ background: "#0F172AFF", margin: 20 }}
+                    width={400}
+                    collapsed={collapsed}
+                    onCollapse={(value) => setCollapsed(value)}
                 >
-                    Select database
-                </h1>
-                <hr style={{ marginBottom: 7, border: "none" }} />
-                <Radio.Group
-                    buttonStyle="solid"
-                    value={size}
-                    onChange={handleSizeChange}
-                >
-                    <Radio.Button style={{ width: 200 }} value="DescartesHuman">
-                        DescartesHuman
-                    </Radio.Button>
-                    <Radio.Button
-                        style={{ width: 200 }}
-                        value="HumanCellLandscape"
-                    >
-                        HumanCellLandscape
-                    </Radio.Button>
-                </Radio.Group>
-                <br />
-                <br />
-                <PhenotypeTree onGetData={getData} />
-                <Collapse
-                    items={advancedSettingsMain}
-                    size="small"
-                    style={{ background: colorBgContainer }}
-                />
-            </Sider>
-            <Layout>
-                <Content
-                    style={{
-                        margin: "0 16px",
-                    }}
-                >
-                    <Breadcrumb
+                    <div className="demo-logo-vertical" />
+                    <h1
                         style={{
-                            margin: "16px 0",
+                            fontSize: "1.1em",
+                            fontWeight: "bold",
+                            color: "#FFFFFF",
                         }}
                     >
-                        <Breadcrumb.Item href={"/"}>Home</Breadcrumb.Item>
-                        <Breadcrumb.Item>Search by Phenotype</Breadcrumb.Item>
-                    </Breadcrumb>
-                    <Card
-                        style={{
-                            width: "100%",
-                        }}
+                        Select database
+                    </h1>
+                    <hr style={{ marginBottom: 7, border: "none" }} />
+                    <Radio.Group
+                        buttonStyle="solid"
+                        value={size}
+                        onChange={handleSizeChange}
                     >
-                        <p>
-                            Each phenotype in the HPO is linked to specific cell
-                            types and genes, allowing researchers to explore the
-                            underlying biological mechanisms. The relationships
-                            between phenotypes and cell types are based on
-                            statistical significance, with stronger associations
-                            highlighted. This page enables users to search for
-                            any phenotype and explore its corresponding data,
-                            such as associated genes and cell types, using
-                            dynamic visualizations like network graphs and bar
-                            charts.
-                        </p>
-                    </Card>
-                    <br />
-
-                    <div
-                        style={{
-                            padding: 24,
-                            minHeight: 560,
-                            background: colorBgContainer,
-                            borderRadius: borderRadiusLG,
-                        }}
-                    >
-                        <h2
-                            style={{
-                                fontSize: 22,
-                                fontWeight: "bold",
-                                color: "#6357d3",
-                            }}
+                        <Radio.Button
+                            style={{ width: 200 }}
+                            value="DescartesHuman"
                         >
-                            {dataRef != null ? dataRef.title : "All"}
-                        </h2>
-                        <Descriptions
-                            column={1}
-                            size={"small"}
-                            labelStyle={{ color: "#0f172a", width: "200px" }}
+                            DescartesHuman
+                        </Radio.Button>
+                        <Radio.Button
+                            style={{ width: 200 }}
+                            value="HumanCellLandscape"
+                        >
+                            HumanCellLandscape
+                        </Radio.Button>
+                    </Radio.Group>
+                    <br />
+                    <br />
+                    <PhenotypeTree onGetData={getData} />
+                    <Collapse
+                        items={advancedSettingsMain}
+                        size="small"
+                        style={{ background: colorBgContainer }}
+                    />
+                </Sider>
+                <Layout>
+                    <Content
+                        style={{
+                            margin: "0 16px",
+                        }}
+                    >
+                        <Breadcrumb
                             style={{
                                 margin: "16px 0",
                             }}
-                            bordered
-                            items={desItem}
-                        />
+                        >
+                            <Breadcrumb.Item href={"/"}>Home</Breadcrumb.Item>
+                            <Breadcrumb.Item>
+                                Search by Phenotype
+                            </Breadcrumb.Item>
+                        </Breadcrumb>
+                        <Card
+                            style={{
+                                width: "100%",
+                            }}
+                        >
+                            <p>
+                                Each phenotype in the HPO is linked to specific
+                                cell types and genes, allowing researchers to
+                                explore the underlying biological mechanisms.
+                                The relationships between phenotypes and cell
+                                types are based on statistical significance,
+                                with stronger associations highlighted. This
+                                page enables users to search for any phenotype
+                                and explore its corresponding data, such as
+                                associated genes and cell types, using dynamic
+                                visualizations like network graphs and bar
+                                charts.
+                            </p>
+                        </Card>
+                        <br />
 
-                        <Tabs
-                            onChange={onChange}
-                            type="card"
-                            items={new Array(3).fill(null).map((_, i) => {
-                                let id = String(i + 1);
-                                if (i === 0) {
-                                    id = "Cell Associations";
-                                    return {
-                                        label: `${id}`,
-                                        key: id,
-                                        children: (
-                                            <PhenotypeTableDisease2
-                                                hpid={data}
-                                                dbType={size}
-                                                decimalPoints={decimalPoints}
-                                            />
-                                        ),
-                                    };
-                                }
-                                if (i === 1) {
-                                    id = "Disease Associations";
-                                    return {
-                                        label: `${id}`,
-                                        key: id,
-                                        children: (
-                                            <PhenotypeTableDisease
-                                                hpid={data}
-                                            />
-                                        ),
-                                    };
-                                }
-                                if (i === 2) {
-                                    id = "Gene Associations";
-                                    return {
-                                        label: `${id}`,
-                                        key: id,
-                                        children: (
-                                            <PhenotypeTableDisease1
-                                                hpid={data}
-                                            />
-                                        ),
-                                    };
-                                }
-                            })}
-                        />
-                    </div>
-                </Content>
-                <CustomFooter />
+                        <div
+                            style={{
+                                padding: 24,
+                                minHeight: 560,
+                                background: colorBgContainer,
+                                borderRadius: borderRadiusLG,
+                            }}
+                        >
+                            <h2
+                                style={{
+                                    fontSize: 22,
+                                    fontWeight: "bold",
+                                    color: "#6357d3",
+                                }}
+                            >
+                                {dataRef != null ? dataRef.title : "All"}
+                            </h2>
+                            <Descriptions
+                                column={1}
+                                size={"small"}
+                                labelStyle={{
+                                    color: "#0f172a",
+                                    width: "200px",
+                                }}
+                                style={{
+                                    margin: "16px 0",
+                                }}
+                                bordered
+                                items={desItem}
+                            />
+
+                            <Tabs
+                                onChange={onChange}
+                                type="card"
+                                items={new Array(3).fill(null).map((_, i) => {
+                                    let id = String(i + 1);
+                                    if (i === 0) {
+                                        id = "Cell Associations";
+                                        return {
+                                            label: `${id}`,
+                                            key: id,
+                                            children: (
+                                                <PhenotypeTableDisease2
+                                                    hpid={data}
+                                                    dbType={size}
+                                                    decimalPoints={
+                                                        decimalPoints
+                                                    }
+                                                />
+                                            ),
+                                        };
+                                    }
+                                    if (i === 1) {
+                                        id = "Disease Associations";
+                                        return {
+                                            label: `${id}`,
+                                            key: id,
+                                            children: (
+                                                <PhenotypeTableDisease
+                                                    hpid={data}
+                                                />
+                                            ),
+                                        };
+                                    }
+                                    if (i === 2) {
+                                        id = "Gene Associations";
+                                        return {
+                                            label: `${id}`,
+                                            key: id,
+                                            children: (
+                                                <PhenotypeTableDisease1
+                                                    hpid={data}
+                                                />
+                                            ),
+                                        };
+                                    }
+                                })}
+                            />
+                        </div>
+                    </Content>
+                    <CustomFooter />
+                </Layout>
             </Layout>
-        </Layout>
         </>
     );
 }
