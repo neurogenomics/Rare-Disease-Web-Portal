@@ -40,7 +40,7 @@ const generateList = (data) => {
 class SearchTree extends React.Component {
     state = {
         expandedKeys: [""],
-        searchValue: "",
+        searchValue:(jump) ? jump : "",
         autoExpandParent: true,
         gData: [
             {
@@ -112,7 +112,7 @@ class SearchTree extends React.Component {
                 index > -1 ? (
                     <span>
                         {beforeStr}
-                        <span style={{ color: "#f50" }}>{searchValue}</span>
+                        {searchValue}
                         {afterStr}
                     </span>
                 ) : (
@@ -140,7 +140,7 @@ class SearchTree extends React.Component {
         return (
             <div style={{ marginBottom: "10px" }}>
                 <Search
-                    value={(jump) ? jump : null}
+                    // value={searchValue}
                     style={{ marginBottom: 16 }}
                     placeholder="Search for specific cell type"
                     onChange={this.onChange}
