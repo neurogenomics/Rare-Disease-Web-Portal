@@ -130,6 +130,7 @@ const CustomHeader = ({ activePageKey }) => {
                         transform: "translateX(-50%)",
                         background: "#fff",
                     }}
+                    disabledOverflow={true}
                 />
             </Header>
         </ConfigProvider>
