@@ -30,6 +30,7 @@ import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
 import NotFound from "../components/utilities/Texts.jsx";
 import SeverityTierHover from "../components/info/SeverityTierHover.jsx";
 import SeverityTierInfo from "../components/info/SeverityTierInfo.jsx";
+import SeverityScoreInfo from "../components/info/SeverityScoreInfo.jsx";
 
 const { Header, Content, Sider } = Layout;
 
@@ -259,7 +260,11 @@ export default function SeverityPage() {
             sorter: (a, b) => a.hpo_name.localeCompare(b.hpo_name),
         },
         {
-            title: "Severity Score",
+            title: (
+                <>
+                    Severity Score <SeverityScoreInfo />
+                </>
+            ),
             dataIndex: "severity_score_gpt",
             key: "severity_score_gpt",
             sorter: (a, b) => a.severity_score_gpt - b.severity_score_gpt,
