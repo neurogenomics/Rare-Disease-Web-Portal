@@ -330,7 +330,7 @@ export default function CelltypePage() {
         {
             title: (
                 <>
-                    Severity Tier <SeverityTierInfo />
+                    Severity Class <SeverityTierInfo />
                 </>
             ),
             dataIndex: "severity_class",

@@ -1,26 +1,40 @@
 import React from "react";
-import { Tag, Popover } from "antd";
-import LinkHPOID from "../link/LinkHPOID";
-import { InfoOutlined } from "@mui/icons-material";
+import { Tooltip, Popover } from "antd";
+import { InfoOutlined, Launch } from "@mui/icons-material";
 
 export default function SeverityTierInfo() {
-    const info = "A classification that describes the impact of a phenotype on an individual’s health, functionality, and prognosis, ranging from mild to severe.";
+    const info =
+        "A classification that describes the impact of a phenotype on an individual’s health, functionality, and prognosis, ranging from mild to severe.";
     function popoverContent() {
         return (
             <>
                 <p>{info}</p>
                 <p className="mt-1">
-                                        <span className="font-semibold">More information:</span> <LinkHPOID hpoId="HP:0012824" />
-                                    </p>
+                    <span className="font-semibold">More information:</span>{" "}
+                    <Tooltip title={<i>medRxiv: Harnessing generative AI to annotate the severity of all phenotypic abnormalities within the Human Phenotype Ontology</i>} placement="bottom">
+                    <a
+                        href="https://www.medrxiv.org/content/10.1101/2024.06.10.24308475v1.full-text"
+                        target="_blank"
+                    >
+                        Journal Article  
+                        <sup className="text-xs">
+                            <Launch fontSize="inherit" />
+                        </sup>
+                    </a>
+                    </Tooltip>
+                </p>
             </>
         );
-    };
+    }
 
     return (
         <>
-            <Popover content={popoverContent} styles={{ root: {maxWidth: "300px"} }}>
+            <Popover
+                content={popoverContent}
+                styles={{ root: { maxWidth: "300px" } }}
+            >
                 <InfoOutlined fontSize="inherit" />
             </Popover>
         </>
-    )
+    );
 }

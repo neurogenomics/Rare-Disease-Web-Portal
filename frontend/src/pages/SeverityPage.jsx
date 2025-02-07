@@ -270,7 +270,7 @@ export default function SeverityPage() {
         {
             title: (
                 <>
-                    Severity Tier <SeverityTierInfo />
+                    Severity Class <SeverityTierInfo />
                 </>
             ),
             dataIndex: "severity_class",

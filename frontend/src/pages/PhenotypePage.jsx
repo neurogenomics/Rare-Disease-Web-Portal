@@ -120,7 +120,7 @@ export default function phenotypePage() {
             itemsTemp.push({
                 label: (
                     <>
-                        Severity Tier <SeverityTierInfo />
+                        Severity Class <SeverityTierInfo />
                     </>
                 ),
                 key: "6",
