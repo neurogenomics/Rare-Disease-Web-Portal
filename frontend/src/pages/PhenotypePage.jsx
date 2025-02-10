@@ -67,7 +67,6 @@ export default function phenotypePage() {
                     item.key === "5" &&
                     typeof !isNaN(parseFloat(item.children))
                 ) {
-                    console.log("YES");
                     return {
                         ...item,
                         children: parseFloat(item.children).toFixed(
@@ -139,8 +138,6 @@ export default function phenotypePage() {
     };
 
     const getData = async (data, info) => {
-        console.log(`data from Child2 - ${info.node.dataRef}`);
-        console.log(info.node.dataRef)
         setDataRef(info.node.dataRef.title);
         setData(info.node.dataRef.key);
 

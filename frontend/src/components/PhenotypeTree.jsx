@@ -38,9 +38,9 @@ const generateList = (data) => {
 
 class SearchTree extends React.Component {
     state = {
-        expandedKeys: ((jump) ? [jump] : ["HP:0000118"]),
-        selectedKeys: ((jump) ? [jump] : ["HP:0000118"]),
-        searchValue: ((jump) ? jump : ""),
+        expandedKeys: jump ? [jump] : ["HP:0000118"],
+        selectedKeys: jump ? [jump] : ["HP:0000118"],
+        searchValue: jump ? jump : "",
         autoExpandParent: true,
         gData: [
             {
@@ -76,11 +76,15 @@ class SearchTree extends React.Component {
     };
 
     onSelect = (selectedKeys, info) => {
+        if (
+            selectedKeys.length === 0 ||
+            selectedKeys[0] === this.state.selectedKeys[0]
+        ) {
+            console.log("No selection or already selected");
+            return;
+        }
         this.setState({ selectedKeys });
-        console.log("selected", selectedKeys, info);
-        console.log("selected", this.props);
         this.props.onGetData(selectedKeys[0], info);
-        console.log(this.state.expandedKeys);
         this.setState({ expandedKeys: [selectedKeys[0]] });
     };
 
