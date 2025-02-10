@@ -336,43 +336,40 @@ const PhenotypeTableDisease = (hpid) => {
                 title: "Value",
                 dataIndex: "Value",
                 key: "Value",
+                render: (num) => num.toFixed(hpid.decimalPoints),
             },
         ];
         const data1 = [];
 
         data1.push({
             Value: record.estimate,
-            Target: "estimate",
+            Target: "Estimate",
         });
 
         data1.push({
             Value: record.std_error,
-            Target: "std_error",
+            Target: "Standard Error",
         });
         data1.push({
             Value: record.statistic,
-            Target: "statistic",
-        });
-        data1.push({
-            Value: record.q,
-            Target: "q",
+            Target: "Statistic",
         });
         data1.push({
             Value: record.fold_change,
-            Target: "fold_change",
+            Target: "Fold Change",
         });
 
         data1.push({
             Value: record.p,
-            Target: "p",
+            Target: "P-Value",
         });
         data1.push({
             Value: record.model_estimate,
-            Target: "model_estimate",
+            Target: "Model Estimate",
         });
         data1.push({
             Value: record.model_statistic,
-            Target: "model_statistic",
+            Target: "Model Statistic",
         });
 
         return (
