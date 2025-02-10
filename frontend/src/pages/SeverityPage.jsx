@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import SeveritySlider from "../components/SeveritySlider.jsx";
 import SeveritySlider1 from "../components/SeveritySlider1.jsx";
 import SeverityNetWork from "../components/SeverityNetWork.jsx";
@@ -9,28 +9,23 @@ import {
     Breadcrumb,
     Layout,
     theme,
-    Badge,
-    Dropdown,
-    Space,
     Table,
     Spin,
     Button,
-    Input,
-    Tooltip,
     Alert,
     Checkbox,
-    Tag,
     Card,
     InputNumber,
     Collapse,
 } from "antd";
-import { DownloadOutlined, SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
 import { SettingsOutlined } from "@mui/icons-material";
 import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
 import NotFound from "../components/utilities/Texts.jsx";
 import SeverityTierHover from "../components/info/SeverityTierHover.jsx";
 import SeverityTierInfo from "../components/info/SeverityTierInfo.jsx";
 import SeverityScoreInfo from "../components/info/SeverityScoreInfo.jsx";
+import DownloadButton from "../components/utilities/Download.jsx";
 
 const { Header, Content, Sider } = Layout;
 
@@ -319,7 +314,6 @@ export default function SeverityPage() {
     });
 
     const handleSliderChange = (name, value) => {
-        debugger;
         setSliderValues((prevValues) => ({
             ...prevValues,
             [name.toLowerCase().replace(/ /g, "_")]: value,
@@ -348,7 +342,6 @@ export default function SeverityPage() {
         setCheckboxAlert(false);
         setLoading(true);
         const queryParams = new URLSearchParams(sliderValues).toString();
-        debugger;
         const url = `${BASE_API_URL}/api/severity?${queryParams}&pageSize=${tableParams.pagination?.pageSize}&current=${tableParams.pagination?.current}`;
         console.log("Submitting request to URL:", url);
         try {
@@ -388,9 +381,8 @@ export default function SeverityPage() {
                 if (i === 10) {
                     break;
                 }
-                let item = { id: dataWithDefinitions[i].hpo_name };
                 let itemData = [];
-                for (let key in dataWithDefinitions[i]) {
+                for (let keyx in dataWithDefinitions[i]) {
                     if (
                         ![
                             "id",
@@ -407,16 +399,19 @@ export default function SeverityPage() {
                             "AssociatedName",
                             "Associated",
                             "total",
-                        ].includes(key) &&
-                        key.indexOf("justification") < 0
+                        ].includes(keyx) &&
+                        keyx.indexOf("justification") < 0
                     ) {
                         itemData.push({
-                            x: key,
-                            y: dataWithDefinitions[i][key],
+                            x: keyx,
+                            y: parseInt(dataWithDefinitions[i][keyx]),
                         });
                     }
                 }
-                item.data = itemData;
+                let item = {
+                    id: dataWithDefinitions[i].hpo_name,
+                    data: itemData,
+                };
                 list.push(item);
             }
             setDataSet(list);
@@ -430,27 +425,6 @@ export default function SeverityPage() {
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
-    const download = () => {
-        var svgElement = document.getElementsByTagName("svg")[1];
-        var svgData = new XMLSerializer().serializeToString(svgElement);
-        var blob = new Blob([svgData], { type: "image/svg+xml" });
-        var url = URL.createObjectURL(blob);
-        if (window.navigator.msSaveOrOpenBlob) {
-            //ie
-            var imgData = blob;
-            var blobObj = new Blob([imgData]);
-            window.navigator.msSaveOrOpenBlob(blobObj, "Cell Associations.png");
-        } else {
-            //google, firefox
-            var oA = document.createElement("a");
-            oA.download = "Severity";
-            oA.href = url;
-            oA.className = "qrcode";
-            document.body.appendChild(oA);
-            oA.click();
-            oA.remove();
-        }
-    };
 
     // Advanced Settings
     const genExtra = () => <SettingsOutlined />; // Settings icon
@@ -701,14 +675,6 @@ export default function SeverityPage() {
                             </p>
                         </Card>
                         <br />
-                        <Button
-                            style={{ float: "right", width: 50 }}
-                            type="primary"
-                            icon={<DownloadOutlined />}
-                            size="small"
-                            onClick={download}
-                        />
-                        <br />
                         <div
                             style={{
                                 padding: 24,
@@ -716,8 +682,14 @@ export default function SeverityPage() {
                                 background: colorBgContainer,
                                 borderRadius: borderRadiusLG,
                             }}
+                            className="relative"
                         >
-                            <SeverityNetWork data1={dataSet} />
+                            <div className="absolute right-6">
+                            <DownloadButton elementId="severity-network" />
+                            </div>
+                            <div id="severity-network">
+                                <SeverityNetWork data1={dataSet} />
+                            </div>
 
                             <Spin spinning={loading}>
                                 {" "}
