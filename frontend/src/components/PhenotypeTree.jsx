@@ -38,14 +38,14 @@ const generateList = (data) => {
 
 class SearchTree extends React.Component {
     state = {
-        expandedKeys: ((jump) ? [jump] : [""]),
-        selectedKeys: ((jump) ? [jump] : [""]),
+        expandedKeys: ((jump) ? [jump] : ["HP:0000118"]),
+        selectedKeys: ((jump) ? [jump] : ["HP:0000118"]),
         searchValue: ((jump) ? jump : ""),
         autoExpandParent: true,
         gData: [
             {
-                title: "ALL",
-                key: "HP:0000001",
+                title: "Phenotypic Abnormality",
+                key: "HP:0000118",
             },
         ],
         first_load: true,
@@ -59,12 +59,12 @@ class SearchTree extends React.Component {
         }
         this.onFirstLoad(this.state.selectedKeys, {});
     }
+
     fetchData = (param) => {
         let res = [];
         const url = `${ONTOLOGY_API_URL}/api/hp/terms/${param}/children`;
 
         return axios.get(url).then((response) => {
-            console.log("Response data:", response.data);
             for (let i = 0; i < response.data.length; i++) {
                 let item = response.data[i];
                 item.key = item.id;
@@ -81,6 +81,7 @@ class SearchTree extends React.Component {
         console.log("selected", this.props);
         this.props.onGetData(selectedKeys[0], info);
         console.log(this.state.expandedKeys);
+        this.setState({ expandedKeys: [selectedKeys[0]] });
     };
 
     onFirstLoad = (selectedKeys, info) => {
@@ -98,7 +99,6 @@ class SearchTree extends React.Component {
     onExpand = (expandedKeys) => {
         this.setState({
             expandedKeys,
-            autoExpandParent: false,
         });
     };
 
