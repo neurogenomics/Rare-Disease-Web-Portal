@@ -39,7 +39,7 @@ const generateList = (data) => {
 class SearchTree extends React.Component {
     state = {
         expandedKeys: jump ? [jump] : ["HP:0000118"],
-        selectedKeys: jump ? [jump] : ["HP:0000118"],
+        selectedKeys: jump ? [jump] : [""],
         searchValue: jump ? jump : "",
         autoExpandParent: true,
         gData: [
@@ -61,17 +61,36 @@ class SearchTree extends React.Component {
     }
 
     fetchData = (param) => {
-        let res = [];
         const url = `${ONTOLOGY_API_URL}/api/hp/terms/${param}/children`;
 
         return axios.get(url).then((response) => {
-            for (let i = 0; i < response.data.length; i++) {
-                let item = response.data[i];
+            const children = response.data;
+            const items = children.map(item => {
                 item.key = item.id;
                 item.title = item.name;
-                res.push(item);
-            }
-            return res;
+                item.isLeaf = false; // Assume it's not a leaf initially
+                return item;
+            });
+
+            // Check if each child has further children by making another API call
+            const childPromises = items.map(item => {
+                const childUrl = `${ONTOLOGY_API_URL}/api/hp/terms/${item.id}/children`;
+                return axios.get(childUrl)
+                    .then(childResponse => {
+                        if (childResponse.data.length === 0) {
+                            item.isLeaf = true; // If no children, then it's a leaf
+                        }
+                        return item;
+                    })
+                    .catch(() => {
+                        item.isLeaf = true; // If API call fails, consider it a leaf
+                        return item;
+                    });
+            });
+
+            return Promise.all(childPromises).then(updatedItems => {
+                return updatedItems;
+            });
         });
     };
 
@@ -111,7 +130,6 @@ class SearchTree extends React.Component {
         const url = `${ONTOLOGY_API_URL}/api/hp/search?q=${e.target.value}&limit=50`;
 
         return axios.get(url).then((response) => {
-            console.log("Response data:", response.data.terms.length);
             for (let i = 0; i < response.data.terms.length; i++) {
                 let item = response.data.terms[i];
                 res.push({ key: item.id, title: item.name });
@@ -150,7 +168,14 @@ class SearchTree extends React.Component {
                     </TreeNode>
                 );
             }
-            return <TreeNode dataRef={item} key={item.key} title={title} />;
+            return (
+                <TreeNode
+                    dataRef={item}
+                    key={item.key}
+                    title={title}
+                    isLeaf={item.isLeaf}
+                />
+            );
         });
 
     onLoadData = (treeNode) =>
@@ -180,7 +205,6 @@ class SearchTree extends React.Component {
         const url = `${ONTOLOGY_API_URL}/api/hp/search?q=${e}&limit=50`;
 
         return axios.get(url).then((response) => {
-            console.log("Response data:", response.data.terms.length);
             for (let i = 0; i < response.data.terms.length; i++) {
                 let item = response.data.terms[i];
                 res.push({ key: item.id, title: item.name });
