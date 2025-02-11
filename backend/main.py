@@ -58,6 +58,7 @@ def get_severity_data(
     """
     query = {
         "hpo_id": hpo_id,
+        "q": {"$lt": 0.99999}, # Filter out all cells with practically no association
     }
     response = fetch_cell_data(db_type, query, dry_run)
     if dry_run:

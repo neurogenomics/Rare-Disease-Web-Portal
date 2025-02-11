@@ -44,9 +44,8 @@ const DemoColumn = (data) => {
                                                         marginRight: 6,
                                                     }}
                                                 ></span>
-                                                <span>-log10(q): &nbsp; </span>
+                                                <span>-log10(q) * -1: &nbsp; </span>
                                             </div>
-
                                             <b>{value}</b>
                                         </div>
                                     </div>
@@ -58,11 +57,6 @@ const DemoColumn = (data) => {
             },
         },
         height: 570,
-        slider: {
-            x: {
-                values: [0, 0.1],
-            },
-        },
     };
     return <Column {...config} ref={chartRef} />;
 };
@@ -92,7 +86,7 @@ const PhenotypeTableDisease = (hpid) => {
     const searchInput = useRef(null);
     const [loading, setLoading] = useState(false);
 
-    const [chart, setChart] = useState();
+    const [chart, setChart] = useState([]);
     const [data1, setData1] = useState([]);
 
     const columns1 = [
@@ -113,6 +107,7 @@ const PhenotypeTableDisease = (hpid) => {
             sortDirections: ["descend", "ascend"],
         },
     ];
+    
     const fetchData = () => {
         setLoading(true);
         let hppp = hpid.hpid;
@@ -123,6 +118,7 @@ const PhenotypeTableDisease = (hpid) => {
         )
             .then((res) => res.json())
             .then((data) => {
+                // let filteredData = data.filter((item) => item.q < 0.99999); // Remove data where q is nearly 1, i.e. practically no association
                 let temp = [];
                 data.forEach((item) => {
                     item.key = item.id;
@@ -145,15 +141,15 @@ const PhenotypeTableDisease = (hpid) => {
         )
             .then((res) => res.json())
             .then((data) => {
+                // let filteredData = data.filter((item) => item.q < 0.99999); // Remove data where q is nearly 1, i.e. practically no association
                 let temp = [];
                 data.forEach((item) => {
                     item.key = item.id;
                     temp.push({
-                        q: Math.log10(item.q),
-                        Cell: item.celltype_name.substring(0, 10),
+                        q: Math.log10(item.q) * -1,
+                        Cell: item.celltype_name,
                     });
                 });
-                console.log("TEMP", temp);
                 setChart(temp);
                 setData(data);
                 setLoading(false);

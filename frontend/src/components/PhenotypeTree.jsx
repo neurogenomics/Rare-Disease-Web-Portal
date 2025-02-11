@@ -96,8 +96,9 @@ class SearchTree extends React.Component {
                         item.hasData = await checkData(item.id);
                         return item;
                     })
-                    .catch(() => {
+                    .catch((e) => {
                         item.isLeaf = true; // If API call fails, consider it a leaf
+                        console.warn("Failed to fetch children for", item.id, "Error:", e);
                         return item;
                     });
             });
@@ -105,6 +106,10 @@ class SearchTree extends React.Component {
             return Promise.all(childPromises).then(updatedItems => {
                 return updatedItems;
             });
+        })
+        .catch((e) => {
+            console.warn("Failed to fetch parent-", param, "Error:", e);
+            return [];
         });
     };
 
@@ -183,7 +188,7 @@ class SearchTree extends React.Component {
                     <span>{item.title}</span>
                 );
                 title = (
-                    <Tooltip title={(item.hasData) ? null : "No cell associations data available"} placement="right">
+                    <Tooltip title={(item.hasData) ? null : "No cell associations found"} placement="right">
                     {title}
                     </Tooltip>
                 );
