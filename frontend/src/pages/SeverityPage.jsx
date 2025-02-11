@@ -26,6 +26,7 @@ import SeverityTierHover from "../components/info/SeverityTierHover.jsx";
 import SeverityTierInfo from "../components/info/SeverityTierInfo.jsx";
 import SeverityScoreInfo from "../components/info/SeverityScoreInfo.jsx";
 import DownloadButton from "../components/utilities/Download.jsx";
+import formatText from "../scripts/formatText.js";
 
 const { Header, Content, Sider } = Layout;
 
@@ -288,7 +289,7 @@ export default function SeverityPage() {
                 const bCelltype = b.celltype_name ? b.celltype_name : "";
                 return aCelltype.localeCompare(bCelltype);
             },
-            render: (text) => (text ? text : <i>None</i>),
+            render: (text) => (text ? formatText(text) : <i>None</i>),
         },
         {
             title: "Celltype Database",
