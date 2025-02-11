@@ -2,6 +2,7 @@ import React from "react";
 import { Tree, Input } from "antd";
 import axios from "axios";
 import { BASE_API_URL } from "../../config.js";
+import formatText from "../scripts/formatText.js";
 
 const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
@@ -89,7 +90,7 @@ class SearchTree extends React.Component {
             console.log("Response data:", response.data.length);
             for (let i = 0; i < response.data.length; i++) {
                 let item = response.data[i];
-                res.push({ key: item, title: item });
+                res.push({ key: item, title: formatText(item) });
             }
             this.setState({
                 gData: res,
