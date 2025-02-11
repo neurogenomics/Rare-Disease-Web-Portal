@@ -3,7 +3,8 @@ import { DownloadOutlined, SearchOutlined } from "@ant-design/icons";
 import { Spin, Button, Input, Space, Table, Modal } from "antd";
 import Highlighter from "react-highlight-words";
 import { Column } from "@ant-design/plots";
-import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
+import { BASE_API_URL } from "../../config.js";
+import formatText from "../scripts/formatText.js";
 
 const DemoColumn = (data) => {
     const chartRef = useRef();
@@ -139,8 +140,6 @@ const PhenotypeTableDisease = (hpid) => {
     const fetchData1 = (db_type) => {
         setLoading(true);
         let hppp = hpid.hpid;
-        console.log("hpid changehhhhhhhh", hppp);
-        console.log("hpid change", JSON.stringify(hpid));
         fetch(
             `${BASE_API_URL}/api/cellByHpoid1?hpo_id=${hppp}&db_type=${db_type}`
         )
@@ -293,7 +292,7 @@ const PhenotypeTableDisease = (hpid) => {
     });
     const columns = [
         {
-            title: "CellType Name",
+            title: "Cell Type",
             dataIndex: "celltype_name",
             key: "celltype_name",
             sorter: (a, b) => a.celltype_name.localeCompare(b.celltype_name),
@@ -305,17 +304,17 @@ const PhenotypeTableDisease = (hpid) => {
                         target={"_blank"}
                         href={`/celltype?jump=${text}&db_type=${record.celltype_database}`}
                     >
-                        {text}
+                        {formatText(text)}
                     </a>
                 );
             },
         },
-        {
-            title: "HPO ID",
-            dataIndex: "hpo_id",
-            key: "hpo_id",
-            sorter: (a, b) => a.hpo_id.localeCompare(b.hpo_id),
-        },
+        // {
+        //     title: "HPO ID",
+        //     dataIndex: "hpo_id",
+        //     key: "hpo_id",
+        //     sorter: (a, b) => a.hpo_id.localeCompare(b.hpo_id),
+        // },
         {
             title: "Q-Value",
             dataIndex: "q",
@@ -462,45 +461,6 @@ const PhenotypeTableDisease = (hpid) => {
                 <Table
                     scroll={{ x: 500, y: 600 }}
                     columns={columns}
-                    rowSelection={{
-                        type: "radio",
-                        onSelect: (record, selected, selectedRows) => {
-                            let newData = [];
-                            fetch(
-                                `${BASE_API_URL}/gene1/${record.celltype_name}/${record.celltype_database}`
-                            )
-                                .then((res) => res.json())
-                                .then(async (results) => {
-                                    debugger;
-                                    results.sort((a, b) => {
-                                        return (
-                                            b.expression_specificity -
-                                            a.expression_specificity
-                                        );
-                                    });
-                                    await fetch(
-                                        `${ONTOLOGY_API_URL}/api/network/annotation/${record.hpo_id}`
-                                    )
-                                        .then((res) => res.json())
-                                        .then(({ genes }) => {
-                                            results.forEach((item) => {
-                                                if (
-                                                    genes.some(
-                                                        (a) =>
-                                                            a.name === item.gene
-                                                    )
-                                                ) {
-                                                    newData.push(item);
-                                                }
-                                            });
-                                        });
-                                    setData1(newData);
-                                    setLoading(false);
-                                });
-                            setVisiable(selected);
-                        },
-                        onSelectNone: () => {},
-                    }}
                     expandable={{
                         expandedRowRender,
                         defaultExpandedRowKeys: ["0"],

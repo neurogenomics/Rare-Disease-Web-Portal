@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ResponsiveHeatMapCanvas } from "@nivo/heatmap";
 import { Tooltip } from "antd";
 import { InfoOutlined } from "@mui/icons-material";
+import formatText from "../scripts/formatText";
 
 const SeverityNetWork = ({ data1 }) => {
     const [data, setData] = useState({});
@@ -33,16 +34,7 @@ const SeverityNetWork = ({ data1 }) => {
                         legendPosition: "middle",
                         legendOffset: -85,
                         truncateTickAt: 0,
-                        format: (value) => {
-                            return value
-                                .split("_")
-                                .map(
-                                    (word) =>
-                                        word.charAt(0).toUpperCase() +
-                                        word.slice(1)
-                                )
-                                .join(" ");
-                        },
+                        format: (value) => formatText(value),
                     }}
                     axisLeft={{
                         tickSize: 5,
