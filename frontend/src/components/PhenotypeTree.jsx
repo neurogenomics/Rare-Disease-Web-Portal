@@ -82,7 +82,6 @@ class SearchTree extends React.Component {
                 item.key = item.id;
                 item.title = item.name;
                 item.isLeaf = false; // Assume it's not a leaf initially
-                // item.hasData = checkData(item.id);
                 return item;
             });
 

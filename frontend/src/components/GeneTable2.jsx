@@ -228,16 +228,19 @@ const PhenotypeTableDisease = (hpid) => {
 
     return (
         <Spin spinning={loading}>
-            {" "}
-            <Button
-                style={{ float: "right", width: 50 }}
-                type="primary"
-                icon={<DownloadOutlined />}
-                size="small"
-                onClick={download}
-            />
-            <br />
-            <DemoColumn data={data} />
+            {data.length > 0 && (
+                <>
+                    <Button
+                        style={{ float: "right", width: 50 }}
+                        type="primary"
+                        icon={<DownloadOutlined />}
+                        size="small"
+                        onClick={download}
+                    />
+                    <br />
+                    <DemoColumn data={data} />
+                </>
+            )}
             <Table
                 columns={columns}
                 dataSource={data}

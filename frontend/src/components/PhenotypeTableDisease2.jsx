@@ -153,6 +153,7 @@ const PhenotypeTableDisease = (hpid) => {
                         Cell: item.celltype_name.substring(0, 10),
                     });
                 });
+                console.log("TEMP", temp);
                 setChart(temp);
                 setData(data);
                 setLoading(false);
@@ -449,15 +450,19 @@ const PhenotypeTableDisease = (hpid) => {
     return (
         <>
             <Spin spinning={loading}>
-                <Button
-                    style={{ float: "right", width: 50 }}
-                    type="primary"
-                    icon={<DownloadOutlined />}
-                    size="small"
-                    onClick={download}
-                />
-                <br />
-                <DemoColumn data={chart} />
+                {chart.length > 0 && (
+                    <>
+                        <Button
+                            style={{ float: "right", width: 50 }}
+                            type="primary"
+                            icon={<DownloadOutlined />}
+                            size="small"
+                            onClick={download}
+                        />
+                        <br />
+                        <DemoColumn data={chart} />
+                    </>
+                )}
                 <Table
                     scroll={{ x: 500, y: 600 }}
                     columns={columns}
