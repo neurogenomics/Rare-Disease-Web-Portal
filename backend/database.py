@@ -95,18 +95,22 @@ def fetch_gene(
         return results
 
 
-def fetch_cell_data(db_type: str, query: dict):
+def fetch_cell_data(db_type: str, query: dict, dry_run: bool = False):
     """
     Fetch documents from the celltype1 or celltype2 collection based on the celltype_name and db_type.
 
     Args:
         celltype_name (str): The name of the cell type to query.
         db_type (str): The type of database to query.
+        dry_run (bool): Just check id data exists.
 
     Returns:
-        List of documents matching the query.
+        List of documents matching the query, or just a boolean value if dry_run
+        is True.
     """
     if db_type == "DescartesHuman":
+        if dry_run:
+            return celltype1.count_documents(query) > 0
         cursor = celltype1.find(query).sort("p", 1).limit(88)
         results = []
         for document in cursor:
@@ -120,7 +124,11 @@ def fetch_cell_data(db_type: str, query: dict):
             results.append(document)
         return results
     elif db_type == "HumanCellLandscape":
+        if dry_run:
+            return celltype1.count_documents(query) > 0
         cursor1 = celltype2.find(query).sort("p", 1).limit(88)
+        if dry_run:
+            return cursor.count() > 0
         results = []
         for document1 in cursor1:
             document1["id"] = str(document1.pop("_id"))

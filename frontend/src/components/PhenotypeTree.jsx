@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
-import { Tree, Input } from "antd";
+import React from "react";
+import { Tree, Input, Tooltip } from "antd";
 import axios from "axios";
-import { ONTOLOGY_API_URL } from "../../config.js";
+import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
+import { Close } from "@mui/icons-material";
 
 const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
@@ -46,6 +47,7 @@ class SearchTree extends React.Component {
             {
                 title: "Phenotypic Abnormality",
                 key: "HP:0000118",
+                hasData: true,
             },
         ],
         first_load: true,
@@ -63,12 +65,24 @@ class SearchTree extends React.Component {
     fetchData = (param) => {
         const url = `${ONTOLOGY_API_URL}/api/hp/terms/${param}/children`;
 
+        const checkData = (param) => {
+            const urlData = `${BASE_API_URL}/api/cellByHpoid1?hpo_id=${param}&db_type=${this.props.dbType}&dry_run=true`
+            return axios.get(urlData).then((response) => {
+                if (response.data) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        };
+
         return axios.get(url).then((response) => {
             const children = response.data;
             const items = children.map(item => {
                 item.key = item.id;
                 item.title = item.name;
                 item.isLeaf = false; // Assume it's not a leaf initially
+                // item.hasData = checkData(item.id);
                 return item;
             });
 
@@ -76,10 +90,11 @@ class SearchTree extends React.Component {
             const childPromises = items.map(item => {
                 const childUrl = `${ONTOLOGY_API_URL}/api/hp/terms/${item.id}/children`;
                 return axios.get(childUrl)
-                    .then(childResponse => {
+                    .then(async childResponse => {
                         if (childResponse.data.length === 0) {
                             item.isLeaf = true; // If no children, then it's a leaf
                         }
+                        item.hasData = await checkData(item.id);
                         return item;
                     })
                     .catch(() => {
@@ -151,15 +166,27 @@ class SearchTree extends React.Component {
             const middleStr = searchValue
                 ? item.title.substr(index, searchValue.length)
                 : "";
-            const title =
+            let title =
                 index > -1 ? (
-                    <span>
+                    <span className="inline-block align-middle">
                         {beforeStr}
                         <span style={{ color: "#f50" }}>{middleStr}</span>
                         {afterStr}
+                        {item.hasData ? (
+                            ""
+                        ) : (
+                            <span className="ml-1 text-red-500">
+                                    <Close fontSize="inherit" />
+                            </span>
+                        )}
                     </span>
                 ) : (
                     <span>{item.title}</span>
+                );
+                title = (
+                    <Tooltip title={(item.hasData) ? null : "No cell associations data available"} placement="right">
+                    {title}
+                    </Tooltip>
                 );
             if (item.children) {
                 return (

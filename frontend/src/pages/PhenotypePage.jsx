@@ -234,7 +234,7 @@ export default function phenotypePage() {
                     </Radio.Group>
                     <br />
                     <br />
-                    <PhenotypeTree onGetData={getData} />
+                    <PhenotypeTree onGetData={getData} dbType={size} />
                     <Collapse
                         items={advancedSettingsMain}
                         size="small"

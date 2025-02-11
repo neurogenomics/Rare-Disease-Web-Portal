@@ -11,6 +11,7 @@ from database import (
 )
 from fastapi.middleware.cors import CORSMiddleware
 from config import CORS_ORIGINS, HOST, PORT
+from typing import Optional
 
 # Create an instance of the FastAPI application
 app = FastAPI()
@@ -43,6 +44,7 @@ def hpj():
 def get_severity_data(
     hpo_id: str = Query(...),
     db_type: str = Query(...),
+    dry_run: Optional[bool] = False, # Just check if the data exists
 ):
     """
     Fetch cell data based on HPO ID and database type.
@@ -57,7 +59,9 @@ def get_severity_data(
     query = {
         "hpo_id": hpo_id,
     }
-    response = fetch_cell_data(db_type, query)
+    response = fetch_cell_data(db_type, query, dry_run)
+    if dry_run:
+        return response
     if response:
         return response
     return []
