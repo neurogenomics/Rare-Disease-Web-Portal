@@ -64,7 +64,7 @@ export default function SeverityTierHover({ tier }) {
                     <ul className="list-none space-y-[0.5px] mb-2 ml-2 block">
                         <li><span className="font-medium">Tier 1 (Most severe):</span> death, intellectual disability</li>
                         <li><span className="font-medium">Tier 2:</span> impaired mobility, physical malformations</li>
-                        <li><span className="font-medium">Tier 3:</span> blindness, sensory impairments, immunodeficiency, cancer</li>
+                        <li><span className="font-medium">Tier 3:</span> blindness, sensory impairments, immunodeficiency, cancer, mental illness</li>
                         <li><span className="font-medium">Tier 4 (Least severe):</span> reduced fertility</li>
                     </ul>
                     <p className="text-xs text-gray-600 mt-2"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4262393/" target="_blank">Based on Lazarin et al. (2014) severity classification system developed through consultation with 192 healthcare professionals.<sup className="text-xs">
