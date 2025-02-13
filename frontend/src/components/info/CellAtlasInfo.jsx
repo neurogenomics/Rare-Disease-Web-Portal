@@ -2,7 +2,7 @@ import React from "react";
 import { Popover } from "antd";
 import { InfoOutlined } from "@mui/icons-material";
 
-export default function CellAtlasInfo(columnMode = false) {
+export default function CellAtlasInfo({ columnMode = false }) {
     const info =
         "Single-cell RNA-seq atlases are comprehensive maps of gene expression in individual cells across diverse tissues, capturing cellular diversity, states, and interactions to advance understanding of development, health, and disease.";
     const info2 =
@@ -12,7 +12,7 @@ export default function CellAtlasInfo(columnMode = false) {
             <>
                 <p>{info}</p>
                 <p className="mt-1">{info2}</p>
-                <p className="mt-1 font-medium">
+                <p className="mt-3 rounded-lg p-1 pl-3 bg-purple-100">
                     {columnMode ? "Hover over any atlas name to learn more about it." : "Hover over each option below to learn more about it."}
                 </p>
             </>

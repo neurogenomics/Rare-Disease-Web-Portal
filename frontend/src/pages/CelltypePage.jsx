@@ -16,6 +16,7 @@ import {
     Tag,
     Card,
     Collapse,
+    ConfigProvider,
 } from "antd";
 import { Column } from "@ant-design/plots";
 import { DownloadOutlined, SearchOutlined } from "@ant-design/icons";
@@ -627,6 +628,15 @@ export default function CelltypePage() {
                             Cell Atlases <CellAtlasInfo />
                         </h1>
                         <hr style={{ marginBottom: 7, border: "none" }} />
+                        <ConfigProvider
+                            theme={{
+                                components: {
+                                    Radio: {
+                                        buttonSolidCheckedBg: "#7944f2",
+                                        buttonSolidCheckedHoverBg: "#8a5cf2",
+                                    }
+                                }
+                            }} >
                         <Radio.Group
                             buttonStyle="solid"
                             value={size}
@@ -645,6 +655,7 @@ export default function CelltypePage() {
                                 <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
                             </Radio.Button>
                         </Radio.Group>
+                        </ConfigProvider>
                         <br />
                         <br />
                         <PhenotypeTree onGetData={getData} db_type={size} />

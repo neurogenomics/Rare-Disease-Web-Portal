@@ -10,6 +10,7 @@ import {
     Card,
     Collapse,
     InputNumber,
+    ConfigProvider,
 } from "antd";
 import PhenotypeTree from "../components/GeneTree.jsx";
 import PhenotypeTableDisease from "../components/GeneTable.jsx";
@@ -97,7 +98,7 @@ export default function phenotypePage() {
             label: "NCBI Gene ID",
             key: "1",
             children: parseNCBIGeneID(info.node.dataRef.id),
-        })
+        });
 
         fetch(
             `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id=${info.node.dataRef.id.substring(
@@ -130,8 +131,9 @@ export default function phenotypePage() {
                                 itemsTemp.push({
                                     label: "Definition",
                                     key: "2",
-                                    children:
-                                        result.result[resultKey][resultKey1] || <NotFound />,
+                                    children: result.result[resultKey][
+                                        resultKey1
+                                    ] || <NotFound />,
                                 });
                             }
                         }
@@ -168,7 +170,7 @@ export default function phenotypePage() {
             style={{ width: "100%" }}
             onChange={handleDecimalChange}
             onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                     e.preventDefault(); // Prevent the default behavior of the Enter key
                 }
             }}
@@ -210,24 +212,35 @@ export default function phenotypePage() {
                         Cell Atlases <CellAtlasInfo />
                     </h1>
                     <hr style={{ marginBottom: 7, border: "none" }} />
-                    <Radio.Group
-                        buttonStyle="solid"
-                        value={size}
-                        onChange={handleSizeChange}
+                    <ConfigProvider
+                        theme={{
+                            components: {
+                                Radio: {
+                                    buttonSolidCheckedBg: "#7944f2",
+                                    buttonSolidCheckedHoverBg: "#8a5cf2",
+                                },
+                            },
+                        }}
                     >
-                        <Radio.Button
-                            style={{ width: 200 }}
-                            value="DescartesHuman"
+                        <Radio.Group
+                            buttonStyle="solid"
+                            value={size}
+                            onChange={handleSizeChange}
                         >
-                            <CellAtlasSelectionInfo atlasName="DescartesHuman" />
-                        </Radio.Button>
-                        <Radio.Button
-                            style={{ width: 200 }}
-                            value="HumanCellLandscape"
-                        >
-                            <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
-                        </Radio.Button>
-                    </Radio.Group>
+                            <Radio.Button
+                                style={{ width: 200 }}
+                                value="DescartesHuman"
+                            >
+                                <CellAtlasSelectionInfo atlasName="DescartesHuman" />
+                            </Radio.Button>
+                            <Radio.Button
+                                style={{ width: 200 }}
+                                value="HumanCellLandscape"
+                            >
+                                <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
+                            </Radio.Button>
+                        </Radio.Group>
+                    </ConfigProvider>
                     <br />
                     <br />
                     <PhenotypeTree onGetData={getData} />

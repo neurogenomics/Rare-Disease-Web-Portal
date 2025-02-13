@@ -12,6 +12,7 @@ export default function SeverityScoreInfo({ atlasName, columnMode = false }) {
             journalEntry:
                 "Science: A human cell atlas of fetal gene expression",
             journalLink: "https://www.science.org/doi/10.1126/science.aba7721",
+            cells: "Fetal only",
         },
         HumanCellLandscape: {
             name: "Human Cell Landscape",
@@ -22,12 +23,17 @@ export default function SeverityScoreInfo({ atlasName, columnMode = false }) {
             journalEntry:
                 "Nature: Construction of a human cell landscape at single-cell level",
             journalLink: "https://www.nature.com/articles/s41586-020-2157-4",
+            cells: "Fetal and adult",
         },
     };
 
     function popoverContent() {
         return (
             <>
+                <p className="pl-3 p-1 mt-1 mb-2 rounded-lg bg-purple-100">
+                    <span className="font-semibold">Cell types:</span>{" "}
+                    {atlasInfo[atlasName]["cells"]}
+                </p>
                 <p>{atlasInfo[atlasName]["info"]}</p>
                 <p className="mt-1">
                     <span className="font-semibold">More information:</span>{" "}

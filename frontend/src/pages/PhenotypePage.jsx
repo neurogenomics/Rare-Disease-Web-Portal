@@ -4,7 +4,7 @@ import {
     Layout,
     Tabs,
     theme,
-    Badge,
+    ConfigProvider,
     Descriptions,
     Radio,
     Card,
@@ -90,7 +90,9 @@ export default function phenotypePage() {
             children: <LinkHPOID hpoId={key} />,
         });
 
-        const result = await fetch(`${ONTOLOGY_API_URL}/api/hp/terms/${key}`).then((res) => res.json());
+        const result = await fetch(
+            `${ONTOLOGY_API_URL}/api/hp/terms/${key}`
+        ).then((res) => res.json());
 
         itemsTemp.push({
             label: "Definition",
@@ -114,7 +116,9 @@ export default function phenotypePage() {
         });
 
         try {
-            const result1 = await fetch(`${BASE_API_URL}/api/hpo-definitionNew/${key}`).then((res) => res.json());
+            const result1 = await fetch(
+                `${BASE_API_URL}/api/hpo-definitionNew/${key}`
+            ).then((res) => res.json());
             itemsTemp.push({
                 label: (
                     <>
@@ -122,7 +126,12 @@ export default function phenotypePage() {
                     </>
                 ),
                 key: "5",
-                children: <SeverityScoreHover score={result1[0].severity_score_gpt} decimalPoints={decimalPoints} /> || <NotFound />,
+                children: (
+                    <SeverityScoreHover
+                        score={result1[0].severity_score_gpt}
+                        decimalPoints={decimalPoints}
+                    />
+                ) || <NotFound />,
             });
             itemsTemp.push({
                 label: (
@@ -131,7 +140,9 @@ export default function phenotypePage() {
                     </>
                 ),
                 key: "6",
-                children: <SeverityTierHover tier={result1[0].severity_class} /> || <NotFound />,
+                children: (
+                    <SeverityTierHover tier={result1[0].severity_class} />
+                ) || <NotFound />,
             });
         } catch (e) {
             console.log("error", e);
@@ -217,24 +228,35 @@ export default function phenotypePage() {
                         Cell Atlases <CellAtlasInfo />
                     </h1>
                     <hr style={{ marginBottom: 7, border: "none" }} />
-                    <Radio.Group
-                        buttonStyle="solid"
-                        value={size}
-                        onChange={handleSizeChange}
+                    <ConfigProvider
+                        theme={{
+                            components: {
+                                Radio: {
+                                    buttonSolidCheckedBg: "#7944f2",
+                                    buttonSolidCheckedHoverBg: "#8a5cf2",
+                                },
+                            },
+                        }}
                     >
-                        <Radio.Button
-                            style={{ width: 200 }}
-                            value="DescartesHuman"
+                        <Radio.Group
+                            buttonStyle="solid"
+                            value={size}
+                            onChange={handleSizeChange}
                         >
-                            <CellAtlasSelectionInfo atlasName="DescartesHuman" />
-                        </Radio.Button>
-                        <Radio.Button
-                            style={{ width: 200 }}
-                            value="HumanCellLandscape"
-                        >
-                            <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
-                        </Radio.Button>
-                    </Radio.Group>
+                            <Radio.Button
+                                style={{ width: 200 }}
+                                value="DescartesHuman"
+                            >
+                                <CellAtlasSelectionInfo atlasName="DescartesHuman" />
+                            </Radio.Button>
+                            <Radio.Button
+                                style={{ width: 200 }}
+                                value="HumanCellLandscape"
+                            >
+                                <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
+                            </Radio.Button>
+                        </Radio.Group>
+                    </ConfigProvider>
                     <br />
                     <br />
                     <PhenotypeTree onGetData={getData} dbType={size} />
