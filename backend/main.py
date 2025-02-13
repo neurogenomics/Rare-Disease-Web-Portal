@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI, Query
 from database import (
@@ -8,13 +9,26 @@ from database import (
     fetch_gene,
     fetch_gene1,
     fetch_hpoADJ_full,
+    fetch_severity_scores,
 )
 from fastapi.middleware.cors import CORSMiddleware
 from config import CORS_ORIGINS, HOST, PORT
-from typing import Optional
+from typing import AsyncIterator, Optional
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.inmemory import InMemoryBackend
+from fastapi_cache.decorator import cache
+import logging
+
+log = logging.getLogger("uvicorn.error")
+
+# Setup in-memory cache
+@asynccontextmanager
+async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+    FastAPICache.init(InMemoryBackend())
+    yield
 
 # Create an instance of the FastAPI application
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 
 # Add CORS middleware to the FastAPI application
 app.add_middleware(
@@ -270,6 +284,19 @@ def gene1(Gene_name: str, db_type: str):
     if response:
         return response
     return []
+
+
+@app.get("/api/severity-scores")
+@cache(expire=36000, namespace="severity-scores")    # Cache for 10 hours
+def severity_scores():
+    """
+    Fetch severity scores.
+
+    Returns:
+        List of all the severity scores.
+    """
+    log.info("Fetching severity scores.")
+    return fetch_severity_scores()
 
 
 if __name__ == "__main__":

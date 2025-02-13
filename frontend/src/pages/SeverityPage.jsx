@@ -25,6 +25,7 @@ import NotFound from "../components/utilities/Texts.jsx";
 import SeverityTierHover from "../components/info/SeverityTierHover.jsx";
 import SeverityTierInfo from "../components/info/SeverityTierInfo.jsx";
 import SeverityScoreInfo from "../components/info/SeverityScoreInfo.jsx";
+import SeverityScoreHover from "../components/info/SeverityScoreHover.jsx";
 import DownloadButton from "../components/utilities/Download.jsx";
 import formatText from "../scripts/formatText.js";
 
@@ -265,7 +266,12 @@ export default function SeverityPage() {
             key: "severity_score_gpt",
             sorter: (a, b) => a.severity_score_gpt - b.severity_score_gpt,
             render: (text) => {
-                return text.toFixed(decimalPoints);
+                return (
+                    <SeverityScoreHover
+                        score={parseFloat(text)}
+                        decimalPoints={decimalPoints}
+                    />
+                );
             },
         },
         {
@@ -686,7 +692,7 @@ export default function SeverityPage() {
                             className="relative"
                         >
                             <div className="absolute right-6">
-                            <DownloadButton elementId="severity-network" />
+                                <DownloadButton elementId="severity-network" />
                             </div>
                             <div id="severity-network">
                                 <SeverityNetWork data1={dataSet} />

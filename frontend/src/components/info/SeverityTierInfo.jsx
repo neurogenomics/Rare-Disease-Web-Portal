@@ -9,6 +9,7 @@ export default function SeverityTierInfo() {
         return (
             <>
                 <p>{info}</p>
+                <p className="mt-1">Hover over any tag for detailed information.</p>
                 <p className="mt-1">
                     <span className="font-semibold">More information:</span>{" "}
                     <Tooltip title={<i>medRxiv: Harnessing generative AI to annotate the severity of all phenotypic abnormalities within the Human Phenotype Ontology</i>} placement="bottom">
@@ -31,7 +32,7 @@ export default function SeverityTierInfo() {
         <>
             <Popover
                 content={popoverContent}
-                styles={{ root: { maxWidth: "300px" } }}
+                styles={{ root: { maxWidth: "350px" } }}
             >
                 <InfoOutlined fontSize="inherit" />
             </Popover>

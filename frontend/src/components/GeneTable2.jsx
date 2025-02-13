@@ -228,7 +228,7 @@ const PhenotypeTableDisease = (hpid) => {
 
     return (
         <Spin spinning={loading}>
-            {data.length > 0 && (
+            {data && data.length > 0 && (
                 <>
                     <Button
                         style={{ float: "right", width: 50 }}

@@ -305,3 +305,15 @@ def fetch_severity_dataByHpoIdNew(hpoId: str):
         document["id"] = str(document.pop("_id"))
         results.append(document)
     return results
+
+
+def fetch_severity_scores():
+    """
+    Fetch all severity scores.
+
+    Returns:
+        List of all the severity scores.
+    """
+    cursor = severity.find(projection={"severity_score_gpt": 1})
+    scores = [float(document["severity_score_gpt"]) for document in cursor]
+    return scores

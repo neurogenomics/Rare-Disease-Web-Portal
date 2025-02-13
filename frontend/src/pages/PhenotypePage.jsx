@@ -23,6 +23,7 @@ import { SettingsOutlined } from "@mui/icons-material";
 import SeverityTierHover from "../components/info/SeverityTierHover.jsx";
 import SeverityTierInfo from "../components/info/SeverityTierInfo.jsx";
 import SeverityScoreInfo from "../components/info/SeverityScoreInfo.jsx";
+import SeverityScoreHover from "../components/info/SeverityScoreHover.jsx";
 import LinkHPOID from "../components/link/LinkHPOID.jsx";
 
 const { Header, Content, Sider } = Layout;
@@ -119,7 +120,7 @@ export default function phenotypePage() {
                     </>
                 ),
                 key: "5",
-                children: result1[0].severity_score_gpt.toFixed(decimalPoints) || <NotFound />,
+                children: <SeverityScoreHover score={result1[0].severity_score_gpt} decimalPoints={decimalPoints} /> || <NotFound />,
             });
             itemsTemp.push({
                 label: (

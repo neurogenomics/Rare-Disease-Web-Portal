@@ -26,6 +26,7 @@ import NotFound from "../components/utilities/Texts.jsx";
 import SeverityTierHover from "../components/info/SeverityTierHover.jsx";
 import SeverityTierInfo from "../components/info/SeverityTierInfo.jsx";
 import SeverityScoreInfo from "../components/info/SeverityScoreInfo.jsx";
+import SeverityScoreHover from "../components/info/SeverityScoreHover.jsx";
 import formatText from "../scripts/formatText.js";
 
 const suitsDta =
@@ -207,15 +208,14 @@ export default function CelltypePage() {
     const jump = searchParams.get("jump");
 
     const [sliderValues, setSliderValues] = useState({
-        db_type: (db_type) ? db_type : "DescartesHuman",
+        db_type: db_type ? db_type : "DescartesHuman",
         q: "0.05",
         fold_change: "1",
-        celltype_name: (jump) ? jump : "All",
+        celltype_name: jump ? jump : "All",
     });
     const [activeCellType, setActiveCellType] = useState("");
 
     useEffect(() => {
-        
         console.log(searchParams, db_type, jump);
 
         if (db_type) {
@@ -330,8 +330,15 @@ export default function CelltypePage() {
             key: "severity_score_gpt",
             sorter: (a, b) => a.severity_score_gpt - b.severity_score_gpt,
             render: (text) => {
-                return parseFloat(text).toFixed(decimalPoints);
-            },
+                if (isNaN(parseFloat(text))) {
+                    return <i className="text-gray-400">NA</i>;
+                }
+                return (
+                <SeverityScoreHover
+                    score={parseFloat(text)}
+                    decimalPoints={decimalPoints}
+                />
+            )},
         },
         {
             title: (

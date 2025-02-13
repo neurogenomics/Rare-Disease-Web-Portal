@@ -9,6 +9,7 @@ export default function SeverityScoreInfo() {
         return (
             <>
                 <p>{info}</p>
+                <p className="mt-1">Hover over any score for detailed distribution.</p>
                 <p className="mt-1">
                     <span className="font-semibold">More information:</span>{" "}
                     <Tooltip title={<i>medRxiv: Harnessing generative AI to annotate the severity of all phenotypic abnormalities within the Human Phenotype Ontology</i>} placement="bottom">
