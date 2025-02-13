@@ -19,6 +19,8 @@ import CustomFooter from "../components/utilities/Footer.jsx";
 import NotFound from "../components/utilities/Texts.jsx";
 import { LaunchOutlined, SettingsOutlined } from "@mui/icons-material";
 import CustomHeader from "../components/utilities/Header.jsx";
+import CellAtlasInfo from "../components/info/CellAtlasInfo.jsx";
+import CellAtlasSelectionInfo from "../components/info/CellAtlasSelectionInfo.jsx";
 
 const { Header, Content, Sider } = Layout;
 
@@ -184,167 +186,173 @@ export default function phenotypePage() {
 
     return (
         <>
-        <CustomHeader activePageKey="gene" />
-        <Layout
-            style={{
-                minHeight: "100vh",
-                backgroundColor: "#0F172AFF",
-            }}
-        >
-            <Sider
-                style={{ background: "#0F172AFF", margin: 20 }}
-                width={400}
-                collapsed={collapsed}
-                onCollapse={(value) => setCollapsed(value)}
+            <CustomHeader activePageKey="gene" />
+            <Layout
+                style={{
+                    minHeight: "100vh",
+                    backgroundColor: "#0F172AFF",
+                }}
             >
-                <div className="demo-logo-vertical" />
-                <h1
-                    style={{
-                        fontSize: "1.1em",
-                        fontWeight: "bold",
-                        color: "#FFFFFF",
-                    }}
+                <Sider
+                    style={{ background: "#0F172AFF", margin: 20 }}
+                    width={400}
+                    collapsed={collapsed}
+                    onCollapse={(value) => setCollapsed(value)}
                 >
-                    Select database
-                </h1>
-                <hr style={{ marginBottom: 7, border: "none" }} />
-                <Radio.Group
-                    buttonStyle="solid"
-                    value={size}
-                    onChange={handleSizeChange}
-                >
-                    <Radio.Button style={{ width: 200 }} value="DescartesHuman">
-                        DescartesHuman
-                    </Radio.Button>
-                    <Radio.Button
-                        style={{ width: 200 }}
-                        value="HumanCellLandscape"
-                    >
-                        HumanCellLandscape
-                    </Radio.Button>
-                </Radio.Group>
-                <br />
-                <br />
-                <PhenotypeTree onGetData={getData} />
-                <Collapse
-                    items={advancedSettingsMain}
-                    size="small"
-                    style={{ background: colorBgContainer }}
-                />
-            </Sider>
-            <Layout>
-                <Content
-                    style={{
-                        margin: "0 16px",
-                    }}
-                >
-                    <Breadcrumb
+                    <div className="demo-logo-vertical" />
+                    <h1
                         style={{
-                            margin: "16px 0",
+                            fontSize: "1.1em",
+                            fontWeight: "bold",
+                            color: "#FFFFFF",
                         }}
                     >
-                        <Breadcrumb.Item href={"/"}>Home</Breadcrumb.Item>
-                        <Breadcrumb.Item>Search by Gene</Breadcrumb.Item>
-                    </Breadcrumb>
-                    <Card
-                        style={{
-                            width: "100%",
-                        }}
+                        Cell Atlases <CellAtlasInfo />
+                    </h1>
+                    <hr style={{ marginBottom: 7, border: "none" }} />
+                    <Radio.Group
+                        buttonStyle="solid"
+                        value={size}
+                        onChange={handleSizeChange}
                     >
-                        <p>
-                            Genes are linked to cell types and phenotypes,
-                            revealing their role in rare diseases. This page
-                            provides visualizations of gene-cell
-                            type, gene-disease, and gene-phenotype
-                            relationships.
-                        </p>
-                    </Card>
+                        <Radio.Button
+                            style={{ width: 200 }}
+                            value="DescartesHuman"
+                        >
+                            <CellAtlasSelectionInfo atlasName="DescartesHuman" />
+                        </Radio.Button>
+                        <Radio.Button
+                            style={{ width: 200 }}
+                            value="HumanCellLandscape"
+                        >
+                            <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
+                        </Radio.Button>
+                    </Radio.Group>
                     <br />
-                    {gene != null ? (
-                        <div
+                    <br />
+                    <PhenotypeTree onGetData={getData} />
+                    <Collapse
+                        items={advancedSettingsMain}
+                        size="small"
+                        style={{ background: colorBgContainer }}
+                    />
+                </Sider>
+                <Layout>
+                    <Content
+                        style={{
+                            margin: "0 16px",
+                        }}
+                    >
+                        <Breadcrumb
                             style={{
-                                padding: 24,
-                                minHeight: 360,
-                                background: colorBgContainer,
-                                borderRadius: borderRadiusLG,
+                                margin: "16px 0",
                             }}
                         >
-                            <h2
+                            <Breadcrumb.Item href={"/"}>Home</Breadcrumb.Item>
+                            <Breadcrumb.Item>Search by Gene</Breadcrumb.Item>
+                        </Breadcrumb>
+                        <Card
+                            style={{
+                                width: "100%",
+                            }}
+                        >
+                            <p>
+                                Genes are linked to cell types and phenotypes,
+                                revealing their role in rare diseases. This page
+                                provides visualizations of gene-cell type,
+                                gene-disease, and gene-phenotype relationships.
+                            </p>
+                        </Card>
+                        <br />
+                        {gene != null ? (
+                            <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: "bold",
-                                    color: "#6357d3",
+                                    padding: 24,
+                                    minHeight: 360,
+                                    background: colorBgContainer,
+                                    borderRadius: borderRadiusLG,
                                 }}
                             >
-                                {dataRef != null ? dataRef.name : ""}
-                            </h2>
-                            <Descriptions
-                                column={1}
-                                size={"small"}
-                                labelStyle={{
-                                    color: "#0f172a",
-                                    width: "200px",
-                                }}
-                                style={{
-                                    margin: "16px 0",
-                                }}
-                                bordered
-                                items={desItem}
-                            />
+                                <h2
+                                    style={{
+                                        fontSize: 22,
+                                        fontWeight: "bold",
+                                        color: "#6357d3",
+                                    }}
+                                >
+                                    {dataRef != null ? dataRef.name : ""}
+                                </h2>
+                                <Descriptions
+                                    column={1}
+                                    size={"small"}
+                                    labelStyle={{
+                                        color: "#0f172a",
+                                        width: "200px",
+                                    }}
+                                    style={{
+                                        margin: "16px 0",
+                                    }}
+                                    bordered
+                                    items={desItem}
+                                />
 
-                            <Tabs
-                                onChange={onChange}
-                                type="card"
-                                items={new Array(3).fill(null).map((_, i) => {
-                                    let id = String(i + 1);
-                                    if (i === 0) {
-                                        id = "Cell Associations";
-                                        return {
-                                            label: `${id}`,
-                                            key: id,
-                                            children: (
-                                                <PhenotypeTableDisease2
-                                                    hpid={gene}
-                                                    dbType={size}
-                                                    decimalPoints={decimalPoints}
-                                                />
-                                            ),
-                                        };
-                                    }
-                                    if (i === 1) {
-                                        id = "Disease Associations";
-                                        return {
-                                            label: `${id}`,
-                                            key: id,
-                                            children: (
-                                                <PhenotypeTableDisease1
-                                                    hpid={data}
-                                                />
-                                            ),
-                                        };
-                                    }
-                                    if (i === 2) {
-                                        id = "HPO Associations";
-                                        return {
-                                            label: `${id}`,
-                                            key: id,
-                                            children: (
-                                                <PhenotypeTableDisease
-                                                    hpid={data}
-                                                />
-                                            ),
-                                        };
-                                    }
-                                })}
-                            />
-                        </div>
-                    ) : (
-                        selectGeneAlert()
-                    )}
-                </Content>
-                <CustomFooter />
+                                <Tabs
+                                    onChange={onChange}
+                                    type="card"
+                                    items={new Array(3)
+                                        .fill(null)
+                                        .map((_, i) => {
+                                            let id = String(i + 1);
+                                            if (i === 0) {
+                                                id = "Cell Associations";
+                                                return {
+                                                    label: `${id}`,
+                                                    key: id,
+                                                    children: (
+                                                        <PhenotypeTableDisease2
+                                                            hpid={gene}
+                                                            dbType={size}
+                                                            decimalPoints={
+                                                                decimalPoints
+                                                            }
+                                                        />
+                                                    ),
+                                                };
+                                            }
+                                            if (i === 1) {
+                                                id = "Disease Associations";
+                                                return {
+                                                    label: `${id}`,
+                                                    key: id,
+                                                    children: (
+                                                        <PhenotypeTableDisease1
+                                                            hpid={data}
+                                                        />
+                                                    ),
+                                                };
+                                            }
+                                            if (i === 2) {
+                                                id = "HPO Associations";
+                                                return {
+                                                    label: `${id}`,
+                                                    key: id,
+                                                    children: (
+                                                        <PhenotypeTableDisease
+                                                            hpid={data}
+                                                        />
+                                                    ),
+                                                };
+                                            }
+                                        })}
+                                />
+                            </div>
+                        ) : (
+                            selectGeneAlert()
+                        )}
+                    </Content>
+                    <CustomFooter />
+                </Layout>
             </Layout>
-        </Layout>
         </>
     );
 }

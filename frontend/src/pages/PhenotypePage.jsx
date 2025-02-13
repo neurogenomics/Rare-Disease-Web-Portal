@@ -25,6 +25,8 @@ import SeverityTierInfo from "../components/info/SeverityTierInfo.jsx";
 import SeverityScoreInfo from "../components/info/SeverityScoreInfo.jsx";
 import SeverityScoreHover from "../components/info/SeverityScoreHover.jsx";
 import LinkHPOID from "../components/link/LinkHPOID.jsx";
+import CellAtlasInfo from "../components/info/CellAtlasInfo.jsx";
+import CellAtlasSelectionInfo from "../components/info/CellAtlasSelectionInfo.jsx";
 
 const { Header, Content, Sider } = Layout;
 
@@ -212,7 +214,7 @@ export default function phenotypePage() {
                             color: "#FFFFFF",
                         }}
                     >
-                        Select database
+                        Cell Atlases <CellAtlasInfo />
                     </h1>
                     <hr style={{ marginBottom: 7, border: "none" }} />
                     <Radio.Group
@@ -224,13 +226,13 @@ export default function phenotypePage() {
                             style={{ width: 200 }}
                             value="DescartesHuman"
                         >
-                            DescartesHuman
+                            <CellAtlasSelectionInfo atlasName="DescartesHuman" />
                         </Radio.Button>
                         <Radio.Button
                             style={{ width: 200 }}
                             value="HumanCellLandscape"
                         >
-                            HumanCellLandscape
+                            <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
                         </Radio.Button>
                     </Radio.Group>
                     <br />

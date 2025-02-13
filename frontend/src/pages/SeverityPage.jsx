@@ -28,6 +28,8 @@ import SeverityScoreInfo from "../components/info/SeverityScoreInfo.jsx";
 import SeverityScoreHover from "../components/info/SeverityScoreHover.jsx";
 import DownloadButton from "../components/utilities/Download.jsx";
 import formatText from "../scripts/formatText.js";
+import CellAtlasInfo from "../components/info/CellAtlasInfo.jsx";
+import CellAtlasSelectionInfo from "../components/info/CellAtlasSelectionInfo.jsx";
 
 const { Header, Content, Sider } = Layout;
 
@@ -47,7 +49,7 @@ export default function SeverityPage() {
 
     useEffect(() => {
         handleSubmit();
-    }, [tableParams.pagination?.current]);
+    }, [tableParams.pagination?.current, tableParams.pagination?.pageSize]);
 
     const handleTableChange = async (pagination, filters, sorter) => {
         setTableParams({
@@ -56,9 +58,6 @@ export default function SeverityPage() {
             sortOrder: Array.isArray(sorter) ? undefined : sorter.order,
             sortField: Array.isArray(sorter) ? undefined : sorter.field,
         });
-        if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-            setData([]);
-        }
     };
     const handleDecimalChange = (decimalPoints) => {
         setDecimalPoints(decimalPoints);
@@ -85,7 +84,7 @@ export default function SeverityPage() {
 
         data1.push({
             key: "2",
-            date: "IntellectualDisability",
+            date: "Intellectual Disability",
             name: record.intellectual_disability_justification,
             upgradeNum:
                 record.intellectual_disability === 0
@@ -111,7 +110,7 @@ export default function SeverityPage() {
         });
         data1.push({
             key: "4",
-            date: "ImpairedMobility",
+            date: "Impaired Mobility",
             name: record.impaired_mobility_justification,
             upgradeNum:
                 record.impaired_mobility === 0
@@ -124,7 +123,7 @@ export default function SeverityPage() {
         });
         data1.push({
             key: "5",
-            date: "PhysicalMalformations",
+            date: "Physical Malformations",
             name: record.physical_malformations_justification,
             upgradeNum:
                 record.physical_malformations === 0
@@ -150,7 +149,7 @@ export default function SeverityPage() {
         });
         data1.push({
             key: "7",
-            date: "SensoryImpairments",
+            date: "Sensory Impairments",
             name: record.sensory_impairments_justification,
             upgradeNum:
                 record.sensory_impairments === 0
@@ -189,7 +188,7 @@ export default function SeverityPage() {
         });
         data1.push({
             key: "10",
-            date: "ReducedFertility",
+            date: "Reduced Fertility",
             name: record.reduced_fertility_justification,
             upgradeNum:
                 record.reduced_fertility === 0
@@ -202,7 +201,7 @@ export default function SeverityPage() {
         });
         data1.push({
             key: "11",
-            date: "CongenitalOnset",
+            date: "Congenital Onset",
             name: record.congenital_onset_justification,
             upgradeNum:
                 record.congenital_onset === 0
@@ -235,9 +234,6 @@ export default function SeverityPage() {
             title: "HPO ID",
             dataIndex: "hpo_id",
             key: "hpo_id",
-            sorter: (a, b) =>
-                a.hpo_id.substring("HP:".length) -
-                b.hpo_id.substring("HP:".length),
             render: (text) => {
                 return (
                     <a
@@ -254,7 +250,6 @@ export default function SeverityPage() {
             title: "HPO Name",
             dataIndex: "hpo_name",
             key: "hpo_name",
-            sorter: (a, b) => a.hpo_name.localeCompare(b.hpo_name),
         },
         {
             title: (
@@ -264,7 +259,6 @@ export default function SeverityPage() {
             ),
             dataIndex: "severity_score_gpt",
             key: "severity_score_gpt",
-            sorter: (a, b) => a.severity_score_gpt - b.severity_score_gpt,
             render: (text) => {
                 return (
                     <SeverityScoreHover
@@ -287,21 +281,21 @@ export default function SeverityPage() {
             },
         },
         {
-            title: "Most Associated Celltype",
+            title: "Most Associated Cell Type",
             dataIndex: "celltype_name",
             key: "celltype_name",
-            sorter: (a, b) => {
-                const aCelltype = a.celltype_name ? a.celltype_name : "";
-                const bCelltype = b.celltype_name ? b.celltype_name : "";
-                return aCelltype.localeCompare(bCelltype);
-            },
-            render: (text) => (text ? formatText(text) : <i>None</i>),
+            render: (text) => (text ? formatText(text) : <i className ="text-gray-700">None</i>),
         },
         {
-            title: "Celltype Database",
+            title: (
+                <>
+                    Cell Atlas <CellAtlasInfo columnMode={true}/>
+                </>
+            ),
             dataIndex: "celltype_database",
             key: "celltype_database",
-            render: (text) => (text ? text : <i>NA</i>),
+            width: 170,
+            render: (text) => <CellAtlasSelectionInfo atlasName={text} columnMode={true}/>,
         },
     ];
     const [sliderValues, setSliderValues] = useState({
@@ -649,7 +643,6 @@ export default function SeverityPage() {
                     <Content
                         style={{
                             margin: "0 16px",
-                            overflow: "auto",
                         }}
                     >
                         <Breadcrumb
@@ -685,7 +678,7 @@ export default function SeverityPage() {
                         <div
                             style={{
                                 padding: 24,
-                                minHeight: 360,
+                                paddingBottom: 0,
                                 background: colorBgContainer,
                                 borderRadius: borderRadiusLG,
                             }}
@@ -702,7 +695,6 @@ export default function SeverityPage() {
                                 {" "}
                                 <Table
                                     pagination={tableParams.pagination}
-                                    style={{ height: 500 }}
                                     columns={columns}
                                     expandable={{
                                         expandedRowRender,
