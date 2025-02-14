@@ -3,6 +3,7 @@ import { Tree, Input, Tooltip } from "antd";
 import axios from "axios";
 import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
 import { Close } from "@mui/icons-material";
+import { debounce } from "lodash";
 
 const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
@@ -51,9 +52,11 @@ class SearchTree extends React.Component {
             },
         ],
         first_load: true,
+        loading: true,
     };
     constructor(props) {
         super(props);
+        this.onChange = debounce(this.onChange.bind(this), 500);
     }
     componentDidMount() {
         if (jump) {
@@ -62,19 +65,19 @@ class SearchTree extends React.Component {
         this.onFirstLoad(this.state.selectedKeys, {});
     }
 
+    checkData = (param) => {
+        const urlData = `${BASE_API_URL}/api/cellByHpoid1?hpo_id=${param}&db_type=${this.props.dbType}&dry_run=true`
+        return axios.get(urlData).then((response) => {
+            if (response.data) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+    };
+
     fetchData = (param) => {
         const url = `${ONTOLOGY_API_URL}/api/hp/terms/${param}/children`;
-
-        const checkData = (param) => {
-            const urlData = `${BASE_API_URL}/api/cellByHpoid1?hpo_id=${param}&db_type=${this.props.dbType}&dry_run=true`
-            return axios.get(urlData).then((response) => {
-                if (response.data) {
-                    return true;
-                } else {
-                    return false;
-                }
-            });
-        };
 
         return axios.get(url).then((response) => {
             const children = response.data;
@@ -93,7 +96,7 @@ class SearchTree extends React.Component {
                         if (childResponse.data.length === 0) {
                             item.isLeaf = true; // If no children, then it's a leaf
                         }
-                        item.hasData = await checkData(item.id);
+                        item.hasData = await this.checkData(item.id);
                         return item;
                     })
                     .catch((e) => {
@@ -104,6 +107,7 @@ class SearchTree extends React.Component {
             });
 
             return Promise.all(childPromises).then(updatedItems => {
+                this.setState({ loading: false });
                 return updatedItems;
             });
         })
@@ -145,16 +149,42 @@ class SearchTree extends React.Component {
     };
 
     onChange = (e) => {
+        if (e.target.value === "") {
+            e.target.value = "Phenotypic Abnormality";
+        }
         let res = [];
         const url = `${ONTOLOGY_API_URL}/api/hp/search?q=${e.target.value}&limit=50`;
+        this.setState({ loading: true });
 
-        return axios.get(url).then((response) => {
+        axios.get(url).then((response) => {
             for (let i = 0; i < response.data.terms.length; i++) {
                 let item = response.data.terms[i];
-                res.push({ key: item.id, title: item.name });
+                res.push({ key: item.id, title: item.name, isLeaf: false });
             }
-            this.setState({
-                gData: res,
+
+            // Check if each child has further children by making another API call
+            const childPromises = res.map(item => {
+                const childUrl = `${ONTOLOGY_API_URL}/api/hp/terms/${item.key}/children`;
+                return axios.get(childUrl)
+                    .then(async childResponse => {
+                        if (childResponse.data.length === 0) {
+                            item.isLeaf = true; // If no children, then it's a leaf
+                        }
+                        item.hasData = await this.checkData(item.key);
+                        return item;
+                    })
+                    .catch((e) => {
+                        item.isLeaf = true; // If API call fails, consider it a leaf
+                        console.warn("Failed to fetch children for", item.key, "Error:", e);
+                        return item;
+                    });
+            });
+
+            Promise.all(childPromises).then(updatedItems => {
+                this.setState({
+                    gData: updatedItems,
+                    loading: false,
+                });
             });
         });
     };
@@ -238,16 +268,37 @@ class SearchTree extends React.Component {
         return axios.get(url).then((response) => {
             for (let i = 0; i < response.data.terms.length; i++) {
                 let item = response.data.terms[i];
-                res.push({ key: item.id, title: item.name });
+                res.push({ key: item.id, title: item.name, isLeaf: false });
             }
-            this.setState({
-                gData: res,
+
+            // Check if each child has further children by making another API call
+            const childPromises = res.map(item => {
+                const childUrl = `${ONTOLOGY_API_URL}/api/hp/terms/${item.key}/children`;
+                return axios.get(childUrl)
+                    .then(async childResponse => {
+                        if (childResponse.data.length === 0) {
+                            item.isLeaf = true; // If no children, then it's a leaf
+                        }
+                        item.hasData = await this.checkData(item.key);
+                        return item;
+                    })
+                    .catch((e) => {
+                        item.isLeaf = true; // If API call fails, consider it a leaf
+                        console.warn("Failed to fetch children for", item.key, "Error:", e);
+                        return item;
+                    });
+            });
+
+            Promise.all(childPromises).then(updatedItems => {
+                this.setState({
+                    gData: updatedItems,
+                });
             });
         });
     };
 
     render() {
-        let { expandedKeys, selectedKeys, autoExpandParent, gData } =
+        let { expandedKeys, selectedKeys, autoExpandParent, gData, loading } =
             this.state;
         generateList(gData);
         return (
@@ -257,6 +308,7 @@ class SearchTree extends React.Component {
                     placeholder="Search phenotype tree"
                     onChange={this.onChange}
                     onSearch={this.onSearch}
+                    loading={loading}
                 />
                 <div
                     style={{
