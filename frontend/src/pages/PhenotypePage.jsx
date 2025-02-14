@@ -130,6 +130,7 @@ export default function phenotypePage() {
                     <SeverityScoreHover
                         score={result1[0].severity_score_gpt}
                         decimalPoints={decimalPoints}
+                        showPercentile={true}
                     />
                 ) || <NotFound />,
             });

@@ -6,7 +6,7 @@ import { ArrowDropDown } from "@mui/icons-material";
 import axios from "axios";
 
 
-export default function SeverityScoreHover({ score, decimalPoints }) {
+export default function SeverityScoreHover({ score, decimalPoints, showPercentile = false }) {
     const [scoresRef, setScores] = useState([]);
 
     useEffect(() => {
@@ -143,7 +143,10 @@ export default function SeverityScoreHover({ score, decimalPoints }) {
 
     return (
         <Popover content={popoverContent} title="Severity Score Distribution" placement="right">
-            <div className="text-purple-900">{score.toFixed(decimalPoints)}</div>
+            <div className="text-purple-900">
+                {score.toFixed(decimalPoints)}{" "}
+                {showPercentile && ` (${calculatePercentile(scoresRef, score)} Percentile)`}
+            </div>
         </Popover>
     )
 }
