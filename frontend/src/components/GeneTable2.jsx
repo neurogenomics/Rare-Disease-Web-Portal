@@ -4,22 +4,86 @@ import { Spin, Button, Input, Space, Table } from "antd";
 import Highlighter from "react-highlight-words";
 import { Column } from "@ant-design/plots";
 import { BASE_API_URL } from "../../config.js";
+import formatText from "../scripts/formatText.js";
+import truncateText from "../scripts/truncateText.js";
+import ExpressionSpecificityInfo from "./info/ExpressionSpecificityInfo.jsx";
+import { render } from "@react-three/fiber";
 
 const DemoColumn = (data) => {
     const chartRef = useRef();
-    useEffect(() => {
-        console.log({ chartRef });
-    }, []);
+
     const config = {
         data: data.data,
         xField: "celltype",
         yField: "expression_specificity",
-        height: 800,
-        slider: {
-            x: {
-                values: [0, 0.1],
-            },
-        },
+        axis: {
+                    x: {
+                        title: "Cell Type",
+                        labelFormatter: (v) => {
+                                            return truncateText(formatText(v), 30);
+                                        },
+                    },
+                    y: {
+                        title: "Gene Expression Specificity",
+                    },
+                },
+                interaction: {
+                    tooltip: {
+                        render: (e, { title, items }) => {
+                            return (
+                                <div key={title}>
+                                    <div className="text-xs">
+                                        <span className="font-semibold">
+                                            Cell Type:{" "}
+                                        </span>
+                                        {formatText(title)}
+                                    </div>
+                                    {items.map((item) => {
+                                        const { value, color } = item;
+                                        return (
+                                            // eslint-disable-next-line react/jsx-key
+                                            <div>
+                                                <div
+                                                    style={{
+                                                        margin: 10,
+                                                        display: "flex",
+                                                        justifyContent: "space-between",
+                                                    }}
+                                                >
+                                                    <div>
+                                                        <span
+                                                            style={{
+                                                                display: "inline-block",
+                                                                width: 6,
+                                                                height: 6,
+                                                                borderRadius: "50%",
+                                                                backgroundColor: color,
+                                                                marginRight: 6,
+                                                            }}
+                                                        />
+                                                        <span>
+                                                            Gene Expression Specificity:{" "}
+                                                            <b>
+                                                                {value.toFixed(
+                                                                    data.decimalPoints
+                                                                )}
+                                                            </b>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                    <div className="italic">
+                                        A higher value indicates that the gene likely 
+                                        plays a more important role in the cell type.
+                                    </div>
+                                </div>
+                            );
+                        },
+                    },
+                },
+        
     };
     return <Column {...config} ref={chartRef} />;
 };
@@ -33,12 +97,12 @@ const PhenotypeTableDisease = (hpid) => {
     const fetchData = () => {
         setLoading(true);
         let hppp = hpid.hpid;
-        console.log("hpid changehhhhhhhh", hppp);
-        console.log("hpid change", JSON.stringify(hpid));
         fetch(`${BASE_API_URL}/gene/${hppp}/${hpid.dbType}`)
             .then((res) => res.json())
             .then((results) => {
-                debugger;
+                results = results.filter(
+                    (item) => item.expression_specificity > 0.00001
+                ); // Filter out cell types with practically no specificity
                 results.sort((a, b) => {
                     return b.expression_specificity - a.expression_specificity;
                 });
@@ -49,7 +113,6 @@ const PhenotypeTableDisease = (hpid) => {
 
     useEffect(() => {
         fetchData();
-        console.log("Props changed:", hpid);
     }, [hpid]);
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -180,10 +243,14 @@ const PhenotypeTableDisease = (hpid) => {
             sorter: (a, b) => a.celltype.localeCompare(b.celltype),
             sortDirections: ["ascend", "descend"],
             ...getColumnSearchProps("celltype"),
+            render: (text) => formatText(text),
         },
-
         {
-            title: "Expression Specificity",
+            title: (
+                            <>
+                                Gene Expression Specificity <ExpressionSpecificityInfo />
+                            </>
+                        ),
             dataIndex: "expression_specificity",
             key: "expression_specificity",
             ...getColumnSearchProps("expression_specificity"),
@@ -238,7 +305,7 @@ const PhenotypeTableDisease = (hpid) => {
                         onClick={download}
                     />
                     <br />
-                    <DemoColumn data={data} />
+                    <DemoColumn data={data} decimalPoints={hpid.decimalPoints} />
                 </>
             )}
             <Table

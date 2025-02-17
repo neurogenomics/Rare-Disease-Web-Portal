@@ -3,6 +3,7 @@ import { ResponsiveHeatMapCanvas } from "@nivo/heatmap";
 import { Tooltip } from "antd";
 import { InfoOutlined } from "@mui/icons-material";
 import formatText from "../scripts/formatText";
+import truncateText from "../scripts/truncateText";
 
 const SeverityNetWork = ({ data1 }) => {
     const [data, setData] = useState({});
@@ -43,7 +44,7 @@ const SeverityNetWork = ({ data1 }) => {
                         legend: "HPO Names",
                         legendPosition: "middle",
                         legendOffset: -250,
-                        format: (value) => truncateLabel(value, 40),
+                        format: (value) => truncateText(value, 40),
                     }}
                     colors={{
                         type: "diverging",

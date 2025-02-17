@@ -13,10 +13,10 @@ import {
     Spin,
     Button,
     Tabs,
-    Tag,
     Card,
     Collapse,
     ConfigProvider,
+    Tooltip,
 } from "antd";
 import { Column } from "@ant-design/plots";
 import { DownloadOutlined, SearchOutlined } from "@ant-design/icons";
@@ -32,29 +32,86 @@ import formatText from "../scripts/formatText.js";
 import CellAtlasInfo from "../components/info/CellAtlasInfo.jsx";
 import CellAtlasSelectionInfo from "../components/info/CellAtlasSelectionInfo.jsx";
 import QValueInfo from "../components/info/QValueInfo.jsx";
+import ExpressionSpecificityInfo from "../components/info/ExpressionSpecificityInfo.jsx";
 
 const suitsDta =
     '[{"source":"Microsoft","target":"Amazon","type":"1"},{"source":"Microsoft","target":"HTC","type":"licensing"},{"source":"Samsung","target":"Apple","type":"suit"},{"source":"Motorola","target":"Apple","type":"suit"},{"source":"Nokia","target":"Apple","type":"resolved"},{"source":"HTC","target":"Apple","type":"suit"},{"source":"Kodak","target":"Apple","type":"suit"},{"source":"Microsoft","target":"Barnes & Noble","type":"suit"},{"source":"Microsoft","target":"Foxconn","type":"suit"},{"source":"Oracle","target":"Google","type":"suit"},{"source":"Apple","target":"HTC","type":"suit"},{"source":"Microsoft","target":"Inventec","type":"suit"},{"source":"Samsung","target":"Kodak","type":"resolved"},{"source":"LG","target":"Kodak","type":"resolved"},{"source":"RIM","target":"Kodak","type":"suit"},{"source":"Sony","target":"LG","type":"suit"},{"source":"Kodak","target":"LG","type":"resolved"},{"source":"Apple","target":"Nokia","type":"resolved"},{"source":"Qualcomm","target":"Nokia","type":"resolved"},{"source":"Apple","target":"Motorola","type":"suit"},{"source":"Microsoft","target":"Motorola","type":"suit"},{"source":"Motorola","target":"Microsoft","type":"suit"},{"source":"Huawei","target":"ZTE","type":"suit"},{"source":"Ericsson","target":"ZTE","type":"suit"},{"source":"Kodak","target":"Samsung","type":"resolved"},{"source":"Apple","target":"Samsung","type":"suit"},{"source":"Kodak","target":"RIM","type":"suit"},{"source":"Nokia","target":"Qualcomm","type":"suit"}]';
 
 const DemoColumn = (data) => {
     const chartRef = useRef();
-    useEffect(() => {
-        console.log({ chartRef });
-    }, []);
     const config = {
         data: data.data,
         xField: "gene",
         yField: "expression_specificity",
-        slider: {
+        axis: {
             x: {
-                values: [0, 0.1],
+                title: "Gene",
+            },
+            y: {
+                title: "Expression Specificity",
+            },
+        },
+        interaction: {
+            tooltip: {
+                render: (e, { title, items }) => {
+                    return (
+                        <div key={title}>
+                            <div className="text-xs">
+                                <span className="font-semibold">
+                                    Gene Name:{" "}
+                                </span>
+                                {formatText(title)}
+                            </div>
+                            {items.map((item) => {
+                                const { value, color } = item;
+                                return (
+                                    // eslint-disable-next-line react/jsx-key
+                                    <div>
+                                        <div
+                                            style={{
+                                                margin: 10,
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                            }}
+                                        >
+                                            <div>
+                                                <span
+                                                    style={{
+                                                        display: "inline-block",
+                                                        width: 6,
+                                                        height: 6,
+                                                        borderRadius: "50%",
+                                                        backgroundColor: color,
+                                                        marginRight: 6,
+                                                    }}
+                                                />
+                                                <span>
+                                                    Expression Specificity:{" "}
+                                                    <b>
+                                                        {value.toFixed(
+                                                            data.decimalPoints
+                                                        )}
+                                                    </b>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                            <div className="italic">
+                                A higher value indicates that the gene likely 
+                                plays a more important role in the cell type.
+                            </div>
+                        </div>
+                    );
+                },
             },
         },
     };
     return <Column {...config} ref={chartRef} />;
 };
 
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 export default function CelltypePage() {
     // Set states
@@ -338,11 +395,12 @@ export default function CelltypePage() {
                     return <i className="text-gray-400">NA</i>;
                 }
                 return (
-                <SeverityScoreHover
-                    score={parseFloat(text)}
-                    decimalPoints={decimalPoints}
-                />
-            )},
+                    <SeverityScoreHover
+                        score={parseFloat(text)}
+                        decimalPoints={decimalPoints}
+                    />
+                );
+            },
         },
         {
             title: (
@@ -357,7 +415,11 @@ export default function CelltypePage() {
             },
         },
         {
-            title: (<>Q-Value <QValueInfo /></>),
+            title: (
+                <>
+                    Q-Value <QValueInfo />
+                </>
+            ),
             dataIndex: "q",
             key: "q",
             sorter: (a, b) => a.q - b.q,
@@ -377,7 +439,11 @@ export default function CelltypePage() {
         },
 
         {
-            title: "Expression Specificity",
+            title: (
+                <>
+                    Expression Specificity <ExpressionSpecificityInfo />
+                </>
+            ),
             dataIndex: "expression_specificity",
             key: "expression_specificity",
             sorter: (a, b) =>
@@ -446,7 +512,9 @@ export default function CelltypePage() {
         )
             .then((res) => res.json())
             .then((results) => {
-                debugger;
+                results = results.filter(
+                    (item) => item.expression_specificity > 0.00001
+                ); // Filter out genes with practically no specificity
                 results.sort((a, b) => {
                     return b.expression_specificity - a.expression_specificity;
                 });
@@ -635,27 +703,28 @@ export default function CelltypePage() {
                                     Radio: {
                                         buttonSolidCheckedBg: "#7944f2",
                                         buttonSolidCheckedHoverBg: "#8a5cf2",
-                                    }
-                                }
-                            }} >
-                        <Radio.Group
-                            buttonStyle="solid"
-                            value={size}
-                            onChange={handleSizeChange}
+                                    },
+                                },
+                            }}
                         >
-                            <Radio.Button
-                                style={{ width: 200 }}
-                                value="DescartesHuman"
+                            <Radio.Group
+                                buttonStyle="solid"
+                                value={size}
+                                onChange={handleSizeChange}
                             >
-                                <CellAtlasSelectionInfo atlasName="DescartesHuman" />
-                            </Radio.Button>
-                            <Radio.Button
-                                style={{ width: 200 }}
-                                value="HumanCellLandscape"
-                            >
-                                <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
-                            </Radio.Button>
-                        </Radio.Group>
+                                <Radio.Button
+                                    style={{ width: 200 }}
+                                    value="DescartesHuman"
+                                >
+                                    <CellAtlasSelectionInfo atlasName="DescartesHuman" />
+                                </Radio.Button>
+                                <Radio.Button
+                                    style={{ width: 200 }}
+                                    value="HumanCellLandscape"
+                                >
+                                    <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
+                                </Radio.Button>
+                            </Radio.Group>
                         </ConfigProvider>
                         <br />
                         <br />
@@ -675,7 +744,13 @@ export default function CelltypePage() {
                                     max="1"
                                     min="0.00000001"
                                     onChange={handleSliderChange}
-                                    addonBefore="Q-Value"
+                                    addonBefore={
+                                        <>
+                                            <Tooltip title="Only the results with q-value below this threhold will be displayed.">
+                                                Q-Value <QValueInfo />
+                                            </Tooltip>
+                                        </>
+                                    }
                                     stringMode
                                 />
                                 <br />
@@ -798,6 +873,7 @@ export default function CelltypePage() {
                                                         showSorterTooltip={true}
                                                         dataSource={data}
                                                         size="small"
+                                                        className="mt-5"
                                                     />
                                                 </Spin>
                                             ),
@@ -823,7 +899,12 @@ export default function CelltypePage() {
                                                         onClick={download}
                                                     />
                                                     <br />
-                                                    <DemoColumn data={data1} />
+                                                    <DemoColumn
+                                                        data={data1}
+                                                        decimalPoints={
+                                                            decimalPoints
+                                                        }
+                                                    />
                                                     <Table
                                                         columns={columns1}
                                                         dataSource={data1}

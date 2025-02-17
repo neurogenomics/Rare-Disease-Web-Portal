@@ -1,26 +1,42 @@
 import React, { useEffect, useRef, useState } from "react";
-import { DownloadOutlined, SearchOutlined } from "@ant-design/icons";
-import { Spin, Button, Input, Space, Table, Modal } from "antd";
-import Highlighter from "react-highlight-words";
+import { DownloadOutlined } from "@ant-design/icons";
+import { Spin, Button, Table } from "antd";
 import { Column } from "@ant-design/plots";
 import { BASE_API_URL } from "../../config.js";
 import formatText from "../scripts/formatText.js";
+import truncateText from "../scripts/truncateText.js";
+import MathJax from "react-mathjax2";
+import QValueInfo from "./info/QValueInfo.jsx";
 
 const DemoColumn = (data) => {
     const chartRef = useRef();
-    useEffect(() => {
-        console.log({ chartRef });
-    }, []);
+    const formula = "-\\log_{10}(\\text{q-value})";
     const config = {
         data: data.data,
         xField: "Cell",
         yField: "q",
+        axis: {
+            x: {
+                title: "Cell Types",
+                labelFormatter: (v) => {
+                    return truncateText(formatText(v), 30);
+                },
+            },
+            y: {
+                title: "Enrichment Significance (-log10(q-value))",
+            },
+        },
         interaction: {
             tooltip: {
                 render: (e, { title, items }) => {
                     return (
                         <div key={title}>
-                            <h4>{title}</h4>
+                            <div className="text-xs">
+                                <span className="font-semibold">
+                                    Cell Type:{" "}
+                                </span>
+                                {formatText(title)}
+                            </div>
                             {items.map((item) => {
                                 const { name, value, color } = item;
                                 return (
@@ -43,14 +59,31 @@ const DemoColumn = (data) => {
                                                         backgroundColor: color,
                                                         marginRight: 6,
                                                     }}
-                                                ></span>
-                                                <span>-log10(q) * -1: &nbsp; </span>
+                                                />
+                                                <MathJax.Context>
+                                                    <span>
+                                                        Enrichment Significance
+                                                        (
+                                                        <MathJax.Node inline>
+                                                            {formula}
+                                                        </MathJax.Node>
+                                                        ): &nbsp;{" "}
+                                                    </span>
+                                                </MathJax.Context>
                                             </div>
-                                            <b>{value}</b>
+                                            <b>
+                                                {value.toFixed(
+                                                    data.decimalPoints
+                                                )}
+                                            </b>
                                         </div>
                                     </div>
                                 );
                             })}
+                            <div className="italic">
+                                A higher value indicates a stronger cell
+                                type-phenotype association.
+                            </div>
                         </div>
                     );
                 },
@@ -58,24 +91,7 @@ const DemoColumn = (data) => {
         },
         height: 570,
     };
-    return <Column {...config} ref={chartRef} />;
-};
-
-const DemoColumn1 = (data) => {
-    const chartRef = useRef();
-    useEffect(() => {
-        console.log({ chartRef });
-    }, []);
-    const config = {
-        data: data.data,
-        xField: "gene",
-        yField: "expression_specificity",
-        slider: {
-            x: {
-                values: [0, 1],
-            },
-        },
-    };
+    ``;
     return <Column {...config} ref={chartRef} />;
 };
 
@@ -87,32 +103,10 @@ const PhenotypeTableDisease = (hpid) => {
     const [loading, setLoading] = useState(false);
 
     const [chart, setChart] = useState([]);
-    const [data1, setData1] = useState([]);
 
-    const columns1 = [
-        {
-            title: "Gene Name",
-            dataIndex: "gene",
-            key: "gene",
-            width: "30%",
-            sorter: (a, b) => a.gene.length - b.gene.length,
-        },
-
-        {
-            title: "Expression Specificity",
-            dataIndex: "expression_specificity",
-            key: "expression_specificity",
-            sorter: (a, b) =>
-                a.expression_specificity - b.expression_specificity,
-            sortDirections: ["descend", "ascend"],
-        },
-    ];
-    
     const fetchData = () => {
         setLoading(true);
         let hppp = hpid.hpid;
-        console.log("hpid changehhhhhhhh", hppp);
-        console.log("hpid change", JSON.stringify(hpid));
         fetch(
             `${BASE_API_URL}/api/cellByHpoid1?hpo_id=${hppp}&db_type=${hpid.dbType}`
         )
@@ -167,133 +161,14 @@ const PhenotypeTableDisease = (hpid) => {
             fetchData();
         }
     }, [hpid]);
-    const handleSearch = (selectedKeys, confirm, dataIndex) => {
-        confirm();
-        setSearchText(selectedKeys[0]);
-        setSearchedColumn(dataIndex);
-    };
-    const handleReset = (clearFilters) => {
-        clearFilters();
-        setSearchText("");
-    };
-    const getColumnSearchProps = (dataIndex) => ({
-        filterDropdown: ({
-            setSelectedKeys,
-            selectedKeys,
-            confirm,
-            clearFilters,
-            close,
-        }) => (
-            <div
-                style={{
-                    padding: 8,
-                }}
-                onKeyDown={(e) => e.stopPropagation()}
-            >
-                <Input
-                    ref={searchInput}
-                    placeholder={`Search ${dataIndex}`}
-                    value={selectedKeys[0]}
-                    onChange={(e) =>
-                        setSelectedKeys(e.target.value ? [e.target.value] : [])
-                    }
-                    onPressEnter={() =>
-                        handleSearch(selectedKeys, confirm, dataIndex)
-                    }
-                    style={{
-                        marginBottom: 8,
-                        display: "block",
-                    }}
-                />
-                <Space>
-                    <Button
-                        type="primary"
-                        onClick={() =>
-                            handleSearch(selectedKeys, confirm, dataIndex)
-                        }
-                        icon={<SearchOutlined />}
-                        size="small"
-                        style={{
-                            width: 90,
-                        }}
-                    >
-                        Search
-                    </Button>
-                    <Button
-                        onClick={() =>
-                            clearFilters && handleReset(clearFilters)
-                        }
-                        size="small"
-                        style={{
-                            width: 90,
-                        }}
-                    >
-                        Reset
-                    </Button>
-                    <Button
-                        type="link"
-                        size="small"
-                        onClick={() => {
-                            confirm({
-                                closeDropdown: false,
-                            });
-                            setSearchText(selectedKeys[0]);
-                            setSearchedColumn(dataIndex);
-                        }}
-                    >
-                        Filter
-                    </Button>
-                    <Button
-                        type="link"
-                        size="small"
-                        onClick={() => {
-                            close();
-                        }}
-                    >
-                        close
-                    </Button>
-                </Space>
-            </div>
-        ),
-        filterIcon: (filtered) => (
-            <SearchOutlined
-                style={{
-                    color: filtered ? "#1677ff" : undefined,
-                }}
-            />
-        ),
-        onFilter: (value, record) =>
-            record[dataIndex]
-                .toString()
-                .toLowerCase()
-                .includes(value.toLowerCase()),
-        onFilterDropdownOpenChange: (visible) => {
-            if (visible) {
-                setTimeout(() => searchInput.current?.select(), 100);
-            }
-        },
-        render: (text) =>
-            searchedColumn === dataIndex ? (
-                <Highlighter
-                    highlightStyle={{
-                        backgroundColor: "#ffc069",
-                        padding: 0,
-                    }}
-                    searchWords={[searchText]}
-                    autoEscape
-                    textToHighlight={text ? text.toString() : ""}
-                />
-            ) : (
-                text
-            ),
-    });
+
     const columns = [
         {
             title: "Cell Type",
             dataIndex: "celltype_name",
             key: "celltype_name",
             sorter: (a, b) => a.celltype_name.localeCompare(b.celltype_name),
-            sortDirections: ['ascend', 'descend'],
+            sortDirections: ["ascend", "descend"],
             render: (text, record) => {
                 return (
                     <a
@@ -306,18 +181,16 @@ const PhenotypeTableDisease = (hpid) => {
                 );
             },
         },
-        // {
-        //     title: "HPO ID",
-        //     dataIndex: "hpo_id",
-        //     key: "hpo_id",
-        //     sorter: (a, b) => a.hpo_id.localeCompare(b.hpo_id),
-        // },
         {
-            title: "Q-Value",
+            title: (
+                <>
+                    Q-Value <QValueInfo />
+                </>
+            ),
             dataIndex: "q",
             key: "q",
             sorter: (a, b) => a.q - b.q,
-            sortDirections: ['ascend', 'descend'],
+            sortDirections: ["ascend", "descend"],
             render: (num) => num.toFixed(hpid.decimalPoints),
         },
     ];
@@ -402,46 +275,6 @@ const PhenotypeTableDisease = (hpid) => {
         URL.revokeObjectURL(elink.href);
         document.body.removeChild(elink);
     };
-    const download1 = () => {
-        var canvas = document.getElementsByTagName("canvas")[1];
-        let svg0 = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "svg"
-        );
-        svg0.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-        svg0.setAttribute("version", "1.1");
-        svg0.setAttribute("height", "880");
-        svg0.setAttribute("width", "1920");
-        let img3 = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "image"
-        );
-        img3.href.baseVal = canvas.toDataURL("image/png");
-        img3.setAttribute("height", "880");
-        svg0.appendChild(img3);
-        let h = svg0.outerHTML;
-        let data =
-            "data:image/svg+xml;base64," +
-            window.btoa(unescape(encodeURIComponent(h)));
-        const elink = document.createElement("a");
-        elink.download = "Cell Associations";
-        elink.style.display = "none";
-        elink.href = data;
-        document.body.appendChild(elink);
-        elink.click();
-        URL.revokeObjectURL(elink.href);
-        document.body.removeChild(elink);
-    };
-
-    const [visiable, setVisiable] = useState(false);
-
-    const onOk = () => {
-        console.log("编写自己的onOk逻辑");
-        closeModal();
-    };
-    const closeModal = () => {
-        setVisiable(false);
-    };
 
     return (
         <>
@@ -456,7 +289,10 @@ const PhenotypeTableDisease = (hpid) => {
                             onClick={download}
                         />
                         <br />
-                        <DemoColumn data={chart} />
+                        <DemoColumn
+                            data={chart}
+                            decimalPoints={hpid.decimalPoints}
+                        />
                     </>
                 )}
                 <Table
@@ -471,28 +307,6 @@ const PhenotypeTableDisease = (hpid) => {
                     showSorterTooltip={true}
                 />
             </Spin>
-            <Modal
-                title="Gene Associations"
-                width={1000}
-                open={visiable}
-                onOk={onOk}
-                onCancel={closeModal}
-                afterClose={closeModal}
-            >
-                <Spin spinning={loading}>
-                    {" "}
-                    <Button
-                        style={{ float: "right", width: 50 }}
-                        type="primary"
-                        icon={<DownloadOutlined />}
-                        size="small"
-                        onClick={download1}
-                    />
-                    <br />
-                    <DemoColumn1 data={data1} />
-                    <Table columns={columns1} dataSource={data1} size="small" />
-                </Spin>
-            </Modal>
         </>
     );
 };

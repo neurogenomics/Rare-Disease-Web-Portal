@@ -1,6 +1,4 @@
 import pprint
-from annotated_types.test_cases import cases
-from model import SeverityData
 from pymongo import MongoClient
 from config import MONGODB_URI
 
@@ -34,6 +32,7 @@ def fetch_hpoADJ_full():
 def fetch_gene1(
     Gene_name: str,
     db_type: str,
+    expression_specificity_threshold: float = 0.00001,
 ):
     """
     Fetch documents from the gene1 collection based on the Gene_name and db_type.
@@ -41,11 +40,12 @@ def fetch_gene1(
     Args:
         Gene_name (str): The name of the gene to query.
         db_type (str): The type of database to query.
+        expression_specificity_threshold (float): Minimum expression specificity threshold.
 
     Returns:
         List of documents matching the query.
     """
-    query = {"celltype": Gene_name}
+    query = {"celltype": Gene_name, "expression_specificity": {"$gt": expression_specificity_threshold},}
     if Gene_name == "All":
         query = {}
     if db_type == "DescartesHuman":
