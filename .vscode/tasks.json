@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "kill-vite",
+            "type": "shell",
+            "command": "kill $(ps aux | grep 'vite ./' | awk '{print $2}')",
+            "problemMatcher": []
+        }
+    ]
+}

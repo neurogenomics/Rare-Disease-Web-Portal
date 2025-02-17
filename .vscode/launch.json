@@ -24,6 +24,7 @@
                 "run",
                 "dev"
             ],
+            "preLaunchTask": "kill-vite"
         },
         {
             "name": "API",

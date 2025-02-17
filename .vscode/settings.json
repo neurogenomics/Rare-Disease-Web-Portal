@@ -1,3 +1,6 @@
 {
-    "prettier.tabWidth": 4
+    "prettier.tabWidth": 4,
+    "common-intellisense.ui": [
+        "antd5"
+    ]
 }
