@@ -52,8 +52,6 @@ class SearchTree extends React.Component {
     }
 
     onSelect = (selectedKeys, info) => {
-        console.log("selected", selectedKeys, info);
-        console.log("selected", this.props);
         this.props.onGetData(selectedKeys[0], info);
         console.log(this.state.expandedKeys);
     };
@@ -120,7 +118,7 @@ class SearchTree extends React.Component {
             },
         }
         this.onChange(e);
-    }
+    };
 
     loop = (data) =>
         data.map((item) => {
@@ -150,16 +148,19 @@ class SearchTree extends React.Component {
 
     render() {
         let { expandedKeys, autoExpandParent, gData, loading } = this.state;
+        console.log("prop1");
         generateList(gData);
         return (
-            <div style={{ marginBottom: "16px" }}>
-                <Search
-                    style={{ marginBottom: 16 }}
-                    placeholder="Search gene name"
-                    onChange={this.onChange}
-                    onSearch={this.onSearch}
-                    loading={loading}
-                />
+            <div className="space-y-4 mb-4">
+                <div ref={this.props.tourRefs[0]}>
+                    <Search
+                        placeholder="Search gene name"
+                        onChange={this.onChange}
+                        onSearch={this.onSearch}
+                        loading={loading}
+                    />
+                </div>
+                <div ref={this.props.tourRefs[1]}>
                 <div
                     style={{
                         background: "#fff",
@@ -167,6 +168,7 @@ class SearchTree extends React.Component {
                         borderRadius: "4px",
                     }}
                 >
+                    
                     <p className="font-semibold m-0.5 mb-2 ml-2">
                         Genes Names
                     </p>
@@ -178,6 +180,7 @@ class SearchTree extends React.Component {
                     >
                         {this.loop(gData)}
                     </Tree>
+                    </div>
                 </div>
             </div>
         );

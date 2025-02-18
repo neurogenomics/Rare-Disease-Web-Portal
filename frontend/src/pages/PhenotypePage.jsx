@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     Breadcrumb,
     Layout,
@@ -27,8 +27,10 @@ import SeverityScoreHover from "../components/info/SeverityScoreHover.jsx";
 import LinkHPOID from "../components/link/LinkHPOID.jsx";
 import CellAtlasInfo from "../components/info/CellAtlasInfo.jsx";
 import CellAtlasSelectionInfo from "../components/info/CellAtlasSelectionInfo.jsx";
+import PageIntro from "../components/PageIntro.jsx";
+import { HPOTextTooltip } from "../components/info/TextTooltips.jsx";
 
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 const items = [
     {
@@ -56,6 +58,26 @@ export default function phenotypePage() {
 
     const [desItem, setDesItem] = useState(items);
     const [decimalPoints, setDecimalPoints] = useState(3);
+
+    // Tour
+    const tourRefAtlas = useRef(null);
+    const tourRefSearch = useRef(null);
+    const tourRefSelect = useRef(null);
+
+    const tourSteps = [
+        {
+            key: "atlas-search",
+            target: () => tourRefAtlas.current,
+        },
+        {
+            key: "phenotype-search",
+            target: () => tourRefSearch.current,
+        },
+        {
+            key: "phenotype-select",
+            target: () => tourRefSelect.current,
+        },
+    ];
 
     const handleSizeChange = (e) => {
         setSize(e.target.value);
@@ -218,49 +240,52 @@ export default function phenotypePage() {
                     collapsed={collapsed}
                     onCollapse={(value) => setCollapsed(value)}
                 >
-                    <div className="demo-logo-vertical" />
-                    <h1
-                        style={{
-                            fontSize: "1.1em",
-                            fontWeight: "bold",
-                            color: "#FFFFFF",
-                        }}
-                    >
-                        Cell Atlases <CellAtlasInfo />
-                    </h1>
-                    <hr style={{ marginBottom: 7, border: "none" }} />
-                    <ConfigProvider
-                        theme={{
-                            components: {
-                                Radio: {
-                                    buttonSolidCheckedBg: "#7944f2",
-                                    buttonSolidCheckedHoverBg: "#8a5cf2",
-                                },
-                            },
-                        }}
-                    >
-                        <Radio.Group
-                            buttonStyle="solid"
-                            value={size}
-                            onChange={handleSizeChange}
+                    <div ref={tourRefAtlas} className="mb-4">
+                        <h1
+                            style={{
+                                fontSize: "1.1em",
+                                fontWeight: "bold",
+                                color: "#FFFFFF",
+                            }}
                         >
-                            <Radio.Button
-                                style={{ width: 200 }}
-                                value="DescartesHuman"
+                            Cell Atlases <CellAtlasInfo />
+                        </h1>
+                        <hr style={{ marginBottom: 7, border: "none" }} />
+                        <ConfigProvider
+                            theme={{
+                                components: {
+                                    Radio: {
+                                        buttonSolidCheckedBg: "#7944f2",
+                                        buttonSolidCheckedHoverBg: "#8a5cf2",
+                                    },
+                                },
+                            }}
+                        >
+                            <Radio.Group
+                                buttonStyle="solid"
+                                value={size}
+                                onChange={handleSizeChange}
                             >
-                                <CellAtlasSelectionInfo atlasName="DescartesHuman" />
-                            </Radio.Button>
-                            <Radio.Button
-                                style={{ width: 200 }}
-                                value="HumanCellLandscape"
-                            >
-                                <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
-                            </Radio.Button>
-                        </Radio.Group>
-                    </ConfigProvider>
-                    <br />
-                    <br />
-                    <PhenotypeTree onGetData={getData} dbType={size} />
+                                <Radio.Button
+                                    style={{ width: 200 }}
+                                    value="DescartesHuman"
+                                >
+                                    <CellAtlasSelectionInfo atlasName="DescartesHuman" />
+                                </Radio.Button>
+                                <Radio.Button
+                                    style={{ width: 200 }}
+                                    value="HumanCellLandscape"
+                                >
+                                    <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
+                                </Radio.Button>
+                            </Radio.Group>
+                        </ConfigProvider>
+                    </div>
+                    <PhenotypeTree
+                        onGetData={getData}
+                        dbType={size}
+                        tourRefs={[tourRefSearch, tourRefSelect]}
+                    />
                     <Collapse
                         items={advancedSettingsMain}
                         size="small"
@@ -271,6 +296,7 @@ export default function phenotypePage() {
                     <Content
                         style={{
                             margin: "0 16px",
+                            minWidth: "50rem",
                         }}
                     >
                         <Breadcrumb
@@ -289,100 +315,110 @@ export default function phenotypePage() {
                             }}
                         >
                             <p>
-                                Each phenotype in the HPO is linked to specific
-                                cell types and genes, allowing researchers to
-                                explore the underlying biological mechanisms.
-                                The relationships between phenotypes and cell
-                                types are based on statistical significance,
-                                with stronger associations highlighted. This
-                                page enables users to search for any phenotype
-                                and explore its corresponding data, such as
-                                associated genes and cell types, using dynamic
-                                visualizations like network graphs and bar
-                                charts.
+                                Each phenotype in the{" "}
+                                <HPOTextTooltip type="full" /> is linked to
+                                specific cell types and genes, allowing
+                                researchers to explore the underlying biological
+                                mechanisms. The relationships between phenotypes
+                                and cell types are based on statistical
+                                significance, with stronger associations
+                                highlighted. This page enables users to search
+                                for any phenotype and explore its corresponding
+                                data, such as associated genes and cell types,
+                                using dynamic visualizations like network graphs
+                                and bar charts.
                             </p>
                         </Card>
                         <br />
 
-                        <div
-                            style={{
-                                padding: 24,
-                                minHeight: 560,
-                                background: colorBgContainer,
-                                borderRadius: borderRadiusLG,
-                            }}
-                        >
-                            <h2
+                        {data ? (
+                            <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: "bold",
-                                    color: "#6357d3",
+                                    padding: 24,
+                                    minHeight: 560,
+                                    background: colorBgContainer,
+                                    borderRadius: borderRadiusLG,
                                 }}
                             >
-                                {dataRef != null ? dataRef : "All"}
-                            </h2>
-                            <Descriptions
-                                column={1}
-                                size={"small"}
-                                labelStyle={{
-                                    color: "#0f172a",
-                                    width: "200px",
-                                }}
-                                style={{
-                                    margin: "16px 0",
-                                }}
-                                bordered
-                                items={desItem}
-                            />
+                                <h2
+                                    style={{
+                                        fontSize: 22,
+                                        fontWeight: "bold",
+                                        color: "#6357d3",
+                                    }}
+                                >
+                                    {dataRef != null ? dataRef : "All"}
+                                </h2>
+                                <Descriptions
+                                    column={1}
+                                    size={"small"}
+                                    labelStyle={{
+                                        color: "#0f172a",
+                                        width: "200px",
+                                    }}
+                                    style={{
+                                        margin: "16px 0",
+                                    }}
+                                    bordered
+                                    items={desItem}
+                                />
 
-                            <Tabs
-                                onChange={onChange}
-                                type="card"
-                                items={new Array(3).fill(null).map((_, i) => {
-                                    let id = String(i + 1);
-                                    if (i === 0) {
-                                        id = "Cell Associations";
-                                        return {
-                                            label: `${id}`,
-                                            key: id,
-                                            children: (
-                                                <PhenotypeTableDisease2
-                                                    hpid={data}
-                                                    dbType={size}
-                                                    decimalPoints={
-                                                        decimalPoints
-                                                    }
-                                                />
-                                            ),
-                                        };
-                                    }
-                                    if (i === 1) {
-                                        id = "Disease Associations";
-                                        return {
-                                            label: `${id}`,
-                                            key: id,
-                                            children: (
-                                                <PhenotypeTableDisease
-                                                    hpid={data}
-                                                />
-                                            ),
-                                        };
-                                    }
-                                    if (i === 2) {
-                                        id = "Gene Associations";
-                                        return {
-                                            label: `${id}`,
-                                            key: id,
-                                            children: (
-                                                <PhenotypeTableDisease1
-                                                    hpid={data}
-                                                />
-                                            ),
-                                        };
-                                    }
-                                })}
+                                <Tabs
+                                    onChange={onChange}
+                                    type="card"
+                                    items={new Array(3)
+                                        .fill(null)
+                                        .map((_, i) => {
+                                            let id = String(i + 1);
+                                            if (i === 0) {
+                                                id = "Cell Associations";
+                                                return {
+                                                    label: `${id}`,
+                                                    key: id,
+                                                    children: (
+                                                        <PhenotypeTableDisease2
+                                                            hpid={data}
+                                                            dbType={size}
+                                                            decimalPoints={
+                                                                decimalPoints
+                                                            }
+                                                        />
+                                                    ),
+                                                };
+                                            }
+                                            if (i === 1) {
+                                                id = "Disease Associations";
+                                                return {
+                                                    label: `${id}`,
+                                                    key: id,
+                                                    children: (
+                                                        <PhenotypeTableDisease
+                                                            hpid={data}
+                                                        />
+                                                    ),
+                                                };
+                                            }
+                                            if (i === 2) {
+                                                id = "Gene Associations";
+                                                return {
+                                                    label: `${id}`,
+                                                    key: id,
+                                                    children: (
+                                                        <PhenotypeTableDisease1
+                                                            hpid={data}
+                                                        />
+                                                    ),
+                                                };
+                                            }
+                                        })}
+                                />
+                            </div>
+                        ) : (
+                            <PageIntro
+                                description="Explore and select a phenotype from the tree on the left to explore its relationships with different cell types, diseases, and genes."
+                                tourSteps={tourSteps}
                             />
-                        </div>
+                        )}
                     </Content>
                     <CustomFooter />
                 </Layout>

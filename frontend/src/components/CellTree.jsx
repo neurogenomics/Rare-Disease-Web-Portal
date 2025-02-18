@@ -45,7 +45,7 @@ class SearchTree extends React.Component {
         autoExpandParent: true,
         gData: [
             {
-                title: "ALL",
+                title: "All Cells",
                 key: "All",
             },
         ],
@@ -83,7 +83,7 @@ class SearchTree extends React.Component {
 
         // Include All if the query is empty or contains All or its equivalent
         if (e === "" || e.toLowerCase() === "all") {
-            res.push({ key: "All", title: "ALL" });
+            res.push({ key: "All", title: "All Cells" });
         }
 
         return axios.get(url).then((response) => {
@@ -140,20 +140,22 @@ class SearchTree extends React.Component {
         }
         return (
             <div style={{ marginBottom: "10px" }}>
+                <div ref={this.props.tourRefs[0]} className="mb-4">
                 <Search
                     // value={searchValue}
-                    style={{ marginBottom: 16 }}
                     placeholder="Search for specific cell type"
                     onChange={this.onChange}
                     onSearch={this.onSearch}
                     loading={loading}
                 />
+                </div>
                 <div
                     style={{
                         background: "#fff",
                         padding: "10px",
                         borderRadius: "4px",
                     }}
+                    ref={this.props.tourRefs[1]}
                 >
                     <p className="font-semibold m-0.5 mb-2 ml-2">Cell Types</p>
                     <Tree
@@ -161,7 +163,7 @@ class SearchTree extends React.Component {
                         onSelect={this.onSelect}
                         expandedKeys={expandedKeys}
                         autoExpandParent={autoExpandParent}
-                        defaultSelectedKeys={(jump) ? [jump] : ["All"]}
+                        defaultSelectedKeys={(jump) ? [jump] : [""]}
                     >
                         {this.loop(gData)}
                     </Tree>

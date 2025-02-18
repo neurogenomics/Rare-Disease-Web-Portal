@@ -7,7 +7,6 @@ import { BASE_API_URL } from "../../config.js";
 import formatText from "../scripts/formatText.js";
 import truncateText from "../scripts/truncateText.js";
 import ExpressionSpecificityInfo from "./info/ExpressionSpecificityInfo.jsx";
-import { render } from "@react-three/fiber";
 
 const DemoColumn = (data) => {
     const chartRef = useRef();
@@ -17,73 +16,72 @@ const DemoColumn = (data) => {
         xField: "celltype",
         yField: "expression_specificity",
         axis: {
-                    x: {
-                        title: "Cell Type",
-                        labelFormatter: (v) => {
-                                            return truncateText(formatText(v), 30);
-                                        },
-                    },
-                    y: {
-                        title: "Gene Expression Specificity",
-                    },
+            x: {
+                title: "Cell Type",
+                labelFormatter: (v) => {
+                    return truncateText(formatText(v), 30);
                 },
-                interaction: {
-                    tooltip: {
-                        render: (e, { title, items }) => {
-                            return (
-                                <div key={title}>
-                                    <div className="text-xs">
-                                        <span className="font-semibold">
-                                            Cell Type:{" "}
-                                        </span>
-                                        {formatText(title)}
-                                    </div>
-                                    {items.map((item) => {
-                                        const { value, color } = item;
-                                        return (
-                                            // eslint-disable-next-line react/jsx-key
+            },
+            y: {
+                title: "Gene Expression Specificity",
+            },
+        },
+        interaction: {
+            tooltip: {
+                render: (e, { title, items }) => {
+                    return (
+                        <div key={title}>
+                            <div className="text-xs">
+                                <span className="font-semibold">
+                                    Cell Type:{" "}
+                                </span>
+                                {formatText(title)}
+                            </div>
+                            {items.map((item) => {
+                                const { value, color } = item;
+                                return (
+                                    // eslint-disable-next-line react/jsx-key
+                                    <div>
+                                        <div
+                                            style={{
+                                                margin: 10,
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                            }}
+                                        >
                                             <div>
-                                                <div
+                                                <span
                                                     style={{
-                                                        margin: 10,
-                                                        display: "flex",
-                                                        justifyContent: "space-between",
+                                                        display: "inline-block",
+                                                        width: 6,
+                                                        height: 6,
+                                                        borderRadius: "50%",
+                                                        backgroundColor: color,
+                                                        marginRight: 6,
                                                     }}
-                                                >
-                                                    <div>
-                                                        <span
-                                                            style={{
-                                                                display: "inline-block",
-                                                                width: 6,
-                                                                height: 6,
-                                                                borderRadius: "50%",
-                                                                backgroundColor: color,
-                                                                marginRight: 6,
-                                                            }}
-                                                        />
-                                                        <span>
-                                                            Gene Expression Specificity:{" "}
-                                                            <b>
-                                                                {value.toFixed(
-                                                                    data.decimalPoints
-                                                                )}
-                                                            </b>
-                                                        </span>
-                                                    </div>
-                                                </div>
+                                                />
+                                                <span>
+                                                    Gene Expression Specificity:{" "}
+                                                    <b>
+                                                        {value.toFixed(
+                                                            data.decimalPoints
+                                                        )}
+                                                    </b>
+                                                </span>
                                             </div>
-                                        );
-                                    })}
-                                    <div className="italic">
-                                        A higher value indicates that the gene likely 
-                                        plays a more important role in the cell type.
+                                        </div>
                                     </div>
-                                </div>
-                            );
-                        },
-                    },
+                                );
+                            })}
+                            <div className="italic">
+                                A higher value indicates that the gene likely
+                                plays a more important role in the cell type.
+                            </div>
+                        </div>
+                    );
                 },
-        
+            },
+        },
     };
     return <Column {...config} ref={chartRef} />;
 };
@@ -247,10 +245,10 @@ const PhenotypeTableDisease = (hpid) => {
         },
         {
             title: (
-                            <>
-                                Gene Expression Specificity <ExpressionSpecificityInfo />
-                            </>
-                        ),
+                <>
+                    Gene Expression Specificity <ExpressionSpecificityInfo />
+                </>
+            ),
             dataIndex: "expression_specificity",
             key: "expression_specificity",
             ...getColumnSearchProps("expression_specificity"),
@@ -259,7 +257,7 @@ const PhenotypeTableDisease = (hpid) => {
             sortDirections: ["descend", "ascend"],
             render: (text) => {
                 return text.toFixed(hpid.decimalPoints);
-            }
+            },
         },
     ];
     const download = () => {
@@ -305,7 +303,10 @@ const PhenotypeTableDisease = (hpid) => {
                         onClick={download}
                     />
                     <br />
-                    <DemoColumn data={data} decimalPoints={hpid.decimalPoints} />
+                    <DemoColumn
+                        data={data}
+                        decimalPoints={hpid.decimalPoints}
+                    />
                 </>
             )}
             <Table

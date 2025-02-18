@@ -33,6 +33,7 @@ import CellAtlasInfo from "../components/info/CellAtlasInfo.jsx";
 import CellAtlasSelectionInfo from "../components/info/CellAtlasSelectionInfo.jsx";
 import QValueInfo from "../components/info/QValueInfo.jsx";
 import ExpressionSpecificityInfo from "../components/info/ExpressionSpecificityInfo.jsx";
+import PageIntro from "../components/PageIntro.jsx";
 
 const suitsDta =
     '[{"source":"Microsoft","target":"Amazon","type":"1"},{"source":"Microsoft","target":"HTC","type":"licensing"},{"source":"Samsung","target":"Apple","type":"suit"},{"source":"Motorola","target":"Apple","type":"suit"},{"source":"Nokia","target":"Apple","type":"resolved"},{"source":"HTC","target":"Apple","type":"suit"},{"source":"Kodak","target":"Apple","type":"suit"},{"source":"Microsoft","target":"Barnes & Noble","type":"suit"},{"source":"Microsoft","target":"Foxconn","type":"suit"},{"source":"Oracle","target":"Google","type":"suit"},{"source":"Apple","target":"HTC","type":"suit"},{"source":"Microsoft","target":"Inventec","type":"suit"},{"source":"Samsung","target":"Kodak","type":"resolved"},{"source":"LG","target":"Kodak","type":"resolved"},{"source":"RIM","target":"Kodak","type":"suit"},{"source":"Sony","target":"LG","type":"suit"},{"source":"Kodak","target":"LG","type":"resolved"},{"source":"Apple","target":"Nokia","type":"resolved"},{"source":"Qualcomm","target":"Nokia","type":"resolved"},{"source":"Apple","target":"Motorola","type":"suit"},{"source":"Microsoft","target":"Motorola","type":"suit"},{"source":"Motorola","target":"Microsoft","type":"suit"},{"source":"Huawei","target":"ZTE","type":"suit"},{"source":"Ericsson","target":"ZTE","type":"suit"},{"source":"Kodak","target":"Samsung","type":"resolved"},{"source":"Apple","target":"Samsung","type":"suit"},{"source":"Kodak","target":"RIM","type":"suit"},{"source":"Nokia","target":"Qualcomm","type":"suit"}]';
@@ -99,7 +100,7 @@ const DemoColumn = (data) => {
                                 );
                             })}
                             <div className="italic">
-                                A higher value indicates that the gene likely 
+                                A higher value indicates that the gene likely
                                 plays a more important role in the cell type.
                             </div>
                         </div>
@@ -121,6 +122,36 @@ export default function CelltypePage() {
     const [decimalPoints, setDecimalPoints] = useState(3);
 
     const ref = useRef();
+
+    // Tour
+    const tourRefAtlas = useRef(null);
+    const tourRefSearch = useRef(null);
+    const tourRefSelect = useRef(null);
+    const tourRefQValue = useRef(null);
+    const tourRefSubmit = useRef(null);
+
+    const tourSteps = [
+        {
+            key: "atlas-search",
+            target: () => tourRefAtlas.current,
+        },
+        {
+            key: "cell-search",
+            target: () => tourRefSearch.current,
+        },
+        {
+            key: "cell-select",
+            target: () => tourRefSelect.current,
+        },
+        {
+            key: "cell-qvalue",
+            target: () => tourRefQValue.current,
+        },
+        {
+            key: "cell-submit",
+            target: () => tourRefSubmit.current,
+        },
+    ];
 
     function NetWork(a, b) {
         var c = a.filter(function (v) {
@@ -272,7 +303,7 @@ export default function CelltypePage() {
         db_type: db_type ? db_type : "DescartesHuman",
         q: "0.05",
         fold_change: "1",
-        celltype_name: jump ? jump : "All",
+        celltype_name: jump ? jump : "",
     });
     const [activeCellType, setActiveCellType] = useState("");
 
@@ -460,12 +491,6 @@ export default function CelltypePage() {
             q: name,
         }));
     };
-    const handleSliderChange1 = (name) => {
-        setSliderValues((prevValues) => ({
-            ...prevValues,
-            fold_change: name,
-        }));
-    };
     const handleDecimalChange = (decimalPoints) => {
         setDecimalPoints(decimalPoints);
     };
@@ -562,7 +587,7 @@ export default function CelltypePage() {
             console.error("Error fetching data:", error);
         }
     };
-    console.log("Form is rendered");
+
     const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer, borderRadiusLG },
@@ -687,6 +712,7 @@ export default function CelltypePage() {
                     onCollapse={(value) => setCollapsed(value)}
                 >
                     <form onSubmit={handleSubmit}>
+                        <div ref={tourRefAtlas} className="mb-4">
                         <h1
                             style={{
                                 fontSize: "1.1em",
@@ -726,14 +752,21 @@ export default function CelltypePage() {
                                 </Radio.Button>
                             </Radio.Group>
                         </ConfigProvider>
-                        <br />
-                        <br />
-                        <PhenotypeTree onGetData={getData} db_type={size} />
+                        </div>
+                        <PhenotypeTree
+                            onGetData={getData}
+                            db_type={size}
+                            tourRefs={[
+                                tourRefSearch,
+                                tourRefSelect,
+                            ]}
+                        />
                         <center>
                             <div style={{ textAlign: "left" }}>
                                 <hr
                                     style={{ marginBottom: 10, border: "none" }}
                                 />
+                                <div ref={tourRefQValue}>
                                 <InputNumber
                                     name="q"
                                     style={{
@@ -753,6 +786,7 @@ export default function CelltypePage() {
                                     }
                                     stringMode
                                 />
+                                </div>
                                 <br />
                                 <br />
                                 <Collapse
@@ -775,6 +809,7 @@ export default function CelltypePage() {
                                         console.log("Button clicked");
                                         handleSubmit(event);
                                     }}
+                                    ref={tourRefSubmit}
                                 >
                                     <p className="font-semibold">Search</p>
                                 </Button>
@@ -788,6 +823,7 @@ export default function CelltypePage() {
                             margin: "0 16px",
                             height: "200px",
                             overflow: "auto",
+                            minWidth: "50rem",
                         }}
                     >
                         <Breadcrumb
@@ -817,107 +853,136 @@ export default function CelltypePage() {
                             </p>
                         </Card>
                         <br />
-                        <div
-                            style={{
-                                padding: 24,
-                                minHeight: 360,
-                                background: colorBgContainer,
-                                borderRadius: borderRadiusLG,
-                            }}
-                        >
-                            <h2
+                        {(activeCellType != "") ? (
+                            <div
                                 style={{
-                                    fontSize: 22,
-                                    fontWeight: "bold",
-                                    color: "#6357d3",
+                                    padding: 24,
+                                    minHeight: 360,
+                                    background: colorBgContainer,
+                                    borderRadius: borderRadiusLG,
                                 }}
                             >
-                                {formatText(activeCellType)}
-                            </h2>
-                            <br />
-                            <Tabs
-                                type="card"
-                                items={new Array(2).fill(null).map((_, i) => {
-                                    let id = String(i + 1);
-                                    if (i === 0) {
-                                        id = "Phenotype Associations";
-                                        return {
-                                            label: `${id}`,
-                                            key: id,
-                                            children: (
-                                                <Spin spinning={loading}>
-                                                    <Button
-                                                        style={{
-                                                            float: "right",
-                                                            width: 50,
-                                                        }}
-                                                        type="primary"
-                                                        icon={
-                                                            <DownloadOutlined />
-                                                        }
-                                                        size="small"
-                                                        onClick={download1}
-                                                    />
-                                                    <br />
-                                                    <svg
-                                                        id={"svgMain"}
-                                                        ref={ref}
-                                                    />
-                                                    <Table
-                                                        columns={columns}
-                                                        expandable={{
-                                                            expandedRowRender,
-                                                            defaultExpandedRowKeys:
-                                                                ["0"],
-                                                        }}
-                                                        showSorterTooltip={true}
-                                                        dataSource={data}
-                                                        size="small"
-                                                        className="mt-5"
-                                                    />
-                                                </Spin>
-                                            ),
-                                        };
-                                    }
-                                    if (i === 1) {
-                                        id = "Gene Associations";
-                                        return {
-                                            label: `${id}`,
-                                            key: id,
-                                            children: (
-                                                <Spin spinning={loading}>
-                                                    <Button
-                                                        style={{
-                                                            float: "right",
-                                                            width: 50,
-                                                        }}
-                                                        type="primary"
-                                                        icon={
-                                                            <DownloadOutlined />
-                                                        }
-                                                        size="small"
-                                                        onClick={download}
-                                                    />
-                                                    <br />
-                                                    <DemoColumn
-                                                        data={data1}
-                                                        decimalPoints={
-                                                            decimalPoints
-                                                        }
-                                                    />
-                                                    <Table
-                                                        columns={columns1}
-                                                        dataSource={data1}
-                                                        size="small"
-                                                        showSorterTooltip={true}
-                                                    />
-                                                </Spin>
-                                            ),
-                                        };
-                                    }
-                                })}
+                                <h2
+                                    style={{
+                                        fontSize: 22,
+                                        fontWeight: "bold",
+                                        color: "#6357d3",
+                                    }}
+                                >
+                                    {formatText(activeCellType)}
+                                </h2>
+                                <br />
+                                <Tabs
+                                    type="card"
+                                    items={new Array(2)
+                                        .fill(null)
+                                        .map((_, i) => {
+                                            let id = String(i + 1);
+                                            if (i === 0) {
+                                                id = "Phenotype Associations";
+                                                return {
+                                                    label: `${id}`,
+                                                    key: id,
+                                                    children: (
+                                                        <Spin
+                                                            spinning={loading}
+                                                        >
+                                                            <Button
+                                                                style={{
+                                                                    float: "right",
+                                                                    width: 50,
+                                                                }}
+                                                                type="primary"
+                                                                icon={
+                                                                    <DownloadOutlined />
+                                                                }
+                                                                size="small"
+                                                                onClick={
+                                                                    download1
+                                                                }
+                                                            />
+                                                            <br />
+                                                            <svg
+                                                                id={"svgMain"}
+                                                                ref={ref}
+                                                            />
+                                                            <Table
+                                                                columns={
+                                                                    columns
+                                                                }
+                                                                expandable={{
+                                                                    expandedRowRender,
+                                                                    defaultExpandedRowKeys:
+                                                                        ["0"],
+                                                                }}
+                                                                showSorterTooltip={
+                                                                    true
+                                                                }
+                                                                dataSource={
+                                                                    data
+                                                                }
+                                                                size="small"
+                                                                className="mt-5"
+                                                            />
+                                                        </Spin>
+                                                    ),
+                                                };
+                                            }
+                                            if (i === 1) {
+                                                id = "Gene Associations";
+                                                return {
+                                                    label: `${id}`,
+                                                    key: id,
+                                                    children: (
+                                                        <Spin
+                                                            spinning={loading}
+                                                        >
+                                                            <Button
+                                                                style={{
+                                                                    float: "right",
+                                                                    width: 50,
+                                                                }}
+                                                                type="primary"
+                                                                icon={
+                                                                    <DownloadOutlined />
+                                                                }
+                                                                size="small"
+                                                                onClick={
+                                                                    download
+                                                                }
+                                                            />
+                                                            <br />
+                                                            <DemoColumn
+                                                                data={data1}
+                                                                decimalPoints={
+                                                                    decimalPoints
+                                                                }
+                                                            />
+                                                            <Table
+                                                                columns={
+                                                                    columns1
+                                                                }
+                                                                dataSource={
+                                                                    data1
+                                                                }
+                                                                size="small"
+                                                                showSorterTooltip={
+                                                                    true
+                                                                }
+                                                            />
+                                                        </Spin>
+                                                    ),
+                                                };
+                                            }
+                                        })}
+                                />
+                            </div>
+                        ) : (
+                            <PageIntro
+                                tourSteps={tourSteps}
+                                description="Search and select a cell type from the list on the left to explore its relationships with different genes and phenotypes."
                             />
-                        </div>
+                        )}
                     </Content>
                     <CustomFooter />
                 </Layout>

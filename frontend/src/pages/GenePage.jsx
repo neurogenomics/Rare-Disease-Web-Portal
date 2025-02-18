@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
     Breadcrumb,
     Layout,
     Tabs,
     theme,
-    Alert,
     Descriptions,
     Radio,
     Card,
@@ -22,8 +21,9 @@ import { LaunchOutlined, SettingsOutlined } from "@mui/icons-material";
 import CustomHeader from "../components/utilities/Header.jsx";
 import CellAtlasInfo from "../components/info/CellAtlasInfo.jsx";
 import CellAtlasSelectionInfo from "../components/info/CellAtlasSelectionInfo.jsx";
+import PageIntro from "../components/PageIntro.jsx";
 
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 const items = [
     {
@@ -53,6 +53,26 @@ export default function phenotypePage() {
     const handleDecimalChange = (decimalPoints) => {
         setDecimalPoints(decimalPoints);
     };
+
+    // Tour
+    const tourRefAtlas = useRef(null);
+    const tourRefSearch = useRef(null);
+    const tourRefSelect = useRef(null);
+
+    const tourSteps = [
+        {
+            key: "atlas-search",
+            target: () => tourRefAtlas.current,
+        },
+        {
+            key: "gene-search",
+            target: () => tourRefSearch.current,
+        },
+        {
+            key: "gene-select",
+            target: () => tourRefSelect.current,
+        }
+    ];
 
     const parseNCBIGeneID = (id, with_link = true) => {
         const prefixString = "NCBIGene:";
@@ -146,19 +166,6 @@ export default function phenotypePage() {
         return false;
     };
 
-    const selectGeneAlert = () => {
-        return (
-            <Alert
-                className="mb-5"
-                width="50%"
-                message="Get Started"
-                description="Search and select a gene from the list on the left to explore its relationships with different cell types, diseases, and phenotypes."
-                type="info"
-                showIcon
-            />
-        );
-    };
-
     // Advanced Settings
     const genExtra = () => <SettingsOutlined />; // Settings icon
     const advancedSettingsChildren = [
@@ -201,7 +208,7 @@ export default function phenotypePage() {
                     collapsed={collapsed}
                     onCollapse={(value) => setCollapsed(value)}
                 >
-                    <div className="demo-logo-vertical" />
+                    <div ref={tourRefAtlas} className="mb-4">
                     <h1
                         style={{
                             fontSize: "1.1em",
@@ -241,9 +248,8 @@ export default function phenotypePage() {
                             </Radio.Button>
                         </Radio.Group>
                     </ConfigProvider>
-                    <br />
-                    <br />
-                    <PhenotypeTree onGetData={getData} />
+                    </div>
+                    <PhenotypeTree tourRefs={[tourRefSearch, tourRefSelect]} onGetData={getData} />
                     <Collapse
                         items={advancedSettingsMain}
                         size="small"
@@ -254,6 +260,7 @@ export default function phenotypePage() {
                     <Content
                         style={{
                             margin: "0 16px",
+                            minWidth: "50rem",
                         }}
                     >
                         <Breadcrumb
@@ -360,7 +367,10 @@ export default function phenotypePage() {
                                 />
                             </div>
                         ) : (
-                            selectGeneAlert()
+                            <PageIntro
+                                description="Search and select a gene from the list on the left to explore its relationships with different cell types, diseases, and phenotypes."
+                                tourSteps={tourSteps}
+                            />
                         )}
                     </Content>
                     <CustomFooter />

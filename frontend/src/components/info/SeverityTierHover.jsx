@@ -2,7 +2,7 @@ import React from "react";
 import { Tag, Popover } from "antd";
 import { Launch } from "@mui/icons-material";
 
-export default function SeverityTierHover({ tier }) {
+export default function SeverityTierHover({ tier, infoOnly = false }) {
     const tiers = {
         0: {
             name: "Mild",
@@ -72,10 +72,11 @@ export default function SeverityTierHover({ tier }) {
                 </div>
                 <div className="space-y-2">
                     {Object.entries(tiers).map(([key, data]) => {
-                        const isCurrent =
+                        const isCurrent = infoOnly ? null :
                             key == tier ||
                             (key === "NA" && inputTier === tiers.NA);
 
+                        if (infoOnly && key == "NA") return;
                         return (
                             <div
                                 key={key}
@@ -98,6 +99,14 @@ export default function SeverityTierHover({ tier }) {
                 </div>
             </>
         );
+    }
+
+    if (infoOnly) {
+        return(
+            <>
+            {popoverContent()}
+            </>
+        )
     }
 
     return (

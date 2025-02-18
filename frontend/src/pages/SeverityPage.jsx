@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SeveritySlider from "../components/SeveritySlider.jsx";
 import SeveritySlider1 from "../components/SeveritySlider1.jsx";
 import SeverityNetWork from "../components/SeverityNetWork.jsx";
@@ -30,6 +30,8 @@ import DownloadButton from "../components/utilities/Download.jsx";
 import formatText from "../scripts/formatText.js";
 import CellAtlasInfo from "../components/info/CellAtlasInfo.jsx";
 import CellAtlasSelectionInfo from "../components/info/CellAtlasSelectionInfo.jsx";
+import { HPOTextTooltip } from "../components/info/TextTooltips.jsx";
+import PageIntro from "../components/PageIntro.jsx";
 
 const { Header, Content, Sider } = Layout;
 
@@ -47,8 +49,39 @@ export default function SeverityPage() {
     const [checkboxAlert, setCheckboxAlert] = useState(false);
     const [decimalPoints, setDecimalPoints] = useState(3);
 
+    // Tour
+    const tourRefSeverity = useRef(null);
+    const tourRefOccurence = useRef(null);
+    const tourRefCellAssociation = useRef(null);
+    const tourRefSubmit = useRef(null);
+
+    const tourSteps = [
+        {
+            key: "severity-tier",
+            target: () => tourRefSeverity.current,
+        },
+        {
+            key: "severity-occurence",
+            target: () => tourRefOccurence.current,
+        },
+        {
+            key: "severity-cell-association",
+            target: () => tourRefCellAssociation.current,
+        },
+        {
+            key: "severity-submit",
+            target: () => tourRefSubmit.current,
+        },
+    ];
+
     useEffect(() => {
-        handleSubmit();
+        if (
+            tableParams.pagination?.current !== 1 ||
+            tableParams.pagination?.pageSize !== 10
+        ) {
+            // Don't submit on first page load
+            handleSubmit();
+        }
     }, [tableParams.pagination?.current, tableParams.pagination?.pageSize]);
 
     const handleTableChange = async (pagination, filters, sorter) => {
@@ -284,18 +317,21 @@ export default function SeverityPage() {
             title: "Most Associated Cell Type",
             dataIndex: "celltype_name",
             key: "celltype_name",
-            render: (text) => (text ? formatText(text) : <i className ="text-gray-700">None</i>),
+            render: (text) =>
+                text ? formatText(text) : <i className="text-gray-700">None</i>,
         },
         {
             title: (
                 <>
-                    Cell Atlas <CellAtlasInfo columnMode={true}/>
+                    Cell Atlas <CellAtlasInfo columnMode={true} />
                 </>
             ),
             dataIndex: "celltype_database",
             key: "celltype_database",
             width: 170,
-            render: (text) => <CellAtlasSelectionInfo atlasName={text} columnMode={true}/>,
+            render: (text) => (
+                <CellAtlasSelectionInfo atlasName={text} columnMode={true} />
+            ),
         },
     ];
     const [sliderValues, setSliderValues] = useState({
@@ -344,10 +380,8 @@ export default function SeverityPage() {
         setLoading(true);
         const queryParams = new URLSearchParams(sliderValues).toString();
         const url = `${BASE_API_URL}/api/severity?${queryParams}&pageSize=${tableParams.pagination?.pageSize}&current=${tableParams.pagination?.current}`;
-        console.log("Submitting request to URL:", url);
         try {
             const response = await axios.get(url);
-            console.log("Response data:", response.data);
 
             // Fetch definitions for each item
             const dataWithDefinitions = await Promise.all(
@@ -421,7 +455,6 @@ export default function SeverityPage() {
         }
     };
 
-    console.log("Form is rendered");
     const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer, borderRadiusLG },
@@ -486,15 +519,17 @@ export default function SeverityPage() {
                                 <p className="text-xl font-semibold text-left mb-2 ml-5">
                                     Filters
                                 </p>
+                                <div ref={tourRefSeverity}>
                                 <SeveritySlider1
-                                    name="Severity Tier"
+                                    name={<>Severity Class</>}
                                     onChange={(value) =>
                                         handleSliderChange(
                                             "severity_class",
                                             value
-                                        )
-                                    }
+                                        )}
                                 />
+                                </div>
+                                <div ref={tourRefOccurence}>
                                 <SeveritySlider
                                     name="Intellectual Disability"
                                     onChange={(value) =>
@@ -576,19 +611,21 @@ export default function SeverityPage() {
                                         )
                                     }
                                 />
+                                </div>
                             </div>
                             <div style={{ margin: 29, textAlign: "left" }}>
+                                <div ref={tourRefCellAssociation} className="mb-4">
                                 {checkboxAlert && (
                                     <Alert
                                         className="mb-5"
-                                        message="Please select atleast one celltype condition."
+                                        message="Please select atleast one cell type condition."
                                         type="error"
                                         showIcon
                                     />
                                 )}
                                 <Checkbox
                                     style={{
-                                        marginBottom: 20,
+                                        marginBottom: 10,
                                         transform: "scale(1.2)",
                                         fontWeight: 400,
                                         marginLeft: 25,
@@ -596,11 +633,10 @@ export default function SeverityPage() {
                                     onChange={onChange}
                                     checked={sliderValues.with1}
                                 >
-                                    With Associated Celltype
+                                    With Associated Cell Type
                                 </Checkbox>
                                 <Checkbox
                                     style={{
-                                        marginBottom: 20,
                                         transform: "scale(1.2)",
                                         fontWeight: 400,
                                         marginLeft: 27,
@@ -608,8 +644,9 @@ export default function SeverityPage() {
                                     onChange={onChange1}
                                     checked={sliderValues.without}
                                 >
-                                    Without Associated Celltype
+                                    Without Associated Cell Type
                                 </Checkbox>
+                                </div>
                             </div>
                             <div style={{ margin: 29 }}>
                                 <Collapse
@@ -629,9 +666,9 @@ export default function SeverityPage() {
                                     type="submit"
                                     block
                                     onClick={(event) => {
-                                        console.log("Button clicked");
                                         handleSubmit(event);
                                     }}
+                                    ref={tourRefSubmit}
                                 >
                                     <p className="font-semibold">Search</p>
                                 </Button>
@@ -643,6 +680,7 @@ export default function SeverityPage() {
                     <Content
                         style={{
                             margin: "0 16px",
+                            minWidth: "50rem",
                         }}
                     >
                         <Breadcrumb
@@ -662,19 +700,22 @@ export default function SeverityPage() {
                             }}
                         >
                             <p>
-                                Each phenotype in the HPO has had its severity
-                                scored. This was done based on a scoring system
-                                derived by clinicians, such that phenotypes
-                                which cause intellectual disability and death
-                                are profoundly severe, while those which just
-                                reduce fertility are mild. Our annotation of
-                                this was described in this preprint.
-                                Justifications for why each phenotype is
-                                associated with a severity modifier, can be seen
-                                by expanding the entries in the table below.
+                                Each phenotype in the{" "}
+                                <HPOTextTooltip type="full" /> has had its
+                                severity scored. This was done based on a
+                                scoring system derived by clinicians, such that
+                                phenotypes which cause intellectual disability
+                                and death are profoundly severe, while those
+                                which just reduce fertility are mild. Our
+                                annotation of this was described in this
+                                preprint. Justifications for why each phenotype
+                                is associated with a severity modifier, can be
+                                seen by expanding the entries in the table
+                                below.
                             </p>
                         </Card>
                         <br />
+                        {data.length > 0 ? (
                         <div
                             style={{
                                 padding: 24,
@@ -706,7 +747,8 @@ export default function SeverityPage() {
                                     showSorterTooltip={true}
                                 />
                             </Spin>
-                        </div>
+                        </div>) : 
+                        <PageIntro description="Search phenotypes by severity tier and frequency of specific clinical characteristics." tourSteps={tourSteps}/>}
                     </Content>
                     <CustomFooter />
                 </Layout>

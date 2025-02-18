@@ -150,7 +150,7 @@ class SearchTree extends React.Component {
 
     onChange = (e) => {
         if (e.target.value === "") {
-            e.target.value = "Phenotypic Abnormality";
+            return;
         }
         let res = [];
         const url = `${ONTOLOGY_API_URL}/api/hp/search?q=${e.target.value}&limit=50`;
@@ -303,19 +303,21 @@ class SearchTree extends React.Component {
         generateList(gData);
         return (
             <div style={{ marginBottom: "20px" }}>
+                <div ref={this.props.tourRefs[0]} className="mb-4">
                 <Search
-                    style={{ marginBottom: 16 }}
                     placeholder="Search phenotype tree"
                     onChange={this.onChange}
                     onSearch={this.onSearch}
                     loading={loading}
                 />
+                </div>
                 <div
                     style={{
                         background: "#fff",
                         padding: "10px",
                         borderRadius: "4px",
                     }}
+                    ref={this.props.tourRefs[1]}
                 >
                     <p className="font-semibold m-0.5 mb-2 ml-2">
                         Phenotype Tree
