@@ -194,7 +194,8 @@ export default function PageIntro({ description, tourSteps = [] }) {
         {
             key: "severity-cell-association",
             title: "Select Cell Type Associations",
-            description: "Filter phenotypes based on their a",
+            description:
+                "Filter phenotypes based on whether they are associated with a specific cell type.",
             placement: "right",
         },
     ];
