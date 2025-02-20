@@ -29,6 +29,8 @@ import CellAtlasInfo from "../components/info/CellAtlasInfo.jsx";
 import CellAtlasSelectionInfo from "../components/info/CellAtlasSelectionInfo.jsx";
 import PageIntro from "../components/PageIntro.jsx";
 import { HPOTextTooltip } from "../components/info/TextTooltips.jsx";
+import { urlParser, urlSetter } from "../scripts/urlHandlers.js";
+
 
 const { Content, Sider } = Layout;
 
@@ -43,9 +45,8 @@ const onChange = (key) => {
     console.log(key);
 };
 export default function phenotypePage() {
-    const searchParams = new URLSearchParams(window.location.search);
-    const jump = searchParams.get("jump");
-    const url_db_type = searchParams.get("db_type");
+    // URL Parsing
+    const { jump, url_db_type } = urlParser("phenotype");
 
     const [collapsed, setCollapsed] = useState(false);
     const {
@@ -177,6 +178,7 @@ export default function phenotypePage() {
     const getData = async (data, info) => {
         setDataRef(info.node.dataRef.title);
         setData(info.node.dataRef.key);
+        urlSetter({ jump: data, db_type: size });
 
         const { itemsTemp } = await fetchData(info.node.dataRef.key);
         setDesItem(itemsTemp);

@@ -2,6 +2,7 @@ import React from "react";
 import { Tree, Input } from "antd";
 import axios from "axios";
 import { ONTOLOGY_API_URL } from "../../config.js";
+import { urlParser } from "../scripts/urlHandlers.js";
 
 const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
@@ -21,19 +22,6 @@ const getParentKey = (title, tree) => {
     return parentKey;
 };
 
-const dataList = [];
-
-const generateList = (data) => {
-    for (let i = 0; i < data.length; i++) {
-        const node = data[i];
-        const key = node.key;
-        dataList.push({ key, title: node.title });
-        if (node.children) {
-            generateList(node.children);
-        }
-    }
-};
-
 class SearchTree extends React.Component {
     state = {
         expandedKeys: ["1"],
@@ -45,6 +33,7 @@ class SearchTree extends React.Component {
                 key: "1",
             },
         ],
+        selectedKeys: [""],
         loading: false,
     };
     constructor(props) {
@@ -53,7 +42,7 @@ class SearchTree extends React.Component {
 
     onSelect = (selectedKeys, info) => {
         this.props.onGetData(selectedKeys[0], info);
-        console.log(this.state.expandedKeys);
+        this.setState({ selectedKeys });
     };
 
     onExpand = (expandedKeys) => {
@@ -71,7 +60,6 @@ class SearchTree extends React.Component {
         const url = `${ONTOLOGY_API_URL}/api/network/search/gene?q=${e}&limit=-1`;
 
         return axios.get(url).then((response) => {
-            console.log("Response data:", response.data.results.length);
             for (let i = 0; i < response.data.results.length; i++) {
                 let item = response.data.results[i];
                 item.key = item.id;
@@ -86,8 +74,6 @@ class SearchTree extends React.Component {
     };
 
     onChange = (e) => {
-        console.log(e);
-        console.log(e.target.value);
         this.setState({
             loading: true,
         });
@@ -95,11 +81,9 @@ class SearchTree extends React.Component {
         const url = `${ONTOLOGY_API_URL}/api/network/search/gene?q=${e.target.value}&limit=100`;
 
         return axios.get(url).then((response) => {
-            console.log("Response data:", response.data.results.length);
             for (let i = 0; i < response.data.results.length; i++) {
                 let item = response.data.results[i];
                 item.key = item.id;
-                // item.title = item.id + " - " + item.name;
                 item.title = item.name;
                 res.push(item);
             }
@@ -111,13 +95,33 @@ class SearchTree extends React.Component {
     };
 
     componentDidMount() {
-        // Search "NCBI" by default
-        let e = {
-            target: {
-                value: "NCBI",
-            },
+        const { jump } = urlParser("gene");
+        if (jump) {
+            let e = {
+                target: {
+                    value: jump,
+                }
+            }
+            const geneId = "NCBIGene:" + jump;
+            let info = {
+                node: {
+                    dataRef: {
+                        key: geneId,
+                        id: geneId,
+                    }
+                }
+            };
+            this.onChange(e);
+            this.onSelect([geneId], info);
+        } else {
+            // Search "NCBI" by default
+            let e = {
+                target: {
+                    value: "NCBI",
+                },
+            }
+            this.onChange(e);
         }
-        this.onChange(e);
     };
 
     loop = (data) =>
@@ -148,8 +152,6 @@ class SearchTree extends React.Component {
 
     render() {
         let { expandedKeys, autoExpandParent, gData, loading } = this.state;
-        console.log("prop1");
-        generateList(gData);
         return (
             <div className="space-y-4 mb-4">
                 <div ref={this.props.tourRefs[0]}>
@@ -176,6 +178,7 @@ class SearchTree extends React.Component {
                         style={{ maxHeight: 500, overflowY: "auto" }}
                         onSelect={this.onSelect}
                         expandedKeys={expandedKeys}
+                        selectedKeys={this.state.selectedKeys}
                         autoExpandParent={autoExpandParent}
                     >
                         {this.loop(gData)}

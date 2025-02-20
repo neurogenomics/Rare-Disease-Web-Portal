@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
     Breadcrumb,
     Layout,
@@ -22,6 +22,7 @@ import CustomHeader from "../components/utilities/Header.jsx";
 import CellAtlasInfo from "../components/info/CellAtlasInfo.jsx";
 import CellAtlasSelectionInfo from "../components/info/CellAtlasSelectionInfo.jsx";
 import PageIntro from "../components/PageIntro.jsx";
+import { urlSetter } from "../scripts/urlHandlers.js";
 
 const { Content, Sider } = Layout;
 
@@ -32,16 +33,12 @@ const items = [
         children: "Root of all terms in the Human Phenotype Ontology.",
     },
 ];
-const onChange = (key) => {
-    console.log(key);
-};
 export default function phenotypePage() {
     const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
-    const [dataRef, setDataRef] = useState(null);
     const [data, setData] = useState(null);
     const [gene, setGene] = useState(null);
     const [size, setSize] = useState("DescartesHuman");
@@ -104,16 +101,10 @@ export default function phenotypePage() {
         if (!info.node.dataRef.id.includes("NCBIGene")) {
             return false;
         }
-        console.log(`data from Child2 - ${info.node.dataRef.id.substring(9)}`);
-        setDataRef(info.node.dataRef);
+
         setData(info.node.dataRef.id);
-        setGene(info.node.dataRef.name);
+        urlSetter({ jump: info.node.dataRef.id.substring(9) });
         let itemsTemp = [];
-        itemsTemp.push({
-            label: "Gene Name",
-            key: "1",
-            children: info.node.dataRef.name,
-        });
         itemsTemp.push({
             label: "NCBI Gene ID",
             key: "1",
@@ -130,6 +121,9 @@ export default function phenotypePage() {
                 for (const resultKey in result.result) {
                     if (resultKey === info.node.dataRef.id.substring(9)) {
                         for (const resultKey1 in result.result[resultKey]) {
+                            if (resultKey1 === "name") {
+                                setGene(result.result[resultKey][resultKey1]);
+                            }
                             if (resultKey1 === "maplocation") {
                                 itemsTemp.push({
                                     label: "Gene Location",
@@ -300,7 +294,7 @@ export default function phenotypePage() {
                                         color: "#6357d3",
                                     }}
                                 >
-                                    {dataRef != null ? dataRef.name : ""}
+                                    {gene}
                                 </h2>
                                 <Descriptions
                                     column={1}
@@ -317,7 +311,6 @@ export default function phenotypePage() {
                                 />
 
                                 <Tabs
-                                    onChange={onChange}
                                     type="card"
                                     items={new Array(3)
                                         .fill(null)

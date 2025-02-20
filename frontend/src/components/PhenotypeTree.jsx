@@ -4,11 +4,12 @@ import axios from "axios";
 import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
 import { Close } from "@mui/icons-material";
 import { debounce } from "lodash";
+import { urlParser } from "../scripts/urlHandlers.js";
 
 const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
-const searchParams = new URLSearchParams(window.location.search);
-let jump = searchParams.get("jump");
+const { jump } = urlParser("phenotype");
+
 
 const getParentKey = (title, tree) => {
     let parentKey;
@@ -127,7 +128,9 @@ class SearchTree extends React.Component {
         }
         this.setState({ selectedKeys });
         this.props.onGetData(selectedKeys[0], info);
-        this.setState({ expandedKeys: [selectedKeys[0]] });
+        this.setState({ 
+            expandedKeys: [...new Set([...this.state.expandedKeys, selectedKeys[0]])]
+        });
     };
 
     onFirstLoad = (selectedKeys, info) => {

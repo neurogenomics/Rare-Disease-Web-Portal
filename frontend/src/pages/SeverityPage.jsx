@@ -32,8 +32,10 @@ import CellAtlasInfo from "../components/info/CellAtlasInfo.jsx";
 import CellAtlasSelectionInfo from "../components/info/CellAtlasSelectionInfo.jsx";
 import { HPOTextTooltip } from "../components/info/TextTooltips.jsx";
 import PageIntro from "../components/PageIntro.jsx";
+import { urlParser, urlSetter } from "../scripts/urlHandlers.js";
+import checkAllNull from "../scripts/checkAllNull.js";
 
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 export default function SeverityPage() {
     const [data, setData] = useState([]);
@@ -48,6 +50,9 @@ export default function SeverityPage() {
     });
     const [checkboxAlert, setCheckboxAlert] = useState(false);
     const [decimalPoints, setDecimalPoints] = useState(3);
+
+    // URL Parser
+    const urlParams = urlParser("severity");
 
     // Tour
     const tourRefSeverity = useRef(null);
@@ -83,6 +88,10 @@ export default function SeverityPage() {
             handleSubmit();
         }
     }, [tableParams.pagination?.current, tableParams.pagination?.pageSize]);
+
+    useEffect(() => {
+        if (!checkAllNull(urlParams)) handleSubmit();
+    }, []);
 
     const handleTableChange = async (pagination, filters, sorter) => {
         setTableParams({
@@ -335,19 +344,19 @@ export default function SeverityPage() {
         },
     ];
     const [sliderValues, setSliderValues] = useState({
-        intellectual_disability: [0, 3],
-        death: [0, 3],
-        impaired_mobility: [0, 3],
-        physical_malformations: [0, 3],
-        blindness: [0, 3],
-        sensory_impairments: [0, 3],
-        immunodeficiency: [0, 3],
-        cancer: [0, 3],
-        reduced_fertility: [0, 3],
-        congenital_onset: [0, 3],
-        severity_class: [0, 3],
-        with1: true,
-        without: true,
+        intellectual_disability: urlParams?.intellectual_disability || [0, 3],
+        death: urlParams?.death || [0, 3],
+        impaired_mobility: urlParams?.impaired_mobility || [0, 3],
+        physical_malformations: urlParams?.physical_malformations || [0, 3],
+        blindness: urlParams?.blindness || [0, 3],
+        sensory_impairments: urlParams?.sensory_impairments || [0, 3],
+        immunodeficiency: urlParams?.immunodeficiency || [0, 3],
+        cancer: urlParams?.cancer || [0, 3],
+        reduced_fertility: urlParams?.reduced_fertility || [0, 3],
+        congenital_onset: urlParams?.congenital_onset || [0, 3],
+        severity_class: urlParams?.severity_class || [0, 3],
+        with1: urlParams?.with1 || true,
+        without: urlParams?.without || true,
     });
 
     const handleSliderChange = (name, value) => {
@@ -450,6 +459,19 @@ export default function SeverityPage() {
                 list.push(item);
             }
             setDataSet(list);
+
+            // Set URL
+            Object.keys(sliderValues).forEach((key) => {
+                if (sliderValues[key].length == 2) {
+                    urlSetter({
+                        [key]:
+                            sliderValues[key][0].toString() +
+                            sliderValues[key][1].toString(),
+                    });
+                } else {
+                    urlSetter({ [key]: sliderValues[key].toString() });
+                }
+            });
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -520,132 +542,164 @@ export default function SeverityPage() {
                                     Filters
                                 </p>
                                 <div ref={tourRefSeverity}>
-                                <SeveritySlider1
-                                    name={<>Severity Class</>}
-                                    onChange={(value) =>
-                                        handleSliderChange(
-                                            "severity_class",
-                                            value
-                                        )}
-                                />
+                                    <SeveritySlider1
+                                        name={<>Severity Class</>}
+                                        onChange={(value) =>
+                                            handleSliderChange(
+                                                "severity_class",
+                                                value
+                                            )
+                                        }
+                                        startValue={sliderValues.severity_class}
+                                    />
                                 </div>
                                 <div ref={tourRefOccurence}>
-                                <SeveritySlider
-                                    name="Intellectual Disability"
-                                    onChange={(value) =>
-                                        handleSliderChange(
-                                            "Intellectual Disability",
-                                            value
-                                        )
-                                    }
-                                />
-                                <SeveritySlider
-                                    name="Death"
-                                    onChange={(value) =>
-                                        handleSliderChange("Death", value)
-                                    }
-                                />
-                                <SeveritySlider
-                                    name="Impaired Mobility"
-                                    onChange={(value) =>
-                                        handleSliderChange(
-                                            "Impaired Mobility",
-                                            value
-                                        )
-                                    }
-                                />
-                                <SeveritySlider
-                                    name="Physical Malformations"
-                                    onChange={(value) =>
-                                        handleSliderChange(
-                                            "Physical Malformations",
-                                            value
-                                        )
-                                    }
-                                />
-                                <SeveritySlider
-                                    name="Blindness"
-                                    onChange={(value) =>
-                                        handleSliderChange("Blindness", value)
-                                    }
-                                />
-                                <SeveritySlider
-                                    name="Sensory Impairments"
-                                    onChange={(value) =>
-                                        handleSliderChange(
-                                            "Sensory Impairments",
-                                            value
-                                        )
-                                    }
-                                />
-                                <SeveritySlider
-                                    name="Immunodeficiency"
-                                    onChange={(value) =>
-                                        handleSliderChange(
-                                            "Immunodeficiency",
-                                            value
-                                        )
-                                    }
-                                />
-                                <SeveritySlider
-                                    name="Cancer"
-                                    onChange={(value) =>
-                                        handleSliderChange("Cancer", value)
-                                    }
-                                />
-                                <SeveritySlider
-                                    name="Reduced Fertility"
-                                    onChange={(value) =>
-                                        handleSliderChange(
-                                            "Reduced Fertility",
-                                            value
-                                        )
-                                    }
-                                />
-                                <SeveritySlider
-                                    name="Congenital Onset"
-                                    onChange={(value) =>
-                                        handleSliderChange(
-                                            "Congenital Onset",
-                                            value
-                                        )
-                                    }
-                                />
+                                    <SeveritySlider
+                                        name="Intellectual Disability"
+                                        onChange={(value) =>
+                                            handleSliderChange(
+                                                "Intellectual Disability",
+                                                value
+                                            )
+                                        }
+                                        startValue={
+                                            sliderValues.intellectual_disability
+                                        }
+                                    />
+                                    <SeveritySlider
+                                        name="Death"
+                                        onChange={(value) =>
+                                            handleSliderChange("Death", value)
+                                        }
+                                        startValue={sliderValues.death}
+                                    />
+                                    <SeveritySlider
+                                        name="Impaired Mobility"
+                                        onChange={(value) =>
+                                            handleSliderChange(
+                                                "Impaired Mobility",
+                                                value
+                                            )
+                                        }
+                                        startValue={
+                                            sliderValues.impaired_mobility
+                                        }
+                                    />
+                                    <SeveritySlider
+                                        name="Physical Malformations"
+                                        onChange={(value) =>
+                                            handleSliderChange(
+                                                "Physical Malformations",
+                                                value
+                                            )
+                                        }
+                                        startValue={
+                                            sliderValues.physical_malformations
+                                        }
+                                    />
+                                    <SeveritySlider
+                                        name="Blindness"
+                                        onChange={(value) =>
+                                            handleSliderChange(
+                                                "Blindness",
+                                                value
+                                            )
+                                        }
+                                        startValue={sliderValues.blindness}
+                                    />
+                                    <SeveritySlider
+                                        name="Sensory Impairments"
+                                        onChange={(value) =>
+                                            handleSliderChange(
+                                                "Sensory Impairments",
+                                                value
+                                            )
+                                        }
+                                        startValue={
+                                            sliderValues.sensory_impairments
+                                        }
+                                    />
+                                    <SeveritySlider
+                                        name="Immunodeficiency"
+                                        onChange={(value) =>
+                                            handleSliderChange(
+                                                "Immunodeficiency",
+                                                value
+                                            )
+                                        }
+                                        startValue={
+                                            sliderValues.immunodeficiency
+                                        }
+                                    />
+                                    <SeveritySlider
+                                        name="Cancer"
+                                        onChange={(value) =>
+                                            handleSliderChange("Cancer", value)
+                                        }
+                                        startValue={sliderValues.cancer}
+                                    />
+                                    <SeveritySlider
+                                        name="Reduced Fertility"
+                                        onChange={(value) =>
+                                            handleSliderChange(
+                                                "Reduced Fertility",
+                                                value
+                                            )
+                                        }
+                                        startValue={
+                                            sliderValues.reduced_fertility
+                                        }
+                                    />
+                                    <SeveritySlider
+                                        name="Congenital Onset"
+                                        onChange={(value) =>
+                                            handleSliderChange(
+                                                "Congenital Onset",
+                                                value
+                                            )
+                                        }
+                                        startValue={
+                                            sliderValues.congenital_onset
+                                        }
+                                    />
                                 </div>
                             </div>
                             <div style={{ margin: 29, textAlign: "left" }}>
-                                <div ref={tourRefCellAssociation} className="mb-4">
-                                {checkboxAlert && (
-                                    <Alert
-                                        className="mb-5"
-                                        message="Please select atleast one cell type condition."
-                                        type="error"
-                                        showIcon
-                                    />
-                                )}
-                                <Checkbox
-                                    style={{
-                                        marginBottom: 10,
-                                        transform: "scale(1.2)",
-                                        fontWeight: 400,
-                                        marginLeft: 25,
-                                    }}
-                                    onChange={onChange}
-                                    checked={sliderValues.with1}
+                                <div
+                                    ref={tourRefCellAssociation}
+                                    className="mb-4"
                                 >
-                                    With Associated Cell Type
-                                </Checkbox>
-                                <Checkbox
-                                    style={{
-                                        transform: "scale(1.2)",
-                                        fontWeight: 400,
-                                        marginLeft: 27,
-                                    }}
-                                    onChange={onChange1}
-                                    checked={sliderValues.without}
-                                >
-                                    Without Associated Cell Type
-                                </Checkbox>
+                                    {checkboxAlert && (
+                                        <Alert
+                                            className="mb-5"
+                                            message="Please select atleast one cell type condition."
+                                            type="error"
+                                            showIcon
+                                        />
+                                    )}
+                                    <Checkbox
+                                        style={{
+                                            marginBottom: 10,
+                                            transform: "scale(1.2)",
+                                            fontWeight: 400,
+                                            marginLeft: 25,
+                                        }}
+                                        onChange={onChange}
+                                        checked={sliderValues.with1}
+                                    >
+                                        With Associated Cell Type
+                                    </Checkbox>
+                                    <Checkbox
+                                        style={{
+                                            transform: "scale(1.2)",
+                                            fontWeight: 400,
+                                            marginLeft: 27,
+                                        }}
+                                        onChange={onChange1}
+                                        checked={sliderValues.without}
+                                    >
+                                        Without Associated Cell Type
+                                    </Checkbox>
                                 </div>
                             </div>
                             <div style={{ margin: 29 }}>
@@ -715,40 +769,45 @@ export default function SeverityPage() {
                             </p>
                         </Card>
                         <br />
-                        {data.length > 0 ? (
-                        <div
-                            style={{
-                                padding: 24,
-                                paddingBottom: 0,
-                                background: colorBgContainer,
-                                borderRadius: borderRadiusLG,
-                            }}
-                            className="relative"
-                        >
-                            <div className="absolute right-6">
-                                <DownloadButton elementId="severity-network" />
-                            </div>
-                            <div id="severity-network">
-                                <SeverityNetWork data1={dataSet} />
-                            </div>
+                        {data.length > 0 || !checkAllNull(urlParams) ? (
+                            <div
+                                style={{
+                                    padding: 24,
+                                    paddingBottom: 0,
+                                    background: colorBgContainer,
+                                    borderRadius: borderRadiusLG,
+                                }}
+                                className="relative"
+                            >
+                                <div className="absolute right-6">
+                                    <DownloadButton elementId="severity-network" />
+                                </div>
+                                <div id="severity-network">
+                                    <SeverityNetWork data1={dataSet} />
+                                </div>
 
-                            <Spin spinning={loading}>
-                                {" "}
-                                <Table
-                                    pagination={tableParams.pagination}
-                                    columns={columns}
-                                    expandable={{
-                                        expandedRowRender,
-                                        defaultExpandedRowKeys: ["0"],
-                                    }}
-                                    dataSource={data}
-                                    size="small"
-                                    onChange={handleTableChange}
-                                    showSorterTooltip={true}
-                                />
-                            </Spin>
-                        </div>) : 
-                        <PageIntro description="Search phenotypes by severity tier and frequency of specific clinical characteristics." tourSteps={tourSteps}/>}
+                                <Spin spinning={loading}>
+                                    {" "}
+                                    <Table
+                                        pagination={tableParams.pagination}
+                                        columns={columns}
+                                        expandable={{
+                                            expandedRowRender,
+                                            defaultExpandedRowKeys: ["0"],
+                                        }}
+                                        dataSource={data}
+                                        size="small"
+                                        onChange={handleTableChange}
+                                        showSorterTooltip={true}
+                                    />
+                                </Spin>
+                            </div>
+                        ) : (
+                            <PageIntro
+                                description="Search phenotypes by severity tier and frequency of specific clinical characteristics."
+                                tourSteps={tourSteps}
+                            />
+                        )}
                     </Content>
                     <CustomFooter />
                 </Layout>

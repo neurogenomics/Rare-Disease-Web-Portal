@@ -26,8 +26,8 @@ function valuetext(value) {
     return `${value}`;
 }
 
-export default function SeveritySlider({ name, onChange }) {
-    const [value, setValue] = useState([0, 3]);
+export default function SeveritySlider({ name, onChange, startValue }) {
+    const [value, setValue] = useState(startValue);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);

@@ -34,6 +34,7 @@ import CellAtlasSelectionInfo from "../components/info/CellAtlasSelectionInfo.js
 import QValueInfo from "../components/info/QValueInfo.jsx";
 import ExpressionSpecificityInfo from "../components/info/ExpressionSpecificityInfo.jsx";
 import PageIntro from "../components/PageIntro.jsx";
+import { urlParser, urlSetter } from "../scripts/urlHandlers.js";
 
 const suitsDta =
     '[{"source":"Microsoft","target":"Amazon","type":"1"},{"source":"Microsoft","target":"HTC","type":"licensing"},{"source":"Samsung","target":"Apple","type":"suit"},{"source":"Motorola","target":"Apple","type":"suit"},{"source":"Nokia","target":"Apple","type":"resolved"},{"source":"HTC","target":"Apple","type":"suit"},{"source":"Kodak","target":"Apple","type":"suit"},{"source":"Microsoft","target":"Barnes & Noble","type":"suit"},{"source":"Microsoft","target":"Foxconn","type":"suit"},{"source":"Oracle","target":"Google","type":"suit"},{"source":"Apple","target":"HTC","type":"suit"},{"source":"Microsoft","target":"Inventec","type":"suit"},{"source":"Samsung","target":"Kodak","type":"resolved"},{"source":"LG","target":"Kodak","type":"resolved"},{"source":"RIM","target":"Kodak","type":"suit"},{"source":"Sony","target":"LG","type":"suit"},{"source":"Kodak","target":"LG","type":"resolved"},{"source":"Apple","target":"Nokia","type":"resolved"},{"source":"Qualcomm","target":"Nokia","type":"resolved"},{"source":"Apple","target":"Motorola","type":"suit"},{"source":"Microsoft","target":"Motorola","type":"suit"},{"source":"Motorola","target":"Microsoft","type":"suit"},{"source":"Huawei","target":"ZTE","type":"suit"},{"source":"Ericsson","target":"ZTE","type":"suit"},{"source":"Kodak","target":"Samsung","type":"resolved"},{"source":"Apple","target":"Samsung","type":"suit"},{"source":"Kodak","target":"RIM","type":"suit"},{"source":"Nokia","target":"Qualcomm","type":"suit"}]';
@@ -289,40 +290,24 @@ export default function CelltypePage() {
                 [250, 250],
             ])
             .on("zoom", function (event) {
-                console.log(event);
                 svg.attr("transform", event.transform);
             });
         svg.call(zoom);
     }
 
-    const searchParams = new URLSearchParams(window.location.search);
-    const db_type = searchParams.get("db_type");
-    const jump = searchParams.get("jump");
+    // URL Parsing
+    const { jump, db_type, q_value } = urlParser("celltype");
 
     const [sliderValues, setSliderValues] = useState({
-        db_type: db_type ? db_type : "DescartesHuman",
-        q: "0.05",
+        db_type: db_type || "DescartesHuman",
+        q: q_value || "0.05",
         fold_change: "1",
-        celltype_name: jump ? jump : "",
+        celltype_name: jump || "",
     });
     const [activeCellType, setActiveCellType] = useState("");
 
     useEffect(() => {
-        console.log(searchParams, db_type, jump);
-
-        if (db_type) {
-            setSize(db_type);
-            let eve = {
-                db_type: db_type,
-                q: "10",
-                fold_change: "0",
-                celltype_name: jump,
-            };
-            setSliderValues(eve);
-            setActiveCellType(jump);
-            onload(eve);
-        }
-        handleSubmit(); // Submit default key on page load
+        if (jump) handleSubmit();
     }, []);
 
     const expandedRowRender = (record, index, indent, expanded) => {
@@ -496,12 +481,15 @@ export default function CelltypePage() {
     };
     const handleSubmit = async (event) => {
         setLoading(true);
+        urlSetter({
+            jump: sliderValues.celltype_name,
+            db_type: sliderValues.db_type,
+            q_value: sliderValues.q,
+        });
         const queryParams = new URLSearchParams(sliderValues).toString();
         const url = `${BASE_API_URL}/api/cell?${queryParams}`;
-        console.log("Submitting request to URL:", url);
         try {
             const response = await axios.get(url);
-            console.log("Response data:", response.data);
 
             // Fetch definitions for each item
             const dataWithDefinitions = await Promise.all(
@@ -553,10 +541,8 @@ export default function CelltypePage() {
         setLoading(true);
         const queryParams = new URLSearchParams(event).toString();
         const url = `${BASE_API_URL}/api/cell?${queryParams}`;
-        console.log("Submitting request to URL:", url);
         try {
             const response = await axios.get(url);
-            console.log("Response data:", response.data);
 
             // Fetch definitions for each item
             const dataWithDefinitions = await Promise.all(
@@ -592,7 +578,7 @@ export default function CelltypePage() {
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
-    const [size, setSize] = useState("DescartesHuman");
+    const [size, setSize] = useState(db_type || "DescartesHuman");
     const handleSizeChange = (e) => {
         setSize(e.target.value);
         setSliderValues((prevValues) => ({
@@ -601,7 +587,6 @@ export default function CelltypePage() {
         }));
     };
     const getData = (data, info) => {
-        console.log(`data from Child2 - ${info.node.key}`);
         setSliderValues((prevValues) => ({
             ...prevValues,
             celltype_name: info.node.key,
@@ -713,53 +698,51 @@ export default function CelltypePage() {
                 >
                     <form onSubmit={handleSubmit}>
                         <div ref={tourRefAtlas} className="mb-4">
-                        <h1
-                            style={{
-                                fontSize: "1.1em",
-                                fontWeight: "bold",
-                                color: "#FFFFFF",
-                            }}
-                        >
-                            Cell Atlases <CellAtlasInfo />
-                        </h1>
-                        <hr style={{ marginBottom: 7, border: "none" }} />
-                        <ConfigProvider
-                            theme={{
-                                components: {
-                                    Radio: {
-                                        buttonSolidCheckedBg: "#7944f2",
-                                        buttonSolidCheckedHoverBg: "#8a5cf2",
-                                    },
-                                },
-                            }}
-                        >
-                            <Radio.Group
-                                buttonStyle="solid"
-                                value={size}
-                                onChange={handleSizeChange}
+                            <h1
+                                style={{
+                                    fontSize: "1.1em",
+                                    fontWeight: "bold",
+                                    color: "#FFFFFF",
+                                }}
                             >
-                                <Radio.Button
-                                    style={{ width: 200 }}
-                                    value="DescartesHuman"
+                                Cell Atlases <CellAtlasInfo />
+                            </h1>
+                            <hr style={{ marginBottom: 7, border: "none" }} />
+                            <ConfigProvider
+                                theme={{
+                                    components: {
+                                        Radio: {
+                                            buttonSolidCheckedBg: "#7944f2",
+                                            buttonSolidCheckedHoverBg:
+                                                "#8a5cf2",
+                                        },
+                                    },
+                                }}
+                            >
+                                <Radio.Group
+                                    buttonStyle="solid"
+                                    value={size}
+                                    onChange={handleSizeChange}
                                 >
-                                    <CellAtlasSelectionInfo atlasName="DescartesHuman" />
-                                </Radio.Button>
-                                <Radio.Button
-                                    style={{ width: 200 }}
-                                    value="HumanCellLandscape"
-                                >
-                                    <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
-                                </Radio.Button>
-                            </Radio.Group>
-                        </ConfigProvider>
+                                    <Radio.Button
+                                        style={{ width: 200 }}
+                                        value="DescartesHuman"
+                                    >
+                                        <CellAtlasSelectionInfo atlasName="DescartesHuman" />
+                                    </Radio.Button>
+                                    <Radio.Button
+                                        style={{ width: 200 }}
+                                        value="HumanCellLandscape"
+                                    >
+                                        <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
+                                    </Radio.Button>
+                                </Radio.Group>
+                            </ConfigProvider>
                         </div>
                         <PhenotypeTree
                             onGetData={getData}
                             db_type={size}
-                            tourRefs={[
-                                tourRefSearch,
-                                tourRefSelect,
-                            ]}
+                            tourRefs={[tourRefSearch, tourRefSelect]}
                         />
                         <center>
                             <div style={{ textAlign: "left" }}>
@@ -767,25 +750,26 @@ export default function CelltypePage() {
                                     style={{ marginBottom: 10, border: "none" }}
                                 />
                                 <div ref={tourRefQValue}>
-                                <InputNumber
-                                    name="q"
-                                    style={{
-                                        width: "100%",
-                                    }}
-                                    defaultValue="0.005"
-                                    step="0.0005"
-                                    max="1"
-                                    min="0.00000001"
-                                    onChange={handleSliderChange}
-                                    addonBefore={
-                                        <>
-                                            <Tooltip title="Only the results with q-value below this threhold will be displayed.">
-                                                Q-Value <QValueInfo />
-                                            </Tooltip>
-                                        </>
-                                    }
-                                    stringMode
-                                />
+                                    <InputNumber
+                                        name="q"
+                                        style={{
+                                            width: "100%",
+                                        }}
+                                        defaultValue="0.005"
+                                        value={sliderValues.q}
+                                        step="0.005"
+                                        max="1"
+                                        min="0.00001"
+                                        onChange={handleSliderChange}
+                                        addonBefore={
+                                            <>
+                                                <Tooltip title="Only the results with q-value below this threhold will be displayed.">
+                                                    Q-Value <QValueInfo />
+                                                </Tooltip>
+                                            </>
+                                        }
+                                        stringMode
+                                    />
                                 </div>
                                 <br />
                                 <br />
@@ -806,7 +790,6 @@ export default function CelltypePage() {
                                     type="submit"
                                     block
                                     onClick={(event) => {
-                                        console.log("Button clicked");
                                         handleSubmit(event);
                                     }}
                                     ref={tourRefSubmit}
@@ -853,7 +836,7 @@ export default function CelltypePage() {
                             </p>
                         </Card>
                         <br />
-                        {(activeCellType != "") ? (
+                        {activeCellType != "" ? (
                             <div
                                 style={{
                                     padding: 24,
