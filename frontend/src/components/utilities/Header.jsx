@@ -99,8 +99,11 @@ const CustomHeader = ({ activePageKey }) => {
                 style={{
                     background: "#fff",
                     padding: 0,
+                    top: 0,
+                    width: "100%",
                     display: "flex",
                     alignItems: "center",
+                    zIndex: 10,
                 }}
                 theme="light"
             >

@@ -28,7 +28,7 @@ function TextTooltips({ texts, tooltipText, type, moreInfo }) {
             content={tooltipContent}
             styles={{ root: { maxWidth: "400px" } }}
         >
-            <span className="text-purple-900">{texts[type]}</span>
+            <span className="text-purple-900 cursor-help">{texts[type]}</span>
         </Popover>
     );
 }

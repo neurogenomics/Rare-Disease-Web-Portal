@@ -88,28 +88,39 @@ const pointsOuter = Array.from({ length: NUM_POINTS / 4 }, (v, k) => k + 1).map(
     }
 );
 
-function BackgroundAnimation() {
+function BackgroundAnimation({ homePage = false}) {
+    const positions = {
+        camera: homePage ? [-4, -4, 30] : [-6, -6, 20],
+        mesh: homePage ? [12, 1, 0] : [0, 0, 0],
+        light: homePage ? [-30, 20, 0] : [-30, 0, -30],
+    };
+
     return (
-        <div>
+        <>
             <Canvas
                 camera={{
-                    position: [-6, -6, 20],
-                    // position: [-6, -6, 10],
+                    position: positions.camera,
                 }}
-                style={{ height: "100vh" }}
                 className="bg-slate-900"
             >
-                <OrbitControls maxDistance={20} minDistance={10} />
-                <directionalLight />
-                <pointLight position={[-30, 0, -30]} power={10.0} />
+                <mesh position={positions.mesh}>
+                <OrbitControls
+                    maxDistance={20}
+                    minDistance={10}
+                    enableZoom={false}
+                />
+                <directionalLight position={positions.light}/>
+                <pointLight position={positions.light} power={10.0} />
                 <PointCircle />
-                <AnimatedDnaModel scale={0.7} />
+                <AnimatedDnaModel scale={0.65} />
+                </mesh>
             </Canvas>
-        </div>
+        </>
     );
 }
 
-function AnimatedPoint({ position, color }) { // Changed function name from Point to AnimatedPoint
+function AnimatedPoint({ position, color }) {
+    // Changed function name from Point to AnimatedPoint
     const { scale } = useSpring({
         from: { scale: 0 },
         to: { scale: 1 },
@@ -130,7 +141,8 @@ function AnimatedPoint({ position, color }) { // Changed function name from Poin
     );
 }
 
-function AnimatedDnaModel(props) { // New function
+function AnimatedDnaModel(props) {
+    // New function
     const { scale } = useSpring({
         from: { scale: props.scale - 0.03 },
         to: { scale: props.scale },
