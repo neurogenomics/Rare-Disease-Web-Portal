@@ -34,6 +34,7 @@ import { HPOTextTooltip } from "../components/info/TextTooltips.jsx";
 import PageIntro from "../components/PageIntro.jsx";
 import { urlParser, urlSetter } from "../scripts/urlHandlers.js";
 import checkAllNull from "../scripts/checkAllNull.js";
+import ShareButton from "../components/utilities/ShareButton.jsx";
 
 const { Content, Sider } = Layout;
 
@@ -779,7 +780,10 @@ export default function SeverityPage() {
                                 }}
                                 className="relative"
                             >
-                                <div className="absolute right-6">
+                                <div className="absolute left-6 z-10">
+                                    <ShareButton />
+                                </div>
+                                <div className="absolute right-6 z-10">
                                     <DownloadButton elementId="severity-network" />
                                 </div>
                                 <div id="severity-network">

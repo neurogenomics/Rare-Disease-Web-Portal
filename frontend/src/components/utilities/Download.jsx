@@ -25,7 +25,8 @@ export default function DownloadButton({ elementId }) {
     return (
         <Button
             style={{ width: 50 }}
-            type="primary"
+            color="purple"
+            variant="solid"
             icon={<DownloadOutlined />}
             size="small"
             onClick={download}

@@ -30,7 +30,7 @@ import CellAtlasSelectionInfo from "../components/info/CellAtlasSelectionInfo.js
 import PageIntro from "../components/PageIntro.jsx";
 import { HPOTextTooltip } from "../components/info/TextTooltips.jsx";
 import { urlParser, urlSetter } from "../scripts/urlHandlers.js";
-
+import ShareButton from "../components/utilities/ShareButton.jsx";
 
 const { Content, Sider } = Layout;
 
@@ -342,15 +342,18 @@ export default function phenotypePage() {
                                     borderRadius: borderRadiusLG,
                                 }}
                             >
-                                <h2
-                                    style={{
-                                        fontSize: 22,
-                                        fontWeight: "bold",
-                                        color: "#6357d3",
-                                    }}
-                                >
-                                    {dataRef != null ? dataRef : "All"}
-                                </h2>
+                                <div className="flex flex-row items-center justify-between">
+                                    <h2
+                                        style={{
+                                            fontSize: 22,
+                                            fontWeight: "bold",
+                                            color: "#6357d3",
+                                        }}
+                                    >
+                                        {dataRef != null ? dataRef : "All"}
+                                    </h2>
+                                    <ShareButton />
+                                </div>
                                 <Descriptions
                                     column={1}
                                     size={"small"}

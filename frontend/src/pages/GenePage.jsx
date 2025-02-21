@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import {
     Breadcrumb,
     Layout,
@@ -23,6 +23,7 @@ import CellAtlasInfo from "../components/info/CellAtlasInfo.jsx";
 import CellAtlasSelectionInfo from "../components/info/CellAtlasSelectionInfo.jsx";
 import PageIntro from "../components/PageIntro.jsx";
 import { urlSetter } from "../scripts/urlHandlers.js";
+import ShareButton from "../components/utilities/ShareButton.jsx";
 
 const { Content, Sider } = Layout;
 
@@ -68,7 +69,7 @@ export default function phenotypePage() {
         {
             key: "gene-select",
             target: () => tourRefSelect.current,
-        }
+        },
     ];
 
     const parseNCBIGeneID = (id, with_link = true) => {
@@ -203,47 +204,50 @@ export default function phenotypePage() {
                     onCollapse={(value) => setCollapsed(value)}
                 >
                     <div ref={tourRefAtlas} className="mb-4">
-                    <h1
-                        style={{
-                            fontSize: "1.1em",
-                            fontWeight: "bold",
-                            color: "#FFFFFF",
-                        }}
-                    >
-                        Cell Atlases <CellAtlasInfo />
-                    </h1>
-                    <hr style={{ marginBottom: 7, border: "none" }} />
-                    <ConfigProvider
-                        theme={{
-                            components: {
-                                Radio: {
-                                    buttonSolidCheckedBg: "#7944f2",
-                                    buttonSolidCheckedHoverBg: "#8a5cf2",
-                                },
-                            },
-                        }}
-                    >
-                        <Radio.Group
-                            buttonStyle="solid"
-                            value={size}
-                            onChange={handleSizeChange}
+                        <h1
+                            style={{
+                                fontSize: "1.1em",
+                                fontWeight: "bold",
+                                color: "#FFFFFF",
+                            }}
                         >
-                            <Radio.Button
-                                style={{ width: 200 }}
-                                value="DescartesHuman"
+                            Cell Atlases <CellAtlasInfo />
+                        </h1>
+                        <hr style={{ marginBottom: 7, border: "none" }} />
+                        <ConfigProvider
+                            theme={{
+                                components: {
+                                    Radio: {
+                                        buttonSolidCheckedBg: "#7944f2",
+                                        buttonSolidCheckedHoverBg: "#8a5cf2",
+                                    },
+                                },
+                            }}
+                        >
+                            <Radio.Group
+                                buttonStyle="solid"
+                                value={size}
+                                onChange={handleSizeChange}
                             >
-                                <CellAtlasSelectionInfo atlasName="DescartesHuman" />
-                            </Radio.Button>
-                            <Radio.Button
-                                style={{ width: 200 }}
-                                value="HumanCellLandscape"
-                            >
-                                <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
-                            </Radio.Button>
-                        </Radio.Group>
-                    </ConfigProvider>
+                                <Radio.Button
+                                    style={{ width: 200 }}
+                                    value="DescartesHuman"
+                                >
+                                    <CellAtlasSelectionInfo atlasName="DescartesHuman" />
+                                </Radio.Button>
+                                <Radio.Button
+                                    style={{ width: 200 }}
+                                    value="HumanCellLandscape"
+                                >
+                                    <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
+                                </Radio.Button>
+                            </Radio.Group>
+                        </ConfigProvider>
                     </div>
-                    <PhenotypeTree tourRefs={[tourRefSearch, tourRefSelect]} onGetData={getData} />
+                    <PhenotypeTree
+                        tourRefs={[tourRefSearch, tourRefSelect]}
+                        onGetData={getData}
+                    />
                     <Collapse
                         items={advancedSettingsMain}
                         size="small"
@@ -287,15 +291,18 @@ export default function phenotypePage() {
                                     borderRadius: borderRadiusLG,
                                 }}
                             >
-                                <h2
-                                    style={{
-                                        fontSize: 22,
-                                        fontWeight: "bold",
-                                        color: "#6357d3",
-                                    }}
-                                >
-                                    {gene}
-                                </h2>
+                                <div className="flex flex-row items-center justify-between">
+                                    <h2
+                                        style={{
+                                            fontSize: 22,
+                                            fontWeight: "bold",
+                                            color: "#6357d3",
+                                        }}
+                                    >
+                                        {gene}
+                                    </h2>
+                                    <ShareButton />
+                                </div>
                                 <Descriptions
                                     column={1}
                                     size={"small"}
