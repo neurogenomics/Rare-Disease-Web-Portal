@@ -34,8 +34,8 @@ const exampleData = [
         id: 4,
         title: "Severity Search",
         description:
-            (<>Show me all the phenotypes which are <span className="text-purple-300 font-medium">often-to-always associated with intellectual disability</span> but <span className="text-purple-300 font-medium">rarely cause death</span>. Additionally, only show phenotypes <span className="text-purple-300 font-medium">with associated cell types</span>.</>),
-        path: "/severity?intellectual_disability=23&death=01&impaired_mobility=03&physical_malformations=03&blindness=03&sensory_impairments=03&immunodeficiency=03&cancer=03&reduced_fertility=03&congenital_onset=03&severity_class=03&with1=true&without=false",
+            (<>Show me all the phenotypes which are <span className="text-purple-300 font-medium">always associated with intellectual disability</span> but <span className="text-purple-300 font-medium">rarely cause death</span>. Additionally, only show phenotypes <span className="text-purple-300 font-medium">with associated cell types</span>.</>),
+        path: "/severity?intellectual_disability=33&death=01&impaired_mobility=03&physical_malformations=03&blindness=03&sensory_impairments=03&immunodeficiency=03&cancer=03&reduced_fertility=03&congenital_onset=03&severity_class=03&with1=true&without=false",
         icon: <FaHeadSideMask className="text-3xl" />,
     },
 ];
@@ -164,4 +164,4 @@ export default function ExamplesSection() {
             </div>
         </div>
     );
-};
+}
