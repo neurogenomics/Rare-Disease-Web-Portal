@@ -28,6 +28,30 @@ def fetch_hpoADJ_full():
         results.append(document)
     return results
 
+def fetch_hpoADJ_filtered(hpoids: list):
+    """
+    Fetch filtered documents from the hpoADJ_full collection. Filters entries
+    based on output from `get_cell_data`.
+
+    Args:
+        hpoids (list): The list of hpo ids to query.
+
+    Returns:
+        List of documents with '_id' field removed.
+    """
+    query = {
+        "$or": [
+            {"source": {"$in": hpoids}},
+            {"target": {"$in": hpoids}}
+        ]
+    }
+    cursor = hpoADJ_full.find(query)
+    results = []
+    for document in cursor:
+        document.pop("_id")
+        results.append(document)
+    return results
+
 
 def fetch_gene1(
     Gene_name: str,
@@ -111,7 +135,7 @@ def fetch_cell_data(db_type: str, query: dict, dry_run: bool = False):
     if db_type == "DescartesHuman":
         if dry_run:
             return celltype1.count_documents(query) > 0
-        cursor = celltype1.find(query).sort("p", 1).limit(88)
+        cursor = celltype1.find(query).sort("p", 1)
         results = []
         for document in cursor:
             document["id"] = str(document.pop("_id"))
@@ -126,7 +150,7 @@ def fetch_cell_data(db_type: str, query: dict, dry_run: bool = False):
     elif db_type == "HumanCellLandscape":
         if dry_run:
             return celltype1.count_documents(query) > 0
-        cursor1 = celltype2.find(query).sort("p", 1).limit(88)
+        cursor1 = celltype2.find(query).sort("p", 1)
         if dry_run:
             return cursor.count() > 0
         results = []

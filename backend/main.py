@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI, Query
 from database import (
+    fetch_hpoADJ_filtered,
     fetch_severity_data,
     fetch_cell_data,
     fetch_cell_type,
@@ -21,11 +22,13 @@ import logging
 
 log = logging.getLogger("uvicorn.error")
 
+
 # Setup in-memory cache
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     FastAPICache.init(InMemoryBackend())
     yield
+
 
 # Create an instance of the FastAPI application
 app = FastAPI(lifespan=lifespan)
@@ -54,11 +57,46 @@ def hpj():
     return []
 
 
+@app.get("/api/hpjFiltered")
+def hpj_filtered(
+    celltype_name: str = Query(...),
+    q: float = Query(...),
+    db_type: str = Query(...),
+):
+    """
+    Fetch filtered documents from the hpoADJ_full collection. Filters entries
+    based on output from `get_cell_data`.
+
+    Args:
+        celltype_name (str): The name of the cell type to query.
+        q (float): The q value to query.
+        db_type (str): The type of database to query.
+
+    Returns:
+        List of documents with '_id' field removed.
+    """
+    cell_data_query = {
+        "celltype_name": celltype_name,
+        "q": {"$lt": q},
+    }
+    if celltype_name == "All":
+        cell_data_query.pop("celltype_name")
+    cell_data = fetch_cell_data(db_type, cell_data_query,)
+    if not cell_data:
+        return []
+    hpo_ids = [entry["hpo_id"] for entry in cell_data]
+
+    response = fetch_hpoADJ_filtered(hpo_ids)
+    if response:
+        return response
+    return []
+
+
 @app.get("/api/cellByHpoid1")
-def get_severity_data(
+def get_cell_data_hpoid1(
     hpo_id: str = Query(...),
     db_type: str = Query(...),
-    dry_run: Optional[bool] = False, # Just check if the data exists
+    dry_run: Optional[bool] = False,  # Just check if the data exists
 ):
     """
     Fetch cell data based on HPO ID and database type.
@@ -72,7 +110,7 @@ def get_severity_data(
     """
     query = {
         "hpo_id": hpo_id,
-        "q": {"$lt": 0.99999}, # Filter out all cells with practically no association
+        "q": {"$lt": 0.99999},  # Filter out all cells with practically no association
     }
     response = fetch_cell_data(db_type, query, dry_run)
     if dry_run:
@@ -83,7 +121,7 @@ def get_severity_data(
 
 
 @app.get("/api/cellByHpoid")
-def get_severity_data(
+def get_cell_data_hpoid(
     hpo_id: str = Query(...),
 ):
     """
@@ -109,7 +147,7 @@ def get_severity_data(
 
 
 @app.get("/api/cell/type")
-def get_severity_data(
+def get_cell_type(
     celltype_name: str = Query(...),
     db_type: str = Query(...),
 ):
@@ -134,7 +172,7 @@ def get_severity_data(
 
 
 @app.get("/api/cell")
-def get_severity_data(
+def get_cell_data(
     celltype_name: str = Query(...),
     q: float = Query(...),
     db_type: str = Query(...),
@@ -157,7 +195,6 @@ def get_severity_data(
     if celltype_name == "All":
         query.pop("celltype_name")
     response = fetch_cell_data(db_type, query)
-    # print(response)
     if response:
         return response
     return []
@@ -230,7 +267,7 @@ def get_severity_data(
 
 
 @app.get("/api/hpo-definitionNew/{hpo_id}")
-def definitionNew(hpo_id: str):
+def hpo_definition_new(hpo_id: str):
     """
     Fetch severity data based on the HPO ID.
 
@@ -249,7 +286,7 @@ def definitionNew(hpo_id: str):
 
 
 @app.get("/gene/{Gene_name}/{db_type}")
-def definitionNew(Gene_name: str, db_type: str):
+def gene(Gene_name: str, db_type: str):
     """
     Fetch gene data based on the gene name and database type.
 
@@ -287,7 +324,7 @@ def gene1(Gene_name: str, db_type: str):
 
 
 @app.get("/api/severity-scores")
-@cache(expire=36000, namespace="severity-scores")    # Cache for 10 hours
+@cache(expire=36000, namespace="severity-scores")  # Cache for 10 hours
 def severity_scores():
     """
     Fetch severity scores.

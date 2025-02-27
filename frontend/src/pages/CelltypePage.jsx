@@ -36,6 +36,8 @@ import ExpressionSpecificityInfo from "../components/info/ExpressionSpecificityI
 import PageIntro from "../components/PageIntro.jsx";
 import { urlParser, urlSetter } from "../scripts/urlHandlers.js";
 import ShareButton from "../components/utilities/ShareButton.jsx";
+import PhenotypeNetwork from "../components/PhenotypeNetwork.jsx";
+import { createRoot } from "react-dom";
 
 const suitsDta =
     '[{"source":"Microsoft","target":"Amazon","type":"1"},{"source":"Microsoft","target":"HTC","type":"licensing"},{"source":"Samsung","target":"Apple","type":"suit"},{"source":"Motorola","target":"Apple","type":"suit"},{"source":"Nokia","target":"Apple","type":"resolved"},{"source":"HTC","target":"Apple","type":"suit"},{"source":"Kodak","target":"Apple","type":"suit"},{"source":"Microsoft","target":"Barnes & Noble","type":"suit"},{"source":"Microsoft","target":"Foxconn","type":"suit"},{"source":"Oracle","target":"Google","type":"suit"},{"source":"Apple","target":"HTC","type":"suit"},{"source":"Microsoft","target":"Inventec","type":"suit"},{"source":"Samsung","target":"Kodak","type":"resolved"},{"source":"LG","target":"Kodak","type":"resolved"},{"source":"RIM","target":"Kodak","type":"suit"},{"source":"Sony","target":"LG","type":"suit"},{"source":"Kodak","target":"LG","type":"resolved"},{"source":"Apple","target":"Nokia","type":"resolved"},{"source":"Qualcomm","target":"Nokia","type":"resolved"},{"source":"Apple","target":"Motorola","type":"suit"},{"source":"Microsoft","target":"Motorola","type":"suit"},{"source":"Motorola","target":"Microsoft","type":"suit"},{"source":"Huawei","target":"ZTE","type":"suit"},{"source":"Ericsson","target":"ZTE","type":"suit"},{"source":"Kodak","target":"Samsung","type":"resolved"},{"source":"Apple","target":"Samsung","type":"suit"},{"source":"Kodak","target":"RIM","type":"suit"},{"source":"Nokia","target":"Qualcomm","type":"suit"}]';
@@ -122,8 +124,9 @@ export default function CelltypePage() {
     const [data1, setData1] = useState([]);
     const [loading, setLoading] = useState(false);
     const [decimalPoints, setDecimalPoints] = useState(3);
+    const [networkData, setNetworkData] = useState();
 
-    const ref = useRef();
+    const networkDivRef = useRef();
 
     // Tour
     const tourRefAtlas = useRef(null);
@@ -154,147 +157,6 @@ export default function CelltypePage() {
             target: () => tourRefSubmit.current,
         },
     ];
-
-    function NetWork(a, b) {
-        var c = a.filter(function (v) {
-            return (
-                b.some((item2) => item2["id"] === v["source"]) &&
-                b.some((item2) => item2["id"] === v["target"])
-            );
-        });
-        ref.current.innerHTML = "";
-        const suits = c;
-        const width = 1800;
-        const height = 600;
-        const types = [0, 1, 2, 3];
-        const nodes = b;
-        const links = suits.map((d) => {
-            return Object.create(d);
-        });
-
-        function linkArc(d) {
-            const r = Math.hypot(
-                d.target.x - d.source.x,
-                d.target.y - d.source.y
-            );
-            return ` M${d.source.x},${d.source.y}A${r},${r} 0 0,1 ${d.target.x},${d.target.y}`;
-        }
-
-        const drag = (simulation) => {
-            function dragstarted(event, d) {
-                if (!event.active) simulation.alphaTarget(0.3).restart();
-                d.fx = d.x;
-                d.fy = d.y;
-            }
-
-            function dragged(event, d) {
-                d.fx = event.x;
-                d.fy = event.y;
-            }
-
-            function dragended(event, d) {
-                if (!event.active) simulation.alphaTarget(0);
-                d.fx = null;
-                d.fy = null;
-            }
-
-            return d3
-                .drag()
-                .on("start", dragstarted)
-                .on("drag", dragged)
-                .on("end", dragended);
-        };
-        const color = d3.scaleOrdinal(d3.schemePurples[4]);
-
-        const simulation = d3
-            .forceSimulation(nodes)
-            .force(
-                "link",
-                d3.forceLink(links).id((d) => d.id)
-            )
-            .force("charge", d3.forceManyBody().strength(-400))
-            .force("x", d3.forceX())
-            .force("y", d3.forceY());
-
-        const svg = d3
-            .select(ref.current)
-            .attr("viewBox", [-width / 2, -height / 2, width, height])
-            .attr("width", width)
-            .attr("height", height)
-            .attr(
-                "style",
-                "max-width: 100%; height: auto; font: 12px sans-serif;"
-            );
-
-        svg.append("defs")
-            .selectAll("marker")
-            .data(types)
-            .join("marker")
-            .attr("id", (d) => `arrow-${d}`)
-            .attr("viewBox", "0 -5 10 10")
-            .attr("refX", 15)
-            .attr("refY", -0.5)
-            .attr("markerWidth", 6)
-            .attr("markerHeight", 6)
-            .attr("orient", "auto")
-            .append("path")
-            .attr("fill", "#cf6464")
-            .attr("d", "M0,-5L10,0L0,5");
-
-        const link = svg
-            .append("g")
-            .attr("fill", "none")
-            .attr("stroke-width", 1.5)
-            .selectAll("path")
-            .data(links)
-            .join("path")
-            .attr("stroke", "#cf6464")
-            .attr("marker-end", `url(${new URL(`#arrow-3`, location)})`);
-
-        const node = svg
-            .append("g")
-            .attr("stroke-linecap", "round")
-            .attr("stroke-linejoin", "round")
-            .selectAll("g")
-            .data(nodes)
-            .attr("fill", "#d80f0f")
-            .join("g")
-            .call(drag(simulation));
-
-        node.append("circle")
-            .attr("stroke", (d) => color(d.type))
-            .attr("stroke-width", 1.5)
-            .attr("r", 6)
-            .attr("fill", (d) => color(d.type));
-
-        node.append("text")
-            .attr("x", 8)
-            .attr("y", "0.31em")
-            .text((d) => d.name)
-            .clone(true)
-            .lower()
-            .attr("fill", (d) => color(d.type))
-            .attr("stroke", (d) => color(d.type))
-            .attr("stroke-width", 3);
-
-        simulation.on("tick", () => {
-            link.attr("d", linkArc);
-            node.attr("transform", (d) => `translate(${d.x},${d.y})`);
-        });
-
-        Object.assign(svg.node(), { scales: { color } });
-
-        const zoom = d3
-            .zoom()
-            .extent([
-                [0, 0],
-                [250, 250],
-            ])
-            .on("zoom", function (event) {
-                svg.attr("transform", event.transform);
-            });
-        svg.call(zoom);
-    }
 
     // URL Parsing
     const { jump, db_type, q_value } = urlParser("celltype");
@@ -489,6 +351,7 @@ export default function CelltypePage() {
         });
         const queryParams = new URLSearchParams(sliderValues).toString();
         const url = `${BASE_API_URL}/api/cell?${queryParams}`;
+        console.log("Request made to: ", url);
         try {
             const response = await axios.get(url);
 
@@ -512,10 +375,28 @@ export default function CelltypePage() {
                 });
             }
 
-            fetch(`${BASE_API_URL}/api/hpj`)
+            fetch(`${BASE_API_URL}/api/hpjFiltered?${queryParams}`)
                 .then((res) => res.json())
                 .then((results) => {
-                    NetWork(results, node);
+                    node = node.filter(function (v) {
+                        return v.name !== undefined;
+                    })
+
+                    results = results.filter(function (v) {
+                        return (
+                            node.some((item2) => item2["id"] === v["source"]) &&
+                            node.some((item2) => item2["id"] === v["target"])
+                        );
+                    });
+
+                    const data = {
+                        "nodes": node,
+                        "links": results
+                    }
+                    setNetworkData(data);
+                    createRoot(document.getElementById("network")).render(
+                        <PhenotypeNetwork elementRef={networkDivRef} data={data} height={400} />
+                    )
                 });
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -593,8 +474,8 @@ export default function CelltypePage() {
             celltype_name: info.node.key,
         }));
     };
-    const download = () => {
-        var canvas = document.getElementsByTagName("canvas")[0];
+    const downloadGenePlot = () => {
+        var canvas = document.getElementsById("network")[0];
         let svg0 = document.createElementNS(
             "http://www.w3.org/2000/svg",
             "svg"
@@ -624,25 +505,6 @@ export default function CelltypePage() {
         document.body.removeChild(elink);
     };
 
-    const download1 = () => {
-        var svgElement = document.getElementById("svgMain");
-        var svgData = new XMLSerializer().serializeToString(svgElement);
-        var blob = new Blob([svgData], { type: "image/svg+xml" });
-        var url = URL.createObjectURL(blob);
-        if (window.navigator.msSaveOrOpenBlob) {
-            var imgData = blob;
-            var blobObj = new Blob([imgData]);
-            window.navigator.msSaveOrOpenBlob(blobObj, "Cell Associations.png");
-        } else {
-            var oA = document.createElement("a");
-            oA.download = "Severity";
-            oA.href = url;
-            oA.className = "qrcode";
-            document.body.appendChild(oA);
-            oA.click();
-            oA.remove();
-        }
-    };
 
     // Advanced Settings
     const genExtra = () => <SettingsOutlined />; // Settings icon
@@ -840,7 +702,7 @@ export default function CelltypePage() {
                         {activeCellType != "" ? (
                             <div
                                 style={{
-                                    padding: 24,
+                                    padding: 22,
                                     minHeight: 360,
                                     background: colorBgContainer,
                                     borderRadius: borderRadiusLG,
@@ -874,25 +736,8 @@ export default function CelltypePage() {
                                                         <Spin
                                                             spinning={loading}
                                                         >
-                                                            <Button
-                                                                style={{
-                                                                    float: "right",
-                                                                    width: 50,
-                                                                }}
-                                                                type="primary"
-                                                                icon={
-                                                                    <DownloadOutlined />
-                                                                }
-                                                                size="small"
-                                                                onClick={
-                                                                    download1
-                                                                }
-                                                            />
                                                             <br />
-                                                            <svg
-                                                                id={"svgMain"}
-                                                                ref={ref}
-                                                            />
+                                                            <div id="network" ref={networkDivRef} className="mb-3 -mt-3 border rounded-lg" />
                                                             <Table
                                                                 columns={
                                                                     columns
@@ -935,7 +780,7 @@ export default function CelltypePage() {
                                                                 }
                                                                 size="small"
                                                                 onClick={
-                                                                    download
+                                                                    downloadGenePlot
                                                                 }
                                                             />
                                                             <br />
