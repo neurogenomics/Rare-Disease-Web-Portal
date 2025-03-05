@@ -44,19 +44,12 @@ export default function SeverityScoreHover({ score, decimalPoints, showPercentil
                 title: "Phenotype Frequency",
             },
         },
-        // annotations: [
-        //     {
-        //         type: "lineX",
-        //         xField: score,
-        //         style: { stroke: "#F4664A", lineWidth: 1 },
-        //     },
-        // ],
     };
 
     const calculateMean = (arr) => {
         if (arr.length === 0) return 0;
         const sum = arr.reduce((acc, num) => acc + num, 0);
-        return (sum / arr.length).toFixed(3);
+        return (sum / arr.length).toFixed(decimalPoints);
     };
 
     const calculateMedian = (arr) => {
@@ -66,7 +59,7 @@ export default function SeverityScoreHover({ score, decimalPoints, showPercentil
 
         return sortedArr.length % 2 !== 0
             ? sortedArr[mid]
-            : ((sortedArr[mid - 1] + sortedArr[mid]) / 2).toFixed(3);
+            : ((sortedArr[mid - 1] + sortedArr[mid]) / 2).toFixed(decimalPoints);
     };
 
     const calculatePercentile = (arr, score) => {

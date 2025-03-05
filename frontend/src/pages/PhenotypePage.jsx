@@ -83,26 +83,9 @@ export default function phenotypePage() {
     const handleSizeChange = (e) => {
         setSize(e.target.value);
     };
+    
     const handleDecimalChange = (decimalPoints) => {
         setDecimalPoints(decimalPoints);
-
-        // Update severity score
-        setDesItem((prev) => {
-            return prev.map((item) => {
-                if (
-                    item.key === "5" &&
-                    typeof !isNaN(parseFloat(item.children))
-                ) {
-                    return {
-                        ...item,
-                        children: parseFloat(item.children).toFixed(
-                            decimalPoints
-                        ),
-                    };
-                }
-                return item;
-            });
-        });
     };
 
     const fetchData = async (key) => {
@@ -383,6 +366,7 @@ export default function phenotypePage() {
                                                     children: (
                                                         <PhenotypeTableDisease2
                                                             hpid={data}
+                                                            hpname={dataRef}
                                                             dbType={size}
                                                             decimalPoints={
                                                                 decimalPoints
