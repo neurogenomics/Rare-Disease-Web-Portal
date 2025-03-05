@@ -773,7 +773,7 @@ export default function CelltypePage() {
                     showIcon
                     message={
                         <>
-                            Only showing the top 30 genes (sorted by expression
+                            Only showing the top 50 genes (sorted by expression
                             specificity) out of{" "}
                             <span className="font-semibold text-blue-950">
                                 {data1.length}

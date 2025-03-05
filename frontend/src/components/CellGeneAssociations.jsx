@@ -161,7 +161,7 @@ export default function CellGeneAssociations({ hpID, hpName, cell, dbType }) {
                     showIcon
                     message={
                         <>
-                            Only showing the top 30 genes (sorted by expression
+                            Only showing the top 40 genes (sorted by expression
                             specificity) out of{" "}
                             <span className="font-semibold text-blue-950">
                                 {data.length}
