@@ -1,6 +1,7 @@
 import pprint
 from pymongo import MongoClient
 from config import MONGODB_URI
+from typing import Dict, Optional
 
 # Establish a connection to the MongoDB server
 client = MongoClient(MONGODB_URI)
@@ -54,26 +55,26 @@ def fetch_hpoADJ_filtered(hpoids: list):
 
 
 def fetch_gene1(
-    Gene_name: str,
+    celltype: str,
     db_type: str,
     expression_specificity_threshold: float = 0.00001,
 ):
     """
-    Fetch documents from the gene1 collection based on the Gene_name and db_type.
+    Fetch documents from the gene1 collection based on the celltype and db_type.
 
     Args:
-        Gene_name (str): The name of the gene to query.
+        celltype (str): The name of the gene to query.
         db_type (str): The type of database to query.
         expression_specificity_threshold (float): Minimum expression specificity threshold.
 
     Returns:
         List of documents matching the query.
     """
-    query = {"celltype": Gene_name, "expression_specificity": {"$gt": expression_specificity_threshold},}
-    if Gene_name == "All":
+    query = {"celltype": celltype, "expression_specificity": {"$gt": expression_specificity_threshold},}
+    if celltype == "All":
         query = {}
     if db_type == "DescartesHuman":
-        cursor = gene1.find(query).limit(88)
+        cursor = gene1.find(query)
         results = []
         for document in cursor:
             document["id"] = str(document.pop("_id"))
@@ -81,7 +82,7 @@ def fetch_gene1(
         return results
     elif db_type == "HumanCellLandscape":
         results = []
-        cursor2 = gene2.find(query).limit(88)
+        cursor2 = gene2.find(query)
         for document in cursor2:
             document["id"] = str(document.pop("_id"))
             results.append(document)
