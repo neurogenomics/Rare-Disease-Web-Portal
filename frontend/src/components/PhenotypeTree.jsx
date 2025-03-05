@@ -10,7 +10,6 @@ const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
 const { jump } = urlParser("phenotype");
 
-
 const getParentKey = (title, tree) => {
     let parentKey;
     for (let i = 0; i < tree.length; i++) {
@@ -67,7 +66,7 @@ class SearchTree extends React.Component {
     }
 
     checkData = (param) => {
-        const urlData = `${BASE_API_URL}/api/cellByHpoid1?hpo_id=${param}&db_type=${this.props.dbType}&dry_run=true`
+        const urlData = `${BASE_API_URL}/api/cellByHpoid1?hpo_id=${param}&db_type=${this.props.dbType}&dry_run=true`;
         return axios.get(urlData).then((response) => {
             if (response.data) {
                 return true;
@@ -80,42 +79,50 @@ class SearchTree extends React.Component {
     fetchData = (param) => {
         const url = `${ONTOLOGY_API_URL}/api/hp/terms/${param}/children`;
 
-        return axios.get(url).then((response) => {
-            const children = response.data;
-            const items = children.map(item => {
-                item.key = item.id;
-                item.title = item.name;
-                item.isLeaf = false; // Assume it's not a leaf initially
-                return item;
-            });
+        return axios
+            .get(url)
+            .then((response) => {
+                const children = response.data;
+                const items = children.map((item) => {
+                    item.key = item.id;
+                    item.title = item.name;
+                    item.isLeaf = false; // Assume it's not a leaf initially
+                    return item;
+                });
 
-            // Check if each child has further children by making another API call
-            const childPromises = items.map(item => {
-                const childUrl = `${ONTOLOGY_API_URL}/api/hp/terms/${item.id}/children`;
-                return axios.get(childUrl)
-                    .then(async childResponse => {
-                        if (childResponse.data.length === 0) {
-                            item.isLeaf = true; // If no children, then it's a leaf
-                        }
-                        item.hasData = await this.checkData(item.id);
-                        return item;
-                    })
-                    .catch((e) => {
-                        item.isLeaf = true; // If API call fails, consider it a leaf
-                        console.warn("Failed to fetch children for", item.id, "Error:", e);
-                        return item;
-                    });
-            });
+                // Check if each child has further children by making another API call
+                const childPromises = items.map((item) => {
+                    const childUrl = `${ONTOLOGY_API_URL}/api/hp/terms/${item.id}/children`;
+                    return axios
+                        .get(childUrl)
+                        .then(async (childResponse) => {
+                            if (childResponse.data.length === 0) {
+                                item.isLeaf = true; // If no children, then it's a leaf
+                            }
+                            item.hasData = await this.checkData(item.id);
+                            return item;
+                        })
+                        .catch((e) => {
+                            item.isLeaf = true; // If API call fails, consider it a leaf
+                            console.warn(
+                                "Failed to fetch children for",
+                                item.id,
+                                "Error:",
+                                e
+                            );
+                            return item;
+                        });
+                });
 
-            return Promise.all(childPromises).then(updatedItems => {
-                this.setState({ loading: false });
-                return updatedItems;
+                return Promise.all(childPromises).then((updatedItems) => {
+                    this.setState({ loading: false });
+                    return updatedItems;
+                });
+            })
+            .catch((e) => {
+                console.warn("Failed to fetch parent-", param, "Error:", e);
+                return [];
             });
-        })
-        .catch((e) => {
-            console.warn("Failed to fetch parent-", param, "Error:", e);
-            return [];
-        });
     };
 
     onSelect = (selectedKeys, info) => {
@@ -128,8 +135,10 @@ class SearchTree extends React.Component {
         }
         this.setState({ selectedKeys });
         this.props.onGetData(selectedKeys[0], info);
-        this.setState({ 
-            expandedKeys: [...new Set([...this.state.expandedKeys, selectedKeys[0]])]
+        this.setState({
+            expandedKeys: [
+                ...new Set([...this.state.expandedKeys, selectedKeys[0]]),
+            ],
         });
     };
 
@@ -143,6 +152,7 @@ class SearchTree extends React.Component {
             });
         }
         this.setState({ first_load: false });
+        this.setState({ loading: false });
     };
 
     onExpand = (expandedKeys) => {
@@ -166,10 +176,11 @@ class SearchTree extends React.Component {
             }
 
             // Check if each child has further children by making another API call
-            const childPromises = res.map(item => {
+            const childPromises = res.map((item) => {
                 const childUrl = `${ONTOLOGY_API_URL}/api/hp/terms/${item.key}/children`;
-                return axios.get(childUrl)
-                    .then(async childResponse => {
+                return axios
+                    .get(childUrl)
+                    .then(async (childResponse) => {
                         if (childResponse.data.length === 0) {
                             item.isLeaf = true; // If no children, then it's a leaf
                         }
@@ -178,12 +189,17 @@ class SearchTree extends React.Component {
                     })
                     .catch((e) => {
                         item.isLeaf = true; // If API call fails, consider it a leaf
-                        console.warn("Failed to fetch children for", item.key, "Error:", e);
+                        console.warn(
+                            "Failed to fetch children for",
+                            item.key,
+                            "Error:",
+                            e
+                        );
                         return item;
                     });
             });
 
-            Promise.all(childPromises).then(updatedItems => {
+            Promise.all(childPromises).then((updatedItems) => {
                 this.setState({
                     gData: updatedItems,
                     loading: false,
@@ -209,22 +225,28 @@ class SearchTree extends React.Component {
                         {beforeStr}
                         <span style={{ color: "#f50" }}>{middleStr}</span>
                         {afterStr}
-                        {item.hasData ? (
-                            ""
-                        ) : (
-                            <span className="ml-1 text-red-500">
-                                    <Close fontSize="inherit" />
-                            </span>
-                        )}
                     </span>
                 ) : (
                     <span>{item.title}</span>
                 );
-                title = (
-                    <Tooltip title={(item.hasData) ? null : "No cell associations found"} placement="right">
-                    {title}
-                    </Tooltip>
-                );
+            title = (
+                <Tooltip
+                    title={item.hasData ? null : "No cell associations found"}
+                    placement="right"
+                >
+                    {item.hasData ? (
+                        title
+                    ) : (
+                        <div>
+                            <p>{title}
+                            <span className="ml-1 text-red-500 inline-flex align-middle -mt-1">
+                                <Close fontSize="inherit" />
+                            </span>
+                            </p>
+                        </div>
+                    )}
+                </Tooltip>
+            );
             if (item.children) {
                 return (
                     <TreeNode key={item.key} title={title} dataRef={item}>
@@ -275,10 +297,11 @@ class SearchTree extends React.Component {
             }
 
             // Check if each child has further children by making another API call
-            const childPromises = res.map(item => {
+            const childPromises = res.map((item) => {
                 const childUrl = `${ONTOLOGY_API_URL}/api/hp/terms/${item.key}/children`;
-                return axios.get(childUrl)
-                    .then(async childResponse => {
+                return axios
+                    .get(childUrl)
+                    .then(async (childResponse) => {
                         if (childResponse.data.length === 0) {
                             item.isLeaf = true; // If no children, then it's a leaf
                         }
@@ -287,12 +310,17 @@ class SearchTree extends React.Component {
                     })
                     .catch((e) => {
                         item.isLeaf = true; // If API call fails, consider it a leaf
-                        console.warn("Failed to fetch children for", item.key, "Error:", e);
+                        console.warn(
+                            "Failed to fetch children for",
+                            item.key,
+                            "Error:",
+                            e
+                        );
                         return item;
                     });
             });
 
-            Promise.all(childPromises).then(updatedItems => {
+            Promise.all(childPromises).then((updatedItems) => {
                 this.setState({
                     gData: updatedItems,
                 });
@@ -307,12 +335,12 @@ class SearchTree extends React.Component {
         return (
             <div style={{ marginBottom: "20px" }}>
                 <div ref={this.props.tourRefs[0]} className="mb-4">
-                <Search
-                    placeholder="Search phenotype tree"
-                    onChange={this.onChange}
-                    onSearch={this.onSearch}
-                    loading={loading}
-                />
+                    <Search
+                        placeholder="Search phenotype tree"
+                        onChange={this.onChange}
+                        onSearch={this.onSearch}
+                        loading={loading}
+                    />
                 </div>
                 <div
                     style={{

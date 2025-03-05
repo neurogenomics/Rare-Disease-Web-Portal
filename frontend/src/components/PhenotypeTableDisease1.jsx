@@ -14,8 +14,6 @@ const PhenotypeTableDisease = (hpid) => {
     const fetchData = () => {
         setLoading(true);
         let hppp = hpid.hpid;
-        console.log("hpid changehhhhhhhh", hppp);
-        console.log("hpid change", JSON.stringify(hpid));
         fetch(`${ONTOLOGY_API_URL}/api/network/annotation/${hppp}`)
             .then((res) => res.json())
             .then(({ genes }) => {
@@ -26,7 +24,6 @@ const PhenotypeTableDisease = (hpid) => {
 
     useEffect(() => {
         fetchData();
-        console.log("Props changed:", hpid);
     }, [hpid]);
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -150,7 +147,7 @@ const PhenotypeTableDisease = (hpid) => {
     });
     const columns = [
         {
-            title: "Gene Id",
+            title: "Gene ID",
             dataIndex: "id",
             key: "id",
             width: "30%",

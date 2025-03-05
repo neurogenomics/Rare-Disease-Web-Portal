@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DownloadOutlined } from "@ant-design/icons";
-import { Spin, Button, Table } from "antd";
+import { Spin, Button, Table, Tooltip } from "antd";
 import { Column } from "@ant-design/plots";
 import { BASE_API_URL } from "../../config.js";
 import formatText from "../scripts/formatText.js";
 import truncateText from "../scripts/truncateText.js";
 import MathJax from "react-mathjax2";
 import QValueInfo from "./info/QValueInfo.jsx";
+import CellGeneAssociations from "./CellGeneAssociations.jsx";
 
 const DemoColumn = (data) => {
     const chartRef = useRef();
@@ -97,9 +98,6 @@ const DemoColumn = (data) => {
 
 const PhenotypeTableDisease = (hpid) => {
     const [data, setData] = useState();
-    const [searchText, setSearchText] = useState("");
-    const [searchedColumn, setSearchedColumn] = useState("");
-    const searchInput = useRef(null);
     const [loading, setLoading] = useState(false);
 
     const [chart, setChart] = useState([]);
@@ -171,13 +169,19 @@ const PhenotypeTableDisease = (hpid) => {
             sortDirections: ["ascend", "descend"],
             render: (text, record) => {
                 return (
+                    <div className="flex flex-row space-x-2 items-center">
+                    <Tooltip title="Click to launch search for all associations with this cell type">
                     <a
                         style={{ textDecoration: "underline" }}
                         target={"_blank"}
                         href={`/celltype?jump=${text}&db_type=${record.celltype_database}`}
+                        className="cursor-pointer text-blue-950"
                     >
                         {formatText(text)}
                     </a>
+                    </Tooltip>
+                    <CellGeneAssociations hpID={hpid.hpid} hpName={hpid.hpname} cell={text} dbType={record.celltype_database} />
+                    </div>
                 );
             },
         },
