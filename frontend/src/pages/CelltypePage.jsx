@@ -17,6 +17,7 @@ import {
     Collapse,
     ConfigProvider,
     Tooltip,
+    Alert
 } from "antd";
 import { Column } from "@ant-design/plots";
 import { DownloadOutlined, SearchOutlined } from "@ant-design/icons";
@@ -765,7 +766,24 @@ export default function CelltypePage() {
                                                         <Spin
                                                             spinning={loading}
                                                         >
-                                                            <Button
+
+                                                            {data1?.length > 40 && (
+                <Alert
+                    type="info"
+                    showIcon
+                    message={
+                        <>
+                            Only showing the top 30 genes (sorted by expression
+                            specificity) out of{" "}
+                            <span className="font-semibold text-blue-950">
+                                {data1.length}
+                            </span>.
+                        </>
+                    }
+                    className=" my-3"
+                />
+            )}
+                                                                        <Button
                                                                 style={{
                                                                     float: "right",
                                                                     width: 50,
@@ -778,10 +796,10 @@ export default function CelltypePage() {
                                                                 onClick={
                                                                     downloadGenePlot
                                                                 }
+                                                                className="z-10"
                                                             />
-                                                            <br />
                                                             <DemoColumn
-                                                                data={data1}
+                                                                data={data1.slice(0, 50)}
                                                                 decimalPoints={
                                                                     decimalPoints
                                                                 }

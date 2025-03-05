@@ -57,7 +57,7 @@ def fetch_hpoADJ_filtered(hpoids: list):
 def fetch_gene1(
     celltype: str,
     db_type: str,
-    expression_specificity_threshold: float = 0.00001,
+    expression_specificity_threshold: float = 0.001,
 ):
     """
     Fetch documents from the gene1 collection based on the celltype and db_type.

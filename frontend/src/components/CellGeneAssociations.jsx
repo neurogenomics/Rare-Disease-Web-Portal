@@ -74,7 +74,7 @@ function GeneAssociationGraph({ data }) {
 
     return (
         <div className="bg-gray-50 px-2 pt-4 rounded-lg">
-            <Column {...config} data={data.slice(0, 30)} />
+            <Column {...config} data={data.slice(0, 40)} />
         </div>
     );
 }
@@ -155,7 +155,7 @@ export default function CellGeneAssociations({ hpID, hpName, cell, dbType }) {
                 this phenotype, close this modal and select the gene
                 associations tab instead.
             </div>
-            {data?.length > 30 && (
+            {data?.length > 40 && (
                 <Alert
                     type="info"
                     showIcon
