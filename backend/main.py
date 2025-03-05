@@ -285,10 +285,10 @@ def hpo_definition_new(hpo_id: str):
     return []
 
 
-@app.get("/gene/{Gene_name}/{db_type}")
-def gene(Gene_name: str, db_type: str):
+@app.get("/gene/{celltype}/{db_type}")
+def gene(celltype: str, db_type: str):
     """
-    Fetch gene data based on the gene name and database type.
+    Fetch gene expression data based on the cell type and database type.
 
     Args:
         Gene_name (str): The name of the gene to query.
@@ -297,8 +297,8 @@ def gene(Gene_name: str, db_type: str):
     Returns:
         List of documents matching the query conditions.
     """
-    Gene_name = Gene_name.replace("%", ":")
-    response = fetch_gene(Gene_name, db_type)
+    celltype = celltype.replace("%", ":")
+    response = fetch_gene(celltype, db_type)
     if response:
         return response
     return []
@@ -307,7 +307,7 @@ def gene(Gene_name: str, db_type: str):
 @app.get("/gene1/{Gene_name}/{db_type}")
 def gene1(Gene_name: str, db_type: str):
     """
-    Fetch gene1 data based on the gene name and database type.
+    Fetch gene expression data based on the gene name and database type.
 
     Args:
         Gene_name (str): The name of the gene to query.

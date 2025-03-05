@@ -20,7 +20,6 @@ import {
 } from "antd";
 import { Column } from "@ant-design/plots";
 import { DownloadOutlined, SearchOutlined } from "@ant-design/icons";
-import * as d3 from "d3";
 import { BASE_API_URL } from "../../config.js";
 import { SettingsOutlined } from "@mui/icons-material";
 import NotFound from "../components/utilities/Texts.jsx";
@@ -124,7 +123,6 @@ export default function CelltypePage() {
     const [data1, setData1] = useState([]);
     const [loading, setLoading] = useState(false);
     const [decimalPoints, setDecimalPoints] = useState(3);
-    const [networkData, setNetworkData] = useState();
 
     const networkDivRef = useRef();
 
@@ -351,7 +349,6 @@ export default function CelltypePage() {
         });
         const queryParams = new URLSearchParams(sliderValues).toString();
         const url = `${BASE_API_URL}/api/cell?${queryParams}`;
-        console.log("Request made to: ", url);
         try {
             const response = await axios.get(url);
 
@@ -393,7 +390,6 @@ export default function CelltypePage() {
                         "nodes": node,
                         "links": results
                     }
-                    setNetworkData(data);
                     createRoot(document.getElementById("network")).render(
                         <PhenotypeNetwork elementRef={networkDivRef} data={data} height={400} />
                     )
