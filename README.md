@@ -75,7 +75,7 @@ Compared to existing tools, this public web portal improves accessing performanc
 ### 3.1 Install dependencies
 
 1. Install [`MongoDB Compass GUI`](https://www.mongodb.com/products/tools/compass)
-2. Install conda env: `conda env create -f `
+2. Install conda env: `conda env create -f https://raw.githubusercontent.com/neurogenomics/Rare-Disease-Web-Portal/refs/heads/main/conda/portal_backend.yml`
 
 
 ### 3.2 Run in Local
