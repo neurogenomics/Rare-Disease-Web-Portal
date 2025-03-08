@@ -1,0 +1,9 @@
+name: portal_backend
+channels:
+    - conda-forge
+dependencies:
+    - uvicorn
+    - fastapi[api]
+    - fastapi_cache2
+    - pymongo
+    - nodejs # for installing npm indirectly

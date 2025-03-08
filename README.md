@@ -4,9 +4,10 @@ A web portal for rare diseases.
 It's a university project from Imperial College London 2023/24 70095 MSc Computing (Specialism) Individual Project.
 This is the code part, please contact me if you're interested in the whole report.
 
--   Project Title: Development of a Public Web Portal for Investigating Rare Diseases, the Cell Types That Cause Them and the Genes Which Can Be Targeted With Therapeutics
--   Supervisor: [Nathan Skene](https://github.com/NathanSkene)
--   Author: [Yichun Zhang](https://github.com/missyQWQ)
+-   **Project Title**: Development of a Public Web Portal for Investigating Rare Diseases, the Cell Types That Cause Them and the Genes Which Can Be Targeted With Therapeutics
+-   **Supervisor**: [Nathan Skene](https://github.com/NathanSkene)
+-   **Author**: [Yichun Zhang](https://github.com/missyQWQ)
+-   **Contributors**: [Hiru Dash](https://github.com/HDash),  [Brian Schilder](https://github.com/bschilder)
 
 **This project has already deployed at [Rare Disease Web Portal](https://neurogenomics-ukdri.dsi.ic.ac.uk/)**
 
@@ -71,66 +72,73 @@ Compared to existing tools, this public web portal improves accessing performanc
 ```
 
 ## 3. Run It!!
-### 3.1 Run in Local
-(1) Clone this repo
+### 3.1 Install dependencies
+
+1. Install [`MongoDB Compass GUI`](https://www.mongodb.com/products/tools/compass)
+2. Install conda env: `conda env create -f `
+
+
+### 3.2 Run in Local
+#### (1) Clone this repo
 ```bash
 git clone https://github.com/neurogenomics/Rare-Disease-Web-Portal.git
 ```
-(2) Set up MongoDB database
-```bash
-1. Download MongoDB Compass
-2. Create a new connection with URI: mongodb://localhost:27017/
-3. Upload data files (Please contact me for the data files as they are too large to upload in GitHub)
+#### (2) Set up MongoDB database
 ```
-(3) Run backend
+1. Open MongoDB Compass
+2. Create a new connection with URI: `mongodb://localhost:27017/`
+3. Download the data files from Zenodo [**!!!ADD LINK HERE!!!**]
+```
+#### (3) Run backend
 ```bash
 cd backend
 uvicorn main:app --reload
 ```
-(4) Run frontend
+#### (4) Run frontend
 ```bash
 cd frontend
 npm i
 npm run dev
 ```
-(5) Enjoy your web portal ☺️
-```bash
-Website: http://localhost:5173/
-API: http://127.0.0.1:8000/docs#/
-```
-### 3.2 Run in Server
-(1) Clone this repo
+#### (5) Enjoy your web portal ☺️
+
+Website: `http://localhost:5173/`  
+API: `http://127.0.0.1:8000/docs#/`
+
+### 3.3 Run in Server
+#### (1) Clone this repo
 ```bash
 git clone https://github.com/neurogenomics/Rare-Disease-Web-Portal.git
 ```
-(2) Set up MongoDB database
-```bash
+#### (2) Set up MongoDB database
+
 1. Download MongoDB Compass
-2. Create a new connection with URI: mongodb://146.169.8.136:8917/
-3. No need to do anything about data files as they are already uploaded to the database on the server 146.169.8.136
-```
-(3) Run backend
-```bash
+2. Create a new connection with URI: `mongodb://146.169.8.136:8917/`
+3. No need to do anything about data files as they are already uploaded to the database on the server `146.169.8.136`
+
+#### (3) Run backend
+
 1. Go to your local backend folder
-2. Comment & uncomment corresponding codes in "config.py" and "main.py", and save changes
-3. Copy & paste all backend files, including config.py, main.py, database.py, model.py, and requirements.txt, from your local space to the server
-4. Run "python3 main.py" under the backend folder in the server, and use tmux to hold the process
-```
-(4) Run frontend
-```bash
+2. Comment & uncomment corresponding codes in `config.py` and `main.py`, and save changes
+3. Copy & paste all backend files, including `config.py`, `main.py`, `database.py`, `model.py`, and `requirements.txt`, from your local space to the server
+4. Run `tmux && python3 main.py` under the backend folder in the server (`tmux` keeps the process running in the background).
+
+#### (4) Run frontend
+
 1. Go to your local frontend folder
-2. Comment & uncomment corresponding codes in "config.js", and save changes
-3. Run "npm run build" under the frontend folder in your local, then a new "dist" folder will be generated automatically
-4. Go to "/var/www/html" in the server
-5. Copy & paste all files in the "dist" folder(at local) to "/var/www/html"(at server)
-6. Wrap folder "models" with a new folder "public", so the structure under "/var/www/html" should look like:
+2. Comment & uncomment corresponding codes in `config.js`, and save changes
+3. Run `npm run build` under the frontend folder in your local, then a new "dist" folder will be generated automatically
+4. Go to `/var/www/html` in the server
+5. Copy & paste all files in the `dist` folder(at local) to `/var/www/html` (at server)
+6. Wrap folder `models` with a new folder `public`, so the structure under `/var/www/html` should look like:
+```bash
 .
 ├── index.html
 ├── assets
 └── public
     └── models
 ```
-(5) Enjoy your web portal ☺️
+#### (5) Enjoy your web portal ☺️
 ```bash
 Website: https://neurogenomics-ukdri.dsi.ic.ac.uk/
 API: https://neurogenomics-ukdri-api.dsi.ic.ac.uk/docs
