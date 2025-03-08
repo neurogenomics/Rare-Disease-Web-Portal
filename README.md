@@ -11,7 +11,7 @@ This is the code part, please contact me if you're interested in the whole repor
 
 **This project has already deployed at [Rare Disease Web Portal](https://neurogenomics-ukdri.dsi.ic.ac.uk/)**
 
-## 1. Abstract
+## Abstract
 
 Rare diseases (RDs) collectively affect millions of individuals worldwide, presenting significant challenges in diagnostics and treatment due to their genetic and phenotypic diversity. Despite advances in cellular and genetic research, current platforms remain fragmented, often lacking effective data integration or intuitive visualizations, which hinders the exploration of complex relationships between phenotypes and genes. Additionally, most platforms do not incorporate cell type data and phenotype severity data, limiting their scope and utility for rare disease research.
 
@@ -19,7 +19,7 @@ This paper presents the development of a public web portal that introduces a nov
 
 Compared to existing tools, this public web portal improves accessing performance, focus on user-friendly design, covers more data scope. Its key innovations include large data integration, interactive data visualization, flexible and multidirectional query functionality. This portal is designed for diverse users, including clinicians and molecular biologists, and aims to drive progress in rare disease research, personalized diagnostics, and therapeutic development by offering a powerful, integrated resource for RD data exploration.
 
-## 2. Directory Structure
+## Directory Structure
 
 ```bash
 .
@@ -71,14 +71,16 @@ Compared to existing tools, this public web portal improves accessing performanc
 
 ```
 
-## 3. Run It!!
-### 3.1 Install dependencies
+##  Setup instructions
+
+### 1. Install dependencies
 
 1. Install [`MongoDB Compass GUI`](https://www.mongodb.com/products/tools/compass)
-2. Install conda env: `conda env create -f https://raw.githubusercontent.com/neurogenomics/Rare-Disease-Web-Portal/refs/heads/main/conda/portal_backend.yml`
+2. [Optional] 
+    - Install conda env: `conda env create -f https://raw.githubusercontent.com/neurogenomics/Rare-Disease-Web-Portal/refs/heads/main/conda/portal_backend.yml`
+    - Activate conda env: `conda activate portal_backend`
 
-
-### 3.2 Run in Local
+### 2.1 Run locally
 #### (1) Clone this repo
 ```bash
 git clone https://github.com/neurogenomics/Rare-Disease-Web-Portal.git
@@ -105,7 +107,7 @@ npm run dev
 Website: `http://localhost:5173/`  
 API: `http://127.0.0.1:8000/docs#/`
 
-### 3.3 Run in Server
+### 2.2 Run on server
 #### (1) Clone this repo
 ```bash
 git clone https://github.com/neurogenomics/Rare-Disease-Web-Portal.git
@@ -139,19 +141,20 @@ git clone https://github.com/neurogenomics/Rare-Disease-Web-Portal.git
     └── models
 ```
 #### (5) Enjoy your web portal ☺️
-```bash
-Website: https://neurogenomics-ukdri.dsi.ic.ac.uk/
-API: https://neurogenomics-ukdri-api.dsi.ic.ac.uk/docs
-Server: 146.169.8.136
-```
 
-## 4. Previews
+Website: `https://neurogenomics-ukdri.dsi.ic.ac.uk/`  
+API: `https://neurogenomics-ukdri-api.dsi.ic.ac.uk/docs`  
+Server: `146.169.8.136`
 
-### 4.1 Home Page
+## Previews
+
+Preview images of the web portal.
+
+### Home Page
 
 ![home_page](/Images/HomePage.png)
 
-### 4.2 Search by Phenotype Page
+### Search by Phenotype Page
 
 ![phenotype_page_overview](/Images/PhenotypePage_Overview.png)
 ![phenotype_page_cellgene](/Images/PhenotypePage_CellGene.png)
@@ -159,18 +162,18 @@ Server: 146.169.8.136
 ![phenotype_page_disease](/Images/PhenotypePage_Disease.png)
 ![phenotype_page_gene](/Images/PhenotypePage_Gene.png)
 
-### 4.3 Search by Celltype Page
+### Search by Celltype Page
 
 ![cell_page_phenotype](/Images/CellPage_Phenotype.png)
 ![cell_page_gene](/Images/CellPage_Gene.png)
 
-### 4.4 Search by Gene Page
+### Search by Gene Page
 
 ![gene_page_cell](/Images/GenePage_Cell.png)
 ![gene_page_disease](/Images/GenePage_Disease.png)
 ![gene_page_phenotype](/Images/GenePage_Phenotype.png)
 
-### 4.5 Search by Severity Page
+### Search by Severity Page
 
 ![severity_page_overview](/Images/SeverityPage_Overview.png)
 ![severity_page_details](/Images/SeverityPage_Details.png)
