@@ -7,7 +7,7 @@ This is the code part, please contact me if you're interested in the whole repor
 -   **Project Title**: Development of a Public Web Portal for Investigating Rare Diseases, the Cell Types That Cause Them and the Genes Which Can Be Targeted With Therapeutics
 -   **Supervisor**: [Nathan Skene](https://github.com/NathanSkene)
 -   **Author**: [Yichun Zhang](https://github.com/missyQWQ)
--   **Contributors**: [Hiru Dash](https://github.com/HDash),  [Brian Schilder](https://github.com/bschilder)
+-   **Contributors**: [Hiranyamaya (Hiru) Dash](https://github.com/HDash),  [Brian Schilder](https://github.com/bschilder)
 
 **This project has already deployed at [Rare Disease Web Portal](https://neurogenomics-ukdri.dsi.ic.ac.uk/)**
 
@@ -89,7 +89,8 @@ git clone https://github.com/neurogenomics/Rare-Disease-Web-Portal.git
 ```
 1. Open MongoDB Compass
 2. Create a new connection with URI: `mongodb://localhost:27017/`
-3. Download the data files from Zenodo [**!!!ADD LINK HERE!!!**]
+3. Download the data files from Zenodo [https://zenodo.org/records/15147825]
+Further instructions on how to setup the database can be found in the Zenodo record description.
 ```
 #### (3) Run backend
 ```bash
