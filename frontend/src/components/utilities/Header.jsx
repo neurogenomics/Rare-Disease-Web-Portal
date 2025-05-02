@@ -118,7 +118,7 @@ const CustomHeader = ({ activePageKey }) => {
                     <span style={{ fontWeight: "bold", display: "block", fontSize: "20px" }}>
                         Rare Disease
                     </span>
-                    <span style={{ fontSize: "15px" }}>Browser</span>
+                    <span style={{ fontSize: "15px" }}>Celltyping Portal</span>
                 </div>
                 <Menu
                     theme="dark"
