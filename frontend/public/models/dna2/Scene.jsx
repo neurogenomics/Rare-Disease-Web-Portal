@@ -12,7 +12,7 @@ import React from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export function Model(props) {
-  const { nodes, materials } = useGLTF('/scene-transformed.glb')
+  const { nodes, materials } = useGLTF("/models/dna1/scene-transformed.glb")
   return (
     <group {...props} dispose={null}>
       <mesh geometry={nodes.defaultMaterial.geometry} material={materials['1001']} position={[74.734, 458.102, 561.216]} rotation={[-0.013, 0.235, 2.339]} scale={100} />
@@ -20,4 +20,4 @@ export function Model(props) {
   )
 }
 
-useGLTF.preload('/scene-transformed.glb')
+useGLTF.preload("/models/dna1/scene-transformed.glb")

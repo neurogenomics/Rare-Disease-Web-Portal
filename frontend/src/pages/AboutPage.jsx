@@ -11,14 +11,14 @@ function Logos() {
         <div className="flex justify-center items-center max-h-[40px] space-x-10 mt-3">
             <a href="https://www.ukdri.ac.uk/" target="_blank">
                 <img
-                    src={"public/logos/logo_UKDRI.png"}
+                    src={"/logos/logo_UKDRI.png"}
                     className="h-[85px] object-contain"
                     alt="UK Dementia Research Institute logo"
                 />
             </a>
             <a href="https://www.imperial.ac.uk/" target="_blank">
                 <img
-                    src={"public/logos/logo_Imperial_DoBS.png"}
+                    src={"/logos/logo_Imperial_DoBS.png"}
                     className="h-[70px] object-contain mt-2"
                     alt="Imperial College London logo"
                 />
@@ -94,7 +94,7 @@ export default function AboutPage() {
                             <a href="https://www.neurogenomics.co.uk" target="_blank">
                             <img
                                 target="_blank"
-                                src="/public/logos/logo_neurogenomicslab.png"
+                                src="/logos/logo_neurogenomicslab.png"
                                 alt="Neurogenomics Lab logo"
                             /></a>
                             <div className="pt-4 text-gray-700">

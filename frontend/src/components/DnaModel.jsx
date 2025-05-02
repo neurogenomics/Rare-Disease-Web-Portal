@@ -13,7 +13,7 @@ import { useGLTF } from "@react-three/drei";
 
 export function DnaModel(props) {
     const { nodes, materials } = useGLTF(
-        "../public/models/dna1/scene-transformed.glb"
+        "/models/dna1/scene-transformed.glb"
     );
     return (
         <group {...props} dispose={null}>
@@ -28,4 +28,4 @@ export function DnaModel(props) {
     );
 }
 
-useGLTF.preload("../public/models/dna1/scene-transformed.glb");
+useGLTF.preload("/models/dna1/scene-transformed.glb");
