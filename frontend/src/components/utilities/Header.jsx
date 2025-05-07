@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ConfigProvider, Layout, Menu } from "antd";
 import { useNavigate } from "react-router-dom";
+import MainLogo from "./MainLogo";
 
 const { Header } = Layout;
 
@@ -107,19 +108,7 @@ const CustomHeader = ({ activePageKey }) => {
                 }}
                 theme="light"
             >
-                <div
-                    style={{
-                        textAlign: "left",
-                        marginLeft: "2em",
-                        lineHeight: 1,
-                        fontFamily: "Arial, sans-serif",
-                    }}
-                >
-                    <span style={{ fontWeight: "bold", display: "block", fontSize: "20px" }}>
-                        Rare Disease
-                    </span>
-                    <span style={{ fontSize: "15px" }}>Celltyping Portal</span>
-                </div>
+                <MainLogo />
                 <Menu
                     theme="dark"
                     mode="horizontal"
