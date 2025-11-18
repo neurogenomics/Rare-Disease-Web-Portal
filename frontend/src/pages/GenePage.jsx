@@ -22,7 +22,7 @@ import CustomHeader from "../components/utilities/Header.jsx";
 import CellAtlasInfo from "../components/info/CellAtlasInfo.jsx";
 import CellAtlasSelectionInfo from "../components/info/CellAtlasSelectionInfo.jsx";
 import PageIntro from "../components/PageIntro.jsx";
-import { urlSetter } from "../scripts/urlHandlers.js";
+import { urlParser, urlSetter } from "../scripts/urlHandlers.js";
 import ShareButton from "../components/utilities/ShareButton.jsx";
 
 const { Content, Sider } = Layout;
@@ -35,6 +35,9 @@ const items = [
     },
 ];
 export default function phenotypePage() {
+    // URL Parsing
+        const { url_db_type } = urlParser("phenotype");
+
     const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer, borderRadiusLG },
@@ -42,11 +45,16 @@ export default function phenotypePage() {
 
     const [data, setData] = useState(null);
     const [gene, setGene] = useState(null);
-    const [size, setSize] = useState("DescartesHuman");
+    const [size, setSize] = useState(url_db_type || "DescartesHuman");
     const [decimalPoints, setDecimalPoints] = useState(3);
-    const handleSizeChange = (e) => {
-        setSize(e.target.value);
-    };
+    const handleSizeChange = async (e) => {
+            const newSize = e.target.value;
+            setSize(newSize);
+            if (data) {
+                urlSetter({ jump: data.substring(9), db_type: newSize });
+                await onload(data);
+            }
+        };
     const [desItem, setDesItem] = useState(items);
     const handleDecimalChange = (decimalPoints) => {
         setDecimalPoints(decimalPoints);
@@ -104,7 +112,7 @@ export default function phenotypePage() {
         }
 
         setData(info.node.dataRef.id);
-        urlSetter({ jump: info.node.dataRef.id.substring(9) });
+        urlSetter({ jump: info.node.dataRef.id.substring(9), db_type: size });
         let itemsTemp = [];
         itemsTemp.push({
             label: "NCBI Gene ID",

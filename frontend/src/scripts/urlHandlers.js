@@ -1,7 +1,4 @@
-import { toHalfFloat } from "three/src/extras/DataUtils.js";
-
 export function urlParser(page) {
-
     function parseDb(db) {
         const shortForms = {
             DescartesHuman: "DH",
@@ -73,6 +70,7 @@ export function urlParser(page) {
         case "gene":
             params = {
                 jump: searchParams?.get("jump"), // NCBI Gene ID number
+                db_type: parseDb(searchParams?.get("db_type"))
             };
             break;
         case "severity":
