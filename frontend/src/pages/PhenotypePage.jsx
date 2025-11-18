@@ -80,8 +80,13 @@ export default function phenotypePage() {
         },
     ];
 
-    const handleSizeChange = (e) => {
-        setSize(e.target.value);
+    const handleSizeChange = async (e) => {
+        const newSize = e.target.value;
+        setSize(newSize);
+        if (data) {
+            urlSetter({ jump: data, db_type: newSize });
+            await onload(data);
+        }
     };
     
     const handleDecimalChange = (decimalPoints) => {
