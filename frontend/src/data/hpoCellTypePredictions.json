@@ -1,0 +1,346 @@
+{
+  "HP:0000505": {
+    "hpo_id": "HP:0000505",
+    "top_cell_type": "Photoreceptor_cells",
+    "top_q_value": 0,
+    "cell_types": ["Photoreceptor_cells", "Retinal_pigment_cells", "Lens_fibre_cells", "Purkinje_neurons", "Fetus_Fetal_epithelial_progenitor"],
+    "q_values": [0, 0, 0.003, 0.028, 0.0291],
+    "n_significant_cell_types": 6
+  },
+  "HP:0000511": {
+    "hpo_id": "HP:0000511",
+    "top_cell_type": "Schwann_cells",
+    "top_q_value": 0,
+    "cell_types": ["Schwann_cells", "Adult_Oligodendrocyte", "ENS_glia"],
+    "q_values": [0, 1e-06, 3e-06],
+    "n_significant_cell_types": 3
+  },
+  "HP:0000546": {
+    "hpo_id": "HP:0000546",
+    "top_cell_type": "Photoreceptor_cells",
+    "top_q_value": 0,
+    "cell_types": ["Photoreceptor_cells", "Retinal_pigment_cells", "Retinal_progenitors_and_Muller_glia", "Fetus_Goblet_cell", "Fetus_Fetal_neuron"],
+    "q_values": [0, 0, 0.0123, 0.0149, 0.0334],
+    "n_significant_cell_types": 5
+  },
+  "HP:0000572": {
+    "hpo_id": "HP:0000572",
+    "top_cell_type": "Photoreceptor_cells",
+    "top_q_value": 0.0003,
+    "cell_types": "Photoreceptor_cells",
+    "q_values": 0.0003,
+    "n_significant_cell_types": 1
+  },
+  "HP:0000662": {
+    "hpo_id": "HP:0000662",
+    "top_cell_type": "Photoreceptor_cells",
+    "top_q_value": 0,
+    "cell_types": ["Photoreceptor_cells", "Retinal_pigment_cells", "Fetus_Fetal_endocrine_cell", "Retinal_progenitors_and_Muller_glia", "Bipolar_cells"],
+    "q_values": [0, 0, 0.0001, 0.0003, 0.0012],
+    "n_significant_cell_types": 5
+  },
+  "HP:0001081": {
+    "hpo_id": "HP:0001081",
+    "top_cell_type": "Adult_CB_CD34+",
+    "top_q_value": 0,
+    "cell_types": ["Adult_CB_CD34+", "Erythroblasts", "Adult_Erythroid_cell", "Fetus_Erythroid_progenitor_cell_(RP_high)", "Fetus_Erythroid_cell"],
+    "q_values": [0, 0, 0, 0, 1e-06],
+    "n_significant_cell_types": 8
+  },
+  "HP:0001249": {
+    "hpo_id": "HP:0001249",
+    "top_cell_type": "Excitatory_neurons",
+    "top_q_value": 0,
+    "cell_types": ["Excitatory_neurons", "Amacrine_cells", "Granule_neurons", "Limbic_system_neurons", "SATB2_LRRC7_positive_cells"],
+    "q_values": [0, 0, 0, 0, 0],
+    "n_significant_cell_types": 29
+  },
+  "HP:0001263": {
+    "hpo_id": "HP:0001263",
+    "top_cell_type": "Excitatory_neurons",
+    "top_q_value": 0,
+    "cell_types": ["Excitatory_neurons", "Amacrine_cells", "SATB2_LRRC7_positive_cells", "Granule_neurons", "Limbic_system_neurons"],
+    "q_values": [0, 0, 0, 0, 0],
+    "n_significant_cell_types": 26
+  },
+  "HP:0001324": {
+    "hpo_id": "HP:0001324",
+    "top_cell_type": "Skeletal_muscle_cells",
+    "top_q_value": 0,
+    "cell_types": ["Skeletal_muscle_cells", "Adult_Ventricle_cardiomyocyte", "Satellite_cells", "Schwann_cells", "Cardiomyocytes"],
+    "q_values": [0, 0.0003, 0.0012, 0.0064, 0.0191],
+    "n_significant_cell_types": 6
+  },
+  "HP:0001332": {
+    "hpo_id": "HP:0001332",
+    "top_cell_type": "Adult_Oligodendrocyte",
+    "top_q_value": 1e-06,
+    "cell_types": ["Adult_Oligodendrocyte", "SATB2_LRRC7_positive_cells", "Schwann_cells", "Excitatory_neurons", "Limbic_system_neurons"],
+    "q_values": [1e-06, 0, 0.0002, 0.0062, 0.0214],
+    "n_significant_cell_types": 6
+  },
+  "HP:0001878": {
+    "hpo_id": "HP:0001878",
+    "top_cell_type": "Erythroblasts",
+    "top_q_value": 0,
+    "cell_types": ["Erythroblasts", "Fetus_Erythroid_progenitor_cell_(RP_high)", "Adult_Erythroid_cell", "Thymocytes", "Lymphoid_cells"],
+    "q_values": [0, 0, 0, 0, 0],
+    "n_significant_cell_types": 15
+  },
+  "HP:0001892": {
+    "hpo_id": "HP:0001892",
+    "top_cell_type": "Megakaryocytes",
+    "top_q_value": 0,
+    "cell_types": ["Megakaryocytes", "STC2_TLX1_positive_cells", "Adult_Endothelial_cell_(endothelial_to_mesenchymal_transition)", "Fetus_Macrophage", "Limbic_system_neurons"],
+    "q_values": [0, 0, 0.0004, 0.0011, 0.0011],
+    "n_significant_cell_types": 25
+  },
+  "HP:0001903": {
+    "hpo_id": "HP:0001903",
+    "top_cell_type": "Erythroblasts",
+    "top_q_value": 0,
+    "cell_types": ["Erythroblasts", "Fetus_Erythroid_progenitor_cell_(RP_high)", "Adult_Erythroid_cell", "Fetus_Erythroid_cell", "Thymocytes"],
+    "q_values": [0, 0, 0, 0, 0],
+    "n_significant_cell_types": 35
+  },
+  "HP:0001909": {
+    "hpo_id": "HP:0001909",
+    "top_cell_type": "Hematopoietic_stem_cells",
+    "top_q_value": 0.0004,
+    "cell_types": ["Hematopoietic_stem_cells", "Adult_hESC", "Adult_Antigen_presenting_cell_(RPS_high)", "Thymocytes", "Fetus_Neutrophil_(RPS_high)"],
+    "q_values": [0.0004, 0.0007, 0.0013, 0.003, 0.012],
+    "n_significant_cell_types": 7
+  },
+  "HP:0001928": {
+    "hpo_id": "HP:0001928",
+    "top_cell_type": "AFP_ALB_positive_cells",
+    "top_q_value": 0,
+    "cell_types": ["AFP_ALB_positive_cells", "Fetus_Sinusoidal_endothelial_cell", "Hepatoblasts", "Megakaryocytes", "Fetus_Hepatocyte_Endodermal_cell"],
+    "q_values": [0, 0, 0, 0, 0],
+    "n_significant_cell_types": 7
+  },
+  "HP:0002015": {
+    "hpo_id": "HP:0002015",
+    "top_cell_type": "Skeletal_muscle_cells",
+    "top_q_value": 2e-06,
+    "cell_types": ["Skeletal_muscle_cells", "Satellite_cells", "Visceral_neurons", "Adult_Fetal_skeletal_muscle_cell", "Schwann_cells"],
+    "q_values": [2e-06, 0.0001, 0.0079, 0.0136, 0.0442],
+    "n_significant_cell_types": 5
+  },
+  "HP:0002093": {
+    "hpo_id": "HP:0002093",
+    "top_cell_type": "Skeletal_muscle_cells",
+    "top_q_value": 1e-06,
+    "cell_types": ["Skeletal_muscle_cells", "Ciliated_epithelial_cells", "Satellite_cells", "Adult_Fetal_epithelial_progenitor", "Adult_Ventricle_cardiomyocyte"],
+    "q_values": [1e-06, 3e-06, 0.0001, 0.0002, 0.0017],
+    "n_significant_cell_types": 8
+  },
+  "HP:0002094": {
+    "hpo_id": "HP:0002094",
+    "top_cell_type": "Cardiomyocytes",
+    "top_q_value": 0,
+    "cell_types": ["Cardiomyocytes", "ELF3_AGBL2_positive_cells", "Fetus_Ventricle_cardiomyocyte", "CLC_IL5RA_positive_cells", "Adult_Ventricle_cardiomyocyte"],
+    "q_values": [0, 0, 0, 0, 0],
+    "n_significant_cell_types": 5
+  },
+  "HP:0002155": {
+    "hpo_id": "HP:0002155",
+    "top_cell_type": "Fetus_Adrenal_gland_inflammatory_cell",
+    "top_q_value": 0,
+    "cell_types": ["Fetus_Adrenal_gland_inflammatory_cell", "AFP_ALB_positive_cells", "Fetus_Hepatocyte_Endodermal_cell", "Hepatoblasts"],
+    "q_values": [0, 0.0004, 0.0011, 0.0345],
+    "n_significant_cell_types": 4
+  },
+  "HP:0002167": {
+    "hpo_id": "HP:0002167",
+    "top_cell_type": "Excitatory_neurons",
+    "top_q_value": 0,
+    "cell_types": ["Excitatory_neurons", "SATB2_LRRC7_positive_cells", "Limbic_system_neurons", "Amacrine_cells", "Inhibitory_neurons"],
+    "q_values": [0, 0, 0, 0, 0],
+    "n_significant_cell_types": 23
+  },
+  "HP:0002194": {
+    "hpo_id": "HP:0002194",
+    "top_cell_type": "Excitatory_neurons",
+    "top_q_value": 0,
+    "cell_types": ["Excitatory_neurons", "SATB2_LRRC7_positive_cells", "SKOR2_NPSR1_positive_cells", "Purkinje_neurons", "Limbic_system_neurons"],
+    "q_values": [0, 0, 0, 0, 1e-06],
+    "n_significant_cell_types": 14
+  },
+  "HP:0002352": {
+    "hpo_id": "HP:0002352",
+    "top_cell_type": "Microglia",
+    "top_q_value": 0,
+    "cell_types": ["Microglia", "Fetus_M2_Macrophage", "Fetus_Dendritic_cell", "Myeloid_cells", "Fetus_Macrophage"],
+    "q_values": [0, 0.0001, 0.0006, 0.0009, 0.0016],
+    "n_significant_cell_types": 7
+  },
+  "HP:0002719": {
+    "hpo_id": "HP:0002719",
+    "top_cell_type": "Antigen_presenting_cells",
+    "top_q_value": 0,
+    "cell_types": ["Antigen_presenting_cells", "Thymocytes", "Lymphoid_cells", "Adult_T_cell", "Adult_B_cell"],
+    "q_values": [0, 0, 0, 0, 0],
+    "n_significant_cell_types": 20
+  },
+  "HP:0002861": {
+    "hpo_id": "HP:0002861",
+    "top_cell_type": "HESC_Proliferating_T_cell",
+    "top_q_value": 0.0001,
+    "cell_types": "HESC_Proliferating_T_cell",
+    "q_values": 0.0001,
+    "n_significant_cell_types": 1
+  },
+  "HP:0003077": {
+    "hpo_id": "HP:0003077",
+    "top_cell_type": "AFP_ALB_positive_cells",
+    "top_q_value": 0,
+    "cell_types": ["AFP_ALB_positive_cells", "Hepatoblasts", "Fetus_Adrenal_gland_inflammatory_cell", "Metanephric_cells", "Fetus_Hepatocyte_Endodermal_cell"],
+    "q_values": [0, 2e-06, 3e-06, 0.0008, 0.003],
+    "n_significant_cell_types": 6
+  },
+  "HP:0003125": {
+    "hpo_id": "HP:0003125",
+    "top_cell_type": "Fetus_Gastric_endocrine_cell",
+    "top_q_value": 0,
+    "cell_types": "Fetus_Gastric_endocrine_cell",
+    "q_values": 0,
+    "n_significant_cell_types": 1
+  },
+  "HP:0003202": {
+    "hpo_id": "HP:0003202",
+    "top_cell_type": "Skeletal_muscle_cells",
+    "top_q_value": 0,
+    "cell_types": ["Skeletal_muscle_cells", "Schwann_cells", "Satellite_cells", "Cardiomyocytes", "ENS_glia"],
+    "q_values": [0, 0, 0, 0, 0.0003],
+    "n_significant_cell_types": 8
+  },
+  "HP:0003236": {
+    "hpo_id": "HP:0003236",
+    "top_cell_type": "Cardiomyocytes",
+    "top_q_value": 0,
+    "cell_types": ["Cardiomyocytes", "Skeletal_muscle_cells", "ELF3_AGBL2_positive_cells", "CLC_IL5RA_positive_cells", "Adult_Ventricle_cardiomyocyte"],
+    "q_values": [0, 0, 0, 0, 0],
+    "n_significant_cell_types": 8
+  },
+  "HP:0003281": {
+    "hpo_id": "HP:0003281",
+    "top_cell_type": "Fetus_Erythroid_progenitor_cell_(RP_high)",
+    "top_q_value": 0,
+    "cell_types": ["Fetus_Erythroid_progenitor_cell_(RP_high)", "Erythroblasts", "Adult_Erythroid_progenitor_cell_(RP_high)", "Adult_Erythroid_cell", "Adult_M2_Macrophage"],
+    "q_values": [0, 0, 0, 0, 0],
+    "n_significant_cell_types": 12
+  },
+  "HP:0003324": {
+    "hpo_id": "HP:0003324",
+    "top_cell_type": "Skeletal_muscle_cells",
+    "top_q_value": 0,
+    "cell_types": ["Skeletal_muscle_cells", "Adult_Fetal_skeletal_muscle_cell", "Satellite_cells", "Fetus_Fetal_skeletal_muscle_cell", "Adult_Ventricle_cardiomyocyte"],
+    "q_values": [0, 0, 0, 0, 0],
+    "n_significant_cell_types": 7
+  },
+  "HP:0004430": {
+    "hpo_id": "HP:0004430",
+    "top_cell_type": "Thymocytes",
+    "top_q_value": 0,
+    "cell_types": ["Thymocytes", "Fetus_Proliferating_T_cell", "Antigen_presenting_cells", "Lymphoid_cells", "Adult_T_cell"],
+    "q_values": [0, 0, 0, 0, 0],
+    "n_significant_cell_types": 9
+  },
+  "HP:0005261": {
+    "hpo_id": "HP:0005261",
+    "top_cell_type": "AFP_ALB_positive_cells",
+    "top_q_value": 0,
+    "cell_types": ["AFP_ALB_positive_cells", "Hepatoblasts", "Fetus_Sinusoidal_endothelial_cell", "Fetus_Macrophage", "Adult_Sinusoidal_endothelial_cell"],
+    "q_values": [0, 0, 0, 0, 0],
+    "n_significant_cell_types": 6
+  },
+  "HP:0005387": {
+    "hpo_id": "HP:0005387",
+    "top_cell_type": "Adult_B_cell",
+    "top_q_value": 0,
+    "cell_types": ["Adult_B_cell", "Thymocytes", "Antigen_presenting_cells", "Lymphoid_cells", "Fetus_Kidney_intercalated_cell"],
+    "q_values": [0, 0, 0, 0, 0],
+    "n_significant_cell_types": 13
+  },
+  "HP:0006775": {
+    "hpo_id": "HP:0006775",
+    "top_cell_type": "Adult_Mast_cell",
+    "top_q_value": 0.0026,
+    "cell_types": ["Adult_Mast_cell", "Adult_Myeloid_cell", "Fetus_Mast_cell"],
+    "q_values": [0.0026, 0.0149, 0.0165],
+    "n_significant_cell_types": 3
+  },
+  "HP:0007328": {
+    "hpo_id": "HP:0007328",
+    "top_cell_type": "Oligodendrocytes",
+    "top_q_value": 0.0097,
+    "cell_types": ["Oligodendrocytes", "HESC_Fetal_neuron", "Limbic_system_neurons"],
+    "q_values": [0.0097, 0.0129, 0.0203],
+    "n_significant_cell_types": 3
+  },
+  "HP:0007663": {
+    "hpo_id": "HP:0007663",
+    "top_cell_type": "Photoreceptor_cells",
+    "top_q_value": 0,
+    "cell_types": ["Photoreceptor_cells", "Retinal_pigment_cells", "Lens_fibre_cells", "Adult_CB_CD34+", "Fetus_Fetal_epithelial_progenitor"],
+    "q_values": [0, 0, 0, 2e-06, 0.0003],
+    "n_significant_cell_types": 8
+  },
+  "HP:0008066": {
+    "hpo_id": "HP:0008066",
+    "top_cell_type": "Adult_Basal_cell",
+    "top_q_value": 0,
+    "cell_types": ["Adult_Basal_cell", "Corneal_and_conjunctival_epithelial_cells", "Squamous_epithelial_cells", "Adult_Stratified_epithelial_cell", "Adult_Epithelial_cell_(intermediated)"],
+    "q_values": [0, 0, 0, 0, 0.0001],
+    "n_significant_cell_types": 8
+  },
+  "HP:0011902": {
+    "hpo_id": "HP:0011902",
+    "top_cell_type": "Islet_endocrine_cells",
+    "top_q_value": 0,
+    "cell_types": ["Islet_endocrine_cells", "Adult_Erythroid_cell", "Fetus_Erythroid_cell", "Erythroblasts", "Adult_Fetal_acinar_cell"],
+    "q_values": [0, 0, 0, 0, 0],
+    "n_significant_cell_types": 10
+  },
+  "HP:0011968": {
+    "hpo_id": "HP:0011968",
+    "top_cell_type": "Excitatory_neurons",
+    "top_q_value": 0.0014,
+    "cell_types": ["Excitatory_neurons", "Satellite_cells", "Amacrine_cells", "SATB2_LRRC7_positive_cells", "Skeletal_muscle_cells"],
+    "q_values": [0.0014, 0.0021, 0.009, 0.0125, 0.0141],
+    "n_significant_cell_types": 7
+  },
+  "HP:0012531": {
+    "hpo_id": "HP:0012531",
+    "top_cell_type": "Adult_Fetal_chondrocyte",
+    "top_q_value": 0,
+    "cell_types": ["Adult_Fetal_chondrocyte", "Cardiomyocytes", "ELF3_AGBL2_positive_cells", "CLC_IL5RA_positive_cells", "Adult_Chondrocyte"],
+    "q_values": [0, 3e-06, 4e-06, 0, 0],
+    "n_significant_cell_types": 20
+  },
+  "HP:0012539": {
+    "hpo_id": "HP:0012539",
+    "top_cell_type": "Thymocytes",
+    "top_q_value": 0,
+    "cell_types": ["Thymocytes", "Fetus_M2_Macrophage", "Lymphoid_cells", "Adult_T_cell", "Fetus_Proliferating_T_cell"],
+    "q_values": [0, 0, 0, 0, 9e-06],
+    "n_significant_cell_types": 8
+  },
+  "HP:0030680": {
+    "hpo_id": "HP:0030680",
+    "top_cell_type": "Cardiomyocytes",
+    "top_q_value": 0,
+    "cell_types": ["Cardiomyocytes", "Fetus_Ventricle_cardiomyocyte", "ELF3_AGBL2_positive_cells", "CLC_IL5RA_positive_cells", "Adult_Ventricle_cardiomyocyte"],
+    "q_values": [0, 1e-06, 2e-06, 0, 0.0003],
+    "n_significant_cell_types": 14
+  },
+  "HP:0200041": {
+    "hpo_id": "HP:0200041",
+    "top_cell_type": "Squamous_epithelial_cells",
+    "top_q_value": 0,
+    "cell_types": ["Squamous_epithelial_cells", "Adult_Basal_cell", "Stellate_cells", "Corneal_and_conjunctival_epithelial_cells"],
+    "q_values": [0, 0.0001, 0.0072, 0.0314],
+    "n_significant_cell_types": 4
+  }
+}

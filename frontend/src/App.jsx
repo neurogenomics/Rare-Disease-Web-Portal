@@ -4,8 +4,11 @@ import PhenotypePage from "./pages/PhenotypePage";
 import CelltypePage from "./pages/CelltypePage";
 import GenePage from "./pages/GenePage";
 import SeverityPage from "./pages/SeverityPage";
+import GeneTherapyPage from "./pages/GeneTherapyPage";
+import ApprovedTherapiesPage from "./pages/ApprovedTherapiesPage";
 import PublicationsPage from "./pages/PublicationsPage";
 import AboutPage from "./pages/AboutPage";
+import GeneBrowserPage from "./pages/GeneBrowserPage";
 
 function App() {
     return (
@@ -21,6 +24,9 @@ function App() {
                     element={<SeverityPage />}
                 />
                 <Route path="/severity" element={<SeverityPage />} />
+                <Route path="/gene-therapy" element={<GeneTherapyPage />} />
+                <Route path="/approved-therapies" element={<ApprovedTherapiesPage />} />
+                <Route path="/gene-browser" element={<GeneBrowserPage />} />
                 <Route path="/publications" element={<PublicationsPage />} />
                 <Route path="/about" element={<AboutPage />} />
             </Routes>

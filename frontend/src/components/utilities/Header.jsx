@@ -35,6 +35,27 @@ const items = [
                 label: "By Severity",
                 path: "/severity"
             },
+            {
+                key: "gene-browser",
+                label: "Gene Browser",
+                path: "/gene-browser"
+            },
+        ],
+    },
+    {
+        key: "gene-therapy",
+        label: "Gene Therapy",
+        children: [
+            {
+                key: "gene-therapy-targets",
+                label: "Target Prioritization",
+                path: "/gene-therapy"
+            },
+            {
+                key: "approved-therapies",
+                label: "Approved Therapies",
+                path: "/approved-therapies"
+            },
         ],
     },
     {

@@ -374,3 +374,8 @@ TODOs.md
 ###### CUSTOM ##################################################################
 launch_*.sh
 .vite
+# Large data files (>100MB, GitHub limit)
+data/celltype_gene_DescartesHuman.json
+data/celltype_gene_HumanCellLandscape.json
+data/hpo_celltype_DescartesHuman.json
+data/hpo_celltype_HumanCellLandscape.json

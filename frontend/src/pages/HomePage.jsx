@@ -8,9 +8,10 @@ import {
     Circle,
     SearchOutlined,
 } from "@mui/icons-material";
-import { FaDisease, FaDna } from "react-icons/fa";
+import { FaDisease, FaDna, FaSyringe } from "react-icons/fa";
 import { BsFileEarmarkMedicalFill } from "react-icons/bs";
 import { FaHeadSideMask } from "react-icons/fa";
+import { MdBiotech } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import ExamplesSection from "../components/HomeExamples";
 
@@ -44,6 +45,20 @@ const searchOptions = {
         description:
             "Filter phenotypes based on severity and occurence of various clinical characteristics",
         path: "/severity",
+    },
+    geneTherapy: {
+        title: "Gene Therapy",
+        icon: <FaSyringe />,
+        description:
+            "Identify gene therapy candidates by filtering for post-natal CNS phenotypes with high severity and tractable cell types",
+        path: "/gene-therapy",
+    },
+    approvedTherapies: {
+        title: "Approved Therapies",
+        icon: <MdBiotech />,
+        description:
+            "Browse FDA/EMA approved gene therapies as a reference for competitive landscape and validation",
+        path: "/approved-therapies",
     },
 };
 
