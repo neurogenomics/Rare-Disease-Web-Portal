@@ -1,0 +1,68 @@
+/* Shared layout for the existing explorers and information pages. */
+.portal-page { min-width: 0; min-height: calc(100vh - 72px); background: #f5f5f5; color: #262626; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+.portal-explorer { flex-direction: row; align-items: flex-start; gap: 24px; padding: 24px; }
+.portal-sidebar { flex: 0 0 350px; min-width: 0; width: 350px; padding: 16px; background: #fff; border: 1px solid #f0f0f0; border-radius: 8px; }
+.portal-content-layout, .portal-content { min-width: 0; width: 100%; background: #f5f5f5; }
+.portal-content-layout { flex: 1 1 0; }
+.portal-content > .ant-breadcrumb { margin-top: 0 !important; }
+.portal-content h1, .portal-information-card h1 { margin: 0 0 12px; color: #262626; font-size: 24px; line-height: 1.3; font-weight: 600; }
+.portal-information-card h2 { margin: 0 0 12px; color: #262626; font-size: 20px; line-height: 1.4; font-weight: 600; }
+.portal-content p, .portal-information-card p { line-height: 1.65; }
+.portal-atlas-options { display: flex; width: 100%; }
+.portal-atlas-option { flex: 1; padding-inline: 8px; text-align: center; }
+.portal-filter-form { text-align: left; }
+.portal-filter-form > div > p, .portal-filter-form .mx-5 { margin-inline: 0; }
+.portal-sidebar .ant-checkbox-wrapper { display: flex; align-items: flex-start; margin-inline-start: 0; margin-block: 8px; }
+.portal-sidebar .ant-tree, .portal-sidebar .ant-radio-group, .portal-sidebar form { max-width: 100%; min-width: 0; }
+.portal-sidebar .ant-tree { overflow-x: auto; }
+.portal-sidebar .ant-tree-title { overflow-wrap: anywhere; }
+.portal-results { position: relative; min-width: 0; border: 1px solid #f0f0f0; overflow: hidden; }
+.portal-panel-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.portal-panel-heading h2 { min-width: 0; overflow-wrap: anywhere; }
+.portal-result-share, .portal-result-download { display: inline-flex; margin-bottom: 12px; vertical-align: middle; }
+.portal-result-share { margin-right: 12px; }
+.portal-results .ant-table-content, .portal-results .ant-table-body, .portal-results .ant-descriptions-view { max-width: 100%; overflow-x: auto; }
+.portal-results .ant-table table { min-width: 640px; }
+.portal-results .ant-tabs, .portal-results .ant-tabs-content-holder, .portal-results .ant-tabs-tabpane, .portal-results .ant-spin-nested-loading, .portal-results .ant-spin-container { min-width: 0; max-width: 100%; }
+.portal-results .ant-descriptions-item-content { overflow-wrap: anywhere; }
+.portal-record-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.portal-record-grid > div { min-width: 0; overflow-wrap: anywhere; }
+.portal-information-page { min-height: 100vh; }
+.portal-information-content { width: min(100%, 1400px); margin: 0 auto; padding: 24px 32px; }
+.portal-information-content > .ant-breadcrumb { margin-bottom: 16px; }
+.portal-information-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 24px; }
+.portal-information-card { min-width: 0; border-color: #f0f0f0; border-radius: 8px; }
+.portal-information-card a { color: #1677ff; }
+.portal-information-card a:hover { color: #4096ff; text-decoration: underline; }
+.portal-information-card a:focus-visible { outline: 2px solid #1677ff; outline-offset: 3px; border-radius: 3px; }
+.portal-contribute-link { margin-top: 24px; }
+.portal-partner-logos { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; margin-top: 24px; padding-top: 20px; border-top: 1px solid #f0f0f0; }
+.portal-partner-logos img { height: auto; max-height: 68px; max-width: 230px; object-fit: contain; }
+.portal-lab-logo { display: block; margin: 16px 0 24px; max-width: 340px; }
+.portal-lab-logo img { max-width: 100%; height: auto; }
+.portal-contact-line { display: flex; gap: 8px; align-items: flex-start; }
+.portal-contact-line svg { flex: 0 0 auto; margin-top: 3px; color: #595959; }
+.portal-social-links { display: flex; gap: 16px; margin-top: 20px; }
+.portal-publication-intro { margin-bottom: 24px; }
+.portal-publication-list { display: grid; gap: 24px; }
+.portal-publication-details { margin-top: 20px; }
+.portal-publication-details > div { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 12px; margin-top: 8px; }
+.portal-publication-details dt { font-weight: 600; }
+.portal-publication-details dd { margin: 0; overflow-wrap: anywhere; }
+/* Incidental utility text and wrappers; scientific data palettes are untouched. */
+.portal-page :is(.text-purple-900, .text-purple-950, .text-cyan-900, .text-cyan-950) { color: #262626; }
+.portal-page :is(.bg-purple-50, .bg-purple-100) { background-color: #e6f4ff; }
+@media (max-width: 1050px) {
+    .portal-explorer { flex-direction: column; }
+    .portal-sidebar { flex-basis: auto; width: 100%; }
+    .portal-sidebar .ant-tree { max-height: 320px !important; }
+    .portal-record-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+}
+@media (max-width: 720px) {
+    .portal-explorer, .portal-information-content { gap: 16px; padding: 16px; }
+    .portal-information-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+    .portal-information-card > .ant-card-body, .portal-content > .ant-card > .ant-card-body, .portal-results { padding: 16px !important; }
+    .portal-results .ant-descriptions-item-label { width: 120px !important; overflow-wrap: anywhere; }
+    .portal-partner-logos img { max-width: min(230px, 100%); }
+    .portal-publication-details > div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}

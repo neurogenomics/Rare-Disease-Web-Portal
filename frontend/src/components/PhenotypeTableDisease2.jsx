@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import { legacyExplorerHref } from "../lib/legacyExplorerLink.js";
+import { portalFetch } from "../lib/portalAPI.js";
+import { useEffect, useRef, useState } from "react";
 import { DownloadOutlined } from "@ant-design/icons";
-import { Spin, Button, Table, Tooltip } from "antd";
+import { Alert, Spin, Button, Table, Tooltip } from "antd";
 import { Column } from "@ant-design/plots";
 import { BASE_API_URL } from "../../config.js";
 import formatText from "../scripts/formatText.js";
@@ -40,7 +42,7 @@ const DemoColumn = (data) => {
                                 {formatText(title)}
                             </div>
                             {items.map((item) => {
-                                const { name, value, color } = item;
+                                const { value, color } = item;
                                 return (
                                     // eslint-disable-next-line react/jsx-key
                                     <div>
@@ -83,8 +85,8 @@ const DemoColumn = (data) => {
                                 );
                             })}
                             <div className="italic">
-                                A higher value indicates a stronger cell
-                                type-phenotype association.
+                                This displays source statistical significance,
+                                not effect size, direction or causal evidence.
                             </div>
                         </div>
                     );
@@ -100,16 +102,18 @@ const DemoColumn = (data) => {
 const PhenotypeTableDisease = (hpid) => {
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false);
+    const [sourceError, setSourceError] = useState(null);
 
     const [chart, setChart] = useState([]);
 
     const fetchData = () => {
         setLoading(true);
+        setSourceError(null);
         let hppp = hpid.hpid;
-        fetch(
+        portalFetch(
             `${BASE_API_URL}/api/cellByHpoid1?hpo_id=${hppp}&db_type=${hpid.dbType}`
         )
-            .then((res) => res.json())
+            .then((res) => { if (!res.ok) throw new Error("Source unavailable"); return res.json(); })
             .then((data) => {
                 // let filteredData = data.filter((item) => item.q < 0.99999); // Remove data where q is nearly 1, i.e. practically no association
                 let temp = [];
@@ -124,46 +128,18 @@ const PhenotypeTableDisease = (hpid) => {
                 setChart(temp);
                 setData(data);
                 setLoading(false);
-            });
-    };
-
-    const fetchData1 = (db_type) => {
-        setLoading(true);
-        let hppp = hpid.hpid;
-        fetch(
-            `${BASE_API_URL}/api/cellByHpoid1?hpo_id=${hppp}&db_type=${db_type}`
-        )
-            .then((res) => res.json())
-            .then((data) => {
-                // let filteredData = data.filter((item) => item.q < 0.99999); // Remove data where q is nearly 1, i.e. practically no association
-                let temp = [];
-                data.forEach((item) => {
-                    item.key = item.id;
-                    if (typeof item.q !== 'number' || !Number.isFinite(item.q) || item.q <= 0 || item.q > 1) return;
-                    temp.push({
-                        q: Math.log10(item.q) * -1,
-                        Cell: item.celltype_name,
-                    });
-                });
-                setChart(temp);
-                setData(data);
-                setLoading(false);
-            });
+            }).catch(error => { setData([]); setSourceError(error.message); setLoading(false); });
     };
 
     useEffect(() => {
-        const searchParams = new URLSearchParams(window.location.search);
-        const db_type = searchParams.get("db_type");
-
         if (hpid.hpid) {
-            if (db_type) {
-                fetchData1(db_type);
-            }
             fetchData();
         }
     }, [hpid]);
 
     const columns = [
+        { title: "Direction", dataIndex: "direction", key: "direction" },
+        { title: "Signed estimate", dataIndex: "estimate", key: "estimate", render: value => typeof value === "number" && Number.isFinite(value) ? value.toPrecision(4) : "Unknown" },
         {
             title: "Cell Type",
             dataIndex: "celltype_name",
@@ -176,8 +152,7 @@ const PhenotypeTableDisease = (hpid) => {
                     <Tooltip title="Click to launch search for all associations with this cell type">
                     <a
                         style={{ textDecoration: "underline" }}
-                        target={"_blank"}
-                        href={`/celltype?jump=${text}&db_type=${record.celltype_database}`}
+                        href={legacyExplorerHref("celltype", text, { hpo: hpid.hpid, atlas: record.celltype_database })}
                         className="cursor-pointer text-blue-950"
                     >
                         {formatText(text)}
@@ -201,7 +176,7 @@ const PhenotypeTableDisease = (hpid) => {
             render: (num) => formatQ(num),
         },
     ];
-    const expandedRowRender = (record, index, indent, expanded) => {
+    const expandedRowRender = (record) => {
         const columns = [
             {
                 title: "Target",
@@ -212,7 +187,7 @@ const PhenotypeTableDisease = (hpid) => {
                 title: "Value",
                 dataIndex: "Value",
                 key: "Value",
-                render: (num) => num.toFixed(hpid.decimalPoints),
+                render: (num) => typeof num === "number" && Number.isFinite(num) ? num.toPrecision(4) : "Unknown",
             },
         ];
         const data1 = [];
@@ -286,6 +261,10 @@ const PhenotypeTableDisease = (hpid) => {
     return (
         <>
             <Spin spinning={loading}>
+            {sourceError && <Alert type="warning" showIcon message="Source unavailable; associations remain unknown" description={sourceError} style={{ marginBottom: 12 }} />}
+            {data?.[0]?.snapshot_coverage && <Alert type="info" showIcon style={{ marginBottom: 12 }}
+                message={data[0].snapshot_coverage === 'all_tested_rows' ? 'All retained tested rows for this phenotype and atlas' : 'Only significant source rows are retained for this phenotype'}
+                description="Positive and negative estimates are shown separately. Statistical significance does not establish cell causality; missing rows outside the declared snapshot scope are unknown." />}
                 <p className="text-sm text-gray-600">The chart omits q values reported as zero and invalid values because their logarithms cannot be plotted reliably. The table retains the source values. Association significance does not establish cellular causality.</p>
                 {chart.length > 0 && (
                     <>
@@ -311,6 +290,8 @@ const PhenotypeTableDisease = (hpid) => {
                         defaultExpandedRowKeys: ["0"],
                     }}
                     dataSource={data}
+                rowKey={record => record.id || record.celltype || record.hpo_id}
+                locale={{ emptyText: sourceError ? "Source unavailable; associations remain unknown." : "No rows in this source view; review the published coverage limits." }}
                     sortDirections={["descend", "ascend"]}
                     showSorterTooltip={true}
                 />

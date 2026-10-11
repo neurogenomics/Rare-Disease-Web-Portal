@@ -1,10 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { legacyExplorerHref } from "../lib/legacyExplorerLink.js";
+import { portalGet } from "../lib/portalAPI.js";
+import SnapshotScopeNotice from "../components/SnapshotScopeNotice.jsx";
+import EvidenceEntry from "../components/EvidenceEntry.jsx";
+import { useEffect, useRef, useState } from "react";
 import SeveritySlider from "../components/SeveritySlider.jsx";
 import SeveritySlider1 from "../components/SeveritySlider1.jsx";
 import SeverityNetWork from "../components/SeverityNetWork.jsx";
 import CustomHeader from "../components/utilities/Header.jsx";
 import CustomFooter from "../components/utilities/Footer.jsx";
-import axios from "axios";
 import {
     Breadcrumb,
     Layout,
@@ -36,13 +40,18 @@ import { urlParser, urlSetter } from "../scripts/urlHandlers.js";
 import checkAllNull from "../scripts/checkAllNull.js";
 import ShareButton from "../components/utilities/ShareButton.jsx";
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 
 export default function SeverityPage() {
+    useEffect(() => {
+        document.title = "Phenotype severity · Rare Disease Celltyping Portal";
+    }, []);
     const [data, setData] = useState([]);
 
     const [dataSet, setDataSet] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [sourceError, setSourceError] = useState(null);
+    const [searchCompleted, setSearchCompleted] = useState(false);
     const [tableParams, setTableParams] = useState({
         pagination: {
             current: 1,
@@ -88,10 +97,14 @@ export default function SeverityPage() {
             // Don't submit on first page load
             handleSubmit();
         }
+        // Pagination submits the current explicit filter selection, not every filter render.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tableParams.pagination?.current, tableParams.pagination?.pageSize]);
 
     useEffect(() => {
         if (!checkAllNull(urlParams)) handleSubmit();
+        // The router remounts the page for a changed query string.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleTableChange = async (pagination, filters, sorter) => {
@@ -105,7 +118,7 @@ export default function SeverityPage() {
     const handleDecimalChange = (decimalPoints) => {
         setDecimalPoints(decimalPoints);
     };
-    const expandedRowRender = (record, index, indent, expanded) => {
+    const expandedRowRender = (record) => {
         const columns = [
             {
                 title: "Clinical Characteristic",
@@ -279,13 +292,12 @@ export default function SeverityPage() {
             key: "hpo_id",
             render: (text) => {
                 return (
-                    <a
+                    <Link
                         style={{ textDecoration: "underline" }}
-                        target={"_blank"}
-                        href={`/phenotype?jump=${text}`}
+                        to={legacyExplorerHref("phenotype", text)}
                     >
                         {text}
-                    </a>
+                    </Link>
                 );
             },
         },
@@ -379,7 +391,8 @@ export default function SeverityPage() {
             without: e.target.checked,
         }));
     };
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event?.preventDefault();
         // Check if neither checkboxes are checked
         if (!sliderValues.with1 && !sliderValues.without) {
             setCheckboxAlert(true);
@@ -388,16 +401,19 @@ export default function SeverityPage() {
 
         setCheckboxAlert(false);
         setLoading(true);
+        setSourceError(null);
+        setSearchCompleted(false);
         const queryParams = new URLSearchParams(sliderValues).toString();
         const url = `${BASE_API_URL}/api/severity?${queryParams}&pageSize=${tableParams.pagination?.pageSize}&current=${tableParams.pagination?.current}`;
         try {
-            const response = await axios.get(url);
+            const response = await portalGet(url);
+            if (!Array.isArray(response.data)) throw new Error("Severity source returned no usable rows");
 
             // Fetch definitions for each item
             const dataWithDefinitions = await Promise.all(
                 response.data.map(async (item, index) => {
                     if (index < 10) {
-                        const definitionResponse = await axios.get(
+                        const definitionResponse = await portalGet(
                             `${ONTOLOGY_API_URL}/api/hp/terms/${item.hpo_id}`
                         );
                         return {
@@ -414,11 +430,12 @@ export default function SeverityPage() {
             );
             setLoading(false);
             setData(dataWithDefinitions);
+            setSearchCompleted(true);
             setTableParams({
                 ...tableParams,
                 pagination: {
                     ...tableParams.pagination,
-                    total: dataWithDefinitions[0]["total"],
+                    total: Number(dataWithDefinitions[0]?.total) || dataWithDefinitions.length,
                 },
             });
             let list = [];
@@ -475,10 +492,13 @@ export default function SeverityPage() {
             });
         } catch (error) {
             console.error("Error fetching data:", error);
+            setData([]);
+            setDataSet([]);
+            setLoading(false);
+            setSourceError("Severity annotations could not be loaded for these filters. Missing source data does not establish low severity or absence of a phenotype.");
         }
     };
 
-    const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
@@ -487,6 +507,7 @@ export default function SeverityPage() {
     const genExtra = () => <SettingsOutlined />; // Settings icon
     const advancedSettingsChildren = [
         <InputNumber
+            key="decimal-points"
             min={1}
             max={10}
             defaultValue={decimalPoints}
@@ -513,31 +534,10 @@ export default function SeverityPage() {
     return (
         <>
             <CustomHeader activePageKey="severity" />
-            <Layout
-                style={{
-                    minHeight: "100vh",
-                    backgroundColor: "#0F172AFF",
-                }}
-            >
-                <Sider
-                    style={{
-                        background: "#FFF",
-                        marginTop: 20,
-                        marginBottom: 20,
-                        marginLeft: 30,
-                        marginRight: 30,
-                        textAlign: "center",
-                        borderRadius: borderRadiusLG,
-                        padding: 10,
-                        paddingTop: 30,
-                    }}
-                    width={350}
-                    collapsed={collapsed}
-                    onCollapse={(value) => setCollapsed(value)}
-                >
-                    <div className="demo-logo-vertical" />
+            <Layout className="portal-page portal-explorer">
+                <aside className="portal-sidebar" aria-label="Search and filters">
                     <form onSubmit={handleSubmit}>
-                        <center>
+                        <div className="portal-filter-form">
                             <div>
                                 <p className="text-xl font-semibold text-left mb-2 ml-5">
                                     Filters
@@ -665,7 +665,7 @@ export default function SeverityPage() {
                                     />
                                 </div>
                             </div>
-                            <div style={{ margin: 29, textAlign: "left" }}>
+                            <div style={{ margin: "16px 0", textAlign: "left" }}>
                                 <div
                                     ref={tourRefCellAssociation}
                                     className="mb-4"
@@ -681,9 +681,7 @@ export default function SeverityPage() {
                                     <Checkbox
                                         style={{
                                             marginBottom: 10,
-                                            transform: "scale(1.2)",
                                             fontWeight: 400,
-                                            marginLeft: 25,
                                         }}
                                         onChange={onChange}
                                         checked={sliderValues.with1}
@@ -692,9 +690,7 @@ export default function SeverityPage() {
                                     </Checkbox>
                                     <Checkbox
                                         style={{
-                                            transform: "scale(1.2)",
                                             fontWeight: 400,
-                                            marginLeft: 27,
                                         }}
                                         onChange={onChange1}
                                         checked={sliderValues.without}
@@ -703,7 +699,7 @@ export default function SeverityPage() {
                                     </Checkbox>
                                 </div>
                             </div>
-                            <div style={{ margin: 29 }}>
+                            <div style={{ margin: "16px 0" }}>
                                 <Collapse
                                     items={advancedSettingsMain}
                                     size="small"
@@ -716,28 +712,20 @@ export default function SeverityPage() {
                                     style={{
                                         marginTop: 20,
                                         marginBottom: 20,
-                                        backgroundColor: "#c8bbec",
                                     }}
-                                    type="submit"
+                                    type="primary"
+                                    htmlType="submit"
                                     block
-                                    onClick={(event) => {
-                                        handleSubmit(event);
-                                    }}
                                     ref={tourRefSubmit}
                                 >
                                     <p className="font-semibold">Search</p>
                                 </Button>
                             </div>
-                        </center>
+                        </div>
                     </form>
-                </Sider>
-                <Layout>
-                    <Content
-                        style={{
-                            margin: "0 16px",
-                            minWidth: "50rem",
-                        }}
-                    >
+                </aside>
+                <Layout className="portal-content-layout">
+                    <Content className="portal-content">
                         <Breadcrumb
                             style={{
                                 margin: "16px 0",
@@ -749,41 +737,39 @@ export default function SeverityPage() {
                             </Breadcrumb.Item>
                         </Breadcrumb>
 
+                        <EvidenceEntry />
+                        <SnapshotScopeNotice />
+                        {sourceError && <Alert className="mb-4" type="warning" showIcon message="Severity source unavailable" description={sourceError} />}
                         <Card
                             style={{
                                 width: "100%",
                             }}
                         >
+                            <h1>Phenotype severity</h1>
                             <p>
-                                Each phenotype in the{" "}
-                                <HPOTextTooltip type="full" /> has had its
-                                severity scored. This was done based on a
-                                scoring system derived by clinicians, such that
-                                phenotypes which cause intellectual disability
-                                and death are profoundly severe, while those
-                                which just reduce fertility are mild. Our
-                                annotation of this was described in this
-                                preprint. Justifications for why each phenotype
-                                is associated with a severity modifier, can be
-                                seen by expanding the entries in the table
-                                below.
+                                Explore historical GPT-4 annotations of clinical characteristics for
+                                terms in the <HPOTextTooltip type="full" />. Expand a row to inspect
+                                the recorded justification behind each modifier. These scores and
+                                classes require independent validation; they are not calibrated
+                                treatment-priority measures. See <Link to="/evidence?tab=methods">methods
+                                and source coverage</Link> before using them in research prioritisation.
                             </p>
                         </Card>
                         <br />
-                        {data.length > 0 || !checkAllNull(urlParams) ? (
+                        {searchCompleted && !sourceError ? (
                             <div
+                                className="portal-results"
                                 style={{
                                     padding: 24,
                                     paddingBottom: 0,
                                     background: colorBgContainer,
                                     borderRadius: borderRadiusLG,
                                 }}
-                                className="relative"
                             >
-                                <div className="absolute left-6 z-10">
+                                <div className="portal-result-share">
                                     <ShareButton />
                                 </div>
-                                <div className="absolute right-6 z-10">
+                                <div className="portal-result-download">
                                     <DownloadButton elementId="severity-network" />
                                 </div>
                                 <div id="severity-network">
@@ -793,6 +779,7 @@ export default function SeverityPage() {
                                 <Spin spinning={loading}>
                                     {" "}
                                     <Table
+                                        locale={{ emptyText: "No phenotype rows returned for these filters in the available source." }}
                                         pagination={tableParams.pagination}
                                         columns={columns}
                                         expandable={{

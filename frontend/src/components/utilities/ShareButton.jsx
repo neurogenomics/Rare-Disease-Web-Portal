@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Button, Tooltip } from "antd";
 import { ShareAltOutlined } from "@ant-design/icons";
@@ -5,9 +6,6 @@ import { ShareAltOutlined } from "@ant-design/icons";
 export default function ShareButton({ url = null }) {
     const defaultText = "Copy link to clipboard";
     const [tooltipText, setTooltipText] = useState(defaultText);
-    if (!url) {
-        url = window.location.href;
-    }
 
     return (
         <Tooltip
@@ -19,13 +17,16 @@ export default function ShareButton({ url = null }) {
             }}
         >
             <Button
-                variant="solid"
-                color="purple"
+                type="default"
                 size="small"
                 icon={<ShareAltOutlined />}
-                onClick={() => {
-                    navigator.clipboard.writeText(url);
-                    setTooltipText("Link copied!");
+                onClick={async () => {
+                    try {
+                        await navigator.clipboard.writeText(url || window.location.href);
+                        setTooltipText("Link copied");
+                    } catch {
+                        setTooltipText("Copy the address from your browser");
+                    }
                 }}
             >
                 Share

@@ -1,29 +1,13 @@
 import React from "react";
 import { Tree, Input, Tooltip } from "antd";
-import axios from "axios";
+import { portalGet } from "../lib/portalAPI.js";
 import { BASE_API_URL, ONTOLOGY_API_URL } from "../../config.js";
-import { Close } from "@mui/icons-material";
 import { debounce } from "lodash";
 import { urlParser } from "../scripts/urlHandlers.js";
 
 const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
-const { jump } = urlParser("phenotype");
 
-const getParentKey = (title, tree) => {
-    let parentKey;
-    for (let i = 0; i < tree.length; i++) {
-        const node = tree[i];
-        if (node.children) {
-            if (node.children.some((item) => item.title === title)) {
-                parentKey = node.key;
-            } else if (getParentKey(title, node.children)) {
-                parentKey = getParentKey(title, node.children);
-            }
-        }
-    }
-    return parentKey;
-};
 
 const dataList = [];
 
@@ -39,10 +23,11 @@ const generateList = (data) => {
 };
 
 class SearchTree extends React.Component {
+    get jump() { return urlParser("phenotype").jump; }
     state = {
-        expandedKeys: jump ? [jump] : ["HP:0000118"],
-        selectedKeys: jump ? [jump] : [""],
-        searchValue: jump ? jump : "",
+        expandedKeys: this.jump ? [this.jump] : ["HP:0000118"],
+        selectedKeys: this.jump ? [this.jump] : [""],
+        searchValue: this.jump ? this.jump : "",
         autoExpandParent: true,
         gData: [
             {
@@ -59,28 +44,21 @@ class SearchTree extends React.Component {
         this.onChange = debounce(this.onChange.bind(this), 500);
     }
     componentDidMount() {
-        if (jump) {
-            this.onSearch(jump);
+        if (this.jump) {
+            this.onSearch(this.jump);
         }
         this.onFirstLoad(this.state.selectedKeys, {});
     }
 
     checkData = (param) => {
         const urlData = `${BASE_API_URL}/api/cellByHpoid1?hpo_id=${param}&db_type=${this.props.dbType}&dry_run=true`;
-        return axios.get(urlData).then((response) => {
-            if (response.data) {
-                return true;
-            } else {
-                return false;
-            }
-        });
+        return portalGet(urlData).then(response => response.data == null ? null : Boolean(response.data)).catch(() => null);
     };
 
     fetchData = (param) => {
         const url = `${ONTOLOGY_API_URL}/api/hp/terms/${param}/children`;
 
-        return axios
-            .get(url)
+        return portalGet(url)
             .then((response) => {
                 const children = response.data;
                 const items = children.map((item) => {
@@ -93,8 +71,7 @@ class SearchTree extends React.Component {
                 // Check if each child has further children by making another API call
                 const childPromises = items.map((item) => {
                     const childUrl = `${ONTOLOGY_API_URL}/api/hp/terms/${item.id}/children`;
-                    return axios
-                        .get(childUrl)
+                    return portalGet(childUrl)
                         .then(async (childResponse) => {
                             if (childResponse.data.length === 0) {
                                 item.isLeaf = true; // If no children, then it's a leaf
@@ -144,10 +121,10 @@ class SearchTree extends React.Component {
 
     onFirstLoad = (selectedKeys, info) => {
         let { first_load } = this.state;
-        if (first_load && jump) {
+        if (first_load && this.jump) {
             this.onSelect(selectedKeys, info);
             this.setState({
-                expandedKeys: [jump],
+                expandedKeys: [this.jump],
                 autoExpandParent: false,
             });
         }
@@ -169,7 +146,7 @@ class SearchTree extends React.Component {
         const url = `${ONTOLOGY_API_URL}/api/hp/search?q=${e.target.value}&limit=50`;
         this.setState({ loading: true });
 
-        axios.get(url).then((response) => {
+        portalGet(url).then((response) => {
             for (let i = 0; i < response.data.terms.length; i++) {
                 let item = response.data.terms[i];
                 res.push({ key: item.id, title: item.name, isLeaf: false });
@@ -178,8 +155,7 @@ class SearchTree extends React.Component {
             // Check if each child has further children by making another API call
             const childPromises = res.map((item) => {
                 const childUrl = `${ONTOLOGY_API_URL}/api/hp/terms/${item.key}/children`;
-                return axios
-                    .get(childUrl)
+                return portalGet(childUrl)
                     .then(async (childResponse) => {
                         if (childResponse.data.length === 0) {
                             item.isLeaf = true; // If no children, then it's a leaf
@@ -231,16 +207,16 @@ class SearchTree extends React.Component {
                 );
             title = (
                 <Tooltip
-                    title={item.hasData ? null : "No cell associations found"}
+                    title={item.hasData === true ? null : item.hasData === false ? "No qualifying atlas rows in this source view; this does not establish absence of an association." : "Atlas source coverage unavailable; association remains unknown."}
                     placement="right"
                 >
-                    {item.hasData ? (
+                    {item.hasData === true ? (
                         title
                     ) : (
                         <div>
                             <p>{title}
-                            <span className="ml-1 text-red-500 inline-flex align-middle -mt-1">
-                                <Close fontSize="inherit" />
+                            <span className="ml-1 text-gray-500 inline-flex align-middle -mt-1" aria-label="Atlas evidence scope">
+                                ?
                             </span>
                             </p>
                         </div>
@@ -290,7 +266,7 @@ class SearchTree extends React.Component {
         let res = [];
         const url = `${ONTOLOGY_API_URL}/api/hp/search?q=${e}&limit=50`;
 
-        return axios.get(url).then((response) => {
+        return portalGet(url).then((response) => {
             for (let i = 0; i < response.data.terms.length; i++) {
                 let item = response.data.terms[i];
                 res.push({ key: item.id, title: item.name, isLeaf: false });
@@ -299,8 +275,7 @@ class SearchTree extends React.Component {
             // Check if each child has further children by making another API call
             const childPromises = res.map((item) => {
                 const childUrl = `${ONTOLOGY_API_URL}/api/hp/terms/${item.key}/children`;
-                return axios
-                    .get(childUrl)
+                return portalGet(childUrl)
                     .then(async (childResponse) => {
                         if (childResponse.data.length === 0) {
                             item.isLeaf = true; // If no children, then it's a leaf

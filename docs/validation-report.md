@@ -1,19 +1,20 @@
 # Evidence validation report
 
-Validated 2026-10-11. The final offline audit of 9,997 JSON files reports **zero schema, count, reference, source-field or archive/public consistency errors**. All 138 regression tests and the production build pass. There is one unresolved disease-alias warning. These checks establish conservative calculations and traceability; passing them does not validate causal cell types, a clinical treatment decision or a treatment-success probability.
+Validated 2026-10-11. The final offline audit of 10,199 JSON files reports **zero schema, count, reference, source-field or archive/public consistency errors**. All 170 regression tests and the production build pass. There is one unresolved disease-alias warning. These checks establish conservative calculations and traceability; passing them does not validate causal cell types, a clinical treatment decision or a treatment-success probability.
 
-The final prebuild publisher passed, and Vite completed the production build in 19.98 seconds after the shared-interface integration. The evidence-workbench executable is 653.71 kB, or 155.11 kB gzip; the main executable is 280.59 kB, or 87.37 kB gzip. Large evidence datasets are published as separately fetched data. Existing build warnings concern stale Browserslist data, `lottie.js` use of `eval` and chunks larger than 500 kB. The completed desktop/mobile and keyboard workbench review found no material scientific-limit mismatch with this report. A further desktop browser check verified the gene browser's unavailable-API warning, disabled unsourced percentile filter and route to the snapshot-backed workbench.
+The prebuild publisher passed, and Vite completed the production build in 11.77 seconds after the site-wide integration. The evidence-workbench executable is 657.25 kB, or 156.26 kB gzip; the entry executable is 242.12 kB, or 75.27 kB gzip. Large evidence datasets are published as separately fetched data. Existing build warnings concern stale Browserslist data and chunks larger than 500 kB. The completed desktop/mobile and keyboard workbench review found no material scientific-limit mismatch with this report. A further desktop browser check verified the gene browser's unavailable-API warning, disabled unsourced percentile filter and route to the snapshot-backed workbench.
 
-The homepage and evidence routes now reuse the established portal logo, header,
-navigation and footer. The explorer uses Ant Design Layout, Breadcrumb, Card,
-Tabs and Button components, with system typography and blue/gray styling.
-Browser checks at 1280px and 390px verified the homepage and evidence layout,
-the homepage-to-variant route, gene preservation across tab changes, and trial
-drawer opening and Escape dismissal. The original phenotype explorer retains
-the same shared identity and navigation. The narrow evidence page has no page
-overflow; mobile search controls use 16px text and a 44px height. CSS selectors
-are isolated from the shared header/footer. Scoped JSX lint and all 62 frontend
-regressions pass after integration; no source data or calculation engine changed.
+All 13 main, information and evidence entry routes now reuse the established
+portal logo, header, navigation, footer and Ant Design conventions. Browser
+checks at 1280px and 390px found no horizontal page overflow, including populated
+phenotype, gene, cell, variant and treatment views. Actual reciprocal navigation,
+atlas changes, same-route selections, Back/Forward, unavailable source recovery,
+mobile-menu Escape and trial-drawer Escape were exercised. The detailed paths
+are in [site-navigation-audit.md](site-navigation-audit.md). CSS selectors remain
+scoped. Frontend lint passes with the legacy prop-types and exhaustive-deps rules
+excluded; their pre-existing debt has not been represented as a clean full lint.
+All 94 frontend regressions pass. Clinical evidence and the candidate engine
+remain unchanged; the publication adapter derives views from the audited corpus.
 
 ## Reproducible checks
 
@@ -34,7 +35,7 @@ The corpus audit requires `jsonschema` and the frozen local HPO, ClinGen and API
 | --- | --- |
 | Import, dosage, ontology, registry-refresh and reverse-cell fixtures | 22 passed |
 | Backend candidate engine and annotation missingness | 40 passed |
-| Frontend evidence, modality and annotation engines | 62 passed |
+| Frontend evidence, modality, annotation, navigation, snapshot and severity handling | 94 passed |
 | Snapshot publication and restoration | 14 passed |
 | Final normalized corpus and archive audit | Zero errors; one disease-alias warning |
 | Prebuild publication and production build | Passed |
@@ -50,6 +51,17 @@ and empirical sampling method; the interface labels it as an estimate and treats
 legacy values without provenance as unverified. Retrieval failures remain
 retryable. These fixtures use offline collections, not fabricated production
 annotations.
+
+The site-wide follow-up adds 10 durable-context navigation tests, 17 snapshot,
+publication and legacy-URL tests, and five severity-distribution tests. They
+separate missing requested atlas coverage from measured empty results, keep
+zero-HPO targets searchable through authoritative identities, reject wider
+reverse-cell filters, preserve signed rows and q=0, and test same-route history
+hydration. Two differently capitalized neuron-label pairs previously collided
+on the case-insensitive macOS filesystem. Reversible UTF-8 hexadecimal filenames
+and exact source labels now preserve them independently. Missing severity
+distributions cannot supply zero percentiles or infinite extrema; percentiles
+use only finite source values, include ties and handle values above the maximum.
 
 Manual configuration checks confirmed environment overrides for a separate
 API/database and exact frontend origins. The actual FastAPI CORS middleware
@@ -87,6 +99,7 @@ The final interface review also checked that MacTel does not offer an inherited-
 | Exported atlas files / retained association rows | 9,762 / 726,881 |
 | Panel gene-expression rows across both atlases | 17,842 |
 | Exact reverse-index cell labels: Descartes / Human Cell Landscape | 77 / 124 |
+| Derived exact atlas/cell snapshots / signed q<0.05 rows | 201 / 46,514 |
 | Complete ClinVar gene queries / per-gene variation rows | 92 / 150,894 |
 | Distinct ClinVar Variation IDs across the panel | 148,294 |
 | Registry snapshots | 119 |
@@ -109,7 +122,7 @@ All 119 registry snapshots agree with normalization of their cached ClinicalTria
 
 Frozen HPO ontology and association source bytes match their recorded SHA256 values. The ontology is `hp/releases/2026-09-01`; the association export records a source modification date of 2026-09-02. An independent ancestry traversal reproduces the clinical-phenotype flags, and the backend and frontend use the same known IDs, clinical branch and ontology checksum. Inheritance, course and other ontology metadata remain in the source evidence but are excluded from therapeutic phenotype candidates.
 
-Atlas counts, signed directions, q-threshold decisions, positive-only minimum-q display choices and coverage declarations agree with every retained row. Independent reconstruction of the reverse-cell index agrees with every significant signed association, including associations beyond the displayed top cell. The eight public metadata datasets equal their authored source snapshots. All three compressed archives pass their outer checksums; all 9,973 records pass individual checksums, byte counts and manifest membership checks and are byte-identical to the public files.
+Atlas counts, signed directions, q-threshold decisions, positive-only minimum-q display choices and coverage declarations agree with every retained row. Independent reconstruction of the reverse-cell index agrees with every significant signed association, including associations beyond the displayed top cell. The nine public metadata datasets equal their authored source snapshots. The 92-gene identifier bridge independently agrees with exact ClinVar symbol/NCBI-ID records, including all eight genes without HPO rows. The audit reconstructs all 201 derived cell files and their 46,514 signed rows, checks exact source values and context, source SHA references, bounded coverage and filename encoding. These are compatibility views, not new clinical evidence. All three compressed archives pass their outer checksums; all 9,973 original records pass individual checksums, byte counts and manifest membership checks and are byte-identical to the public files.
 
 ## Scientific interpretation and remaining gaps
 
@@ -120,6 +133,7 @@ Independent primary-source spot checks support the scope of the SCN1A loss/gain 
 The following limits remain material:
 
 - **Coverage:** 110 selected panel/curated/legacy HPO identifiers are absent from the imported atlas sources. Eight panel genes have no HPO disease-context rows: ALAS1, CNTF, CSF2, HAO1, IFNA2, MAGEA4, TNFRSF17 and UGCG. Missing evidence is not a negative causal or therapeutic finding.
+- **Staging compatibility:** local original explorers use the frozen HPO source and explicit 92-gene phenotype/expression panel; reverse cell views cover only q<0.05. Definitions, comments, cross-references and disease labels are not fully included. Annotation-browser reference filters, severity distributions and full severity facets still need a matching API/database. The interface reports unavailable sources rather than filling these gaps with synthetic data.
 - **Historical curation:** the preserved severity dataset contains 17,141 rows, including 444 obsolete HPO IDs and 948 disagreements with current labels; the legacy product catalogue has 13 label disagreements. These values are historical machine annotations with an unvalidated construct, not patient-specific severity or treatment-priority probabilities. Current curated HPO labels resolve, are nonobsolete and belong to the clinical phenotype branch.
 - **Atlas lineage:** exact import-file hashes and numerical precision are restored, but the analysis commit, expression and HPO releases and model configuration that generated those matrices remain unknown. Signed association, specificity and q-values do not establish causal cells, exposure, target engagement or clinical rescue. Source q=0 retains its unknown upstream precision.
 - **Allele and transcript information:** 11,062 per-gene variation rows have no SPDI representation. Canonical Ensembl transcript identifiers, versions, strands and exons support conservative genomic overlap; protein length times three supplies a coding-length lower bound. The snapshots do not provide transcript-normalized CDS/cDNA positions, complete local sequence or a guaranteed clinically relevant transcript. They cannot determine actual splice repair, NMD, editing eligibility, functional effect or a full vector cassette.

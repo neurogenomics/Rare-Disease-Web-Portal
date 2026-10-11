@@ -8,14 +8,27 @@ independent therapeutic accuracy estimate or patient-specific eligibility.
 
 Start at `/evidence`. The original `/approved-therapies` and `/gene-therapy`
 routes now use the same workbench. Phenotype, gene and exact atlas/cell selections
-from the older explorers carry into it. URL filters support sharing; records,
+from the older explorers carry into it. Reciprocal links return to the biological
+explorers from treatment endpoints, gene expression, variant details
+and modality contexts. Gene links use source-backed NCBI identifiers; cell links
+retain the exact source label and atlas. URL filters support sharing; records,
 source manifests, associations and shortlist tables can be downloaded.
 
 The homepage and evidence explorer share the portal's existing logo, header,
 navigation and footer. Evidence views use the same Ant Design typography,
 breadcrumbs, cards, tabs and controls as the established explorers. Their
 evidence-specific tables and requirement ledgers remain within that shared
-interface; tab changes preserve the selected gene, phenotype and atlas context.
+interface. Tab changes preserve gene, phenotype, disease identifier and exact
+atlas/cell context, while clearing view-specific searches, filters and record
+selections that cannot be reused in another view. An atlas change clears the
+former cell context instead of transferring its label to another atlas.
+
+A navigable connection is not an adjudicated causal claim. Gene–phenotype links
+are disease-context joins. ClinVar tables remain gene-scoped when entered from
+a phenotype or cell; the carried context does not assign a variant to that
+phenotype or cell. Submitted condition identifiers can scope modality discovery
+without an inferred disease crosswalk. Treatment discovery uses gene and endpoint
+and does not manufacture an allele-specific match.
 
 ## Inspect an evidence chain
 
@@ -108,9 +121,23 @@ positive/negative sets.
 
 ## Build and refresh
 
-The workbench can run from static snapshots without MongoDB. The original
-explorers still require the configured API and database; failed requests show
-unavailable evidence rather than biological absence.
+The workbench runs from published static snapshots without MongoDB. Local
+development also uses a bounded snapshot adapter for covered paths in the
+original phenotype, gene and cell explorers when no API override is supplied.
+It provides frozen HPO search/ancestry, disease-context gene–phenotype joins,
+92 source-backed gene identities, panel expression and signed atlas associations.
+Reverse cell views use exact labels and source rows with q < 0.05; thresholds
+above 0.05 require the full atlas API. Source q values reported as zero retain
+their precision limit and do not become infinite evidence.
+
+Missing terms, genes, requested atlas coverage or source files are unavailable
+evidence. A successful empty query within the stated panel or threshold is
+different from a failed request, and neither establishes genome-wide absence
+or a negative cellular mechanism. The adapter uses the published source corpus
+and shows its bounded scope in the explorers. It does not create full gene-annotation
+facets, whole-corpus severity distribution/filtering or missing annotations;
+these still need the configured API and source database. Individual frozen
+severity records remain unvalidated annotations, not regenerated assessments.
 
 ```sh
 cd frontend
@@ -121,7 +148,21 @@ npm run dev -- --host 127.0.0.1 --port 5180 --strictPort
 The release is reviewed locally or in a Vercel **preview** before any Imperial
 production deployment. The January/February development workflow used port
 5175; the isolated evidence worktree uses 5180 to preserve other checkouts.
-No Imperial SSH login is needed to inspect the workbench snapshots.
+No Imperial SSH login is needed to inspect these snapshot-supported paths.
+
+Production builds use the existing API by default. To enable the same bounded
+explorer snapshots in a Vercel preview or a locally served preview build, set
+`VITE_SNAPSHOT_EXPLORERS=true` at build time:
+
+```sh
+VITE_SNAPSHOT_EXPLORERS=true npm run build
+```
+
+`VITE_SNAPSHOT_EXPLORERS=false` keeps the original explorers API-backed in local
+development. An explicit `VITE_API_BASE_URL` also disables automatic local
+snapshot use unless `VITE_SNAPSHOT_EXPLORERS=true` explicitly opts in. Unsupported
+snapshot routes continue to the configured API in either mode. The static
+evidence workbench remains available independently of that switch.
 
 `VITE_API_BASE_URL` selects the API for a development or preview build. Its
 defaults are `http://127.0.0.1:8001` in development and the existing public API
@@ -145,7 +186,13 @@ comma-separated `PORTAL_CORS_ORIGINS`. Defaults bind to loopback and allow
 needs its own exact preview origins and database configuration.
 
 `predev` and `prebuild` restore the checksummed, lossless normalized snapshot
-bundles from `data/evidence/published/` and publish eight lazily fetched datasets.
+bundles from `data/evidence/published/` and publish nine lazily fetched source
+datasets, including a 92-gene NCBI identity bridge. The bridge uses exact HPO
+gene identifiers and unambiguous ClinVar gene symbol/identifier records for
+panel targets with no HPO export rows; missing HPO joins do not remove their
+available expression or variant evidence. Reverse exact-cell files are derived
+reproducibly from the published signed per-HPO corpus, retaining both positive
+and negative estimates with q < 0.05 without independent analysis or normalization.
 Each archive and restored file is verified; missing or corrupted outputs are
 repaired. Files remain ordinary JSON at the frontend URLs. The large raw source
 matrices and retrieval caches are excluded from Git. Private requirement-recovery

@@ -1,8 +1,8 @@
-import React from "react";
+import { useEffect } from "react";
 import CustomHeader from "../components/utilities/Header";
-import { Layout } from "antd";
-import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import BackgroundAnimation from "../components/BackgroundAnimation";
+import { Breadcrumb, Card, Layout } from "antd";
+import { Link } from "react-router-dom";
+import CustomFooter from "../components/utilities/Footer";
 
 const { Content } = Layout;
 
@@ -28,35 +28,39 @@ const publications = [
 ];
 
 export default function PublicationsPage() {
+    useEffect(() => {
+        document.title = "Publications · Rare Disease Celltyping Portal";
+    }, []);
     return (
-        <div className="relative">
+        <Layout className="portal-page portal-information-page">
             <CustomHeader activePageKey="publications" />
-            <div className="fixed inset-0 -z-10">
-                <BackgroundAnimation />
-            </div>
-            <Content className="relative z-10 p-12 bg-center">
-                <div className="bg-white bg-opacity-95 p-10 rounded-lg shadow-lg">
-                    <h1 className="text-4xl font-bold flex items-center mb-3">
-                        <ArticleOutlinedIcon fontSize="large" className="mr-4" />
-                        Publications
-                    </h1>
-                    <br />
-                    <div className="space-y-8 font-mono" style= {{ marginLeft: "3.4em" }}>
-                        {publications.map((pub, index) => (
-                            <div key={index} className="border-b pb-7">
-                                <p className="font-bold mb-1 text-xl">{pub.title}</p>
-                                <p className="mb-2 text-sm">{pub.description}</p>
-                                <div className="ml-3">
-                                    <p><strong>Authors:</strong> {pub.authors}</p>
-                                    <p><strong>Journal:</strong> {pub.journal}</p>
-                                    <p><strong>Year:</strong> {pub.year}</p>
-                                    <p><strong>DOI: </strong><a href={pub.doi} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{pub.doi}</a></p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+            <Content className="portal-information-content">
+                <Breadcrumb items={[{ title: <Link to="/">Home</Link> }, { title: "Publications" }]} />
+                <Card className="portal-information-card portal-publication-intro">
+                    <h1>Publications</h1>
+                    <p>
+                        Studies underlying the portal&apos;s phenotype and cellular-context data.
+                        Read <Link to="/evidence?tab=methods">methods and source coverage</Link> for
+                        the current interpretation, then inspect the <Link to="/evidence">treatment evidence</Link>.
+                    </p>
+                </Card>
+                <div className="portal-publication-list">
+                    {publications.map((pub) => (
+                        <Card key={pub.doi} className="portal-information-card">
+                            <article>
+                                <h2><a href={pub.doi} target="_blank" rel="noopener noreferrer">{pub.title}</a></h2>
+                                <p>{pub.description}</p>
+                                <dl className="portal-publication-details">
+                                    <div><dt>Authors</dt><dd>{pub.authors}</dd></div>
+                                    <div><dt>Journal</dt><dd>{pub.journal}, {pub.year}</dd></div>
+                                    <div><dt>DOI</dt><dd><a href={pub.doi} target="_blank" rel="noopener noreferrer">{pub.doi}</a></dd></div>
+                                </dl>
+                            </article>
+                        </Card>
+                    ))}
                 </div>
             </Content>
-        </div>
+            <CustomFooter />
+        </Layout>
     );
 }

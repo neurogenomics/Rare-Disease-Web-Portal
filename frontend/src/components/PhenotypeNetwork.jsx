@@ -1,6 +1,7 @@
 import ForceGraph2D from "react-force-graph-2d";
 import { forceY } from "d3-force";
 import { useRef, useState, useEffect, useMemo } from "react";
+import { legacyExplorerHref } from '../lib/legacyExplorerLink.js';
 import { Button, Popover, Tooltip, ConfigProvider } from "antd";
 import {
     Add,
@@ -12,7 +13,7 @@ import {
     RestartAlt,
 } from "@mui/icons-material";
 
-export default function PhenotypeNetwork({ elementRef, data, height }) {
+export default function PhenotypeNetwork({ elementRef, data, height, context = {} }) {
     const networkRef = useRef();
     const containerRef = useRef();
     const [windowDimensions, setWindowDimensions] = useState({
@@ -377,7 +378,10 @@ export default function PhenotypeNetwork({ elementRef, data, height }) {
                 height={isFullscreen ? windowDimensions.height : height}
                 width={isFullscreen ? windowDimensions.width : width}
                 nodeLabel={(node) => node.id}
-                onNodeClick={(node) => window.open(`/phenotype?jump=${node.id}&db_type=DescartesHuman`, "_blank").focus()}
+                onNodeClick={(node) => {
+                    const destination = legacyExplorerHref('phenotype', node.id, context);
+                    if (destination) window.location.assign(destination);
+                }}
             />
         </div>
     );

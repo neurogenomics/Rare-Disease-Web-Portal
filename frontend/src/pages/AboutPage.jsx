@@ -1,142 +1,90 @@
-import React from "react";
-import { Layout } from "antd";
+import { useEffect } from "react";
+import { Breadcrumb, Card, Layout } from "antd";
+import { Link } from "react-router-dom";
 import CustomHeader from "../components/utilities/Header";
-import BackgroundAnimation from "../components/BackgroundAnimation";
+import CustomFooter from "../components/utilities/Footer";
 import { Email, Place, GitHub, X, Launch } from "@mui/icons-material";
 
 const { Content } = Layout;
 
 function Logos() {
     return (
-        <div className="flex justify-center items-center max-h-[40px] space-x-10 mt-3">
-            <a href="https://www.ukdri.ac.uk/" target="_blank">
-                <img
-                    src={"/logos/logo_UKDRI.png"}
-                    className="h-[85px] object-contain"
-                    alt="UK Dementia Research Institute logo"
-                />
+        <div className="portal-partner-logos">
+            <a href="https://www.ukdri.ac.uk/" target="_blank" rel="noopener noreferrer">
+                <img src="/logos/logo_UKDRI.png" alt="UK Dementia Research Institute logo" />
             </a>
-            <a href="https://www.imperial.ac.uk/" target="_blank">
-                <img
-                    src={"/logos/logo_Imperial_DoBS.png"}
-                    className="h-[70px] object-contain mt-2"
-                    alt="Imperial College London logo"
-                />
+            <a href="https://www.imperial.ac.uk/" target="_blank" rel="noopener noreferrer">
+                <img src="/logos/logo_Imperial_DoBS.png" alt="Imperial College London logo" />
             </a>
         </div>
     );
 }
 
 export default function AboutPage() {
+    useEffect(() => {
+        document.title = "About · Rare Disease Celltyping Portal";
+    }, []);
     return (
-        <div className="relative">
+        <Layout className="portal-page portal-information-page">
             <CustomHeader activePageKey="about" />
-            <div className="fixed inset-0 -z-10">
-                <BackgroundAnimation />
-            </div>
-            <Content className="relative z-10 p-12 bg-center">
-                <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-                    <div className="bg-white bg-opacity-95 p-10 rounded-lg shadow-lg min-w-[600px] flex flex-col">
-                        <h1 className="text-4xl font-bold flex items-center mb-6">
-                            About
-                        </h1>
-                        <hr />
-                        <br />
-                        <p className="text-justify">
-                            Rare diseases often involve complex genetic
-                            variation, creating challenges for patients,
-                            clinicians, and researchers alike. This portal aims
-                            to shed light on the cell-type mechanisms involved
-                            in each rare disease phenotype by integrating
-                            large-scale single-cell transcriptomic data with the
-                            Human Phenotype Ontology. By highlighting
-                            significant associations between thousands of cell
-                            types and phenotypes, users can quickly see which
-                            cells are most relevant to a given genetic
-                            condition. Within this site, you’ll also find
-                            severity metrics that help prioritize which
-                            phenotypes may benefit most from gene therapy or
-                            other targeted interventions. This resource is fully
-                            open-access, designed to encourage global
-                            collaboration, and supports interactive exploration
-                            through visual tools like graphs and networks.
-                            Ultimately, we hope to contribute to more precise
-                            diagnostic and therapeutic strategies for
-                            individuals living with these diverse and
-                            understudied conditions.
+            <Content className="portal-information-content">
+                <Breadcrumb items={[{ title: <Link to="/">Home</Link> }, { title: "About" }]} />
+                <div className="portal-information-grid">
+                    <Card className="portal-information-card">
+                        <h1>About the portal</h1>
+                        <p>
+                            Rare diseases involve complex genetic variation, creating challenges for patients,
+                            clinicians and researchers. The Rare Disease Celltyping Portal brings together
+                            disease and phenotype annotations, single-cell expression atlases, variant records
+                            and treatment evidence to help researchers examine possible cellular mechanisms.
                         </p>
-                        <br />
-                        <div className="italic font-semibold text-gray-700">
-                            <a
-                                href="http://github.com/neurogenomics/Rare-Disease-Web-Portal"
-                                target="_blank"
-                            >
-                                Contribute to this project on GitHub!{" "}
-                                <sup className="text-xs">
-                                    <Launch fontSize="inherit" />
-                                </sup>
+                        <p>
+                            Explore a phenotype, follow its associated genes and cell types, then inspect
+                            the variant and treatment sources behind the interpretation. Statistical
+                            enrichment nominates a cellular context; it does not establish that a cell
+                            type causes a phenotype or that a treatment will work. Severity annotations
+                            are historical research data and require independent validation.
+                        </p>
+                        <p>
+                            The <Link to="/evidence?tab=methods">methods and source coverage</Link> explain
+                            these limits. The <Link to="/publications">publications</Link> describe the
+                            underlying studies, and the <Link to="/evidence">evidence explorer</Link> lets
+                            you review supporting, conflicting and missing evidence.
+                        </p>
+                        <p className="portal-contribute-link">
+                            <a href="https://github.com/neurogenomics/Rare-Disease-Web-Portal" target="_blank" rel="noopener noreferrer">
+                                Contribute to this project on GitHub <Launch fontSize="inherit" />
                             </a>
+                        </p>
+                        <Logos />
+                    </Card>
+                    <Card className="portal-information-card">
+                        <h2>Contact</h2>
+                        <a className="portal-lab-logo" href="https://www.neurogenomics.co.uk" target="_blank" rel="noopener noreferrer">
+                            <img src="/logos/logo_neurogenomicslab.png" alt="Neurogenomics Lab logo" />
+                        </a>
+                        <p>
+                            UK Dementia Research Institute<br />
+                            Department of Brain Sciences<br />
+                            Faculty of Medicine, Imperial College London
+                        </p>
+                        <p className="portal-contact-line">
+                            <Email fontSize="small" /> <a href="mailto:nskene@ic.ac.uk">nskene@ic.ac.uk</a>
+                        </p>
+                        <p className="portal-contact-line">
+                            <Place fontSize="small" />
+                            <a href="https://maps.app.goo.gl/Fxs7yTVidBDvthjZ9" target="_blank" rel="noopener noreferrer">
+                                Sir Michael Uren Hub, Imperial College London, London, UK – W12 0BZ
+                            </a>
+                        </p>
+                        <div className="portal-social-links">
+                            <a href="https://github.com/neurogenomics" target="_blank" rel="noopener noreferrer" aria-label="Neurogenomics on GitHub"><GitHub /></a>
+                            <a href="https://x.com/n_skene" target="_blank" rel="noopener noreferrer" aria-label="Nathan Skene on X"><X /></a>
                         </div>
-                        <br />
-                        <div className="mt-auto">
-                            <hr />
-                            <br />
-                            <Logos />
-                        </div>
-                    </div>
-                    <div className="bg-white bg-opacity-95 p-10 rounded-lg shadow-lg  min-w-[400px] flex flex-col">
-                        <h1 className="text-4xl font-bold flex items-center mb-6">
-                            Contact
-                        </h1>
-                        <hr />
-                        <br />
-                        <div className="space-y-2">
-                            <a href="https://www.neurogenomics.co.uk" target="_blank">
-                            <img
-                                target="_blank"
-                                src="/logos/logo_neurogenomicslab.png"
-                                alt="Neurogenomics Lab logo"
-                            /></a>
-                            <div className="pt-4 text-gray-700">
-                                UK Dementia Research Institute Department of
-                                Brain Sciences
-                                <br />
-                                Faculty of Medicine
-                                <br />
-                                Imperial College London
-                            </div>
-                            <div className="pt-2">
-                                <Email />{" "}
-                                <a href="mailto:nskene@ic.ac.uk">
-                                    {" "}
-                                    nskene@ic.ac.uk
-                                </a>
-                            </div>
-                            <div>
-                                <Place />{" "}
-                                <a
-                                    href="https://maps.app.goo.gl/Fxs7yTVidBDvthjZ9"
-                                    target="_blank"
-                                >
-                                    Sir Michael Uren Hub, Imperial College
-                                    London, London, UK - W12 0BZ
-                                </a>
-                            </div>
-                            <div className="items-center space-x-4 pt-2">
-                                <a
-                                    href="http://github.com/neurogenomics"
-                                    target="_blank"
-                                >
-                                    <GitHub fontSize="large" />
-                                </a>
-                                <a href="https://x.com/n_skene" target="_blank">
-                                    <X fontSize="large" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    </Card>
                 </div>
             </Content>
-        </div>
+            <CustomFooter />
+        </Layout>
     );
 }

@@ -1,4 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import { portalFetch, USE_PORTAL_SNAPSHOTS } from "../lib/portalAPI.js";
+import SnapshotScopeNotice from "../components/SnapshotScopeNotice.jsx";
+import EvidenceEntry from "../components/EvidenceEntry.jsx";
+import { useEffect, useRef, useState } from "react";
 import {
     Breadcrumb,
     Layout,
@@ -10,6 +13,7 @@ import {
     Card,
     Collapse,
     InputNumber,
+    Alert,
 } from "antd";
 import PhenotypeTree from "../components/PhenotypeTree.jsx";
 import PhenotypeTableDisease from "../components/PhenotypeTableDisease.jsx";
@@ -32,7 +36,7 @@ import { HPOTextTooltip } from "../components/info/TextTooltips.jsx";
 import { urlParser, urlSetter } from "../scripts/urlHandlers.js";
 import ShareButton from "../components/utilities/ShareButton.jsx";
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 
 const items = [
     {
@@ -44,21 +48,25 @@ const items = [
 const onChange = (key) => {
     console.log(key);
 };
-export default function phenotypePage() {
+export default function PhenotypePage() {
     // URL Parsing
     const { jump, url_db_type } = urlParser("phenotype");
 
-    const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
     const [data, setData] = useState(null);
     const [dataRef, setDataRef] = useState(null);
+    const [sourceError, setSourceError] = useState(null);
     const [size, setSize] = useState(url_db_type || "DescartesHuman");
 
     const [desItem, setDesItem] = useState(items);
     const [decimalPoints, setDecimalPoints] = useState(3);
+
+    useEffect(() => {
+        document.title = "Phenotypes · Rare Disease Celltyping Portal";
+    }, []);
 
     // Tour
     const tourRefAtlas = useRef(null);
@@ -97,39 +105,46 @@ export default function phenotypePage() {
         let itemsTemp = [];
         itemsTemp.push({
             label: "Phenotype ID",
-            key: "1",
+            key: "hpo-id",
             children: <LinkHPOID hpoId={key} />,
         });
 
-        const result = await fetch(
+        const result = await portalFetch(
             `${ONTOLOGY_API_URL}/api/hp/terms/${key}`
-        ).then((res) => res.json());
+        ).then((res) => {
+            if (!res.ok) throw new Error("Phenotype definition source unavailable");
+            return res.json();
+        });
 
         itemsTemp.push({
             label: "Definition",
-            key: "1",
-            children: result.definition || <NotFound />,
+            key: "definition",
+            children: result.definition || (USE_PORTAL_SNAPSHOTS ? "Not included in this snapshot" : <NotFound />),
         });
         itemsTemp.push({
             label: "Synonyms",
-            key: "3",
-            children: result.synonyms.join(" - ") || <NotFound />,
+            key: "synonyms",
+            children: result.synonyms?.join(" - ") || <NotFound />,
         });
         itemsTemp.push({
             label: "Comment",
-            key: "2",
-            children: result.comment || <NotFound />,
+            key: "comment",
+            children: result.comment || (USE_PORTAL_SNAPSHOTS ? "Not included in this snapshot" : <NotFound />),
         });
         itemsTemp.push({
             label: "Cross References",
-            key: "4",
-            children: result.xrefs.join(", ") || <NotFound />,
+            key: "cross-references",
+            children: result.xrefs?.join(", ") || (USE_PORTAL_SNAPSHOTS ? "Not included in this snapshot" : <NotFound />),
         });
 
         try {
-            const result1 = await fetch(
+            const result1 = await portalFetch(
                 `${BASE_API_URL}/api/hpo-definitionNew/${key}`
-            ).then((res) => res.json());
+            ).then((res) => {
+                if (!res.ok) throw new Error("Severity source unavailable");
+                return res.json();
+            });
+            if (!result1[0]) throw new Error("Severity annotation not present in this source");
             itemsTemp.push({
                 label: (
                     <>
@@ -157,7 +172,7 @@ export default function phenotypePage() {
                 ) || <NotFound />,
             });
         } catch (e) {
-            console.log("error", e);
+            setSourceError("The severity source has no usable annotation for this phenotype. Severity remains unknown.");
         }
 
         return { itemsTemp, result };
@@ -168,17 +183,29 @@ export default function phenotypePage() {
         setData(info.node.dataRef.key);
         urlSetter({ jump: data, db_type: size });
 
-        const { itemsTemp } = await fetchData(info.node.dataRef.key);
-        setDesItem(itemsTemp);
+        setSourceError(null);
+        try {
+            const { itemsTemp } = await fetchData(info.node.dataRef.key);
+            setDesItem(itemsTemp);
+        } catch {
+            setDesItem([]);
+            setSourceError("The phenotype definition source could not be loaded. Follow the evidence snapshots or retry this selection.");
+        }
         return false;
     };
 
     const onload = async (data) => {
         setData(data);
-
-        const { itemsTemp, result } = await fetchData(data);
-        setDataRef(result.name);
-        setDesItem(itemsTemp);
+        setSourceError(null);
+        try {
+            const { itemsTemp, result } = await fetchData(data);
+            setDataRef(result.name);
+            setDesItem(itemsTemp);
+        } catch {
+            setDataRef(data);
+            setDesItem([]);
+            setSourceError("The phenotype definition source could not be loaded. Follow the evidence snapshots or retry this selection.");
+        }
         return false;
     };
 
@@ -186,12 +213,15 @@ export default function phenotypePage() {
         if (jump) {
             onload(jump);
         }
+        // The router remounts this explorer when the URL changes; selection stays explicit.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Advanced Settings
     const genExtra = () => <SettingsOutlined />; // Settings icon
     const advancedSettingsChildren = [
         <InputNumber
+            key="decimal-points"
             min={1}
             max={10}
             defaultValue={decimalPoints}
@@ -218,52 +248,43 @@ export default function phenotypePage() {
     return (
         <>
             <CustomHeader activePageKey="phenotype" />
-            <Layout
-                style={{
-                    minHeight: "100vh",
-                    backgroundColor: "#0F172AFF",
-                }}
-            >
-                <Sider
-                    style={{ background: "#0F172AFF", margin: 20 }}
-                    width={400}
-                    collapsed={collapsed}
-                    onCollapse={(value) => setCollapsed(value)}
-                >
+            <Layout className="portal-page portal-explorer">
+                <aside className="portal-sidebar" aria-label="Search and filters">
                     <div ref={tourRefAtlas} className="mb-4">
-                        <h1
+                        <h2
                             style={{
                                 fontSize: "1.1em",
                                 fontWeight: "bold",
-                                color: "#FFFFFF",
+                                color: "#262626",
                             }}
                         >
                             Cell Atlases <CellAtlasInfo />
-                        </h1>
+                        </h2>
                         <hr style={{ marginBottom: 7, border: "none" }} />
                         <ConfigProvider
                             theme={{
                                 components: {
                                     Radio: {
-                                        buttonSolidCheckedBg: "#7944f2",
-                                        buttonSolidCheckedHoverBg: "#8a5cf2",
+                                        buttonSolidCheckedBg: "#1677ff",
+                                        buttonSolidCheckedHoverBg: "#4096ff",
                                     },
                                 },
                             }}
                         >
                             <Radio.Group
+                                className="portal-atlas-options"
                                 buttonStyle="solid"
                                 value={size}
                                 onChange={handleSizeChange}
                             >
                                 <Radio.Button
-                                    style={{ width: 200 }}
+                                    className="portal-atlas-option"
                                     value="DescartesHuman"
                                 >
                                     <CellAtlasSelectionInfo atlasName="DescartesHuman" />
                                 </Radio.Button>
                                 <Radio.Button
-                                    style={{ width: 200 }}
+                                    className="portal-atlas-option"
                                     value="HumanCellLandscape"
                                 >
                                     <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
@@ -281,14 +302,9 @@ export default function phenotypePage() {
                         size="small"
                         style={{ background: colorBgContainer }}
                     />
-                </Sider>
-                <Layout>
-                    <Content
-                        style={{
-                            margin: "0 16px",
-                            minWidth: "50rem",
-                        }}
-                    >
+                </aside>
+                <Layout className="portal-content-layout">
+                    <Content className="portal-content">
                         <Breadcrumb
                             style={{
                                 margin: "16px 0",
@@ -299,30 +315,29 @@ export default function phenotypePage() {
                                 Search by Phenotype
                             </Breadcrumb.Item>
                         </Breadcrumb>
+                        <EvidenceEntry />
+                        <SnapshotScopeNotice />
+                        {sourceError && <Alert className="mb-4" type="warning" showIcon message="Source evidence unavailable" description={sourceError} />}
                         <Card
                             style={{
                                 width: "100%",
                             }}
                         >
+                            <h1>Phenotypes</h1>
                             <p>
-                                Each phenotype in the{" "}
-                                <HPOTextTooltip type="full" /> is linked to
-                                specific cell types and genes, allowing
-                                researchers to explore the underlying biological
-                                mechanisms. The relationships between phenotypes
-                                and cell types are based on statistical
-                                significance, with stronger associations
-                                highlighted. This page enables users to search
-                                for any phenotype and explore its corresponding
-                                data, such as associated genes and cell types,
-                                using dynamic visualizations like network graphs
-                                and bar charts.
+                                Select a term in the <HPOTextTooltip type="full" /> to explore
+                                source-associated genes and diseases, and signed statistical
+                                associations with cells in the selected atlas. These relationships
+                                nominate research contexts; they do not establish phenotype causality
+                                or treatment response. Continue to the evidence layers to inspect
+                                variants, endpoint mappings and therapeutic requirements.
                             </p>
                         </Card>
                         <br />
 
                         {data ? (
                             <div
+                                className="portal-results"
                                 style={{
                                     padding: 24,
                                     minHeight: 560,
@@ -330,12 +345,12 @@ export default function phenotypePage() {
                                     borderRadius: borderRadiusLG,
                                 }}
                             >
-                                <div className="flex flex-row items-center justify-between">
+                                <div className="portal-panel-heading">
                                     <h2
                                         style={{
                                             fontSize: 22,
                                             fontWeight: "bold",
-                                            color: "#6357d3",
+                                            color: "#262626",
                                         }}
                                     >
                                         {dataRef != null ? dataRef : "All"}
@@ -346,7 +361,7 @@ export default function phenotypePage() {
                                     column={1}
                                     size={"small"}
                                     labelStyle={{
-                                        color: "#0f172a",
+                                        color: "#262626",
                                         width: "200px",
                                     }}
                                     style={{

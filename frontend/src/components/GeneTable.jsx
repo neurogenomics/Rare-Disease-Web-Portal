@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import { legacyExplorerHref } from "../lib/legacyExplorerLink.js";
+import { portalFetch } from "../lib/portalAPI.js";
+import { useEffect, useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
-import { Spin, Button, Input, Space, Table } from "antd";
+import { Alert, Spin, Button, Input, Space, Table } from "antd";
 import Highlighter from "react-highlight-words";
 import { ONTOLOGY_API_URL } from "../../config.js";
 
@@ -11,19 +13,21 @@ const PhenotypeTableDisease = (hpid) => {
     const [searchedColumn, setSearchedColumn] = useState(null);
     const searchInput = useRef(null);
     const [loading, setLoading] = useState(false);
+    const [sourceError, setSourceError] = useState(null);
 
     // Function to fetch data from the external API
     const fetchData = () => {
         setLoading(true);
+        setSourceError(null);
         let hppp = hpid.hpid;
         console.log("hpid changehhhhhhhh", hppp);
         console.log("hpid change", JSON.stringify(hpid));
-        fetch(`${ONTOLOGY_API_URL}/api/network/annotation/${hppp}`)
-            .then((res) => res.json())
+        portalFetch(`${ONTOLOGY_API_URL}/api/network/annotation/${hppp}`)
+            .then((res) => { if (!res.ok) throw new Error("Source unavailable"); return res.json(); })
             .then(({ phenotypes }) => {
                 setData(phenotypes);
                 setLoading(false);
-            });
+            }).catch(error => { setData([]); setSourceError(error.message); setLoading(false); });
     };
 
     // Effect hook to fetch data when the component mounts or hpid changes
@@ -169,8 +173,7 @@ const PhenotypeTableDisease = (hpid) => {
                 return (
                     <a
                         style={{ textDecoration: "underline" }}
-                        target={"_blank"}
-                        href={`/phenotype?jump=${text}`}
+                        href={legacyExplorerHref("phenotype", text, { gene: hpid.hpid, atlas: hpid.dbType })}
                     >
                         {text}
                     </a>
@@ -190,9 +193,12 @@ const PhenotypeTableDisease = (hpid) => {
     // Render the table with a loading spinner
     return (
         <Spin spinning={loading}>
+            {sourceError && <Alert type="warning" showIcon message="Source unavailable; associations remain unknown" description={sourceError} style={{ marginBottom: 12 }} />}
             <Table
                 columns={columns}
                 dataSource={data}
+                rowKey={record => record.id || record.celltype || record.hpo_id}
+                locale={{ emptyText: sourceError ? "Source unavailable; associations remain unknown." : "No rows in this source view; review the published coverage limits." }}
                 showSorterTooltip={true}
             />
         </Spin>

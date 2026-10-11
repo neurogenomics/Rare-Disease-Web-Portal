@@ -1,7 +1,11 @@
+import { Link } from "react-router-dom";
+import { legacyExplorerHref } from "../lib/legacyExplorerLink.js";
+import { portalGet } from "../lib/portalAPI.js";
+import SnapshotScopeNotice from "../components/SnapshotScopeNotice.jsx";
+import EvidenceEntry from "../components/EvidenceEntry.jsx";
 import { useEffect, useRef, useState } from "react";
 import CustomHeader from "../components/utilities/Header.jsx";
 import CustomFooter from "../components/utilities/Footer.jsx";
-import axios from "axios";
 import {
     Breadcrumb,
     Layout,
@@ -28,9 +32,12 @@ import { urlSetter } from "../scripts/urlHandlers.js";
 import ShareButton from "../components/utilities/ShareButton.jsx";
 import { getTfDisplay, readBrowserPercentiles, readGeneBrowserResponse } from "../lib/geneAnnotationDisplay.js";
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 
 export default function GeneBrowserPage() {
+    useEffect(() => {
+        document.title = "Gene browser · Rare Disease Celltyping Portal";
+    }, []);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [optionsLoading, setOptionsLoading] = useState(true);
@@ -107,7 +114,7 @@ export default function GeneBrowserPage() {
             setOptionsLoading(true);
             setOptionsError(null);
             try {
-                const response = await axios.get(
+                const response = await portalGet(
                     `${BASE_API_URL}/api/genes/browse/options?db_type=${filterValues.db_type}`
                 );
                 if (cancelled) return;
@@ -150,7 +157,7 @@ export default function GeneBrowserPage() {
                     ? filterValues.cell_types[0]
                     : "";
                 const url = `${BASE_API_URL}/api/genes/browse/percentiles?db_type=${filterValues.db_type}${cellType ? `&cell_type=${encodeURIComponent(cellType)}` : ""}`;
-                const response = await axios.get(url);
+                const response = await portalGet(url);
                 if (cancelled) return;
                 const evidence = readBrowserPercentiles(response.data, filterValues.db_type, cellType);
                 setPercentileEvidence(evidence);
@@ -231,7 +238,7 @@ export default function GeneBrowserPage() {
         const url = `${BASE_API_URL}/api/genes/browse?${params.toString()}`;
 
         try {
-            const response = await axios.get(url);
+            const response = await portalGet(url);
             if (requestId !== browseRequestId.current) return;
             const result = readGeneBrowserResponse(response.data);
             if (!result) throw new Error("Gene browser returned no usable annotation response.");
@@ -275,7 +282,7 @@ export default function GeneBrowserPage() {
         const requestAtlas = filterValues.db_type;
 
         try {
-            const response = await axios.get(
+            const response = await portalGet(
                 `${BASE_API_URL}/api/gene/${geneSymbol}/hpo?db_type=${requestAtlas}`
             );
             if (requestAtlas !== currentAtlas.current) return;
@@ -314,15 +321,15 @@ export default function GeneBrowserPage() {
             key: "gene_symbol",
             width: 100,
             sorter: true,
-            render: (text) => (
-                <a
+            render: (text) => {
+                const destination = legacyExplorerHref("gene", text, { atlas: filterValues.db_type });
+                return destination ? <Link
                     style={{ textDecoration: "underline", fontWeight: "bold" }}
-                    target="_blank"
-                    href={`/gene?jump=${text}`}
+                    to={destination}
                 >
                     {text}
-                </a>
-            ),
+                </Link> : <Tooltip title="A source-backed gene identifier is not available in the local evidence panel."><strong>{text}</strong></Tooltip>;
+            },
         },
         {
             title: "Name",
@@ -426,7 +433,7 @@ export default function GeneBrowserPage() {
 
         return (
             <div className="p-4 bg-gray-50">
-                <div className="grid grid-cols-3 gap-6">
+                <div className="portal-record-grid">
                     {/* TF Metadata */}
                     <div>
                         <h4 className="font-semibold mb-2">Transcription Factor</h4>
@@ -486,13 +493,12 @@ export default function GeneBrowserPage() {
                             <div className="max-h-32 overflow-y-auto">
                                 {hpo.phenotypes.slice(0, 10).map((p, i) => (
                                     <div key={i} className="text-sm mb-1">
-                                        <a
-                                            href={`/phenotype?jump=${p.hpo_id}`}
-                                            target="_blank"
+                                        <Link
+                                            to={legacyExplorerHref("phenotype", p.hpo_id, { gene: record.gene_symbol, atlas: filterValues.db_type })}
                                             className="text-blue-600 underline"
                                         >
                                             {p.hpo_id}
-                                        </a>
+                                        </Link>
                                         <span className="ml-1">{p.name}</span>
                                         <span className="text-gray-400 text-xs ml-1">
                                             ({p.via_cell_types?.length || 0} cell types)
@@ -521,29 +527,10 @@ export default function GeneBrowserPage() {
     return (
         <>
             <CustomHeader activePageKey="gene-browser" />
-            <Layout
-                style={{
-                    minHeight: "100vh",
-                    backgroundColor: "#0F172AFF",
-                }}
-            >
-                <Sider
-                    style={{
-                        background: "#FFF",
-                        marginTop: 20,
-                        marginBottom: 20,
-                        marginLeft: 30,
-                        marginRight: 30,
-                        textAlign: "center",
-                        borderRadius: borderRadiusLG,
-                        padding: 10,
-                        paddingTop: 30,
-                    }}
-                    width={350}
-                >
-                    <div className="demo-logo-vertical" />
+            <Layout className="portal-page portal-explorer">
+                <aside className="portal-sidebar" aria-label="Search and filters">
                     <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-                        <center>
+                        <div className="portal-filter-form">
                             <div>
                                 <p className="text-xl font-semibold text-left mb-4 ml-5">
                                     Gene Browser Filters
@@ -713,7 +700,7 @@ export default function GeneBrowserPage() {
                                 </div>
                             </div>
 
-                            <div style={{ margin: 29 }}>
+                            <div style={{ margin: "16px 0" }}>
                                 <Button
                                     name="Search"
                                     size="large"
@@ -721,27 +708,21 @@ export default function GeneBrowserPage() {
                                     style={{
                                         marginTop: 10,
                                         marginBottom: 20,
-                                        backgroundColor: "#c8bbec",
                                     }}
-                                    type="submit"
+                                    type="primary"
+                                    htmlType="submit"
                                     block
-                                    onClick={() => handleSubmit()}
                                     disabled={filterValues.min_specificity === null || loading}
                                     ref={tourRefSubmit}
                                 >
                                     <p className="font-semibold">Browse Genes</p>
                                 </Button>
                             </div>
-                        </center>
+                        </div>
                     </form>
-                </Sider>
-                <Layout>
-                    <Content
-                        style={{
-                            margin: "0 16px",
-                            minWidth: "50rem",
-                        }}
-                    >
+                </aside>
+                <Layout className="portal-content-layout">
+                    <Content className="portal-content">
                         <Breadcrumb
                             style={{
                                 margin: "16px 0",
@@ -751,8 +732,10 @@ export default function GeneBrowserPage() {
                             <Breadcrumb.Item>Gene Browser</Breadcrumb.Item>
                         </Breadcrumb>
 
+                        <EvidenceEntry />
+                        <SnapshotScopeNotice />
                         <Card style={{ width: "100%", marginBottom: 16 }}>
-                            <h2 className="text-xl font-semibold mb-2">Gene Browser</h2>
+                            <h1>Gene browser</h1>
                             <p>
                                 Browse genes by disease association, transcription factor status,
                                 and cell type expression specificity. This tool combines data from:
@@ -788,17 +771,17 @@ export default function GeneBrowserPage() {
 
                         {data.length > 0 ? (
                             <div
+                                className="portal-results"
                                 style={{
                                     padding: 24,
                                     background: colorBgContainer,
                                     borderRadius: borderRadiusLG,
                                 }}
-                                className="relative"
                             >
-                                <div className="absolute left-6 z-10">
+                                <div className="portal-result-share">
                                     <ShareButton />
                                 </div>
-                                <div className="absolute right-6 z-10">
+                                <div className="portal-result-download">
                                     <DownloadButton elementId="gene-browser-table" />
                                 </div>
 

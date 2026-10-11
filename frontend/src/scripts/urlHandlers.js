@@ -111,13 +111,37 @@ export function urlParser(page) {
     return params;
 }
 
-export function urlSetter(items) {
-    const searchParams = new URLSearchParams(window.location.search);
-
-    Object.keys(items).forEach((key) => {
-        searchParams.set(key, items[key]);
+export function updatedExplorerUrl(pathname, search, items) {
+    const searchParams = new URLSearchParams(search);
+    const atlas = value => ({ DH: 'DescartesHuman', HCL: 'HumanCellLandscape' })[value] || value;
+    if (Object.hasOwn(items, 'db_type')) {
+        const previous = atlas(searchParams.get('atlas') || searchParams.get('db_type'));
+        const next = atlas(items.db_type);
+        if (next !== previous) searchParams.delete('cell');
+        if (next) searchParams.set('atlas', next);
+        else searchParams.delete('atlas');
+    }
+    if (Object.hasOwn(items, 'jump')) {
+        const durable = { '/phenotype': 'hpo', '/celltype': 'cell' }[pathname];
+        if (durable) {
+            if (items.jump) searchParams.set(durable, items.jump);
+            else searchParams.delete(durable);
+        }
+        if (pathname === '/gene' && items.jump !== searchParams.get('jump')) searchParams.delete('gene');
+    }
+    Object.entries(items).forEach(([key, value]) => {
+        if (value == null || value === "") searchParams.delete(key);
+        else searchParams.set(key, String(value));
     });
+    return `${pathname}${searchParams.size ? `?${searchParams}` : ""}`;
+}
 
-    const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+export function urlSetter(items) {
+    const newUrl = updatedExplorerUrl(window.location.pathname, window.location.search, items);
+    if (newUrl === `${window.location.pathname}${window.location.search}`) return false;
     window.history.pushState({}, "", newUrl);
+    // React Router and the evidence bridge must observe legacy tree selections.
+    // Identical hydration calls above are skipped to avoid remount loops.
+    window.dispatchEvent(new PopStateEvent("popstate", { state: window.history.state }));
+    return true;
 }

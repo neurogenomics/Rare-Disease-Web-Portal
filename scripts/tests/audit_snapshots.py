@@ -122,6 +122,14 @@ PUBLIC_SCHEMAS = {
     'associations': obj(['_metadata', 'hpo_id', 'rows'], {'rows': {'type': 'array', 'items': ASSOCIATION}}),
     'variants': obj(['metadata', 'reference', 'variants'], {'metadata': VARIANT_METADATA, 'variants': {'type': 'array', 'items': VARIANT}}),
     'trials': TRIAL,
+    'cells': obj(['metadata', 'atlas', 'cell', 'rows'], {
+        'metadata': obj(['generatedAt', 'derivedFrom', 'coverage', 'qThreshold', 'sources', 'interpretation', 'cellFilenameEncoding'], {
+            'coverage': {'const': 'all_published_significant_rows'}, 'qThreshold': {'const': 0.05},
+            'cellFilenameEncoding': {'const': 'utf8-lowercase-hex'},
+        }),
+        'atlas': {'enum': ['DescartesHuman', 'HumanCellLandscape']}, 'cell': STRING,
+        'rows': {'type': 'array', 'items': obj(ASSOCIATION['required'] + ['hpo_id'], ASSOCIATION['properties'])},
+    }),
 }
 
 
@@ -132,6 +140,9 @@ class Audit:
         self.counts = Counter()
         self.variant_ids = defaultdict(set)
         self.cell_hpo_ids = defaultdict(lambda: {'positiveHpoIds': set(), 'negativeHpoIds': set()})
+        self.expected_cell_rows = defaultdict(list)
+        self.actual_cell_rows = {}
+        self.variant_gene_ids = defaultdict(set)
 
     def fail(self, message):
         self.errors.append(message)
@@ -304,7 +315,7 @@ class Audit:
         trial_index = data['trialIndex.json']['trials']
         all_public_paths = sorted((PUBLIC / 'data/evidence').rglob('*.json'))
         for path in all_public_paths:
-            role = path.parent.name
+            role = 'cells' if path.parent.parent.name == 'cells' else path.parent.name
             if role == 'evidence' and path.name == 'hpoSeverity.json':
                 value = self.load(path, SEVERITY)
                 self.counts['publicMetadataFiles'] += 1
@@ -333,6 +344,23 @@ class Audit:
                     self.warn('unindexedPublicTrials', value['nctId'])
                 else:
                     self.check(trial_index[value['nctId']]['reportedOutcomeCount'] == len(value['reportedOutcomes']), f'{path.name}: trial outcome count mismatch')
+            elif role == 'cells':
+                key = (value['atlas'], value['cell'])
+                self.check(key not in self.actual_cell_rows, f'{path.name}: duplicate reverse cell snapshot')
+                self.actual_cell_rows[key] = value['rows']
+                expected_filename = 'cell-' + value['cell'].encode('utf-8').hex() + '.json'
+                self.check(value['atlas'] == path.parent.name and path.name == expected_filename,
+                           f'{path.name}: reverse cell path/context mismatch')
+                metadata = value['metadata']
+                expected_sources = [source for source in atlas['_metadata']['sources']
+                                    if source['atlas'] == value['atlas'] and source['kind'] == 'phenotype_cell_associations']
+                self.check(metadata['sources'] == expected_sources, f'{path.name}: reverse cell source provenance mismatch')
+                self.check(metadata['generatedAt'] == atlas['_metadata']['generatedAt'], f'{path.name}: reverse cell source generation marker mismatch')
+                self.check(bool(metadata['derivedFrom']) and bool(metadata['interpretation']), f'{path.name}: reverse cell scope absent')
+                for row in value['rows']:
+                    self.check(row['atlas'] == key[0] and row['cell'] == key[1], f'{path.name}: mixed cell/atlas context')
+                    self.check(isinstance(row['q'], (int, float)) and 0 <= row['q'] < 0.05, f'{path.name}: reverse row outside declared q scope')
+                self.counts['reverseCellRows'] += len(value['rows'])
         for identifier, value in atlas['phenotypes'].items():
             if value['file']:
                 self.check((PUBLIC / value['file'].lstrip('/')).exists(), f'{identifier}: missing atlas file')
@@ -340,6 +368,15 @@ class Audit:
             actual_cells = {(name, cell): values for name, cells in data['cellIndex.json']['cells'].items() for cell, values in cells.items()}
             expected_cells = {key: {direction: sorted(ids) for direction, ids in values.items()} for key, values in self.cell_hpo_ids.items()}
             self.check(actual_cells == expected_cells, 'Reverse cell index differs from all significant signed atlas rows')
+            self.check(set(self.actual_cell_rows) == set(actual_cells), 'Reverse cell snapshot file set differs from explicit atlas/cell index')
+            for key, rows in self.actual_cell_rows.items():
+                expected_rows = self.expected_cell_rows.get(key, [])
+                order = lambda row: (row['hpo_id'], row['sourceRecordId'] or '', row['atlas'], row['cell'])
+                # JSON numeric 0 and 0.0 have the same value. Compare source
+                # dictionaries directly, preserving numeric precision/signs,
+                # rather than introducing a serializer spelling constraint.
+                self.check(sorted(rows, key=order) == sorted(expected_rows, key=order),
+                           f'{key}: reverse cell rows differ from independently reconstructed per-HPO signed source rows')
             for name, cells in data['cellIndex.json']['cells'].items():
                 self.counts['reverseIndexCells:' + name] = len(cells)
         for gene, value in variant_index.items():
@@ -352,6 +389,15 @@ class Audit:
                 self.warn('incompleteVariantGenes', f'{gene}: {value.get("retrievedCount", 0)}/{value.get("matchedCount", "unknown")}; {value.get("error", value.get("refreshError", ""))}')
             if value.get('stale'):
                 self.warn('staleVariantGenes', gene)
+        for gene, rows in associations.items():
+            if rows:
+                continue
+            ids = self.variant_gene_ids[gene]
+            self.check(len(ids) == 1, f'{gene}: missing or ambiguous exact ClinVar gene identity bridge')
+            for identifier in ids:
+                self.check(data['geneIdentifiers.json'].get(identifier) == gene,
+                           f'{gene}: derived gene identity differs from exact ClinVar symbol/id source records')
+        self.check(set(data['geneIdentifiers.json'].values()) == panel, 'Gene identity bridge does not cover the explicit panel')
         for nct in trial_index:
             self.check((PUBLIC / 'data/evidence/trials' / (nct + '.json')).exists(), f'{nct}: missing trial file')
             if trial_index[nct].get('stale'):
@@ -504,6 +550,8 @@ class Audit:
             self.check(row['significance'] == significance, f'{path.name}: significance mismatch')
             if significance == 'significant' and direction in ('positive', 'negative'):
                 self.cell_hpo_ids[key][direction + 'HpoIds'].add(identifier)
+            if q is not None and 0 <= q < 0.05:
+                self.expected_cell_rows[key].append({**row, 'hpo_id': identifier})
             if record['coverage'] == 'all_significant_rows':
                 self.check(significance == 'significant', f'{path.name}: nonsignificant row in significant-only coverage')
         for name, stats in record['atlases'].items():
@@ -553,6 +601,9 @@ class Audit:
         if metadata['complete']:
             self.check(ids == original_ids, f'{path.name}: complete snapshot differs from search identifier set')
         for variant in variants:
+            for identity in variant.get('genes', []):
+                if identity.get('symbol') == gene and re.fullmatch(r'\d+', str(identity.get('geneid', ''))):
+                    self.variant_gene_ids[gene].add(str(identity['geneid']))
             original = original_records.get(variant['id'])
             self.check(original is not None, f'{path.name}: variant {variant["id"]} not traceable to a summary')
             if original is not None:
