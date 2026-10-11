@@ -35,11 +35,16 @@ export function getEndpointObservations(data, assessmentId, hpoId, diseaseId = n
 
 export function endpointEvidenceCounts(data) {
   const records = data?.assessments || [];
+  const results = records.flatMap(record => record.endpointResults || []);
   return {
     assessments: records.length,
-    endpointResults: records.reduce((sum, record) => sum + (record.endpointResults || []).length, 0),
+    endpointResults: results.length,
+    reviewedResults: results.filter(result => result.scopeReview === 'endpoint_specific').length,
+    pendingResultReviews: results.filter(result => result.scopeReview !== 'endpoint_specific').length,
     cellObservations: records.reduce((sum, record) => sum + (record.cellObservations || []).length, 0),
+    assessmentsWithCellObservations: records.filter(record => record.cellObservations?.length).length,
     diseaseCrosswalks: records.reduce((sum, record) => sum + (record.diseaseIds || []).length, 0),
+    conditionReferenceSources: (data?.sources || []).filter(source => source.kind === 'condition_identifier').length,
   };
 }
 

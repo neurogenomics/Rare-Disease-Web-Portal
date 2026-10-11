@@ -401,6 +401,12 @@
   .ev-hero h1, .ev-intro-card h1 { font-size: 24px; }
   .ev-portal-tabs .ant-tabs-nav { flex-wrap: wrap; row-gap: 12px; }
   .ev-portal-tabs .ant-tabs-nav-wrap { flex-basis: 100%; }
+  .ev-portal-tabs > .ant-tabs-nav .ant-tabs-nav-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; transform: none !important; }
+  .ev-portal-tabs .ant-tabs-tab { margin: 0 !important; padding: 12px 8px; justify-content: center; border-bottom: 2px solid transparent; }
+  .ev-portal-tabs .ant-tabs-tab-btn { white-space: normal; text-align: center; }
+  .ev-portal-tabs .ant-tabs-tab-active { border-bottom-color: var(--ev-primary); }
+  .ev-portal-tabs .ant-tabs-ink-bar, .ev-portal-tabs .ant-tabs-nav-operations { display: none; }
+  .ev-portal-tabs .ant-tabs-nav-wrap::before, .ev-portal-tabs .ant-tabs-nav-wrap::after { display: none; }
   .ev-portal-tabs .ant-tabs-extra-content { margin-left: auto; }
   .ev-hero-aside { gap: 10px 20px; }
   .ev-hero-aside .ev-text-button { flex-basis: 100%; }

@@ -39,16 +39,17 @@ Private meeting material is used to recover requirements; it must not enter publ
 ## Release status — 11 October 2026
 
 The staging release is usable and the broader scientific expansion remains active:
-77 treatment assessments with 219 cited sources, 120 result records with 35
-additional condition-reference sources, five structured cellular observations, 119 registry snapshots,
+77 treatment assessments with 219 source records, 120 result records with 74
+additional references (35 condition identifiers), 16 structured cellular observations
+across 14 assessments, 119 registry snapshots,
 92 complete ClinVar gene queries, 27 reviewed disease-mechanism contexts and 22
 modality families. All 30 historical products have an adjudicated assessment;
 additional inherited-disease comparisons include enzyme replacement, bypass,
 chaperones, substrate reduction, stabilizers and CFTR modulation.
 
-All 21 multi-HPO assessments plus STRIVE and two sepofarsen results have specific
-scope review; 57 single-HPO
-carry-forward records still need detailed reanalysis. Eight exact/source allele
+119 of 120 result records have specific scope review. The initial
+MONARCH/ADMIRAL seizure result remains source-limited and unknown; extension
+subgroup evidence is separate and its unverified denominator remains explicit. Eight exact/source allele
 examples distinguish observed phenotypes, assays and treatment endpoints. Seven
 requirement facts and four maturity records are constrained to their cited allele
 and experimental scenario. The unreviewed product, allele and cell-evidence

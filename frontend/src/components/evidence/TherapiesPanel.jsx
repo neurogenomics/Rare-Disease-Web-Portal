@@ -21,7 +21,7 @@ function CellEvidence({ assessment, phenotype, predictions, atlasIndex, endpoint
       <p>{observation.claim}</p>
       <div className="ev-detail-grid">{[
         ['Species / experimental system', observation.species], ['Population / genotype', observation.population],
-        ['Route / delivery', observation.route], ['Assay', observation.assay], ['Time / stage', observation.timeFrame],
+        ['Route / delivery', observation.route], ['Assay', observation.assay], ['Comparator', observation.comparator || 'Not retained in this curation'], ['Time / stage', observation.timeFrame],
       ].map(([label, value]) => <div key={label}><span className="ev-field-label">{label}</span>{value}</div>)}</div>
       {observation.studyRelationship && <p className="ev-note"><strong>Relationship to the clinical results:</strong> {observation.studyRelationship}</p>}
       <p className="ev-note">Clinical mediation: not established. A model-cell experiment, regulatory mechanism or tissue assay is not proof that an exact atlas cell mediated the endpoint. No atlas identity crosswalk is asserted.</p>
@@ -40,6 +40,7 @@ function EndpointResult({ result, onTrial, sources }) {
   return <article className="ev-trial-card">
     <div className="ev-inline-heading"><h4>{result.endpoint}</h4><StatusBadge status={result.outcome}>{endpointOutcomeLabel[result.outcome] || 'Outcome not established in this scope'}</StatusBadge></div>
     {result.scopeReview === 'single_mapped_endpoint' && <p className="ev-notice"><strong>Detailed scope review pending.</strong> This result carries forward the existing adjudication for the treatment’s sole mapped phenotype. Missing population, time and analysis details stay unknown; this is not a new endpoint or subgroup reanalysis.</p>}
+    {result.scopeReview === 'source_limited' && <p className="ev-notice"><strong>Source review incomplete.</strong> The accessible primary sources do not resolve this result’s full analysis scope. Its outcome stays unknown; results from a different phase or population cannot supply the missing observation.</p>}
     <p>{result.summary}</p>
     <div className="ev-detail-grid">{[
       ['Studied population', result.population], ['Comparator', result.comparator], ['Time point', result.timeFrame],

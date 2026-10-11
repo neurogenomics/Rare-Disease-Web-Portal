@@ -1789,11 +1789,12 @@
         {
           "hpoId": "HP:0002194",
           "label": "Delayed gross motor development",
-          "endpoint": "PDMS-2 gross motor milestones at week 48",
+          "endpoint": "PDMS-2 gross motor milestones: FDA week 48; initial EMA cohorts month 24",
           "mapping": "direct",
           "rationale": "Motor milestones were measured directly. Post-treatment dyskinesia is a safety finding, not proof of dystonia improvement.",
           "sourceIds": [
-            "kebilidi-label"
+            "kebilidi-label",
+            "upstaza-epar"
           ]
         }
       ],
@@ -2559,9 +2560,9 @@
         {
           "hpoId": "HP:0001324",
           "label": "Muscle weakness",
-          "endpoint": "Dystrophin protein; 6-minute walking distance",
+          "endpoint": "Study 201 six-minute walking distance; separate Study 301 dystrophin biopsies",
           "mapping": "proxy",
-          "rationale": "Dystrophin is molecular engagement; walking is functional but is not an isolated muscle-strength measurement.",
+          "rationale": "Walking measures function rather than isolated strength. Protein increases belong to a separate biopsy cohort and do not establish clinical walking benefit.",
           "sourceIds": [
             "exondys-label"
           ]
@@ -2853,19 +2854,23 @@
         {
           "nctId": "NCT04442295",
           "name": "MONARCH; companion ADMIRAL study",
-          "outcome": "mixed",
-          "summary": "Open-label dose-escalation studies primarily assessed safety and pharmacokinetics; exploratory seizure reductions warrant controlled testing.",
+          "outcome": "unknown",
+          "summary": "Initial MONARCH/ADMIRAL studies primarily assessed safety and pharmacokinetics. The accessible primary sources do not isolate a phase-specific seizure effect from extension observations.",
           "sourceIds": [
-            "zorevunersen-2026"
+            "zorevunersen-2026",
+            "endpoint-review-neuro-zorevunersen-abstract",
+            "endpoint-review-neuro-nct04442295"
           ]
         },
         {
           "nctId": "NCT04740476",
           "name": "SWALLOWTAIL; companion LONGWING extension",
           "outcome": "mixed",
-          "summary": "Continued open-label treatment showed preliminary clinical improvement; concurrent therapies and absence of randomized controls limit causal efficacy attribution.",
+          "summary": "Open-label extension reductions concern the antecedent 70-mg subgroup across reported monthly intervals; exact subgroup size and uncertainty remain unverified. No randomized control.",
           "sourceIds": [
-            "zorevunersen-2026"
+            "zorevunersen-2026",
+            "endpoint-review-neuro-zorevunersen-abstract",
+            "endpoint-review-neuro-nct04740476"
           ]
         }
       ],
@@ -3571,11 +3576,12 @@
         {
           "hpoId": "HP:0002719",
           "label": "Recurrent infections",
-          "endpoint": "Severe infection frequency and survival",
+          "endpoint": "Severe infection frequency; primary survival is a separate outcome",
           "mapping": "direct",
           "rationale": "Infection frequency is clinically relevant but does not identify a unique immune-cell subtype.",
           "sourceIds": [
-            "strimvelis-ema"
+            "endpoint-review-gene-strimvelis-smpc",
+            "endpoint-review-gene-strimvelis-epar"
           ]
         }
       ],
@@ -3663,9 +3669,10 @@
           "nctId": "NCT03207009",
           "name": "HGB-212",
           "outcome": "benefit",
-          "summary": "12/14 evaluable participants achieved transfusion independence; 18 received treatment.",
+          "summary": "Earlier FDA label cutoff: 12/14 evaluable participants achieved transfusion independence, of 18 treated. The later 2024 primary report found 16/18 achieved and maintained independence; these are follow-up analyses of the same cohort.",
           "sourceIds": [
-            "zynteglo-label"
+            "zynteglo-label",
+            "endpoint-review-gene-hgb212-primary"
           ]
         }
       ],
@@ -4043,7 +4050,7 @@
           "nctId": "NCT03316300",
           "name": "NTMT-03-A",
           "outcome": "benefit",
-          "summary": "Sham-controlled study (58 active/57 sham): OCT ellipsoid-zone-loss rate 0.075 versus 0.166 mm², difference −0.091 (95% CI −0.13 to −0.06); retinal sensitivity also favored treatment.",
+          "summary": "Sham-controlled study (58 active/57 sham): OCT ellipsoid-zone-loss rate 0.075 versus 0.166 mm²/24 months, difference −0.091 (95% CI −0.13 to −0.06); retinal sensitivity also favored treatment.",
           "sourceIds": [
             "encelto-label"
           ]
@@ -4052,7 +4059,7 @@
           "nctId": "NCT03319849",
           "name": "NTMT-03-B",
           "outcome": "mixed",
-          "summary": "Sham-controlled study (59 active/54 sham): ellipsoid-zone-loss rate 0.111 versus 0.160 mm², difference −0.049 (95% CI −0.089 to −0.008). Retinal sensitivity did not differ (P=0.83).",
+          "summary": "Sham-controlled study (59 active/54 sham): ellipsoid-zone-loss rate 0.111 versus 0.160 mm²/24 months, difference −0.049 (95% CI −0.089 to −0.008). Retinal sensitivity did not differ (P=0.83).",
           "sourceIds": [
             "encelto-label"
           ]
@@ -4062,7 +4069,7 @@
         {
           "hpoId": "HP:0000505",
           "label": "Visual impairment",
-          "endpoint": "OCT ellipsoid-zone area loss",
+          "endpoint": "OCT ellipsoid-zone area-loss rate over 24 months",
           "mapping": "proxy",
           "rationale": "A structural photoreceptor endpoint is not equivalent to improved visual acuity.",
           "sourceIds": [
@@ -4103,6 +4110,15 @@
           "level": "mechanistic",
           "sourceIds": [
             "encelto-label"
+          ]
+        },
+        {
+          "id": "cntf-functional-limits",
+          "direction": "limits",
+          "claim": "The primary phase-3 report found no between-group differences in BCVA loss or NEI VFQ-25; secondary functional findings varied across the two trials despite structural preservation.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "endpoint-review-gene-mactel-phase3"
           ]
         }
       ],
@@ -4262,9 +4278,9 @@
         ],
         "rescue": [],
         "bypass": [
-          "Systemic lipid handling reduces pancreatic metabolic injury"
+          "Proposed systemic lipid-metabolism compensation; reduction of pancreatic injury is not established in this reviewed scope"
         ],
-        "notes": "Pancreatic benefit does not imply direct acinar-cell transduction."
+        "notes": "The proposed pancreatic effect does not imply direct acinar-cell transduction; the pancreatitis outcome remains uncertain."
       },
       "evidence": [
         {
@@ -5324,9 +5340,9 @@
         {
           "hpoId": "HP:0001943",
           "label": "Hypoglycemia",
-          "endpoint": "Daily cornstarch requirement; CGM readings below 70 mg/dL",
-          "mapping": "proxy",
-          "rationale": "Cornstarch requirement is a management endpoint, not hypoglycemia rescue. The directly measured secondary glucose endpoint worsened.",
+          "endpoint": "Percentage of CGM glucose values below 70 mg/dL",
+          "mapping": "direct",
+          "rationale": "The secondary CGM endpoint directly measured hypoglycemic exposure and worsened. The favorable primary cornstarch-management surrogate is separate and cannot establish hypoglycemia rescue.",
           "sourceIds": [
             "genglycos-label"
           ]
@@ -5497,7 +5513,7 @@
         {
           "nctId": "NCT03812263",
           "name": "RP-L201-0318",
-          "outcome": "mixed",
+          "outcome": "surrogate",
           "summary": "Nine treated children. At month 24, median neutrophil CD18 expression was 50% in seven evaluable patients; CD11a was 39% in all nine. These engagement surrogates supported accelerated approval; confirmed clinical benefit remains required.",
           "sourceIds": [
             "kresladi-label"
@@ -5543,10 +5559,11 @@
         {
           "id": "lad-clinical",
           "direction": "unresolved",
-          "claim": "The accelerated-approval surrogate does not by itself establish reduced infections or restoration of every leukocyte function.",
+          "claim": "FDA found survival and infection analyses uninterpretable because definitions, historical records and datasets were inadequate. Neutrophil expression cannot resolve the clinical effect.",
           "level": "human_clinical",
           "sourceIds": [
-            "kresladi-label"
+            "kresladi-label",
+            "endpoint-review-gene-kresladi-sbra"
           ]
         }
       ],
@@ -5556,7 +5573,8 @@
       },
       "limitations": [
         "Single-arm nine-patient cohort; three participants were siblings.",
-        "Conditioning and supportive treatment contribute risk and clinical context."
+        "Conditioning and supportive treatment contribute risk and clinical context.",
+        "Published infection decreases do not resolve the FDA review’s comparator, definition and record limitations."
       ],
       "diseaseGenes": [
         "ITGB2"
@@ -5587,7 +5605,7 @@
           "nctId": "NCT05788536",
           "name": "DB-OTO-001 / CHORD",
           "outcome": "benefit",
-          "summary": "24 treated; week-24 efficacy set 20. Sixteen (80%) reached average PTA ≤70 dB HL; 14 (70%) had click ABR ≤90 dB nHL. Only 3/20 (15%) reached normal hearing ≤25 dB HL. For bilateral treatment, analysis used the better treated ear.",
+          "summary": "24 children treated; week-24 efficacy set 20. Sixteen (80%) reached average PTA ≤70 dB HL; 14 (70%) had click ABR ≤90 dB nHL. Only 3/20 (15%) reached normal hearing ≤25 dB HL. For bilateral treatment, analysis used the better treated ear.",
           "sourceIds": [
             "otarmeni-label"
           ]
@@ -5868,9 +5886,10 @@
           "nctId": null,
           "name": "Pooled ten prospective studies",
           "outcome": "benefit",
-          "summary": "95-patient efficacy population: estimated two-year survival 76%, compared with 6% in 49 historical supportive-care patients. Peripheral naive CD4/CD8 cells and proliferative function increased after implantation.",
+          "summary": "95-patient efficacy population: estimated two-year survival 76%, compared with 6% in 49 historical supportive-care patients. Peripheral naive CD4/CD8 cells and proliferative function increased after implantation. Infection-AE comparisons were exploratory across post-treatment periods, with fewer surviving patients in later denominators; they are distinct from the historical survival comparison.",
           "sourceIds": [
-            "rethymic-label"
+            "rethymic-label",
+            "endpoint-review-gene-rethymic-clinical-review"
           ]
         }
       ],
@@ -5880,9 +5899,10 @@
           "label": "Recurrent infections",
           "endpoint": "Infection frequency during post-treatment immune reconstitution",
           "mapping": "direct",
-          "rationale": "Clinical infections were recorded; survival is a separate endpoint affected by comorbidities.",
+          "rationale": "Post hoc infection-AE comparisons are direct observations with survival-dependent denominators; the separately historically controlled survival result cannot supply infection efficacy.",
           "sourceIds": [
-            "rethymic-label"
+            "rethymic-label",
+            "endpoint-review-gene-rethymic-clinical-review"
           ]
         }
       ],
@@ -5920,6 +5940,15 @@
           "sourceIds": [
             "rethymic-label"
           ]
+        },
+        {
+          "id": "athymia-infection-scope",
+          "direction": "limits",
+          "claim": "Post hoc infection counts fell across observed periods, but deaths changed the denominator and pretreatment histories were unavailable. Label and review subsets differ; this cannot establish a randomized infection effect.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "endpoint-review-gene-rethymic-clinical-review"
+          ]
         }
       ],
       "conclusion": {
@@ -5928,7 +5957,8 @@
       },
       "limitations": [
         "External historical control and syndromic comorbidity limit inference.",
-        "FOXN1 and CHD7 apply to subsets; chromosome deletions are not assigned to a single causal gene."
+        "FOXN1 and CHD7 apply to subsets; chromosome deletions are not assigned to a single causal gene.",
+        "Infection comparisons were exploratory, not prespecified, and excluded deaths from later denominators; label and FDA review infection counts have unresolved subset differences."
       ],
       "diseaseGenes": [
         "FOXN1",
@@ -6477,10 +6507,11 @@
           "nctId": "NCT03847909",
           "name": "PHYOX2",
           "outcome": "surrogate",
-          "summary": "35 randomized PH1/PH2 participants (23 active/12 placebo). Primary urinary-oxalate AUC difference 4,976 (95% CI 2,803–7,149), p<0.0001; PH1 mean percentage-point reduction advantage 56 (33–80). PH2 subgroup was too small for efficacy assessment.",
+          "summary": "35 randomized PH1/PH2 participants. FDA primary percent-change AUC reduction advantage 4976 percentage-point×days (95% CI 2803–7149); the publication reports 5171.7 (2929.3–7414.2) in its named analysis. PH1 average reduction advantage 56 percentage points is a separate subgroup estimate.",
           "sourceIds": [
             "nedosiran-label",
-            "nct03847909-registry"
+            "nct03847909-registry",
+            "endpoint-review-rna-phyox2-primary"
           ]
         }
       ],
@@ -6488,7 +6519,7 @@
         {
           "hpoId": "HP:0003159",
           "label": "Hyperoxaluria",
-          "endpoint": "24-hour urinary oxalate AUC and excretion",
+          "endpoint": "AUC of percent change in 24-hour urinary oxalate excretion",
           "mapping": "direct",
           "rationale": "Direct biochemical phenotype; kidney injury and survival were not the pivotal outcomes.",
           "sourceIds": [
@@ -6538,7 +6569,8 @@
       },
       "limitations": [
         "Pediatric age expansion also uses single-arm PHYOX8.",
-        "The approved and trial populations differ in age and PH subtype."
+        "The approved and trial populations differ in age and PH subtype.",
+        "The reason for the regulatory/publication AUC difference remains unresolved; estimates and units are retained separately."
       ],
       "diseaseGenes": [
         "AGXT"
@@ -7341,9 +7373,10 @@
           "nctId": "NCT02211209",
           "name": "APPROACH",
           "outcome": "surrogate",
-          "summary": "66 randomized: month-3 TG change −77% versus +18%, p<0.001. 15/33 active patients developed platelets below 100,000/µL, including two below 25,000/µL.",
+          "summary": "66 randomized: month-3 TG change −77% versus +18%, p<0.001. 15/33 active patients developed platelets below 100,000/µL, including two below 25,000/µL. APPROACH included 50 genetically confirmed and 16 clinically/low-LPL-confirmed participants; the approved indication is narrower.",
           "sourceIds": [
-            "approach-volanesorsen"
+            "approach-volanesorsen",
+            "endpoint-review-rna-approach-genetic-subgroups"
           ]
         }
       ],
@@ -7373,7 +7406,7 @@
         "bypass": [
           "Reduce apoC-III-mediated inhibition of triglyceride clearance"
         ],
-        "notes": "The intervention suppresses a source protein; pancreas exposure is not required for pancreatitis reduction."
+        "notes": "Hepatic APOC3 reduction is a proposed systemic lipid-metabolism route; the triglyceride surrogate does not establish pancreatitis prevention or whether local pancreas exposure is necessary."
       },
       "evidence": [
         {
@@ -7410,7 +7443,8 @@
       },
       "limitations": [
         "EU conditional status and approved population differ from later APOC3 products.",
-        "Cross-trial lipid reductions do not establish comparative superiority."
+        "Cross-trial lipid reductions do not establish comparative superiority.",
+        "The overall trial estimate combines genetic and clinical/low-LPL diagnoses; it is not a response estimate for every genotype in the narrower approved population."
       ],
       "diseaseGenes": [
         "LPL",
@@ -7649,7 +7683,7 @@
         {
           "hpoId": "HP:0001263",
           "label": "Global developmental delay",
-          "endpoint": "CSF heparan sulfate; exploratory adaptive behavior",
+          "endpoint": "CSF heparan sulfate; Vineland adaptive behavior is a separate secondary clinical outcome",
           "mapping": "proxy",
           "rationale": "CSF substrate is a proxy for neurological burden, not a direct developmental endpoint.",
           "sourceIds": [
@@ -7710,7 +7744,8 @@
       },
       "limitations": [
         "Single-arm, heterogeneous prior-treatment cohort; CSF HS assay estimates selected disaccharides.",
-        "Confirmatory outcome and cell-specific rescue cannot be inferred from accelerated approval."
+        "Confirmatory outcome and cell-specific rescue cannot be inferred from accelerated approval.",
+        "The separate uncontrolled Vineland outcome needs its exact domain, time, denominator and comparator reviewed before a scoped developmental result can be added; CSF substrate reduction cannot supply those findings."
       ],
       "diseaseGenes": [
         "IDS"
@@ -7740,7 +7775,7 @@
           "nctId": "NCT05156320",
           "name": "SAPPHIRE / Study 1",
           "outcome": "benefit",
-          "summary": "188 randomized nonambulatory patients on nusinersen/risdiplam. Prespecified pooled-dose primary age-2–12 analysis: HFMSE difference 1.8 (95% CI 0.30–3.32), p=0.019. Labeled 10-mg/kg analysis: 2.2 (0.49–3.95), nominal p=0.0121.",
+          "summary": "188 randomized on background nusinersen/risdiplam. Prespecified pooled-dose primary age-2–12 HFMSE difference 1.8 (95% CI 0.30–3.32), p=0.019. The 20-mg/kg comparison was nonsignificant, p=0.11; labeled 10-mg/kg difference 2.2 (0.49–3.95), nominal p=0.0121.",
           "sourceIds": [
             "sapphire-apitegromab",
             "apitegromab-label",
@@ -7804,7 +7839,7 @@
       },
       "limitations": [
         "Trial required background SMN2 therapy; efficacy of antibody monotherapy was not tested.",
-        "Main efficacy population age 2–12; higher dose added no efficacy; fractures are a labeled risk."
+        "Main primary population age 2–12; the 20-mg/kg placebo comparison was nonsignificant, without establishing no effect or dose equivalence; fractures are a labeled risk."
       ],
       "diseaseGenes": [
         "SMN1"

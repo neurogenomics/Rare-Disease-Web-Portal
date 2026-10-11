@@ -1,8 +1,8 @@
 # Evidence validation report
 
-Validated 2026-10-11. The final offline audit of 10,200 JSON files reports **zero schema, count, reference, source-field or archive/public consistency errors**. All 211 regression tests and the production build pass. There is one unresolved disease-alias warning. These checks establish conservative calculations and traceability; passing them does not validate causal cell types, a clinical treatment decision or a treatment-success probability.
+Validated 2026-10-11. The final offline audit of 10,200 JSON files reports **zero schema, count, reference, source-field or archive/public consistency errors**. The release has 222 passing regression checks. This follow-up reran all 146 frontend and 14 bundle checks; the 22 importer and 40 backend checks remain unchanged from the previously passing release. The production build passes. There is one unresolved disease-alias warning. These checks establish conservative calculations and traceability; passing them does not validate causal cell types, a clinical treatment decision or a treatment-success probability.
 
-The prebuild publisher passed, and Vite completed the production build in 13.42 seconds after the endpoint/allele integration. The evidence-workbench executable is 900.07 kB, or 196.04 kB gzip; the entry executable is 242.12 kB, or 75.27 kB gzip. The large frozen source datasets are separately fetched; the new authored endpoint evidence is included in the workbench chunk. Existing build warnings concern stale Browserslist data and chunks larger than 500 kB. Further splitting of authored evidence remains a performance opportunity. Desktop/mobile checks below verified the scoped results and allele controls. Earlier checks also verified the gene browser's unavailable-API warning, disabled unsourced percentile filter and route to the snapshot-backed workbench.
+The prebuild publisher passed, and Vite completed the production build in 15.30 seconds after the endpoint/cell-scope review. The evidence-workbench executable is 942.10 kB, or 215.97 kB gzip; the entry executable is 242.12 kB, or 75.27 kB gzip. The large frozen source datasets are separately fetched; the new authored endpoint evidence is included in the workbench chunk. Existing build warnings concern stale Browserslist data and chunks larger than 500 kB. Further splitting of authored evidence remains a performance opportunity. Desktop/mobile checks below verified the scoped results and allele controls. Earlier checks also verified the gene browser's unavailable-API warning, disabled unsourced percentile filter and route to the snapshot-backed workbench.
 
 All 13 main, information and evidence entry routes now reuse the established
 portal logo, header, navigation, footer and Ant Design conventions. Browser
@@ -13,7 +13,7 @@ mobile-menu Escape and trial-drawer Escape were exercised. The detailed paths
 are in [site-navigation-audit.md](site-navigation-audit.md). CSS selectors remain
 scoped. Frontend lint passes with the legacy prop-types and exhaustive-deps rules
 excluded; their pre-existing debt has not been represented as a clean full lint.
-All 135 frontend regressions pass. The publication adapter derives biological
+All 146 frontend regressions pass. The publication adapter derives biological
 explorer views from the audited corpus; the new endpoint and allele models are
 validated separately below.
 
@@ -36,7 +36,7 @@ The corpus audit requires `jsonschema` and the frozen local HPO, ClinGen and API
 | --- | --- |
 | Import, dosage, ontology, registry-refresh and reverse-cell fixtures | 22 passed |
 | Backend candidate engine and annotation missingness | 40 passed |
-| Frontend evidence, endpoint scope, allele/modality, annotation, navigation, snapshot and severity handling | 135 passed |
+| Frontend evidence, endpoint scope, allele/modality, annotation, navigation, snapshot and severity handling | 146 passed |
 | Snapshot publication and restoration | 14 passed |
 | Final normalized corpus and archive audit | Zero errors; one disease-alias warning |
 | Prebuild publication and production build | Passed |
@@ -89,11 +89,13 @@ The interface review also checked that MacTel does not offer an inherited-diseas
 
 ## Endpoint and exact-allele follow-up
 
-There are 120 result records across the 77 assessments: 63 have specific endpoint/population scope review, including all 21 multi-HPO assessments, STRIVE and two sepofarsen studies; 57 single-HPO carry-forward records visibly retain pending detailed review. Eighteen endpoint regressions cover opposing organ outcomes, hierarchical testing, surrogate/not-measured phenotypes, study-specific citations and exact diagnosis/HPO/cell-associated-HPO intersections. Disease identifiers used for discovery do not establish enrollment of the reference allele.
+There are 120 result records across 77 assessments: 119 have specific endpoint/population/comparator/time/analysis review. All 57 formerly carried-forward records were investigated; 56 are now scoped, while the initial MONARCH/ADMIRAL seizure result is source-limited and unknown. Its extension observations retain the antecedent high-dose subgroup with its unverified denominator/uncertainty explicit. Twenty-nine endpoint regressions cover opposing organ outcomes, primary/secondary analysis, surrogate/not-measured phenotypes, cohort-specific citations, exact diagnosis/HPO/cell intersections and cross-product biopsy isolation. Accessible primary abstracts, labels/reviews and registry protocols support the reviewed facts; inaccessible full text and missing analysis detail are not claimed resolved. Disease identifiers used for discovery do not establish enrollment of the reference allele.
 
 Eight allele examples separate human phenotype observations, functional assays and clinical endpoints. Seven exact ClinVar mechanism scopes, seven requirement facts and four maturity records are audited. Resolver tests reject generic disease direction under an unreviewed allele, opposite observations, mismatched identity/scope and omitted experimental dimensions. Unknown and conflicting alleles retain neutral diagnosis labels. SCN2A R853Q's mixed experimental findings keep automatic intervention direction unknown even though conventional loss remains visible; a valid intervention-specific assessment can resolve only its matching scope. STXBP1 defect characterization does not become ASO treatment maturity. Model splice rescue for CEP290 does not establish visual efficacy.
 
-Browser checks verified SCN2A gain/loss/unreviewed selections, CFTR intervention-scoped requirements and reciprocal variant/scenario navigation, STXBP1 VUS versus functional evidence and reported seizure absence, CEP290 model rescue versus negative randomized visual results, eplontersen organ switching, tiratricol developmental failure and divergent olipudase spleen results. Alias `/gene-therapy` navigation retains the exact allele/scenario. New selectors and populated allele views have no page overflow at 1280px/390px. Methods displays the new coverage and 254 source-library entries; the actual downloaded manifest contains 219 treatment sources plus 35 condition-reference sources and the scoped counts. Five structured cell observations declare their study relationship, including earlier ZEVASKYN biopsies versus VIITAL outcomes; none asserts atlas identity or clinical mediation.
+Browser checks verified SCN2A gain/loss/unreviewed selections, CFTR intervention-scoped requirements and reciprocal variant/scenario navigation, STXBP1 VUS versus functional evidence and reported seizure absence, CEP290 model rescue versus negative randomized visual results, eplontersen organ switching, tiratricol developmental failure and divergent olipudase spleen results. Alias `/gene-therapy` navigation retains the exact allele/scenario. New selectors and populated allele views have no page overflow at 1280px/390px. Methods displays 293 source-library records; the actual downloaded manifest contains 219 treatment and 74 endpoint source records, of which 35 are condition references, and the dynamic scoped counts. Sixteen cellular observations across 14 assessments retain explicit comparators and outcome-cohort relationships; none asserts atlas identity or clinical mediation. Independent review corrected cross-product golodirsen/casimersen biopsy links and sharpened B-VEC microscopy denominators and the Fabry score-zero definition.
+
+The latest browser pass verified eteplirsen’s null controlled walking result beside its separate biopsy cohort, neutrophil expression beside uninterpretable infection efficacy, and direct secondary hypoglycemia worsening. Mobile testing found that rc-tabs could forward an undefined key after mouse focus and Enter, deleting the selected tab parameter. Valid-key checking and explicit Enter/Space activation now preserve the focused tab; a stable two-column mobile grid keeps all four tabs visible. Mouse switching across all four tabs, Enter/Space, desktop return and 390px/1280px page widths were verified. The source manifest download matched the corpus counts.
 
 ## Corpus and source traceability
 
@@ -114,10 +116,10 @@ Browser checks verified SCN2A gain/loss/unreviewed selections, CFTR intervention
 | Registry snapshots | 119 |
 | Registry retrieval failures / retained stale snapshots | 0 / 0 |
 | Curated assessments / treatment source records | 77 / 219 |
-| Additional endpoint condition-reference sources | 35 |
-| Endpoint result records / specifically scoped / carry-forward pending | 120 / 63 / 57 |
-| Reviewed diagnosis crosswalk entries / structured cell observations | 56 / 5 |
-| Resolved treatment and endpoint source-ID references | 994 |
+| Additional endpoint sources / condition-reference subset | 74 / 35 |
+| Endpoint result records / specifically scoped / source-limited pending | 120 / 119 / 1 |
+| Reviewed diagnosis crosswalk entries / structured cell observations | 56 / 16 |
+| Resolved treatment and endpoint source-ID references | 1,055 |
 | Reviewed disease-mechanism contexts | 27 |
 | Explicit allele/source functional cases / exact mechanism identities | 8 / 7 |
 | Exact-allele requirement facts / maturity records | 7 / 4 |

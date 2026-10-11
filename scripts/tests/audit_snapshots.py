@@ -126,11 +126,11 @@ SCHEMAS = {
             'endpointResults': {'type': 'array', 'items': obj(['id', 'hpoId', 'diseaseIds', 'trialRefs', 'population',
                 'endpoint', 'comparator', 'role', 'analysis', 'timeFrame', 'outcome', 'summary', 'sourceIds', 'scopeReview', 'limits'], {
                 'outcome': {'enum': ['benefit', 'null', 'harm', 'mixed', 'surrogate', 'unknown', 'not_measured']},
-                'scopeReview': {'enum': ['endpoint_specific', 'single_mapped_endpoint']},
+                'scopeReview': {'enum': ['endpoint_specific', 'single_mapped_endpoint', 'source_limited']},
                 'sourceIds': {'type': 'array', 'minItems': 1, 'items': STRING},
             })},
             'cellObservations': {'type': 'array', 'items': obj(['id', 'hpoIds', 'trialRefs', 'population', 'species',
-                'cells', 'route', 'assay', 'timeFrame', 'evidenceType', 'direction', 'claim', 'sourceIds',
+                'cells', 'route', 'assay', 'comparator', 'timeFrame', 'evidenceType', 'direction', 'claim', 'sourceIds',
                 'endpointResultIds', 'diseaseIds', 'studyRelationship', 'clinicalMediation', 'atlasIdentity'], {
                 'direction': {'enum': ['supports', 'opposes', 'limits', 'unknown']},
                 'sourceIds': {'type': 'array', 'minItems': 1, 'items': STRING},
@@ -527,6 +527,7 @@ class Audit:
             results_by_id = {result['id']: result for result in record['endpointResults']}
             for result in record['endpointResults']:
                 self.counts['endpointResults'] += 1
+                self.counts['endpointResultsReviewed' if result['scopeReview'] == 'endpoint_specific' else 'endpointResultsPending'] += 1
                 self.check(result['hpoId'] in mapped_hpos, f'{result["id"]}: endpoint HPO not in reviewed treatment crosswalk')
                 self.check(set(result['diseaseIds']).issubset(diseases), f'{result["id"]}: disease join lacks reviewed assessment identity')
                 self.check(all(ref.get('nctId') is None or ref['nctId'] in trial_index for ref in result['trialRefs']),

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "reviewedAt": "2026-10-11",
-  "scope": "Endpoint-level joins for the 77 existing treatment assessments. All 21 multi-HPO records and the STRIVE and two sepofarsen study results have manually reviewed trial/result scope. Other single-HPO records retain their cited adjudication and explicitly mark unrecorded analysis details pending detailed scope review. Five structured cellular examples distinguish experimental and clinical scope. No universal allele-to-phenotype mapping, cell causality or treatment suitability is inferred.",
+  "scope": "Endpoint-level joins for the 77 existing treatment assessments: 120 result records, 119 with reviewed endpoint/population/comparator/time/analysis scope and one source-limited initial-phase seizure result. Sixteen structured cellular observations distinguish experimental, tissue and clinical scope. Source-specific limitations and unverified denominators remain explicit. No universal allele-to-phenotype mapping, cell causality or treatment suitability is inferred.",
   "sources": [
     {
       "id": "endpoint-identity-smn1-253300",
@@ -247,6 +247,279 @@
       "url": "https://www.ncbi.nlm.nih.gov/clinvar/variation/5005851/",
       "kind": "condition_identifier",
       "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-cell-bvec-phase12",
+      "title": "Gurevich et al: B-VEC phase 1/2 tissue and patient-cell experiments",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35347281/",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-neuro-nct01907087",
+      "title": "ClinicalTrials.gov CLN2 pivotal study protocol and outcomes",
+      "url": "https://clinicaltrials.gov/study/NCT01907087",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-neuro-nct01396239",
+      "title": "ClinicalTrials.gov eteplirsen Study 201 protocol and outcomes",
+      "url": "https://clinicaltrials.gov/study/NCT01396239",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-neuro-nct04442295",
+      "title": "ClinicalTrials.gov MONARCH protocol and outcomes",
+      "url": "https://clinicaltrials.gov/study/NCT04442295",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-neuro-nct04740476",
+      "title": "ClinicalTrials.gov SWALLOWTAIL extension protocol and outcomes",
+      "url": "https://clinicaltrials.gov/study/NCT04740476",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-neuro-nct02122952",
+      "title": "ClinicalTrials.gov START protocol and outcomes",
+      "url": "https://clinicaltrials.gov/study/NCT02122952",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-neuro-zorevunersen-abstract",
+      "title": "Zorevunersen in Children and Adolescents with Dravet Syndrome: primary publication abstract (2026)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41780062/",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-gene-strimvelis-smpc",
+      "title": "STRIMVELIS EMA product information, sections 5.1 and safety; accessed October 2026",
+      "url": "https://www.ema.europa.eu/en/documents/product-information/strimvelis-epar-product-information_en.pdf",
+      "kind": "regulatory_label",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-gene-glybera-smpc",
+      "title": "GLYBERA EMA archived product information, sections 4.1, 4.4 and 5.1",
+      "url": "https://www.ema.europa.eu/en/documents/product-information/glybera-epar-product-information_en.pdf",
+      "kind": "regulatory_label",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-gene-hgb207-primary",
+      "title": "Betibeglogene Autotemcel Gene Therapy for Non-β0/β0 Genotype β-Thalassemia, HGB-207 primary report",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34891223/",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-gene-hgb212-primary",
+      "title": "HGB-212 severe-genotype β-thalassaemia phase 3 final primary report (2024)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39527960/",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-gene-zynteglo-fda-review",
+      "title": "ZYNTEGLO FDA clinical review memo, August 2022",
+      "url": "https://www.fda.gov/media/161664/download",
+      "kind": "regulatory_review",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-gene-hgb206-primary",
+      "title": "Biologic and Clinical Efficacy of LentiGlobin for Sickle Cell Disease, HGB-206 primary report",
+      "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2117175",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-gene-mactel-phase3",
+      "title": "Cell-Based Ciliary Neurotrophic Factor Therapy for Macular Telangiectasia Type 2, two phase 3 trials (2025)",
+      "url": "https://evidence.nejm.org/doi/full/10.1056/EVIDoa2400481",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-gene-fayuvi-sbra",
+      "title": "FAYUVI FDA Summary Basis for Regulatory Action, September 17, 2026",
+      "url": "https://www.fda.gov/media/195198/download?attachment=",
+      "kind": "regulatory_review",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-gene-kresladi-sbra",
+      "title": "KRESLADI FDA Summary Basis for Regulatory Action, March 26, 2026",
+      "url": "https://www.fda.gov/media/191993/download?attachment=",
+      "kind": "regulatory_review",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-gene-strimvelis-epar",
+      "title": "STRIMVELIS EMA public assessment report, 2016; pivotal endpoint hierarchy and analysis",
+      "url": "https://www.ema.europa.eu/en/documents/assessment-report/strimvelis-epar-public-assessment-report_en.pdf",
+      "kind": "regulatory_review",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-gene-rethymic-clinical-review",
+      "title": "RETHYMIC FDA clinical review, 2021; section 7.1.6.1 infection analysis and Table 15",
+      "url": "https://www.fda.gov/media/153873/download",
+      "kind": "regulatory_review",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-neuro-ttr-primary",
+      "title": "Benson et al. 2018 — NEURO-TTR original randomized trial (author-institution full paper)",
+      "url": "https://diposit.ub.edu/bitstreams/0d02ab06-ae15-4167-b1d6-aebd7ce41a6a/download",
+      "kind": "primary_trial",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-envision-primary-abstract",
+      "title": "Balwani et al. 2020 — ENVISION primary trial abstract",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32521132/",
+      "kind": "primary_trial_abstract",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-phyox2-primary",
+      "title": "Baum et al. 2023 — PHYOX2 original randomized trial (UCL full paper)",
+      "url": "https://discovery.ucl.ac.uk/id/eprint/10155855/1/KI_PHYOX2.pdf",
+      "kind": "primary_trial",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-atlas-ole-primary-abstract",
+      "title": "Young et al. 2025 — ATLAS-OLE antithrombin-guided dosing primary report",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40053895/",
+      "kind": "primary_trial_abstract",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-atlas-inh-primary-abstract",
+      "title": "Young et al. 2023 — randomized ATLAS-INH primary trial report",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37003287/",
+      "kind": "primary_trial_abstract",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-atlas-ab-primary-abstract",
+      "title": "Srivastava et al. 2023 — randomized ATLAS-A/B primary trial report",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37003278/",
+      "kind": "primary_trial_abstract",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-approach-primary-abstract",
+      "title": "Witztum et al. 2019 — APPROACH primary randomized trial abstract",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31390500/",
+      "kind": "primary_trial_abstract",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-approach-genetic-subgroups",
+      "title": "Tsimikas et al. 2025 — original APPROACH genetic versus clinical/LPL-diagnosed subgroups analysis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39848842/",
+      "kind": "primary_trial_abstract",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-firefish-primary",
+      "title": "Darras et al. 2021 — FIREFISH Part 2 original trial (UCL full paper)",
+      "url": "https://discovery.ucl.ac.uk/id/eprint/10132424/1/nejmoa2102047.pdf",
+      "kind": "primary_trial",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-sunfish-primary-abstract",
+      "title": "Mercuri et al. 2022 — SUNFISH Part 2 primary randomized trial abstract",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34942136/",
+      "kind": "primary_trial_abstract",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-tividenofusp-primary-abstract",
+      "title": "Muenzer et al. — tividenofusp alfa phase 1/2 original trial abstract",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41467650/",
+      "kind": "primary_trial_abstract",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-sapphire-primary-abstract",
+      "title": "Crawford et al. 2025 — SAPPHIRE original randomized trial abstract",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40818473/",
+      "kind": "primary_trial_abstract",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-nct01737398-registry",
+      "title": "ClinicalTrials.gov NCT01737398 — original protocol and posted-results record",
+      "url": "https://clinicaltrials.gov/api/v2/studies/NCT01737398",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-nct02310906-registry",
+      "title": "ClinicalTrials.gov NCT02310906 — original protocol and posted-results record",
+      "url": "https://clinicaltrials.gov/api/v2/studies/NCT02310906",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-nct02740972-registry",
+      "title": "ClinicalTrials.gov NCT02740972 — original protocol and posted-results record",
+      "url": "https://clinicaltrials.gov/api/v2/studies/NCT02740972",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-nct03754790-registry",
+      "title": "ClinicalTrials.gov NCT03754790 — original protocol and posted-results record",
+      "url": "https://clinicaltrials.gov/api/v2/studies/NCT03754790",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-nct03417102-registry",
+      "title": "ClinicalTrials.gov NCT03417102 — original protocol and posted-results record",
+      "url": "https://clinicaltrials.gov/api/v2/studies/NCT03417102",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-nct03417245-registry",
+      "title": "ClinicalTrials.gov NCT03417245 — original protocol and posted-results record",
+      "url": "https://clinicaltrials.gov/api/v2/studies/NCT03417245",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-nct02211209-registry",
+      "title": "ClinicalTrials.gov NCT02211209 — original protocol and posted-results record",
+      "url": "https://clinicaltrials.gov/api/v2/studies/NCT02211209",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-nct02913482-registry",
+      "title": "ClinicalTrials.gov NCT02913482 — original protocol and posted-results record",
+      "url": "https://clinicaltrials.gov/api/v2/studies/NCT02913482",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "endpoint-review-rna-nct02908685-registry",
+      "title": "ClinicalTrials.gov NCT02908685 — original protocol and posted-results record",
+      "url": "https://clinicaltrials.gov/api/v2/studies/NCT02908685",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
     }
   ],
   "assessments": [
@@ -372,20 +645,20 @@
             "OMIM:204100",
             "OMIM:613794"
           ],
-          "population": "Biallelic RPE65-associated retinal dystrophy with viable retina",
-          "comparator": "Randomized untreated control; open-label with masked mobility graders",
-          "timeFrame": "One year",
+          "population": "31 participants aged at least 3 years with biallelic RPE65 retinal dystrophy, sufficient viable retina and ability to perform the mobility test; 21 assigned treatment and 10 control.",
+          "comparator": "Randomized untreated control (2:1); open-label administration with masked mobility graders.",
+          "timeFrame": "Baseline to one year after treatment.",
           "role": "primary",
-          "analysis": "Bilateral mobility under varying illumination; visual acuity is a different endpoint.",
+          "analysis": "Modified intention-to-treat: 20 treated and 9 controls after one withdrawal in each arm. Bilateral multi-luminance mobility test change; visual acuity is a separate endpoint.",
           "outcome": "benefit",
-          "summary": "Randomized open-label trial with masked mobility graders: one-year bilateral mobility change difference 1.6 light levels (95% CI 0.72–2.41).",
+          "summary": "Mobility improved by 1.8 versus 0.2 light levels; difference 1.6 (95% CI 0.72–2.41; P=0.0013).",
           "sourceIds": [
             "luxturna-rct"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Functional vision under varying light conditions is measured; this is not the same endpoint as visual acuity.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "The trial selected participants with sufficient viable retina and assessable mobility; results do not cover all retinal stages or alleles.",
+            "Functional vision under different illumination is not visual acuity, and does not demonstrate that a specific cell subtype mediated improvement."
           ]
         }
       ],
@@ -419,7 +692,8 @@
           ],
           "clinicalMediation": "not_established",
           "atlasIdentity": "not_crosswalked",
-          "studyRelationship": "Regulatory description of the delivery mechanism, not a cell-targeting measurement from the clinical endpoint cohort."
+          "studyRelationship": "Regulatory description of the delivery mechanism, not a cell-targeting measurement from the clinical endpoint cohort.",
+          "comparator": "Not applicable: regulatory mechanism description, without a cell assay"
         }
       ],
       "limitations": [
@@ -448,7 +722,7 @@
           "hpoId": "HP:0002194",
           "label": "Delayed gross motor development",
           "mapping": "direct",
-          "endpoint": "PDMS-2 gross motor milestones at week 48",
+          "endpoint": "New PDMS-2 gross motor milestone at week 48",
           "trialRefs": [
             {
               "nctId": "NCT04903288",
@@ -458,21 +732,21 @@
           "diseaseIds": [
             "OMIM:608643"
           ],
-          "population": "Aromatic L-amino acid decarboxylase deficiency; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "13 children with severe AADC deficiency, aged approximately 16 months to 10 years and with adequate skull maturity; no gross motor milestones at baseline. Twelve were assessed at week 48.",
+          "comparator": "Single-arm treatment; external cross-sectional natural-history cohort of 44 untreated patients with severe AADC deficiency.",
+          "timeFrame": "48 weeks after intraputaminal infusion.",
+          "role": "primary_functional",
+          "analysis": "Prespecified key efficacy assessment of acquisition of a PDMS-2 gross motor milestone; one treated child withdrew before week 48. FDA accepted this as an intermediate clinical endpoint for accelerated approval.",
           "outcome": "benefit",
-          "summary": "Single-arm study with external natural history comparison: 8/12 assessed patients acquired a new gross motor milestone at week 48.",
+          "summary": "8/12 assessed treated children acquired a new gross motor milestone, versus none of the 44 external natural-history patients.",
           "sourceIds": [
             "kebilidi-label",
             "kebilidi-sbra"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Motor milestones were measured directly. Post-treatment dyskinesia is a safety finding, not proof of dystonia improvement.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "The external comparison was not randomized and differs from longitudinal follow-up of a concurrent control group.",
+            "Confirmed clinical benefit remains subject to verification; PET uptake and CSF metabolites are separate pharmacodynamic measures, not cell-specific rescue."
           ]
         },
         {
@@ -480,7 +754,7 @@
           "hpoId": "HP:0002194",
           "label": "Delayed gross motor development",
           "mapping": "direct",
-          "endpoint": "PDMS-2 gross motor milestones at week 48",
+          "endpoint": "PDMS-2 gross motor milestone attainment at 24 months",
           "trialRefs": [
             {
               "nctId": null,
@@ -490,21 +764,20 @@
           "diseaseIds": [
             "OMIM:608643"
           ],
-          "population": "Aromatic L-amino acid decarboxylase deficiency; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "Initial pooled intention-to-treat population of 18 children with severe, genetically confirmed AADC deficiency: AADC-CU/1601 n=8 and AADC-010 n=10; studied ages approximately 18 months to 8.5 years.",
+          "comparator": "Unblinded single-arm cohorts compared with published untreated natural history; no randomized concurrent control.",
+          "timeFrame": "24 months after treatment in the initial primary analysis; later data-lock observations are separate.",
+          "role": "primary_functional",
+          "analysis": "Milestones included head control, unsupported sitting, supported standing and assisted walking. The initial 18-patient analysis must not inherit the FDA 13-patient week-48 cohort or the later EMA 28-patient pooled population.",
           "outcome": "benefit",
-          "summary": "Single-arm cohorts acquired and maintained motor milestones; follow-up was incomplete and varying by time point. These are distinct cohorts from FDA Study 1.",
+          "summary": "Initial primary analysis: 9/18 achieved full head control, 7/18 sat without support and 2/18 stood with support by 24 months; no natural-history controls achieved these milestones.",
           "sourceIds": [
-            "kebilidi-label",
             "upstaza-epar"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Motor milestones were measured directly. Post-treatment dyskinesia is a safety finding, not proof of dystonia improvement.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Published external controls were imperfectly characterized, and follow-up/completeness varied; manufacturing processes differed between the two cohorts.",
+            "Motor milestones do not establish reversal of every AADC phenotype or identify which transduced cell population caused the clinical observation."
           ]
         }
       ],
@@ -543,20 +816,20 @@
           "diseaseIds": [
             "OMIM:105210"
           ],
-          "population": "225 adults with hereditary ATTR polyneuropathy",
-          "comparator": "Randomized placebo",
-          "timeFrame": "18 months",
+          "population": "225 adults with hereditary ATTR amyloidosis and polyneuropathy: 148 randomized to patisiran and 77 to placebo.",
+          "comparator": "Randomized double-blind placebo control.",
+          "timeFrame": "Baseline to month 18.",
           "role": "primary",
-          "analysis": "mNIS+7 composite neuropathy assessment; liver delivery is separate from affected neural tissues.",
+          "analysis": "Modified intention-to-treat population included all 225 randomized, dosed participants; 188 had nonmissing month-18 mNIS+7 assessments. Least-squares mean change in the composite neuropathy score.",
           "outcome": "benefit",
-          "summary": "Randomized placebo-controlled study of 225 participants: 18-month mNIS+7 change −6.0 versus +28.0; between-group difference −34.0 points.",
+          "summary": "mNIS+7 change was −6.0 with patisiran versus +28.0 with placebo; difference −34.0 points (95% CI −39.9 to −28.1; P<0.001).",
           "sourceIds": [
             "apollo"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "A composite neuropathy assessment; does not isolate a particular peripheral neural cell subtype.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "mNIS+7 combines multiple neuropathy measurements rather than measuring a single peripheral cell subtype.",
+            "Liver-directed TTR reduction and clinical neuropathy improvement do not establish direct rescue or necessary mediation by the mapped neural cells."
           ]
         }
       ],
@@ -589,7 +862,8 @@
           ],
           "clinicalMediation": "not_established",
           "atlasIdentity": "not_crosswalked",
-          "studyRelationship": "Regulatory description of hepatic delivery and RNA interference, not a cell-specific mediation assay in the clinical endpoint cohort."
+          "studyRelationship": "Regulatory description of hepatic delivery and RNA interference, not a cell-specific mediation assay in the clinical endpoint cohort.",
+          "comparator": "Not applicable: regulatory mechanism description, without a cell assay"
         }
       ],
       "limitations": [
@@ -776,7 +1050,7 @@
           "hpoId": "HP:0001288",
           "label": "Gait disturbance",
           "mapping": "proxy",
-          "endpoint": "Gross Motor Function Measure and severe motor impairment-free survival",
+          "endpoint": "Gross Motor Function Measure total score at two years",
           "trialRefs": [
             {
               "nctId": "NCT01560182",
@@ -786,20 +1060,20 @@
           "diseaseIds": [
             "OMIM:250100"
           ],
-          "population": "Early-onset metachromatic leukodystrophy; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "29 children with presymptomatic or early symptomatic early-onset metachromatic leukodystrophy in the phase 1/2 and expanded-access cohorts.",
+          "comparator": "31 untreated natural-history patients matched on age and disease subtype; nonrandomized.",
+          "timeFrame": "Two years after treatment for the primary motor analysis; median overall follow-up 3.16 years was a separate duration.",
+          "role": "co_primary",
+          "analysis": "Co-primary endpoints were improvement in total GMFM score relative to natural history and ARSA activity in peripheral blood mononuclear cells. The selected phenotype scope is GMFM, not blood enzyme activity or a responder percentage.",
           "outcome": "benefit",
-          "summary": "Nonrandomized treated cohort compared with natural history showed preservation of motor and cognitive function, particularly with early treatment.",
+          "summary": "Between-group GMFM score differences were 66 percentage points (95% CI 48.9–82.3) for late-infantile disease and 42 (12.3–71.8) for early-juvenile disease at two years.",
           "sourceIds": [
             "arsa-cel"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Motor preservation includes ambulation and sitting; it does not directly quantify every gait abnormality.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Motor-score preservation in selected early disease cannot be generalized to advanced disease; external controls leave residual comparability uncertainty.",
+            "GMFM is a broad motor-function proxy for gait. Blood ARSA activity or engraftment does not establish oligodendrocyte rescue or clinical cell mediation."
           ]
         }
       ],
@@ -828,7 +1102,7 @@
           "hpoId": "HP:0001288",
           "label": "Gait disturbance",
           "mapping": "proxy",
-          "endpoint": "Motor domain / loss of ambulation",
+          "endpoint": "Sustained two-category motor-domain decline or motor score zero through week 96",
           "trialRefs": [
             {
               "nctId": "NCT01907087",
@@ -838,21 +1112,22 @@
           "diseaseIds": [
             "OMIM:204500"
           ],
-          "population": "CLN2 disease / TPP1 deficiency; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "24 symptomatic children aged 3–8 years with TPP1-deficient CLN2 enrolled; the FDA motor analysis included 22 with baseline combined motor-language score below 6, counting the early withdrawal as decline.",
+          "comparator": "42 untreated natural-history patients meeting study criteria; nonrandomized external comparison.",
+          "timeFrame": "Through 96 weeks of pivotal treatment plus extension (NCT02485899); the original pivotal registry endpoint was assessed through week 49.",
+          "role": "regulatory_motor_analysis",
+          "analysis": "FDA analyzed motor decline alone because language ratings were not comparable across cohorts. The publication assessed combined motor-language decline with 23 efficacy participants; that is a distinct analysis.",
           "outcome": "benefit",
-          "summary": "Open-label intraventricular enzyme treatment slowed motor-language decline compared with historical controls.",
+          "summary": "21/22 treated participants avoided motor decline through week 96, versus 21/42 historical controls; covariate-adjusted odds ratio 13.1 (95% CI 1.2–146.9).",
           "sourceIds": [
             "brineura-label",
-            "cln2-trial"
+            "cln2-trial",
+            "endpoint-review-neuro-nct01907087"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Loss of ambulation is within the motor phenotype domain, but the trial scale is not an exact HPO gait measure.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "External controls, rating comparability and the wide confidence interval limit causal inference; the published combined-scale population differs from the FDA motor analysis.",
+            "Motor decline captures loss of walking/crawling but not every gait abnormality. Intraventricular delivery does not establish a particular cell subtype as the mediator."
           ]
         }
       ],
@@ -937,7 +1212,8 @@
           ],
           "clinicalMediation": "not_established",
           "atlasIdentity": "not_crosswalked",
-          "studyRelationship": "Separate human donor-cell experiment; no within-trial mediation analysis or exact atlas cell correspondence is established."
+          "studyRelationship": "Separate human donor-cell experiment; no within-trial mediation analysis or exact atlas cell correspondence is established.",
+          "comparator": "Assay control details not retained in this label-based extract"
         }
       ],
       "limitations": [
@@ -954,7 +1230,7 @@
           "hpoId": "HP:0001324",
           "label": "Muscle weakness",
           "mapping": "proxy",
-          "endpoint": "ALSFRS-R clinical function; separate NfL biomarker",
+          "endpoint": "ALSFRS-R change at week 28",
           "trialRefs": [
             {
               "nctId": "NCT02623699",
@@ -962,20 +1238,20 @@
             }
           ],
           "diseaseIds": [],
-          "population": "SOD1-associated amyotrophic lateral sclerosis; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "108 adults aged 23–78 years with SOD1-ALS randomized 72 to tofersen and 36 to placebo; the prespecified primary faster-progression population included 39 and 21 respectively.",
+          "comparator": "Randomized placebo control during the 28-week blinded phase.",
+          "timeFrame": "Baseline to week 28.",
+          "role": "primary",
+          "analysis": "Primary analysis in 60 predicted faster progressors used a joint rank test incorporating mortality and imputation for missing assessments. Biomarker analyses used separate populations and endpoints.",
           "outcome": "null",
-          "summary": "The prespecified 28-week ALSFRS-R primary endpoint was not statistically significant, despite biomarker reductions.",
+          "summary": "ALSFRS-R between-group difference was 1.2 points (95% CI −3.2 to 5.5), without a statistically significant primary clinical result.",
           "sourceIds": [
             "qalsody-label"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "ALSFRS-R is multidomain; NfL is an injury biomarker, not a direct muscle-strength or cell-rescue endpoint.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "This result does not establish absence of any delayed effect, but secondary clinical outcomes also did not meet significance in this phase.",
+            "NfL reduction supporting accelerated approval is a separate surrogate; ALSFRS-R is a multidomain function scale rather than muscle strength or cell-specific rescue."
           ]
         },
         {
@@ -983,7 +1259,7 @@
           "hpoId": "HP:0001324",
           "label": "Muscle weakness",
           "mapping": "proxy",
-          "endpoint": "ALSFRS-R clinical function; separate NfL biomarker",
+          "endpoint": "ALSFRS-R change through week 148 from VALOR baseline",
           "trialRefs": [
             {
               "nctId": "NCT03070119",
@@ -991,21 +1267,20 @@
             }
           ],
           "diseaseIds": [],
-          "population": "SOD1-associated amyotrophic lateral sclerosis; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "Original randomized intention-to-treat population: 72 early-start and 36 delayed-start participants; 95 entered the extension and 46 completed it (34 early, 12 delayed).",
+          "comparator": "Earlier versus approximately six-month-delayed initiation; both groups received tofersen in the extension, without an ongoing untreated control.",
+          "timeFrame": "VALOR baseline through week 148; last available follow-up at 192–276 weeks is a different analysis window.",
+          "role": "secondary_exploratory",
+          "analysis": "Original treatment assignment retained for long-term comparison. ANCOVA with multiple imputation and an alternative joint-rank analysis gave different significance assessments; the study was not powered for this comparison.",
           "outcome": "mixed",
-          "summary": "Longer follow-up associated earlier initiation with numerically less functional decline; crossover, attrition and limited power constrain the comparison.",
+          "summary": "ALSFRS-R changes were −9.9 versus −13.5 points; difference 3.6 (95% CI −1.2 to 8.4; nominal P=0.14). The alternative joint-rank analysis gave nominal P=0.05.",
           "sourceIds": [
-            "qalsody-label",
             "valor-ole"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "ALSFRS-R is multidomain; NfL is an injury biomarker, not a direct muscle-strength or cell-rescue endpoint.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Attrition, imputation, crossover and limited power constrain interpretation; this follow-up does not replace the negative week-28 primary result.",
+            "Clinical function, circulating NfL and cell distribution/target engagement are separate observations; none demonstrates that the mapped cell subtype mediated this clinical trend."
           ]
         }
       ],
@@ -1034,7 +1309,7 @@
           "hpoId": "HP:0001324",
           "label": "Muscle weakness",
           "mapping": "proxy",
-          "endpoint": "Dystrophin protein; 6-minute walking distance",
+          "endpoint": "Change in six-minute walking distance through week 24",
           "trialRefs": [
             {
               "nctId": "NCT01396239",
@@ -1044,24 +1319,57 @@
           "diseaseIds": [
             "OMIM:310200"
           ],
-          "population": "Duchenne muscular dystrophy with exon-51-skipping-amenable variants; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
-          "outcome": "mixed",
-          "summary": "Small placebo-controlled study with crossover investigated dystrophin and walking distance; the label states clinical benefit was not established and its external-control Study 2 did not show benefit.",
+          "population": "12 ambulatory boys aged 7–13 years with exon-51-skipping-amenable DMD and stable corticosteroid treatment; four each assigned 30 mg/kg, 50 mg/kg or placebo.",
+          "comparator": "Randomized placebo control for 24 weeks; later crossover and external-control observations are separate analyses.",
+          "timeFrame": "Baseline to week 24 of Study 201.",
+          "role": "secondary",
+          "analysis": "Clinical walking distance was secondary to dystrophin-positive fiber assessments in the registry. The label reports no significant walking-distance difference and insufficient pretreatment protein data to estimate dystrophin production in Study 1.",
+          "outcome": "null",
+          "summary": "No statistically significant change in six-minute walking distance was observed versus placebo in Study 1.",
           "sourceIds": [
-            "exondys-label"
+            "exondys-label",
+            "endpoint-review-neuro-nct01396239"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Dystrophin is molecular engagement; walking is functional but is not an isolated muscle-strength measurement.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "The very small controlled study has limited precision; null means benefit was not established in this scope, not proof of no possible effect.",
+            "Accelerated approval relied on dystrophin data including a separate 48-week biopsy cohort; those protein observations cannot be inherited by this walking result or relabeled as muscle-strength rescue."
           ]
         }
       ],
-      "cellObservations": [],
+      "cellObservations": [
+        {
+          "id": "eteplirsen-dmd-study301-biopsy",
+          "hpoIds": [
+            "HP:0001324"
+          ],
+          "trialRefs": [],
+          "population": "Study 301: 13 exon-51-skipping-amenable boys; 12 paired biopsies evaluable",
+          "species": "Human treated tissue",
+          "cells": [
+            "Skeletal-muscle biopsy tissue"
+          ],
+          "route": "Intravenous eteplirsen, 30 mg/kg weekly",
+          "assay": "Paired Western-blot dystrophin quantification",
+          "timeFrame": "Baseline and week 48",
+          "evidenceType": "human_tissue",
+          "direction": "supports",
+          "claim": "Mean dystrophin rose from 0.16% to 0.44% of normal; median increase was 0.1%. This is molecular engagement rather than demonstrated strength benefit.",
+          "sourceIds": [
+            "exondys-label"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Separate biopsy cohort from the 12-person randomized Study 201 and its walking comparison. The label also warns against comparing different dystrophin assay protocols.",
+          "endpointResultIds": [
+            "eteplirsen-dmd-HP_0001324-result-1"
+          ],
+          "diseaseIds": [
+            "OMIM:310200"
+          ],
+          "comparator": "Own pretreatment biopsy baseline; no concurrent randomized control"
+        }
+      ],
       "limitations": [
         "Diagnosis crosswalks are discovery links, not allele eligibility or patient-specific treatment recommendations.",
         "Whole-treatment cell arrays and conclusions are background; they are not automatically inherited by this endpoint."
@@ -1096,20 +1404,20 @@
           "diseaseIds": [
             "OMIM:310200"
           ],
-          "population": "Duchenne muscular dystrophy; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
-          "outcome": "mixed",
-          "summary": "Week-52 NSAA primary endpoint was not met: difference 0.65 points (95% CI −0.45 to 1.74; P=0.2441). Micro-dystrophin increased and some secondary outcomes favored treatment.",
+          "population": "125 ambulatory boys aged 4 to under 8 years with DMD: 63 assigned delandistrogene moxeparvovec and 62 placebo.",
+          "comparator": "Randomized double-blind placebo control in EMBARK year 1.",
+          "timeFrame": "Baseline to week 52.",
+          "role": "primary",
+          "analysis": "Primary change in NSAA total score; selected secondary motor tests and micro-dystrophin biopsy results are distinct outcomes.",
+          "outcome": "null",
+          "summary": "NSAA changes were 2.57 versus 1.92 points; difference 0.65 (95% CI −0.45 to 1.74; P=0.2441). The primary endpoint was not met.",
           "sourceIds": [
             "embark"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "NSAA measures several motor skills; it is not a direct strength assay or a cardiomyopathy endpoint.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Favourable secondary observations do not make the NSAA primary endpoint positive; year-two external comparisons are separate evidence.",
+            "NSAA combines motor skills rather than directly measuring isolated muscle strength, cardiac outcomes or mediation by a particular muscle cell population."
           ]
         },
         {
@@ -1127,25 +1435,62 @@
           "diseaseIds": [
             "OMIM:310200"
           ],
-          "population": "Duchenne muscular dystrophy; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "64 participants treated in EMBARK Part 1 were included in the two-year comparison; 63 had a valid two-year NSAA score. The propensity-weighted external comparator comprised 143 participants.",
+          "comparator": "Propensity-weighted external DMD natural-history controls; crossover removed an ongoing randomized placebo comparison in year 2.",
+          "timeFrame": "Baseline to week 104 after initial treatment.",
+          "role": "secondary_exploratory",
+          "analysis": "Prespecified two-year external comparison used repeated-measures modeling with propensity weighting. Nominal P values were not adjusted for multiple comparisons; external-control NSAA data were missing for 29 participants.",
           "outcome": "mixed",
-          "summary": "Longer follow-up is reported separately from the randomized year-one analysis; it must not erase the original primary-endpoint result.",
+          "summary": "NSAA changes were 2.63 versus −0.25 points; difference 2.88 (95% CI 1.43–4.33; nominal P=0.0001).",
           "sourceIds": [
-            "embark",
             "embark-two-year"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "NSAA measures several motor skills; it is not a direct strength assay or a cardiomyopathy endpoint.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "External comparator selection, unmeasured confounding and missing data limit causal interpretation; this analysis does not erase the negative randomized week-52 result.",
+            "NSAA is a functional proxy for muscle weakness. Separate micro-dystrophin biopsy measurements do not establish cell-specific mediation of the motor observation."
           ]
         }
       ],
-      "cellObservations": [],
+      "cellObservations": [
+        {
+          "id": "delandistrogene-dmd-embark-biopsy",
+          "hpoIds": [
+            "HP:0001324"
+          ],
+          "trialRefs": [
+            {
+              "nctId": "NCT05096221",
+              "name": "EMBARK"
+            }
+          ],
+          "population": "EMBARK ambulatory boys aged 4 to under 8; biopsy subset of 31 (17 treated, 14 placebo)",
+          "species": "Human treated tissue",
+          "cells": [
+            "Skeletal-muscle biopsy tissue; subtype unresolved by bulk assay"
+          ],
+          "route": "Single intravenous AAVrh74 gene therapy",
+          "assay": "Western blot for micro-dystrophin, normalized to muscle content",
+          "timeFrame": "Week 12",
+          "evidenceType": "human_tissue",
+          "direction": "supports",
+          "claim": "Biopsy micro-dystrophin averaged 34.29% of normal in treated participants versus 0% with placebo. Molecular expression does not establish strength rescue; the week-52 primary NSAA comparison was not significant.",
+          "sourceIds": [
+            "embark"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "A subset of the same randomized EMBARK cohort; no individual mediation analysis or exact atlas subtype correspondence is established.",
+          "endpointResultIds": [
+            "delandistrogene-dmd-HP_0001324-result-1",
+            "delandistrogene-dmd-HP_0001324-result-2"
+          ],
+          "diseaseIds": [
+            "OMIM:310200"
+          ],
+          "comparator": "Randomized placebo biopsy subset; baseline biopsy unavailable"
+        }
+      ],
       "limitations": [
         "Diagnosis crosswalks are discovery links, not allele eligibility or patient-specific treatment recommendations.",
         "Whole-treatment cell arrays and conclusions are background; they are not automatically inherited by this endpoint."
@@ -1180,20 +1525,20 @@
           "diseaseIds": [
             "OMIM:143100"
           ],
-          "population": "Manifest Huntington disease; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "791 adults with manifest Huntington disease randomized to 120 mg intrathecal tominersen every 8 weeks, every 16 weeks, or placebo.",
+          "comparator": "Randomized placebo control; dose arms evaluated separately.",
+          "timeFrame": "Ad hoc week-69 analysis after early treatment termination; the planned primary time point was week 101.",
+          "role": "primary",
+          "analysis": "Planned primary measures were cUHDRS or Total Functional Capacity. Early stopping changed the analysis window; cUHDRS findings cannot be relabeled as isolated chorea measurements.",
           "outcome": "harm",
-          "summary": "The every-eight-week arm had worse cUHDRS outcome than placebo; the every-sixteen-week arm showed no significant benefit. Analyses after early stopping require caution.",
+          "summary": "The every-8-week arm had worse cUHDRS than placebo (difference −0.54; adjusted P=0.001). The every-16-week arm did not differ significantly; Total Functional Capacity did not differ significantly in either arm.",
           "sourceIds": [
             "generation-hd1"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "The primary composites include broader motor, cognitive and functional domains and cannot be relabeled as an isolated chorea endpoint.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "The worse clinical result applies to the every-8-week arm, not automatically to every dosing schedule; analysis after early stopping needs caution.",
+            "Composite motor, cognitive and functional scores do not isolate chorea, and reduced huntingtin does not demonstrate clinical benefit or rescue of a mapped cell subtype."
           ]
         }
       ],
@@ -1232,20 +1577,22 @@
           "diseaseIds": [
             "OMIM:607208"
           ],
-          "population": "Dravet syndrome with SCN1A haploinsufficiency; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
-          "outcome": "mixed",
-          "summary": "Open-label dose-escalation studies primarily assessed safety and pharmacokinetics; exploratory seizure reductions warrant controlled testing.",
+          "population": "Children/adolescents aged 2–18 years with Dravet syndrome receiving standard antiseizure medicines; the publication pooled 81 participants across MONARCH and ADMIRAL, while MONARCH registry enrollment is 62.",
+          "comparator": "Open-label dose escalation with pretreatment seizure baseline; no randomized control.",
+          "timeFrame": "MONARCH registry seizure observations through six months after the last dose; extension intervals are a separate scope.",
+          "role": "secondary_exploratory",
+          "analysis": "MONARCH primary endpoints were safety and pharmacokinetics; seizure frequency was secondary. Accessible publication material reports the selected high-dose subgroup seizure effect during extension, without a separately verifiable phase 1 seizure estimate.",
+          "outcome": "unknown",
+          "summary": "The seizure effect for the initial MONARCH/ADMIRAL phase cannot be established separately from extension observations in the accessible primary results.",
           "sourceIds": [
-            "zorevunersen-2026"
+            "zorevunersen-2026",
+            "endpoint-review-neuro-nct04442295",
+            "endpoint-review-neuro-zorevunersen-abstract"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "source_limited",
           "limits": [
-            "Convulsive seizure counts measure a subset of seizures; developmental outcomes require separate evidence.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Scope review remains pending: publisher full text and the author manuscript archive were inaccessible, and no registry results were posted.",
+            "Pooled enrollment is not a MONARCH-only denominator. Convulsive seizures exclude other seizure types; experimental splice rescue does not establish clinical cell mediation."
           ]
         },
         {
@@ -1263,20 +1610,22 @@
           "diseaseIds": [
             "OMIM:607208"
           ],
-          "population": "Dravet syndrome with SCN1A haploinsufficiency; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "75 participants entered the pooled SWALLOWTAIL/LONGWING extensions by May 30, 2025. The reported seizure estimate concerns participants previously given 70 mg in phase 1/2a, not all 75; subgroup size is not stated in the accessible abstract.",
+          "comparator": "Pretreatment seizure baseline; open-label continuing treatment and standard antiseizure medicines, without a randomized comparator.",
+          "timeFrame": "One-month intervals across the first 20 months of extension for the reported 70-mg antecedent subgroup; broader clinical follow-up to 36 months is separate.",
+          "role": "secondary_exploratory",
+          "analysis": "Extensions assessed safety primarily and seizure frequency secondarily. Participants received up to 45 mg every four months; seizure-change estimates were pooled across the two extension studies.",
           "outcome": "mixed",
-          "summary": "Continued open-label treatment showed preliminary clinical improvement; concurrent therapies and absence of randomized controls limit causal efficacy attribution.",
+          "summary": "In the antecedent 70-mg subgroup, median convulsive-seizure reductions ranged from 58.82% to 90.91% across the reported monthly extension intervals.",
           "sourceIds": [
-            "zorevunersen-2026"
+            "zorevunersen-2026",
+            "endpoint-review-neuro-nct04740476",
+            "endpoint-review-neuro-zorevunersen-abstract"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Convulsive seizure counts measure a subset of seizures; developmental outcomes require separate evidence.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Subgroup size and uncertainty intervals could not be verified from the accessible abstract; no effect is assigned to every extension participant or to the initial dose-escalation phase.",
+            "Uncontrolled subgroup observations, ongoing treatments and selection into extension constrain efficacy attribution; the seizure endpoint does not establish developmental improvement or cell mediation."
           ]
         }
       ],
@@ -1315,20 +1664,20 @@
           "diseaseIds": [
             "OMIM:610951"
           ],
-          "population": "One patient with the specific MFSD8 splice-disrupting intronic insertion",
-          "comparator": "Pretreatment baseline; uncontrolled N-of-1",
-          "timeFrame": "Reported individualized treatment follow-up",
+          "population": "One seven-year-old girl with advanced CLN7 disease and the patient-specific MFSD8 splice-disrupting intronic insertion.",
+          "comparator": "Pretreatment clinical/EEG baseline; uncontrolled N-of-1. Topiramate dose and measured levels remained stable.",
+          "timeFrame": "First year of individualized treatment; comparison of the initial two and subsequent three EEG recordings.",
           "role": "exploratory_clinical",
-          "analysis": "EEG and parent-reported seizure measurements; cell-splicing rescue does not establish neuronal treatment distribution.",
+          "analysis": "Parent seizure diary and repeated EEG monitoring; no randomized efficacy analysis or formal primary clinical hierarchy was established in this individualized report.",
           "outcome": "mixed",
-          "summary": "Patient-cell splice correction supported individualized treatment; observed seizure reductions lacked a randomized comparator.",
+          "summary": "EEG daily seizure count decreased from 31.5 to 11.7, mean duration from 108 to 52 seconds and cumulative seizure time from 3.9% to 0.6%.",
           "sourceIds": [
             "milasen"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "The observed seizure phenotype is directly measured; this does not establish reversal of all neurodegeneration.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "One uncontrolled patient and sparse EEG sampling cannot establish causal efficacy or generalize to other MFSD8 variants; brain atrophy continued on follow-up MRI.",
+            "Patient fibroblast splice correction supported the mechanism, but does not show neuronal delivery or prove a mapped cell type mediated the seizure observation."
           ]
         }
       ],
@@ -1361,7 +1710,8 @@
           ],
           "clinicalMediation": "not_established",
           "atlasIdentity": "not_crosswalked",
-          "studyRelationship": "Patient-derived fibroblast experiment from the same individual, outside the central nervous system; this does not establish engagement of seizure-generating neurons."
+          "studyRelationship": "Patient-derived fibroblast experiment from the same individual, outside the central nervous system; this does not establish engagement of seizure-generating neurons.",
+          "comparator": "Detailed culture-control conditions not retained in this structured extract"
         }
       ],
       "limitations": [
@@ -1388,7 +1738,7 @@
           "hpoId": "HP:0002194",
           "label": "Delayed gross motor development",
           "mapping": "direct",
-          "endpoint": "Independent sitting and motor milestones",
+          "endpoint": "Independent sitting for at least 30 seconds at age 18 months",
           "trialRefs": [
             {
               "nctId": "NCT03306277",
@@ -1398,20 +1748,20 @@
           "diseaseIds": [
             "OMIM:253300"
           ],
-          "population": "5q spinal muscular atrophy; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "22 symptomatic infants with infantile-onset SMA treated before six months of age; all had two SMN2 copies in the published STR1VE cohort.",
+          "comparator": "23 untreated infants from the PNCR natural-history cohort; single-arm externally controlled study.",
+          "timeFrame": "Age 18 months for the sitting co-primary endpoint; survival without ventilation at age 14 months was the other, separate co-primary endpoint.",
+          "role": "co_primary",
+          "analysis": "Independent sitting measured by Bayley-III gross-motor item 26; the final published cohort differs from the earlier 21-patient label data cutoff.",
           "outcome": "benefit",
-          "summary": "Single-arm trial reported independent sitting and survival without permanent ventilation compared with untreated natural history.",
+          "summary": "13/22 treated infants sat independently for at least 30 seconds at age 18 months, versus 0/23 natural-history infants (P<0.0001).",
           "sourceIds": [
             "str1ve"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Motor milestones do not establish cognitive or global developmental benefit.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "An external comparator cannot remove all selection or supportive-care differences; the observed infant cohort does not represent every SMA stage or genotype.",
+            "Sitting and survival are distinct endpoints. Motor milestones do not establish cognitive benefit or mediation by a particular spinal-cell population."
           ]
         },
         {
@@ -1419,7 +1769,7 @@
           "hpoId": "HP:0002194",
           "label": "Delayed gross motor development",
           "mapping": "direct",
-          "endpoint": "Independent sitting and motor milestones",
+          "endpoint": "Independent sitting for at least 30 seconds by 24 months after infusion",
           "trialRefs": [
             {
               "nctId": "NCT02122952",
@@ -1429,21 +1779,21 @@
           "diseaseIds": [
             "OMIM:253300"
           ],
-          "population": "5q spinal muscular atrophy; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "15 infants with biallelic SMN1 deletions, two SMN2 copies and no c.859G>C modifier: three low-dose and 12 high-dose participants, treated at ages approximately 0.9–7.9 months.",
+          "comparator": "Open-label ascending-dose cohorts; no randomized concurrent untreated comparator.",
+          "timeFrame": "By 24 months after infusion, rather than age 18 months in STR1VE.",
+          "role": "secondary",
+          "analysis": "START primarily assessed safety; motor milestones were secondary. The clinical observation is dose-cohort-specific; retrospective vector-dose estimates were uncertain after assay and storage changes.",
           "outcome": "benefit",
-          "summary": "Dose-ranging single-arm trial supported survival and motor milestones; not a randomized cell-target comparison.",
+          "summary": "9/12 high-dose participants sat independently for at least 30 seconds, compared with none of the three low-dose participants.",
           "sourceIds": [
-            "str1ve",
-            "zolgensma-label"
+            "zolgensma-label",
+            "endpoint-review-neuro-nct02122952"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Motor milestones do not establish cognitive or global developmental benefit.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Dose cohorts were small and not randomized, with differing treatment ages; no causal comparison to untreated infants is established by this dose-cohort contrast alone.",
+            "This is the START cohort, not STR1VE. Survival, motor milestones and evidence of cell distribution are separate findings."
           ]
         }
       ],
@@ -1484,20 +1834,20 @@
           "diseaseIds": [
             "OMIM:300100"
           ],
-          "population": "Early active cerebral adrenoleukodystrophy; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "32 boys with early active cerebral ALD in ALD-102; 26 receiving product considered comparable to the marketed product formed the FDA primary population, with treatment ages 4–14 years.",
+          "comparator": "Single-arm comparison to a prespecified 50% benchmark derived from the ALD-101 natural-history/allo-HSCT data; exploratory historical comparisons were separate.",
+          "timeFrame": "24 months after infusion.",
+          "role": "composite_primary",
+          "analysis": "Success required survival without any of six major functional disabilities, rescue transplantation/cell infusion, withdrawal or loss to follow-up. FDA considered the benchmark analysis difficult to interpret; approval also used a separate exploratory symptomatic comparison.",
           "outcome": "benefit",
-          "summary": "Major functional disability-free survival and supportive MRI findings informed approval; external controls and selected early disease limit inference.",
+          "summary": "23/26 (88%; 95% CI 70–98%) met the 24-month composite criterion. FDA identified external-cohort comparability, earlier detection and limited follow-up as important interpretive limitations.",
           "sourceIds": [
             "skysona-review"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Loss of independent movement is one component; the composite also includes other disabilities and death.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "The observation does not establish confirmed clinical benefit across all CALD stages; accelerated approval relied on an intermediate clinical endpoint and requires verification.",
+            "Loss of independent movement is one of six disability components; the result is not isolated gait improvement. ALDP expression in blood does not demonstrate oligodendrocyte rescue or mediation."
           ]
         }
       ],
@@ -1536,21 +1886,21 @@
           "diseaseIds": [
             "OMIM:306900"
           ],
-          "population": "Hemophilia B; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "HOPE-B: 54 men aged 19–75 with severe/moderately severe hemophilia B (FIX activity ≤2%) previously using regular FIX prophylaxis.",
+          "comparator": "Each participant’s prospective ≥6-month prophylaxis lead-in; no randomized concurrent control.",
+          "timeFrame": "Primary FDA comparison: months 7–18 after infusion versus lead-in.",
+          "role": "primary",
+          "analysis": "FDA all-bleed noninferiority analysis used repeated-measures negative-binomial estimation. Prophylaxis-confounded periods in three patients were imputed as ABR 20; this estimand differs from the publication.",
           "outcome": "benefit",
-          "summary": "54 recipients with lead-in control: FDA-label adjusted annualized bleeding 4.1 before versus 1.9 during months 7–18, ratio 0.46 (95% CI 0.26–0.81). The label analysis and HOPE-B publication estimands differ.",
+          "summary": "Label-adjusted ABR fell from 4.1 to 1.9 bleeds/year; ratio 0.46 (95% CI 0.26–0.81), meeting noninferiority. This is a within-participant comparison.",
           "sourceIds": [
             "hemgenix-label",
             "hope-b"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Defined bleeding events; do not equate biochemical factor activity alone with clinical hemostasis.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Lead-in prophylaxis was individualized and adherence imperfect; no randomized superiority comparison.",
+            "FIX activity is separate from clinical bleeding and does not identify a bleeding-site cell."
           ]
         }
       ],
@@ -1590,21 +1940,21 @@
           "diseaseIds": [
             "OMIM:306900"
           ],
-          "population": "Hemophilia B; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "BENEGENE-2: 45 men aged 18–62, FIX activity ≤2 IU/dL, negative for AAVRh74var neutralizing antibodies; prior routine FIX prophylaxis.",
+          "comparator": "Prospective ≥6-month FIX-prophylaxis lead-in in the same participants; no concurrent randomized control.",
+          "timeFrame": "Week 12/day 82 to cutoff; median efficacy observation 1.8 years versus 1.2 years of lead-in.",
+          "role": "primary",
+          "analysis": "FDA noninferiority margin: +3 bleeds/year. Negative-binomial model included treated/untreated bleeds except procedural bleeds; extended-prophylaxis periods in seven participants were imputed as ABR 20.",
           "outcome": "mixed",
-          "summary": "FDA analysis met noninferiority: modeled annualized bleeding 4.5 before versus 2.5 after treatment, difference −2.1 (95% CI −4.8 to 0.7). Six of 45 resumed routine factor IX prophylaxis.",
+          "summary": "Modeled ABR 4.5 versus 2.5; difference −2.1 (95% CI −4.8 to 0.7), meeting noninferiority but not establishing superiority in this FDA analysis. Six resumed routine FIX prophylaxis.",
           "sourceIds": [
             "beqvez-label",
             "benegene-2"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Defined bleeding events; do not equate biochemical factor activity alone with clinical hemostasis.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "A high-bleeding baseline participant influenced estimates; sensitivity analysis still met noninferiority.",
+            "Bleeding, factor expression and commercial availability are separate outcomes."
           ]
         }
       ],
@@ -1644,21 +1994,21 @@
           "diseaseIds": [
             "OMIM:306700"
           ],
-          "population": "Hemophilia A; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "GENEr8-1: 134 adult men with severe hemophilia A, AAV5-antibody negative and previously using FVIII prophylaxis; 112 had prospective baseline bleeding data.",
+          "comparator": "The 112-person rollover population’s ≥6-month FVIII-prophylaxis baseline; not a concurrent randomized control.",
+          "timeFrame": "From day 33/week 5 or later prophylaxis cessation plus washout to cutoff; median efficacy period 3.0 years.",
+          "role": "regulatory_primary",
+          "analysis": "FDA all-bleed noninferiority assessment (margin +3.5/year); prophylaxis periods for 13 patients were imputed as ABR 35. The 2022 publication’s primary endpoint was FVIII activity, a different estimand.",
           "outcome": "benefit",
-          "summary": "134 treated; 112 in the prospective rollover comparison. FDA-label mean annualized bleeding 5.4 before versus 2.6 after, difference −2.8 (95% CI −4.3 to −1.2), meeting noninferiority. Factor expression varies and declines over time.",
+          "summary": "Rollover-population mean ABR 5.4 before versus 2.6 after; difference −2.8 (95% CI −4.3 to −1.2), meeting FDA noninferiority. Later nonresponse/loss of response occurred.",
           "sourceIds": [
             "roctavian-label",
             "gener8-1"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Defined bleeding events; do not equate biochemical factor activity alone with clinical hemostasis.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "The 22 retrospectively enrolled patients are excluded from this prospective bleeding comparison.",
+            "Observed bleeding reduction does not establish durable expression or direct rescue of bleeding-site cells."
           ]
         }
       ],
@@ -1677,7 +2027,7 @@
           "hpoId": "HP:0002719",
           "label": "Recurrent infections",
           "mapping": "direct",
-          "endpoint": "Severe infection frequency and survival",
+          "endpoint": "Severe infection rate (hospitalization-requiring/prolonging infections)",
           "trialRefs": [
             {
               "nctId": null,
@@ -1685,20 +2035,22 @@
             }
           ],
           "diseaseIds": [],
-          "population": "ADA-deficient severe combined immunodeficiency; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "12 children with ADA-SCID in the pivotal prospective open-label study; no suitable HLA-matched sibling donor and inadequate/intolerable/unavailable PEG-ADA.",
+          "comparator": "Same patients’ retrospectively collected pretreatment infection histories; no randomized comparator.",
+          "timeFrame": "Three years after infusion; the immediate three-month hospitalization was excluded from infection-rate calculation.",
+          "role": "key_secondary",
+          "analysis": "EMA pivotal-study review classifies severe infections as a key secondary endpoint; survival was primary. ITT infection data include post-rescue PEG-ADA/transplant observations; current SmPC rates are retained.",
           "outcome": "benefit",
-          "summary": "All 12 pivotal participants survived three years; severe infections declined after treatment.",
+          "summary": "Severe infections declined from 1.01/person-year (95% CI 0.68–1.46) before therapy to 0.38 (0.21–0.65) during follow-up. Three-year survival was separately 12/12.",
           "sourceIds": [
-            "strimvelis-ema"
+            "strimvelis-ema",
+            "endpoint-review-gene-strimvelis-smpc",
+            "endpoint-review-gene-strimvelis-epar"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Infection frequency is clinically relevant but does not identify a unique immune-cell subtype.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Uncontrolled retrospective baseline and exclusion of early post-treatment infections limit causal comparison.",
+            "Survival and immune-cell reconstitution cannot substitute for the infection endpoint."
           ]
         }
       ],
@@ -1738,20 +2090,22 @@
           "diseaseIds": [
             "OMIM:613985"
           ],
-          "population": "Transfusion-dependent beta-thalassemia; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "HGB-207: 23 transfusion-dependent β-thalassemia patients, ages 4–34, non-β0/β0 genotype.",
+          "comparator": "Open-label single arm; no randomized comparator. Eligibility required prior regular transfusions.",
+          "timeFrame": "≥12 continuous transfusion-free months during the 24-month parent study; median reported follow-up 29.5 months.",
+          "role": "primary",
+          "analysis": "Transfusion independence required weighted average Hb≥9 g/dL throughout ≥12 months without packed-RBC transfusion. Follow-up changes evaluability; it is not independent replication.",
           "outcome": "benefit",
-          "summary": "20/22 evaluable participants achieved transfusion independence; 23 received treatment.",
+          "summary": "20/22 evaluable achieved independence (91%; 95% CI 71–99); 23 were treated.",
           "sourceIds": [
-            "zynteglo-label"
+            "zynteglo-label",
+            "endpoint-review-gene-hgb207-primary",
+            "endpoint-review-gene-zynteglo-fda-review"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Freedom from transfusion is distinct from normal hemoglobin or correction of every anemia consequence.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Transfusion independence does not require normal hemoglobin or correction of iron-related morbidity.",
+            "Busulfan conditioning and absence of a concurrent comparator limit treatment-effect attribution."
           ]
         },
         {
@@ -1769,24 +2123,59 @@
           "diseaseIds": [
             "OMIM:613985"
           ],
-          "population": "Transfusion-dependent beta-thalassemia; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "HGB-212: 18 transfusion-dependent β-thalassemia patients, ages 4–33, β0/β0 or β0/IVS-I-110 or IVS-I-110/IVS-I-110 genotypes.",
+          "comparator": "Open-label single arm; no randomized comparator. Eligibility required prior regular transfusions.",
+          "timeFrame": "≥12 continuous transfusion-free months in the 24-month study; label cutoff median follow-up 24.6 months, later publication 47.9 months.",
+          "role": "primary",
+          "analysis": "Transfusion independence required weighted average Hb≥9 g/dL throughout ≥12 months without packed-RBC transfusion. Follow-up changes evaluability; it is not independent replication.",
           "outcome": "benefit",
-          "summary": "12/14 evaluable participants achieved transfusion independence; 18 received treatment.",
+          "summary": "Label cutoff: 12/14 evaluable (86%; 95% CI 57–98), of 18 treated. Later 2024 primary report: 16/18 (89%) achieved and maintained independence.",
           "sourceIds": [
-            "zynteglo-label"
+            "zynteglo-label",
+            "endpoint-review-gene-hgb212-primary",
+            "endpoint-review-gene-zynteglo-fda-review"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Freedom from transfusion is distinct from normal hemoglobin or correction of every anemia consequence.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Transfusion independence does not require normal hemoglobin or correction of iron-related morbidity.",
+            "Busulfan conditioning and absence of a concurrent comparator limit treatment-effect attribution."
           ]
         }
       ],
-      "cellObservations": [],
+      "cellObservations": [
+        {
+          "id": "betibeglogene-thalassemia-erythroid-output",
+          "hpoIds": [
+            "HP:0001903"
+          ],
+          "endpointResultIds": [
+            "betibeglogene-thalassemia-HP_0001903-result-1",
+            "betibeglogene-thalassemia-HP_0001903-result-2"
+          ],
+          "diseaseIds": [
+            "OMIM:613985"
+          ],
+          "trialRefs": [],
+          "population": "Phase-3 studies HGB-207/HGB-212; pooled blood pharmacodynamic measurements",
+          "species": "Human peripheral blood",
+          "cells": [
+            "Erythroid lineage / peripheral-blood hemoglobin"
+          ],
+          "route": "Gene-modified CD34+ cells intravenously after conditioning",
+          "assay": "HPLC quantification of transgene-derived HbA-T87Q",
+          "timeFrame": "Month 6 (n=35) and month 24 (n=30)",
+          "evidenceType": "human_cell_pharmacodynamics",
+          "direction": "supports",
+          "claim": "Median HbA-T87Q was 8.7 g/dL at month 6 and 8.8 g/dL at month 24. Engineered stem cells produce erythroid descendants; the measured protein is not proof of direct transduction of mature red cells.",
+          "sourceIds": [
+            "zynteglo-label"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Pooled pharmacodynamics from the clinical study programme, with changing evaluable denominators; not a cell-restricted mediation comparison.",
+          "comparator": "Post-infusion serial measurements; no concurrent control"
+        }
+      ],
       "limitations": [
         "Diagnosis crosswalks are discovery links, not allele eligibility or patient-specific treatment recommendations.",
         "Whole-treatment cell arrays and conclusions are background; they are not automatically inherited by this endpoint."
@@ -1821,24 +2210,57 @@
           "diseaseIds": [
             "OMIM:603903"
           ],
-          "population": "Sickle cell disease with vaso-occlusive events; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "HGB-206 Group C: 36 infused patients, all HbSS, aged 12–38; 32 in the VOE efficacy population had ≥4 VOEs during the prior 24 months.",
+          "comparator": "No randomized control; event-free status after treatment in a cohort selected for prior recurrent events.",
+          "timeFrame": "Months 6–18 after infusion; later follow-up is a separate period.",
+          "role": "regulatory_efficacy",
+          "analysis": "FDA-label all-VOE resolution includes medically evaluated vaso-occlusive pain, acute chest syndrome and hepatic/splenic sequestration. The publication’s primary severe-VOE endpoint is narrower.",
           "outcome": "benefit",
-          "summary": "28/32 efficacy-evaluable participants had complete resolution of vaso-occlusive events during months 6–18.",
+          "summary": "28/32 (88%; 95% CI 71–97) had complete all-VOE resolution during months 6–18. Some responders later had recurrent VOEs; ongoing pain treatment was reported.",
           "sourceIds": [
-            "lyfgenia-label"
+            "lyfgenia-label",
+            "endpoint-review-gene-hgb206-primary"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "The protocol event set is not equivalent to every pain phenotype.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "VOE resolution does not mean absence of every pain phenotype; 17/35 received opioids through month 24.",
+            "Uncontrolled clinical response, globin expression and cell rescue remain distinct."
           ]
         }
       ],
-      "cellObservations": [],
+      "cellObservations": [
+        {
+          "id": "lovotibeglogene-scd-erythroid-output",
+          "hpoIds": [
+            "HP:0012531"
+          ],
+          "endpointResultIds": [
+            "lovotibeglogene-scd-HP_0012531-result-1"
+          ],
+          "diseaseIds": [
+            "OMIM:603903"
+          ],
+          "trialRefs": [],
+          "population": "HGB-206 Study 1-C; month-24 pharmacodynamic group n=34",
+          "species": "Human peripheral blood",
+          "cells": [
+            "Erythroid lineage / peripheral-blood hemoglobin"
+          ],
+          "route": "Gene-modified CD34+ cells intravenously after conditioning",
+          "assay": "Chromatographic HbA-T87Q quantification",
+          "timeFrame": "Month 24",
+          "evidenceType": "human_cell_pharmacodynamics",
+          "direction": "supports",
+          "claim": "Median HbA-T87Q was 45.7% of non-transfused hemoglobin. Some later vaso-occlusive events occurred despite maintained globin response; protein production alone does not guarantee freedom from pain events.",
+          "sourceIds": [
+            "lyfgenia-label"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Same open-label study programme; molecular and clinical evaluable groups differ. Clinical pain response does not imply neuronal gene transfer.",
+          "comparator": "Serial post-infusion measurements; no concurrent control"
+        }
+      ],
       "limitations": [
         "Diagnosis crosswalks are discovery links, not allele eligibility or patient-specific treatment recommendations.",
         "Whole-treatment cell arrays and conclusions are background; they are not automatically inherited by this endpoint."
@@ -1861,25 +2283,90 @@
             }
           ],
           "diseaseIds": [],
-          "population": "Dystrophic epidermolysis bullosa; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "GEM-3: 31 COL7A1-confirmed DEB patients aged 1–44 (30 recessive, one dominant), each contributing two matched cutaneous wounds.",
+          "comparator": "Randomized excipient-placebo wound within the same patient; double blind, weekly applications for 26 weeks.",
+          "timeFrame": "Primary closure assessed at weeks 22/24 or 24/26.",
+          "role": "primary",
+          "analysis": "100% closure had to be present at two consecutive visits two weeks apart; analysis compared paired wound proportions, not patient-level syndrome cure.",
           "outcome": "benefit",
-          "summary": "31 randomized within-patient wound pairs: confirmed complete closure at weeks 22/24 or 24/26 in 20/31 (65%) treated versus 8/31 (26%) placebo wounds; difference 39 percentage points (95% CI 14–63).",
+          "summary": "Confirmed closure: 20/31 (65%) treated versus 8/31 (26%) placebo wounds; difference 39 percentage points (95% CI 14–63), P=0.012.",
           "sourceIds": [
             "vyjuvek-label",
             "gem3"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Local wound healing is measured; systemic blister prevention is not established.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Closure of treated wounds does not establish systemic blister prevention or indefinite durability.",
+            "The randomized unit was the wound pair; the genotype subgroups were not independent efficacy trials."
           ]
         }
       ],
-      "cellObservations": [],
+      "cellObservations": [
+        {
+          "id": "beremagene-deb-earlier-skin-biopsy",
+          "hpoIds": [
+            "HP:0200041"
+          ],
+          "trialRefs": [
+            {
+              "nctId": "NCT03536143",
+              "name": "Earlier B-VEC phase 1/2"
+            }
+          ],
+          "population": "Earlier phase 1/2 B-VEC study: 9 people with RDEB; immunofluorescence biopsy subset of 7, with 3 suitable for anchoring-fibril immunoelectron microscopy",
+          "species": "Human treated tissue",
+          "cells": [
+            "Treated skin / dermal–epidermal basement membrane"
+          ],
+          "route": "Topical B-VEC",
+          "assay": "C7 NC1/NC2 immunofluorescence; immunoelectron microscopy for anchoring fibrils",
+          "timeFrame": "Earlier 12-week study; biopsies at reported post-treatment times",
+          "evidenceType": "human_tissue",
+          "direction": "supports",
+          "claim": "Biopsies detected restored C7 and anchoring fibrils. The tissue assay supports local structural repair but does not identify which exact human cell subtype produced the protein.",
+          "sourceIds": [
+            "endpoint-cell-bvec-phase12"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Earlier cohort than GEM-3; this is not a cellular assay in the phase-3 wound-closure cohort.",
+          "endpointResultIds": [
+            "beremagene-deb-HP_0200041-result-1"
+          ],
+          "diseaseIds": [],
+          "comparator": "Descriptive treated-skin biopsies; no exact cell-subtype comparator"
+        },
+        {
+          "id": "beremagene-deb-patient-cell-expression",
+          "hpoIds": [
+            "HP:0200041"
+          ],
+          "trialRefs": [],
+          "population": "Cultured RDEB patient keratinocytes and fibroblasts",
+          "species": "Human patient cells in vitro",
+          "cells": [
+            "Keratinocytes",
+            "Dermal fibroblasts"
+          ],
+          "route": "In-vitro B-VEC infection at experimental multiplicities",
+          "assay": "C7 immunofluorescence and Western blot",
+          "timeFrame": "48-hour culture assessment",
+          "evidenceType": "human_in_vitro",
+          "direction": "supports",
+          "claim": "B-VEC produced C7 in these cultures. Culture transduction is separate from the human biopsy result and cannot quantify either subtype’s contribution to wound closure.",
+          "sourceIds": [
+            "endpoint-cell-bvec-phase12"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Preclinical patient-cell experiments accompanying the earlier phase 1/2 publication; separate from GEM-3.",
+          "endpointResultIds": [
+            "beremagene-deb-HP_0200041-result-1"
+          ],
+          "diseaseIds": [],
+          "comparator": "Control-vector cultures in the reported assays"
+        }
+      ],
       "limitations": [
         "Diagnosis crosswalks are discovery links, not allele eligibility or patient-specific treatment recommendations.",
         "Whole-treatment cell arrays and conclusions are background; they are not automatically inherited by this endpoint."
@@ -1995,7 +2482,8 @@
           ],
           "clinicalMediation": "not_established",
           "atlasIdentity": "not_crosswalked",
-          "studyRelationship": "Earlier phase 1/2a pharmacodynamic evidence supports the intervention mechanism. It is not a cell assay in the same VIITAL outcome cohort or a test of cellular mediation."
+          "studyRelationship": "Earlier phase 1/2a pharmacodynamic evidence supports the intervention mechanism. It is not a cell assay in the same VIITAL outcome cohort or a test of cellular mediation.",
+          "comparator": "Post-treatment biopsy observations from the earlier cohort; no cell-restricted comparator"
         }
       ],
       "limitations": [
@@ -2020,20 +2508,21 @@
             }
           ],
           "diseaseIds": [],
-          "population": "Idiopathic macular telangiectasia type 2; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
-          "outcome": "benefit",
-          "summary": "Sham-controlled study (58 active/57 sham): OCT ellipsoid-zone-loss rate 0.075 versus 0.166 mm², difference −0.091 (95% CI −0.13 to −0.06); retinal sensitivity also favored treatment.",
+          "population": "NTMT-03-A: 120 adults randomized; 115 procedures/evaluable (58 active, 57 sham). Non-neovascular MacTel, EZ-loss area 0.16–2.00 mm², BCVA≥54 letters.",
+          "comparator": "Randomized sham surgery; one intravitreal implant in the study eye.",
+          "timeFrame": "Structural rate over 24 months; microperimetry at month 24.",
+          "role": "primary",
+          "analysis": "Longitudinal mixed-model OCT structural endpoint; microperimetry was secondary, with missing measurements excluded. Broad visual-function outcomes cannot inherit OCT benefit.",
+          "outcome": "surrogate",
+          "summary": "EZ-loss rate 0.075 versus 0.166 mm²/24 months; difference −0.091 (95% CI −0.13 to −0.06), P<0.0001. Secondary sensitivity loss favored treatment.",
           "sourceIds": [
-            "encelto-label"
+            "encelto-label",
+            "endpoint-review-gene-mactel-phase3"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "A structural photoreceptor endpoint is not equivalent to improved visual acuity.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Structural preservation is a proxy for visual impairment, not improved visual acuity.",
+            "The primary publication found no between-group differences in BCVA loss or NEI VFQ-25; functional findings were inconsistent across studies."
           ]
         },
         {
@@ -2049,20 +2538,21 @@
             }
           ],
           "diseaseIds": [],
-          "population": "Idiopathic macular telangiectasia type 2; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
-          "outcome": "mixed",
-          "summary": "Sham-controlled study (59 active/54 sham): ellipsoid-zone-loss rate 0.111 versus 0.160 mm², difference −0.049 (95% CI −0.089 to −0.008). Retinal sensitivity did not differ (P=0.83).",
+          "population": "NTMT-03-B: 119 adults randomized; 113 procedures/evaluable (59 active, 54 sham). Non-neovascular MacTel, EZ-loss area 0.16–2.00 mm², BCVA≥54 letters.",
+          "comparator": "Randomized sham surgery; one intravitreal implant in the study eye.",
+          "timeFrame": "Structural rate over 24 months; microperimetry at month 24.",
+          "role": "primary",
+          "analysis": "Longitudinal mixed-model OCT structural endpoint; microperimetry was secondary, with missing measurements excluded. Broad visual-function outcomes cannot inherit OCT benefit.",
+          "outcome": "surrogate",
+          "summary": "EZ-loss rate 0.111 versus 0.160 mm²/24 months; difference −0.049 (95% CI −0.089 to −0.008), P=0.0186. Secondary sensitivity loss did not differ (P=0.83).",
           "sourceIds": [
-            "encelto-label"
+            "encelto-label",
+            "endpoint-review-gene-mactel-phase3"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "A structural photoreceptor endpoint is not equivalent to improved visual acuity.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Structural preservation is a proxy for visual impairment, not improved visual acuity.",
+            "The primary publication found no between-group differences in BCVA loss or NEI VFQ-25; functional findings were inconsistent across studies."
           ]
         }
       ],
@@ -2089,20 +2579,20 @@
             }
           ],
           "diseaseIds": [],
-          "population": "Adult recurrent respiratory papillomatosis; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "PRGN-2012-201: 38 adults treated, ages 20–88; efficacy set 35 at commercial dose, each with ≥3 papilloma debulking surgeries in the previous year.",
+          "comparator": "Participant baseline surgical burden; no randomized concurrent arm. Surgical debulking preceded and could occur during treatment.",
+          "timeFrame": "Primary: 12 months after the four-dose treatment course; 24-month complete response assessed additionally.",
+          "role": "primary",
+          "analysis": "Complete response meant no clinically indicated surgery. One death before month 12 counted as failure; the denominator remained 35.",
           "outcome": "benefit",
-          "summary": "18/35 participants at the commercial dose needed no clinically indicated surgery in the 12 months after treatment; 15/35 maintained this at 24 months.",
+          "summary": "18/35 (51%; 95% CI 34–69) were surgery-free through 12 months; 15/35 (43%; 26–61) through 24 months.",
           "sourceIds": [
             "papzimeos-review"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Surgery requirement reflects papilloma burden and clinical decisions; it is not direct lesion-cell measurement.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Surgery decisions, regression to the mean and residual-disease management affect this uncontrolled comparison.",
+            "Reduced surgery is a proxy for papilloma burden, not direct lesion eradication or proof of T-cell mediation."
           ]
         }
       ],
@@ -2129,20 +2619,21 @@
             }
           ],
           "diseaseIds": [],
-          "population": "Familial lipoprotein lipase deficiency; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
-          "outcome": "mixed",
-          "summary": "Small uncontrolled studies assessed lipid handling and retrospectively adjudicated pancreatitis; incomplete efficacy evidence led to authorization under exceptional circumstances.",
+          "population": "Genetically confirmed adult familial LPL deficiency; case-note review included 17 treated patients, with a 12-patient subgroup having recurrent lifetime pancreatitis.",
+          "comparator": "Retrospective pre/post-treatment case histories with blinded adjudication; no randomized concurrent control.",
+          "timeFrame": "Pancreatitis follow-up up to three years; later follow-up median 5.8 years assessed hospital stay.",
+          "role": "exploratory",
+          "analysis": "EMA found sparse events and methodological limits insufficient for robust pancreatitis-rate efficacy conclusions. The later SmPC describes a decreasing trend, not a controlled effect.",
+          "outcome": "unknown",
+          "summary": "Pancreatitis incidence/severity trended downward in the recurrent-attack subgroup, but a reliable causal reduction was not established. Authorization under exceptional circumstances did not resolve this uncertainty.",
           "sourceIds": [
-            "glybera-epar"
+            "glybera-epar",
+            "endpoint-review-gene-glybera-smpc"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Clinical episode evidence is weaker than a randomized pancreatitis endpoint comparison.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Lipid handling, shorter hospital stay and pancreatitis frequency are distinct endpoints.",
+            "Low-fat diet remained required; attacks were not eliminated. Marketing authorization later expired."
           ]
         }
       ],
@@ -2281,20 +2772,21 @@
           "diseaseIds": [
             "OMIM:252900"
           ],
-          "population": "Mucopolysaccharidosis IIIA / Sanfilippo A; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "ABT-001: 28 enrolled, 22 commercial-dose patients, 17 early/preserved-function mITT patients (≤2 years, or older with DQ≥60); baseline anti-AAV9 titer <1:100.",
+          "comparator": "27 external untreated MPS IIIA natural-history patients; not randomized or contemporaneously assigned.",
+          "timeFrame": "Modeled chronological-age trajectory from 24 to 60 months; treated follow-up median 4.2 years, 14/17 reached age five.",
+          "role": "primary",
+          "analysis": "Nonlinear mixed-effects model adjusted for chronological age. Long-term follow-up is the same cohort; the selected mITT analysis does not cover all treated disease stages.",
           "outcome": "benefit",
-          "summary": "17 selected treated patients versus 27 natural-history controls: modeled Bayley-III cognitive raw-score change from age 24 to 60 months differed by 23.5 points (95% CI 17.2–29.9). Follow-up is the same cohort, not an independent replication.",
+          "summary": "Bayley-III cognitive raw-score change: +16.0 treated versus −7.6 natural history; difference +23.5 (95% CI 17.2–29.9), P<0.0001.",
           "sourceIds": [
-            "fayuvi-label"
+            "fayuvi-label",
+            "endpoint-review-gene-fayuvi-sbra"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Raw developmental skills are measured; a score trajectory is not complete reversal of the regression phenotype.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "External-control differences and selected early-function population limit causal/generalizable estimates.",
+            "Developmental skill trajectory is a proxy for regression, not complete reversal or proof of a causal CNS cell type."
           ]
         }
       ],
@@ -2323,8 +2815,8 @@
           "id": "pariglasgene-gsd1a-HP_0001943-result-1",
           "hpoId": "HP:0001943",
           "label": "Hypoglycemia",
-          "mapping": "proxy",
-          "endpoint": "Daily cornstarch requirement; CGM readings below 70 mg/dL",
+          "mapping": "direct",
+          "endpoint": "Percentage of CGM glucose values below 70 mg/dL",
           "trialRefs": [
             {
               "nctId": "NCT05139316",
@@ -2334,20 +2826,20 @@
           "diseaseIds": [
             "OMIM:232200"
           ],
-          "population": "Glycogen storage disease Ia; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
-          "outcome": "mixed",
-          "summary": "49 randomized; 46 dosed/evaluated (21 treated, 25 placebo). At week 48, daily cornstarch change was −41.1% versus −10.2%, difference −30.9 percentage points (95% CI −40.8 to −20.9). Hypoglycemic glucose exposure increased, difference +3.1 points (95% CI 0.9–5.2).",
+          "population": "GlucoGene: 49 randomized, 46 dosed/evaluated (21 active, 25 placebo), ages 8–37, GSDIa and no detectable baseline anti-AAV8 antibodies.",
+          "comparator": "Double-blind placebo during weeks 1–48, after a 16-week nutritional stabilization period; both groups underwent blinded glucose-guided nutritional adjustment.",
+          "timeFrame": "Baseline to week 48; CGM hypoglycemic percentage averaged over four weeks.",
+          "role": "secondary",
+          "analysis": "MMRM secondary glucose endpoint; label does not report multiplicity-adjusted inference. Primary cornstarch reduction was a distinct accelerated-approval surrogate.",
+          "outcome": "harm",
+          "summary": "Hypoglycemic CGM exposure increased: +3.1 percentage points active versus +0.1 placebo; modeled difference +3.1 points (95% CI 0.9–5.2). Cornstarch intake fell more with treatment.",
           "sourceIds": [
             "genglycos-label"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Cornstarch requirement is a management endpoint, not hypoglycemia rescue. The directly measured secondary glucose endpoint worsened.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Worsened glucose exposure must not be presented as hypoglycemia rescue because cornstarch requirements improved.",
+            "The treatment/nutrition strategy comparison does not isolate intrinsic drug toxicity from altered nutritional intake; confirmatory clinical benefit remains required."
           ]
         }
       ],
@@ -2374,20 +2866,20 @@
             }
           ],
           "diseaseIds": [],
-          "population": "5q spinal muscular atrophy; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "STEER: 136 treatment-naive SMA patients randomized; 126 dosed/analyzed (75 active, 51 sham), ages 2–17, sitters who never walked independently; baseline anti-AAV9 titer ≤1:50.",
+          "comparator": "Randomized double-blind sham intrathecal procedure, stratified by age and baseline HFMSE.",
+          "timeFrame": "Change from baseline to the average of weeks 48 and 52.",
+          "role": "primary",
+          "analysis": "Dosed full-analysis set; MMRM adjusted for treatment, visit, interaction, randomization strata and baseline HFMSE.",
           "outcome": "benefit",
-          "summary": "Sham-controlled trial: 136 randomized, 126 treated/evaluated (75 active, 51 sham). HFMSE change averaged over weeks 48/52: 2.39 versus 0.51; difference 1.88 points (95% CI 0.51–3.25; P=0.0074).",
+          "summary": "HFMSE change 2.39 active versus 0.51 sham; difference 1.88 points (95% CI 0.51–3.25), P=0.0074.",
           "sourceIds": [
             "itvisma-label"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Functional scale change measures motor ability, not global cognition or restoration of every developmental milestone.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Motor-scale response is a proxy for delayed gross-motor development, not recovery of every milestone.",
+            "The pivotal population did not include adults, prior SMA therapy or independent walkers; the broader label is separate."
           ]
         }
       ],
@@ -2427,24 +2919,57 @@
           "diseaseIds": [
             "OMIM:116920"
           ],
-          "population": "Severe leukocyte adhesion deficiency I; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
-          "outcome": "mixed",
-          "summary": "Nine treated children. At month 24, median neutrophil CD18 expression was 50% in seven evaluable patients; CD11a was 39% in all nine. These engagement surrogates supported accelerated approval; confirmed clinical benefit remains required.",
+          "population": "RP-L201-0318: nine children, ages 9.8–117 months, severe biallelic ITGB2 LAD-I without an HLA-matched sibling donor; CD18 evaluable subset seven, CD11a all nine.",
+          "comparator": "Within-patient baseline surface expression; no randomized control.",
+          "timeFrame": "Month 12 response sustained through month 24; expression reported through at least month 42.",
+          "role": "regulatory_surrogate",
+          "analysis": "FDA used neutrophil CD18/CD11a expression for accelerated approval. Its review found protocol survival/infection analyses uninterpretable because comparators, definitions and records were inadequate.",
+          "outcome": "surrogate",
+          "summary": "Median month-24 CD18 expression 50% in seven evaluable patients and CD11a 39% in all nine; these are engagement surrogates, not infection-frequency benefit.",
           "sourceIds": [
-            "kresladi-label"
+            "kresladi-label",
+            "endpoint-review-gene-kresladi-sbra"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Expression relates to leukocyte trafficking but is not an infection-frequency endpoint.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "FDA identified changed infection definitions, missing/inconsistent historical records and conflicting datasets; published infection decreases cannot resolve these limitations.",
+            "Confirmed clinical benefit remains required; gene/cell expression does not itself establish infection prevention."
           ]
         }
       ],
-      "cellObservations": [],
+      "cellObservations": [
+        {
+          "id": "marnetegragene-lad1-neutrophil-expression",
+          "hpoIds": [
+            "HP:0002719"
+          ],
+          "endpointResultIds": [
+            "marnetegragene-lad1-HP_0002719-result-1"
+          ],
+          "diseaseIds": [
+            "OMIM:116920"
+          ],
+          "trialRefs": [],
+          "population": "RP-L201-0318: 9 children with severe biallelic ITGB2-associated LAD-I; CD18 evaluable in 7",
+          "species": "Human peripheral blood",
+          "cells": [
+            "Peripheral-blood neutrophils"
+          ],
+          "route": "Autologous gene-modified CD34+ cells intravenously after conditioning",
+          "assay": "Neutrophil CD18/CD11a surface expression",
+          "timeFrame": "Month 12 and month 24",
+          "evidenceType": "human_cell_pharmacodynamics",
+          "direction": "supports",
+          "claim": "CD18 median expression was 54% at month 12 in seven evaluable patients; CD11a increased in all nine. These cell-specific markers support engagement, while infection benefit requires separate confirmation.",
+          "sourceIds": [
+            "kresladi-label"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Same single-arm regulatory cohort; no randomized infection-endpoint mediation test.",
+          "comparator": "Own pre-infusion baseline; no concurrent control"
+        }
+      ],
       "limitations": [
         "Diagnosis crosswalks are discovery links, not allele eligibility or patient-specific treatment recommendations.",
         "Whole-treatment cell arrays and conclusions are background; they are not automatically inherited by this endpoint."
@@ -2480,20 +3005,20 @@
           "diseaseIds": [
             "OMIM:601071"
           ],
-          "population": "OTOF-associated severe-to-profound sensorineural hearing loss; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "CHORD: 24 children aged 10 months–16 years with molecularly confirmed OTOF-associated profound hearing loss, preserved outer-hair-cell activity and no cochlear implant in the treated ear; 20 in week-24 efficacy analysis.",
+          "comparator": "Single-arm response threshold; no randomized concurrent comparator. Ten treated unilaterally and 14 bilaterally.",
+          "timeFrame": "Week 24 after intracochlear treatment; later week-48 observations are separate.",
+          "role": "primary",
+          "analysis": "PTA ≤70 dB HL was primary; click ABR ≤90 dB nHL key secondary. Bilateral analyses selected the better treated ear; one missing week-24 result counted as nonresponse.",
           "outcome": "benefit",
-          "summary": "24 treated; week-24 efficacy set 20. Sixteen (80%) reached average PTA ≤70 dB HL; 14 (70%) had click ABR ≤90 dB nHL. Only 3/20 (15%) reached normal hearing ≤25 dB HL. For bilateral treatment, analysis used the better treated ear.",
+          "summary": "16/20 (80%; 95% CI 56–94) met PTA ≤70 dB HL; 14/20 (70%; 46–88) met ABR threshold. Only 3/20 reached normal-hearing PTA ≤25 dB HL.",
           "sourceIds": [
             "otarmeni-label"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Objective auditory thresholds measure hearing; response ≤70 dB HL does not mean normal hearing.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "The treated cohort was pediatric although the indication includes adults; better-ear selection and incomplete follow-up limit estimates.",
+            "Accelerated approval requires verification of clinical benefit/durability. Human hearing response is not direct human hair-cell target engagement."
           ]
         }
       ],
@@ -2614,20 +3139,21 @@
             }
           ],
           "diseaseIds": [],
-          "population": "Congenital athymia, etiologically heterogeneous; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "Ten prospective open-label studies: 105 treated, 95 primary efficacy patients with congenital athymia, ages 1–36 months; etiologies and associated syndromes varied.",
+          "comparator": "Infection comparisons were between earlier and later post-treatment periods in the treated cohort; the separate historical cohort compared survival.",
+          "timeFrame": "Months 0–6 versus >6–12; year one versus >12–24 months.",
+          "role": "exploratory",
+          "analysis": "FDA clinical review: infection analysis was not prespecified in the SAP. Wilcoxon signed-rank comparisons used reported infection AEs; later periods excluded patients who had died. Missing pretreatment histories prevented before/after analysis.",
           "outcome": "benefit",
-          "summary": "95-patient efficacy population: estimated two-year survival 76%, compared with 6% in 49 historical supportive-care patients. Peripheral naive CD4/CD8 cells and proliferative function increased after implantation.",
+          "summary": "FDA review: infection AEs affected 83/95 patients at 0–6 months versus 45/80 surviving at 6–12 months; year one 89/95 versus year two 34/73. Counts differed from the label’s 63-to-39 summary.",
           "sourceIds": [
-            "rethymic-label"
+            "rethymic-label",
+            "endpoint-review-gene-rethymic-clinical-review"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Clinical infections were recorded; survival is a separate endpoint affected by comorbidities.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "The label reports a 2.9-event/patient decrease and 63-to-39 counts; their exact analytical subset is unspecified and cannot be merged with the review’s all-infection-AE table.",
+            "Later-period denominators change with survival; uncontrolled time trends, heterogeneous etiologies and infection management limit causal inference. Survival comparisons are separate; results do not apply to SCID."
           ]
         }
       ],
@@ -2666,21 +3192,24 @@
           "diseaseIds": [
             "OMIM:105210"
           ],
-          "population": "Adult hereditary TTR amyloidosis with polyneuropathy; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "173 adults randomized (113 inotersen/60 placebo); 172 dosed (112/60). Eligible age 18–82, biopsy-confirmed hereditary TTR amyloidosis, pathogenic TTR variant, stage 1 or 2 polyneuropathy and NIS 10–130.",
+          "comparator": "Double-blind subcutaneous inotersen 300 mg sodium salt (284 mg free acid) weekly versus placebo; three loading doses in week 1.",
+          "timeFrame": "Baseline to week 66, after 65 weeks of treatment.",
+          "role": "co_primary",
+          "analysis": "mNIS+7 and Norfolk QoL-DN were co-primary outcomes, tested in sequence with repeated-measures mixed models. Efficacy required at least one dose and postbaseline assessment; randomized and dosed denominators differ.",
           "outcome": "benefit",
-          "summary": "173 randomized (113 active/60 placebo); at week 66 mNIS+7 difference −19.7 (95% CI −26.4 to −13.0) and Norfolk QoL-DN −11.7 (−18.3 to −5.1).",
+          "summary": "mNIS+7 LS mean change was +5.8 with inotersen versus +25.5 with placebo: difference −19.7 points (95% CI −26.4 to −13.0), p<0.001. Separate QoL co-primary difference: −11.7 (−18.3 to −5.1), p<0.001.",
           "sourceIds": [
             "inotersen-label",
-            "neuro-ttr"
+            "neuro-ttr",
+            "endpoint-review-rna-neuro-ttr-primary",
+            "endpoint-review-rna-nct01737398-registry"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Composite neurological impairment combines several functions and does not identify one nerve-cell subtype.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "The mean neuropathy benefit reflects less worsening, rather than improvement in every patient.",
+            "The impairment composite combines functions and does not establish rescue of a particular nerve-cell subtype.",
+            "Severe thrombocytopenia and glomerulonephritis occurred; efficacy alone does not establish a favorable individual benefit–risk balance."
           ]
         }
       ],
@@ -2880,7 +3409,7 @@
           "hpoId": "HP:0003159",
           "label": "Hyperoxaluria",
           "mapping": "direct",
-          "endpoint": "24-hour urinary oxalate excretion",
+          "endpoint": "Percent change in 24-hour urinary oxalate excretion, corrected for body surface area",
           "trialRefs": [
             {
               "nctId": "NCT03681184",
@@ -2890,21 +3419,21 @@
           "diseaseIds": [
             "OMIM:259900"
           ],
-          "population": "Primary hyperoxaluria type 1; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "39 patients randomized (26 lumasiran/13 placebo), age ≥6 years with primary hyperoxaluria type 1 and eGFR ≥30 mL/min/1.73 m².",
+          "comparator": "Double-blind subcutaneous lumasiran 3 mg/kg monthly for three loading doses then every three months versus placebo.",
+          "timeFrame": "Percent change from baseline averaged over months 3–6 during the six-month randomized period.",
+          "role": "primary",
+          "analysis": "Prespecified randomized primary biochemical endpoint; label estimates are rounded LS means. Subsequent all-active extension is a separate analysis.",
           "outcome": "surrogate",
-          "summary": "39 randomized (26 active/13 placebo): month-3–6 urinary oxalate change −65% versus −12%, difference 53 percentage points (95% CI 45–62), p<0.0001.",
+          "summary": "Urinary oxalate change was −65% versus −12%, a 53-percentage-point reduction advantage (95% CI 45–62), p<0.0001.",
           "sourceIds": [
             "lumasiran-label",
             "nct03681184-registry"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Biochemical phenotype measured directly; kidney-stone or renal-survival benefit is a separate question.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "This directly measures hyperoxaluria, but remains a biochemical surrogate for clinical kidney injury, stone events and renal survival.",
+            "The result applies to PH1 with relatively preserved renal function, not all primary-hyperoxaluria types or advanced renal failure."
           ]
         }
       ],
@@ -2923,7 +3452,7 @@
           "hpoId": "HP:0012531",
           "label": "Pain",
           "mapping": "proxy",
-          "endpoint": "Porphyria attacks requiring hospitalization, urgent care or IV hemin",
+          "endpoint": "Annualized composite porphyria attack rate requiring hospitalization, urgent care or intravenous hemin at home",
           "trialRefs": [
             {
               "nctId": "NCT03338816",
@@ -2931,21 +3460,22 @@
             }
           ],
           "diseaseIds": [],
-          "population": "Acute hepatic porphyria, predominantly acute intermittent porphyria in ENVISION; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "94 patients randomized (48 givosiran/46 placebo); primary AIP subgroup n=89 (46/43). Participants had ≥2 qualifying attacks in the preceding six months; observed ages 19–65. Five had other/unclassified acute hepatic porphyrias.",
+          "comparator": "Double-blind givosiran 2.5 mg/kg subcutaneously monthly versus placebo.",
+          "timeFrame": "Six-month randomized period, expressed as an annualized attack rate for the primary AIP analysis.",
+          "role": "primary",
+          "analysis": "Primary AIP attack comparison used negative-binomial regression, accounting for prior hemin prophylaxis, historical attacks and follow-up time. The FDA all-AHP six-month attack counts are a different population and time scale.",
           "outcome": "benefit",
-          "summary": "94 randomized (48 active/46 placebo); 89 had AIP, two VP, one HCP, two no identified mutation. All-AHP mean attacks over 6 months: 1.9 versus 6.5; rate ratio 0.30 (95% CI 0.20–0.40). Registered primary population was AIP.",
+          "summary": "Primary AIP annualized mean attack rates: 3.22 versus 12.52; rate ratio 0.26 (95% CI 0.16–0.41), p<0.001. Separately, label all-AHP six-month rates were 1.9 versus 6.5, ratio 0.30 (0.20–0.40).",
           "sourceIds": [
             "givosiran-label",
-            "nct03338816-registry"
+            "nct03338816-registry",
+            "endpoint-review-rna-envision-primary-abstract"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Attacks include neurovisceral pain but are not a measurement of all pain phenotypes.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "An acute neurovisceral attack is a proxy for the broad HPO pain term; daily pain was measured separately as a secondary outcome.",
+            "Do not combine AIP annualized rates with all-AHP six-month counts or infer identical effects for each porphyria genotype."
           ]
         }
       ],
@@ -2974,7 +3504,7 @@
           "hpoId": "HP:0003159",
           "label": "Hyperoxaluria",
           "mapping": "direct",
-          "endpoint": "24-hour urinary oxalate AUC and excretion",
+          "endpoint": "Area under the curve of percent change in 24-hour urinary oxalate excretion",
           "trialRefs": [
             {
               "nctId": "NCT03847909",
@@ -2984,21 +3514,23 @@
           "diseaseIds": [
             "OMIM:259900"
           ],
-          "population": "Primary hyperoxaluria type 1; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "35 patients randomized (23 nedosiran/12 placebo): PH1 n=29 and PH2 n=6. Eligible age ≥6 (observed 9–46) and eGFR ≥30 mL/min/1.73 m².",
+          "comparator": "Double-blind monthly subcutaneous nedosiran versus placebo; urinary oxalate corrected for body surface area in patients <18 years.",
+          "timeFrame": "Primary percent-change AUC from days 90–180 of the six-month randomized period.",
+          "role": "primary",
+          "analysis": "FDA label: AUC of percent change, in percentage-point×days, LS means −3486 versus +1490; placebo-minus-treatment difference 4976. Original publication instead reports a reduction-oriented AUC (+3507.4 versus −1664.4), difference 5171.7; these are distinct reported analyses and must not be combined. PH1 56-point average reduction advantage is a subgroup, not the combined-population primary AUC.",
           "outcome": "surrogate",
-          "summary": "35 randomized PH1/PH2 participants (23 active/12 placebo). Primary urinary-oxalate AUC difference 4,976 (95% CI 2,803–7,149), p<0.0001; PH1 mean percentage-point reduction advantage 56 (33–80). PH2 subgroup was too small for efficacy assessment.",
+          "summary": "FDA primary AUC reduction advantage 4976 percentage-point×days (95% CI 2803–7149), p<0.0001. Published primary analysis: 5171.7 (2929.3–7414.2), p<0.001. PH1 average percent-change advantage: 56 points (33–80).",
           "sourceIds": [
             "nedosiran-label",
-            "nct03847909-registry"
+            "nct03847909-registry",
+            "endpoint-review-rna-phyox2-primary"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Direct biochemical phenotype; kidney injury and survival were not the pivotal outcomes.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "The pivotal combined PH1/PH2 result is biochemical, not kidney survival or clinical renal rescue.",
+            "PH2 was small and showed no consistent response in the primary paper; PH1 benefit cannot be assigned to PH2.",
+            "The reason for the numerical difference between regulatory and published AUC analyses is not established in the accessible records."
           ]
         }
       ],
@@ -3114,7 +3646,7 @@
           "hpoId": "HP:0001324",
           "label": "Muscle weakness",
           "mapping": "proxy",
-          "endpoint": "4-step ascend velocity; dystrophin expression is a separate surrogate",
+          "endpoint": "Skeletal-muscle dystrophin protein (% of normal) by Western blot",
           "trialRefs": [
             {
               "nctId": "NCT02310906",
@@ -3124,21 +3656,21 @@
           "diseaseIds": [
             "OMIM:310200"
           ],
-          "population": "DMD with exon-53-amenable / exon-45-amenable variants respectively; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "25 boys with DMD mutations amenable to exon 53 skipping in Study 1 Part 2; median age 8 years and stable corticosteroids ≥6 months. Twelve rolled over from dose escalation and 13 were treatment-naïve.",
+          "comparator": "Open-label golodirsen 30 mg/kg intravenously weekly; paired pretreatment muscle biopsies, without a concurrent week-48 placebo group.",
+          "timeFrame": "Baseline to week 48.",
+          "role": "primary",
+          "analysis": "Registered Part 2a primary biomarker endpoint, assessed in 25 paired biopsies. Earlier Part 1 placebo-controlled dose escalation and later motor-function endpoints are separate. ESSENCE topline is background, not the source of this biopsy comparison.",
           "outcome": "surrogate",
-          "summary": "25 paired muscle biopsies: mean dystrophin 0.10% to 1.02% of normal at week 48; increased exon-53 skipping and sarcolemmal localization.",
+          "summary": "Mean dystrophin increased from 0.10% to 1.02% of normal (mean increase 0.92 percentage points of normal), p<0.001.",
           "sourceIds": [
-            "essence-topline",
-            "golodirsen-label"
+            "golodirsen-label",
+            "endpoint-review-rna-nct02310906-registry"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Stair ascent tests function related to weakness; biopsy dystrophin does not directly measure weakness.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Dystrophin protein production is a molecular surrogate and does not directly measure muscle weakness or demonstrate clinical functional benefit.",
+            "The within-person biopsy comparison is uncontrolled at week 48; it cannot replace the confirmatory ESSENCE clinical endpoint."
           ]
         },
         {
@@ -3146,7 +3678,7 @@
           "hpoId": "HP:0001324",
           "label": "Muscle weakness",
           "mapping": "proxy",
-          "endpoint": "4-step ascend velocity; dystrophin expression is a separate surrogate",
+          "endpoint": "Skeletal-muscle dystrophin protein (% of normal) by Western blot",
           "trialRefs": [
             {
               "nctId": "NCT02500381",
@@ -3156,21 +3688,21 @@
           "diseaseIds": [
             "OMIM:310200"
           ],
-          "population": "DMD with exon-53-amenable / exon-45-amenable variants respectively; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "ESSENCE interim biopsy cohort: 43 evaluable ambulatory boys with exon-45-skipping-amenable DMD (27 casimersen/16 placebo); planned label cohort age 7–13, stable corticosteroids ≥24 weeks.",
+          "comparator": "Double-blind casimersen 30 mg/kg intravenously weekly versus placebo, using paired baseline and post-treatment biopsies.",
+          "timeFrame": "Week-48 interim biopsy analysis.",
+          "role": "secondary",
+          "analysis": "Prespecified interim biochemical analysis of a registered secondary endpoint. It is distinct from ESSENCE’s pooled week-96 primary functional endpoint.",
           "outcome": "surrogate",
-          "summary": "Week-48 mean dystrophin 0.93% to 1.74% of normal; biomarker analysis preceded functional confirmation.",
+          "summary": "Dystrophin increased from 0.93% to 1.74% of normal with casimersen (change +0.81 points), versus 0.54% to 0.76% with placebo (+0.22); between-group change difference +0.59 percentage points of normal, p=0.004.",
           "sourceIds": [
-            "essence-topline",
-            "casimersen-label"
+            "casimersen-label",
+            "nct02500381-registry"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Stair ascent tests function related to weakness; biopsy dystrophin does not directly measure weakness.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "The biopsy result is a protein surrogate for muscle weakness, rather than a measured improvement in strength or function.",
+            "Interim exon-45 biomarker benefit must not be presented as success of the pooled confirmatory functional primary endpoint."
           ]
         },
         {
@@ -3178,7 +3710,7 @@
           "hpoId": "HP:0001324",
           "label": "Muscle weakness",
           "mapping": "proxy",
-          "endpoint": "4-step ascend velocity; dystrophin expression is a separate surrogate",
+          "endpoint": "Change in 4-step ascend velocity (steps/second)",
           "trialRefs": [
             {
               "nctId": "NCT02500381",
@@ -3188,25 +3720,96 @@
           "diseaseIds": [
             "OMIM:310200"
           ],
-          "population": "DMD with exon-53-amenable / exon-45-amenable variants respectively; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "225 ambulatory boys randomized, age 6–13 with exon-45- or exon-53-skipping-amenable DMD, corticosteroids ≥24 weeks, 6-minute walk 300–450 m and FVC ≥50% predicted.",
+          "comparator": "Double-blind pooled casimersen or golodirsen 30 mg/kg intravenously weekly versus placebo.",
+          "timeFrame": "Baseline to week 96.",
+          "role": "primary",
+          "analysis": "Sponsor-reported prespecified pooled randomized clinical comparison. A post hoc pandemic-impact exclusion removed 57 participants (n=168 remaining); it is not the primary population. Original registry specifies the week-96 primary endpoint; no complete posted primary results or peer-reviewed full analysis was found.",
           "outcome": "null",
-          "summary": "225 randomized age 6–13; pooled treatment difference in 4-step ascend velocity at week 96 was 0.05 steps/s, p=0.309. Sponsor pandemic-exclusion analysis also was not significant (p=0.09).",
+          "summary": "Primary treatment–placebo difference +0.05 steps/second, p=0.309: nonsignificant. The sponsor’s post hoc pandemic-exclusion comparison was also nonsignificant (+0.11 steps/second, p=0.09).",
           "sourceIds": [
             "essence-topline",
             "nct02500381-registry"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Stair ascent tests function related to weakness; biopsy dystrophin does not directly measure weakness.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "A nonsignificant primary result does not prove an exactly zero effect.",
+            "The pooled result does not establish separate drug-specific functional benefit, and positive dystrophin biopsies do not override it.",
+            "Only sponsor topline and protocol were available for this analysis; confidence interval and complete analysis details remain unavailable."
           ]
         }
       ],
-      "cellObservations": [],
+      "cellObservations": [
+        {
+          "id": "golodirsen-casimersen-dmd-golodirsen-biopsy",
+          "hpoIds": [
+            "HP:0001324"
+          ],
+          "trialRefs": [
+            {
+              "nctId": "NCT02310906",
+              "name": "Golodirsen Study 1"
+            }
+          ],
+          "population": "Golodirsen Study 1 Part 2: 25 boys with exon-53-skipping-amenable DMD",
+          "species": "Human treated tissue",
+          "cells": [
+            "Skeletal-muscle fibers / biopsy tissue"
+          ],
+          "route": "Intravenous golodirsen, 30 mg/kg weekly",
+          "assay": "Exon-skipping RT-PCR, Western blot and sarcolemmal immunofluorescence",
+          "timeFrame": "Baseline and week 48",
+          "evidenceType": "human_tissue",
+          "direction": "supports",
+          "claim": "Dystrophin increased from 0.10% to 1.02% of normal, with sarcolemmal localization. This supports muscle RNA/protein engagement without establishing clinical strength benefit.",
+          "sourceIds": [
+            "golodirsen-label"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Earlier open-label golodirsen biopsy cohort, separate from the pooled ESSENCE functional comparison. It is not an observation in the casimersen-specific cohort.",
+          "endpointResultIds": [
+            "golodirsen-casimersen-dmd-HP_0001324-result-1",
+            "golodirsen-casimersen-dmd-HP_0001324-result-3"
+          ],
+          "diseaseIds": [
+            "OMIM:310200"
+          ],
+          "comparator": "Own pretreatment biopsy baseline in the open-label molecular cohort"
+        },
+        {
+          "id": "golodirsen-casimersen-dmd-casimersen-biopsy",
+          "hpoIds": [
+            "HP:0001324"
+          ],
+          "trialRefs": [],
+          "population": "Casimersen Study 1 interim biopsy subset: 27 treated and 16 placebo participants",
+          "species": "Human treated tissue",
+          "cells": [
+            "Skeletal-muscle fibers / biopsy tissue"
+          ],
+          "route": "Intravenous casimersen, 30 mg/kg weekly",
+          "assay": "RT-ddPCR exon skipping, Western blot and sarcolemmal immunofluorescence",
+          "timeFrame": "Baseline and week 48",
+          "evidenceType": "human_tissue",
+          "direction": "supports",
+          "claim": "Dystrophin change exceeded placebo by 0.59 percentage points of normal; staining supported sarcolemmal localization. Molecular engagement cannot replace the later clinical primary result.",
+          "sourceIds": [
+            "casimersen-label"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Interim casimersen biopsy subset within its randomized programme; endpoint and time differ from pooled ESSENCE 96-week functional outcomes. It is not an observation in the golodirsen-specific cohort.",
+          "endpointResultIds": [
+            "golodirsen-casimersen-dmd-HP_0001324-result-2",
+            "golodirsen-casimersen-dmd-HP_0001324-result-3"
+          ],
+          "diseaseIds": [
+            "OMIM:310200"
+          ],
+          "comparator": "Randomized placebo interim biopsy subset"
+        }
+      ],
       "limitations": [
         "Diagnosis crosswalks are discovery links, not allele eligibility or patient-specific treatment recommendations.",
         "Whole-treatment cell arrays and conclusions are background; they are not automatically inherited by this endpoint."
@@ -3232,7 +3835,7 @@
           "hpoId": "HP:0001324",
           "label": "Muscle weakness",
           "mapping": "proxy",
-          "endpoint": "Time-to-stand velocity; dystrophin is a separate surrogate",
+          "endpoint": "Skeletal-muscle dystrophin protein (% of normal) by Western blot",
           "trialRefs": [
             {
               "nctId": "NCT02740972",
@@ -3242,21 +3845,21 @@
           "diseaseIds": [
             "OMIM:310200"
           ],
-          "population": "DMD with exon-53-skipping-amenable variants; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "Study 1 enrolled 16 ambulatory boys age 4 to <10 with exon-53-skipping-amenable DMD and stable glucocorticoids ≥3 months; this result is the eight patients at the approved 80-mg/kg dose.",
+          "comparator": "Baseline paired muscle biopsy versus 80 mg/kg intravenous viltolarsen weekly. Initial four-week placebo-controlled dose finding was followed by 20 open-label weeks; no concurrent placebo biopsy comparison at week 25.",
+          "timeFrame": "Baseline to week 25 after 24 treatment weeks.",
+          "role": "primary",
+          "analysis": "Registered primary biomarker, Western blot normalized to myosin heavy chain. The other eight patients received 40 mg/kg. The existing RACER53 registry citation is background for the separate confirmatory trial.",
           "outcome": "surrogate",
-          "summary": "Eight patients at the approved 80 mg/kg dose: mean dystrophin 0.6% to 5.9% of normal at week 25.",
+          "summary": "Mean dystrophin increased from 0.6% to 5.9% of normal, a 5.3-percentage-point increase, p=0.01 (n=8 at 80 mg/kg).",
           "sourceIds": [
-            "nct04060199-registry",
-            "viltolarsen-label"
+            "viltolarsen-label",
+            "endpoint-review-rna-nct02740972-registry"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Motor task relates to weakness; protein increase is not the clinical endpoint.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "This small uncontrolled biopsy comparison supports protein production, rather than clinical weakness improvement.",
+            "Western-blot and secondary mass-spectrometry dystrophin estimates are different assays and must not be mixed; the RACER53 functional primary is a separate negative result."
           ]
         },
         {
@@ -3264,7 +3867,7 @@
           "hpoId": "HP:0001324",
           "label": "Muscle weakness",
           "mapping": "proxy",
-          "endpoint": "Time-to-stand velocity; dystrophin is a separate surrogate",
+          "endpoint": "Change in time-to-stand velocity (rises/second)",
           "trialRefs": [
             {
               "nctId": "NCT04060199",
@@ -3274,25 +3877,64 @@
           "diseaseIds": [
             "OMIM:310200"
           ],
-          "population": "DMD with exon-53-skipping-amenable variants; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "77 ambulatory boys randomized, age 4 to <8 with exon-53-skipping-amenable DMD, time-to-stand <10 seconds and stable glucocorticoids ≥3 months. Posted modified-ITT analysis n=75 (37 active/38 placebo); week-49 observed n=33/35.",
+          "comparator": "Double-blind viltolarsen 80 mg/kg intravenously weekly versus placebo.",
+          "timeFrame": "48 treatment weeks; posted primary velocity change assessed through week 49 (also visits 13, 25 and 37).",
+          "role": "primary",
+          "analysis": "Repeated-measures mixed-model analysis in randomized, dosed patients with baseline and ≥1 postbaseline assessment. Posted week-49 counts are observed participants, not all randomized patients.",
           "outcome": "null",
-          "summary": "77 randomized; time-to-stand velocity primary not significant. Posted week-49 changes: 0.009 versus 0.013 rises/s (33/35 assessed); safety/early comparisons do not establish primary efficacy.",
+          "summary": "Week-49 LS velocity changes were +0.009 versus +0.013 rises/second. The sponsor reports that the primary between-group endpoint was not statistically significant; no exact primary p-value was supplied.",
           "sourceIds": [
             "nct04060199-registry",
             "racer53-topline"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Motor task relates to weakness; protein increase is not the clinical endpoint.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "The primary motor endpoint was nonsignificant; this does not imply a known zero effect.",
+            "Early comparisons, safety findings or dystrophin protein production cannot substitute for confirmatory primary functional success.",
+            "Full peer-reviewed analysis and exact primary p-value were not available from the reviewed primary sources."
           ]
         }
       ],
-      "cellObservations": [],
+      "cellObservations": [
+        {
+          "id": "viltolarsen-dmd-early-muscle-biopsy",
+          "hpoIds": [
+            "HP:0001324"
+          ],
+          "trialRefs": [
+            {
+              "nctId": "NCT02740972",
+              "name": "Viltolarsen Study 1"
+            }
+          ],
+          "population": "Study 1: 8 boys in the 80 mg/kg/week cohort; exon-53-skipping-amenable DMD",
+          "species": "Human treated tissue",
+          "cells": [
+            "Skeletal-muscle fibers / biceps biopsy tissue"
+          ],
+          "route": "Intravenous viltolarsen, 80 mg/kg weekly",
+          "assay": "Western blot, RT-PCR and sarcolemmal immunofluorescence",
+          "timeFrame": "Baseline and week 25 after 20–24 weeks dosing",
+          "evidenceType": "human_tissue",
+          "direction": "supports",
+          "claim": "Mean dystrophin increased from 0.6% to 5.9% of normal and localized to muscle-fiber sarcolemma. This molecular response does not establish the later RACER53 clinical endpoint.",
+          "sourceIds": [
+            "viltolarsen-label"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Early molecular study with only an initial short placebo period; separate from the RACER53 confirmatory clinical cohort.",
+          "endpointResultIds": [
+            "viltolarsen-dmd-HP_0001324-result-1",
+            "viltolarsen-dmd-HP_0001324-result-2"
+          ],
+          "diseaseIds": [
+            "OMIM:310200"
+          ],
+          "comparator": "Own pretreatment biopsy baseline; no concurrent placebo at week 25"
+        }
+      ],
       "limitations": [
         "Diagnosis crosswalks are discovery links, not allele eligibility or patient-specific treatment recommendations.",
         "Whole-treatment cell arrays and conclusions are background; they are not automatically inherited by this endpoint."
@@ -3339,20 +3981,23 @@
             "OMIM:306700",
             "OMIM:306900"
           ],
-          "population": "Hemophilia A or B, with or without factor inhibitors; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "ATLAS-OLE enrolled 227 males age ≥12 with severe hemophilia A/B, with or without inhibitors; 213 transitioned to antithrombin-guided dosing. FDA efficacy tables retain parent comparison denominators 38/19 with inhibitors and 80/40 without inhibitors, rather than n=213 for each comparison.",
+          "comparator": "Open-label antithrombin-guided fitusiran, starting 50 mg subcutaneously every two months and adjusted to AT activity 15–35%, compared with earlier parent-trial on-demand bypassing-agent (inhibitor) or factor-concentrate (non-inhibitor) controls.",
+          "timeFrame": "Seven-month efficacy period after six months of antithrombin-guided dose adjustment in the extension.",
+          "role": "secondary",
+          "analysis": "ABR is secondary in the extension, whose primary objective is safety. Negative-binomial integrated comparisons use noncontemporaneous parent controls; the current dosing regimen was not newly randomized against them.",
           "outcome": "benefit",
-          "summary": "Compared with prior randomized on-demand controls: inhibitor patients ABR 5.1 versus 19.1 (73% reduction); non-inhibitor patients 9.0 versus 31.4 (71%). Current-regimen data come from the extension.",
+          "summary": "Label inhibitor comparison: modeled ABR 5.1 versus 19.1, 73% reduction, p=0.0006. Without inhibitors: 9.0 versus 31.4, 71% reduction, p<0.0001.",
           "sourceIds": [
-            "fitusiran-label"
+            "fitusiran-label",
+            "endpoint-review-rna-atlas-ole-primary-abstract",
+            "endpoint-review-rna-nct03754790-registry"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Defined treated bleeds measure only part of the broad bleeding phenotype.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "This current-regimen extension comparison is not a concurrent randomized trial or evidence of superiority over routine factor prophylaxis.",
+            "Treated bleeds measure part of the broad abnormal-bleeding phenotype.",
+            "The historical fixed 80-mg monthly regimen differs from current antithrombin-guided dosing; thrombosis, gallbladder and hepatic risks affect interpretation."
           ]
         },
         {
@@ -3371,20 +4016,22 @@
             "OMIM:306700",
             "OMIM:306900"
           ],
-          "population": "Hemophilia A or B, with or without factor inhibitors; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "ATLAS-INH: 57 males age ≥12 with severe hemophilia A/B and inhibitors, previously receiving on-demand bypassing agents; randomized 38 fitusiran/19 control.",
+          "comparator": "Open-label fixed fitusiran 80 mg subcutaneously monthly versus on-demand bypassing agents, not routine prophylaxis.",
+          "timeFrame": "Primary ABR during days 29–246 of the nine-month randomized treatment period.",
+          "role": "primary",
+          "analysis": "Intention-to-treat primary comparison of all 57 randomized patients; negative-binomial model adjusted for prior bleeding strata. This evaluates the original fixed-dose regimen.",
           "outcome": "benefit",
-          "summary": "57 randomized participants with inhibitors; tested fixed 80 mg monthly, which is not approved because of safety events.",
+          "summary": "Modeled treated-bleed ABR 1.7 (95% CI 1.0–2.7) versus 18.1 (10.6–30.8); rate ratio 0.092 (0.044–0.192), p<0.0001, a 90.8% reduction.",
           "sourceIds": [
-            "fitusiran-label"
+            "fitusiran-label",
+            "endpoint-review-rna-atlas-inh-primary-abstract",
+            "endpoint-review-rna-nct03417102-registry"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Defined treated bleeds measure only part of the broad bleeding phenotype.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Fixed 80-mg monthly dosing is not the approved antithrombin-guided regimen because of safety concerns.",
+            "Results in inhibitor patients cannot be assigned to the non-inhibitor cohort or all bleeding manifestations."
           ]
         },
         {
@@ -3403,20 +4050,23 @@
             "OMIM:306700",
             "OMIM:306900"
           ],
-          "population": "Hemophilia A or B, with or without factor inhibitors; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "ATLAS-A/B: 120 males age ≥12 with severe hemophilia A/B without inhibitors, previously receiving on-demand factor concentrates; randomized 80 fitusiran/40 control. Primary evaluable population n=119 (79/40).",
+          "comparator": "Open-label fixed fitusiran 80 mg subcutaneously monthly versus on-demand clotting-factor concentrate, not routine factor prophylaxis.",
+          "timeFrame": "Primary ABR during days 29–246 of the nine-month randomized treatment period.",
+          "role": "primary",
+          "analysis": "Randomized primary treated-bleed comparison using a negative-binomial model adjusted for prior bleeding and hemophilia type; one randomized active patient lacked evaluable primary data.",
           "outcome": "benefit",
-          "summary": "120 randomized participants without inhibitors; original fixed-dose trial supports the program but differs from current dosing.",
+          "summary": "Modeled treated-bleed ABR 3.1 (95% CI 2.3–4.3) versus 31.0 (21.1–45.5); rate ratio 0.101 (0.064–0.159), p<0.0001.",
           "sourceIds": [
-            "fitusiran-label"
+            "fitusiran-label",
+            "endpoint-review-rna-atlas-ab-primary-abstract",
+            "endpoint-review-rna-nct03417245-registry"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Defined treated bleeds measure only part of the broad bleeding phenotype.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "This tests historical fixed 80-mg monthly dosing, rather than the approved antithrombin-guided regimen.",
+            "The comparator was on-demand treatment; superiority over standard prophylaxis is not established by this trial.",
+            "No inhibitor population or cell-specific correction is inferred."
           ]
         }
       ],
@@ -3455,21 +4105,21 @@
           "diseaseIds": [
             "OMIM:106100"
           ],
-          "population": "Hereditary angioedema, C1-inhibitor type I/II; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "90 patients age ≥12 randomized (45 every-four-week, 23 every-eight-week, 22 placebo), with C1-inhibitor-deficient HAE types I/II and ≥2 confirmed attacks in an eight-week run-in; 84 had type I.",
+          "comparator": "Double-blind donidalorsen 80 mg subcutaneously every four or eight weeks versus placebo; rescue treatment allowed. Other prophylaxis stopped except permitted androgens/tranexamic acid.",
+          "timeFrame": "24 randomized weeks: label weeks 0–24; registry uses weeks 1–25 for the same 24-week window. Rate normalized to 28 days.",
+          "role": "primary",
+          "analysis": "Primary comparison is the every-four-week group versus placebo, explicitly specified in the FDA table footnote. Every-eight-week results are an additional comparison; model-based attack rates and Wald tests are reported.",
           "outcome": "benefit",
-          "summary": "90 randomized; 80 mg every 4 weeks n=45, every 8 weeks n=23, placebo n=22. Attack rate per 4 weeks: 0.44, 1.02, 2.26; reduction 81% (95% CI 65–89) and 55% (22–74).",
+          "summary": "Primary every-four-week rate 0.44 versus placebo 2.26 attacks/4 weeks: 81% reduction (95% CI 65–89), p<0.001. Every-eight-week rate 1.02: 55% reduction (22–74), p=0.004.",
           "sourceIds": [
             "donidalorsen-label",
             "nct05139810-registry"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Clinical attacks directly assess the recurrent swelling phenotype in C1-INH HAE.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "The direct clinical attack result applies to C1-INH HAE types I/II, not every cause of angioedema or normal-C1-INH HAE.",
+            "The eight-week comparison must not be mislabeled as the designated four-week primary comparison."
           ]
         }
       ],
@@ -3636,20 +4286,25 @@
             }
           ],
           "diseaseIds": [],
-          "population": "Genetically confirmed familial chylomicronemia syndrome; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "66 adults with FCS randomized 33/33: 50 genetically confirmed and 16 diagnosed clinically with postheparin LPL activity ≤20% of normal. Entry fasting TG ≥750 mg/dL, low-fat diet ≤20 g/day and stable background therapy.",
+          "comparator": "Double-blind volanesorsen 300 mg subcutaneously weekly versus placebo over 52 weeks.",
+          "timeFrame": "Primary month-3 percent change from baseline in fasting triglycerides, averaged over weeks 12 and 13.",
+          "role": "primary",
+          "analysis": "Randomized primary biochemical comparison. The original trial permitted genetic OR clinical/low-LPL diagnosis; the later original subgroup analysis documents 50/16. The European approved population is narrower: genetically confirmed FCS at high pancreatitis risk.",
           "outcome": "surrogate",
-          "summary": "66 randomized: month-3 TG change −77% versus +18%, p<0.001. 15/33 active patients developed platelets below 100,000/µL, including two below 25,000/µL.",
+          "summary": "Mean triglyceride change −77% with volanesorsen versus +18% with placebo, p<0.001. Fifteen of 33 active patients developed platelets <100,000/µL, including two <25,000/µL.",
           "sourceIds": [
-            "approach-volanesorsen"
+            "approach-volanesorsen",
+            "endpoint-review-rna-approach-primary-abstract",
+            "endpoint-review-rna-approach-genetic-subgroups",
+            "waylivra-ema",
+            "waylivra-ema-review",
+            "endpoint-review-rna-nct02211209-registry"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Direct biochemical endpoint; long-term prevention of pancreatitis is separate.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Triglyceride reduction directly measures the biochemical phenotype but does not by itself establish prevention of pancreatitis or long-term survival benefit.",
+            "The overall estimate is not a genotype-specific response estimate; clinically diagnosed and genetically confirmed trial populations must remain distinct."
           ]
         }
       ],
@@ -3668,7 +4323,7 @@
           "hpoId": "HP:0001324",
           "label": "Muscle weakness",
           "mapping": "proxy",
-          "endpoint": "Motor function / sitting milestones",
+          "endpoint": "Sitting without support for ≥5 seconds (BSID-III gross motor item 22)",
           "trialRefs": [
             {
               "nctId": "NCT02913482",
@@ -3676,20 +4331,23 @@
             }
           ],
           "diseaseIds": [],
-          "population": "5q spinal muscular atrophy; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "FIREFISH Part 2: 41 infants with type 1 SMA, biallelic SMN1 loss and two SMN2 copies; symptoms by age three months and enrollment age 1–7 months (observed 2.2–6.9).",
+          "comparator": "Open-label daily oral risdiplam; no concurrent randomized control. Primary comparison used a prespecified 5% milestone performance criterion based on natural history, rather than a matched historical cohort.",
+          "timeFrame": "After 12 months of treatment.",
+          "role": "primary",
+          "analysis": "Central video review by two independent readers. All 41 infants were in the primary analysis; withdrawal, death or failure to maintain the milestone counted as nonresponse. Original publication presents a two-sided exact binomial test and 95% CI; protocol/registry prespecified one-sided tests and 90% CIs.",
           "outcome": "benefit",
-          "summary": "Open-label infantile SMA: 12/41 (29%) sat without support for at least 5 seconds after 12 months.",
+          "summary": "12/41 infants (29%; published 95% CI 16–46) sat unsupported for ≥5 seconds, p<0.001 versus the 5% performance criterion.",
           "sourceIds": [
-            "risdiplam-label"
+            "risdiplam-label",
+            "endpoint-review-rna-firefish-primary",
+            "endpoint-review-rna-nct02913482-registry"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Motor performance measures consequences of weakness; these tasks do not isolate a causal cell subtype.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "This is an uncontrolled comparison with an author-chosen conservative natural-history threshold, not a randomized treatment effect.",
+            "Historical cohorts of 40 infants supported different secondary performance criteria; they are not the primary sitting comparator.",
+            "The sitting milestone is a functional proxy for muscle weakness and does not isolate a causal cell compartment."
           ]
         },
         {
@@ -3697,7 +4355,7 @@
           "hpoId": "HP:0001324",
           "label": "Muscle weakness",
           "mapping": "proxy",
-          "endpoint": "Motor function / sitting milestones",
+          "endpoint": "Change in 32-item Motor Function Measure (MFM32) total score",
           "trialRefs": [
             {
               "nctId": "NCT02908685",
@@ -3705,20 +4363,22 @@
             }
           ],
           "diseaseIds": [],
-          "population": "5q spinal muscular atrophy; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "SUNFISH Part 2: 180 patients randomized 120 risdiplam/60 placebo, age 2–25 with nonambulatory type 2 or type 3 SMA. Primary MFM32 analysis n=174 (115/59), after the scale’s missing-data exclusions.",
+          "comparator": "Double-blind daily oral weight-based risdiplam versus placebo for 12 months; all-active treatment after month 12 is a separate period.",
+          "timeFrame": "Baseline to month 12.",
+          "role": "primary",
+          "analysis": "Prespecified primary repeated-measures mixed-model comparison; score expressed as percent of the 32-item maximum (0–100). Scale-specific analysis denominators differ from the randomized 180.",
           "outcome": "benefit",
-          "summary": "180 randomized nonambulatory type 2/3 patients: month-12 MFM32 difference 1.55 points (95% CI 0.30–2.81), p=0.0156.",
+          "summary": "LS mean MFM32 change +1.36 versus −0.19; difference +1.55 points (95% CI 0.30–2.81), p=0.0156.",
           "sourceIds": [
-            "risdiplam-label"
+            "risdiplam-label",
+            "endpoint-review-rna-sunfish-primary-abstract",
+            "endpoint-review-rna-nct02908685-registry"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Motor performance measures consequences of weakness; these tasks do not isolate a causal cell subtype.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "This population excludes infantile type 1 SMA and ambulatory type 3; the result cannot be assigned to all SMA stages.",
+            "The aggregate motor score measures functional consequences of weakness and does not establish cell-specific rescue."
           ]
         }
       ],
@@ -3747,7 +4407,7 @@
           "hpoId": "HP:0001288",
           "label": "Gait disturbance",
           "mapping": "direct",
-          "endpoint": "10-meter walk gait speed",
+          "endpoint": "Percent change in 10-meter walk-test gait speed",
           "trialRefs": [
             {
               "nctId": "NCT04849741",
@@ -3757,22 +4417,23 @@
           "diseaseIds": [
             "OMIM:203450"
           ],
-          "population": "Alexander disease; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "49 randomized patients with Alexander disease and a pathogenic GFAP variant, age 2–65. Primary motor-impaired stratum: age ≥5 with gross-motor abnormality; adults required motor symptoms ≤5 years. Primary comparison n=30 (50-mg n=17/shared control n=13).",
+          "comparator": "Double-blind zilganersen 50 mg intrathecally every 12 weeks versus shared placebo controls from both 25- and 50-mg cohorts.",
+          "timeFrame": "Baseline to week 61 after a 60-week double-blind period.",
+          "role": "primary",
+          "analysis": "Prespecified stratum-specific ANCOVA adjusted for baseline, with imputation for missing data. The overall 49 include patients outside the primary stratum and lower-dose patients; four additional infants <2 in an open-label cohort are separate.",
           "outcome": "benefit",
-          "summary": "49 randomized; primary stratum compared 50 mg (n=17) with shared controls (n=13). Week-61 gait-speed difference 33.3 percentage points (95% CI 1.44–65.25), p=0.041; changes −2.1% versus −35.4%.",
+          "summary": "LS gait-speed change −2.1% versus −35.4%; difference +33.3 percentage points (95% CI 1.44–65.25), p=0.041.",
           "sourceIds": [
             "zilganersen-label",
             "zilganersen-pivotal-abstract",
             "nct04849741-registry"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Direct gait measure; primary analysis was restricted to the motor-impaired stratum.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "The primary benefit is less gait-speed decline in the selected motor-impaired stratum, not a demonstrated primary effect in every enrolled age or disease stage.",
+            "The endpoint directly measures gait but does not establish astrocyte-specific functional rescue.",
+            "The separately cited conference abstract was inaccessible; the reviewed regulatory label and original registry establish this endpoint scope."
           ]
         }
       ],
@@ -3801,7 +4462,7 @@
           "hpoId": "HP:0001263",
           "label": "Global developmental delay",
           "mapping": "proxy",
-          "endpoint": "CSF heparan sulfate; exploratory adaptive behavior",
+          "endpoint": "Percent change in cerebrospinal-fluid heparan sulfate concentration",
           "trialRefs": [
             {
               "nctId": "NCT04251026",
@@ -3811,22 +4472,24 @@
           "diseaseIds": [
             "OMIM:309900"
           ],
-          "population": "Hunter syndrome / mucopolysaccharidosis II; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "47 males with MPS II, observed age 3 months–13 years: 44 neuronopathic/3 non-neuronopathic, 15 ERT-naïve/32 previously treated. Week-24 CSF analysis n=44, distinct from 46 completing Part 1.",
+          "comparator": "Single-arm open-label weekly intravenous tividenofusp; paired baseline comparison without randomized control. Starting doses 3–15 mg/kg, maximum doses 3–30 mg/kg; most common dose 15 mg/kg.",
+          "timeFrame": "Baseline to week 24 for this CSF-substrate result.",
+          "role": "secondary",
+          "analysis": "CSF heparan-sulfate change is a registered secondary biochemical endpoint; trial primary outcomes include safety and urinary total GAGs. Adaptive behavior was separately measured by Vineland as a secondary outcome, not by CSF substrate concentration.",
           "outcome": "surrogate",
-          "summary": "47 treated; 44 week-24 CSF measurements. Mean CSF heparan-sulfate reduction 91% (95% CI 89–92%). Uncontrolled adaptive behavior stabilized or improved; this is not randomized neurologic efficacy.",
+          "summary": "44 paired week-24 CSF assessments showed a mean heparan-sulfate reduction of 91% (95% CI 89–92); 41/44 were below the upper limit of normal.",
           "sourceIds": [
             "avlayah-label",
             "tividenofusp-phase12",
-            "nct04251026-registry"
+            "nct04251026-registry",
+            "endpoint-review-rna-tividenofusp-primary-abstract"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "CSF substrate is a proxy for neurological burden, not a direct developmental endpoint.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "CSF substrate reduction is a surrogate for neurological burden, not a direct measure of global developmental delay or randomized neurological efficacy.",
+            "Uncontrolled adaptive-behavior stabilization/improvement was reported separately; it must not inherit the CSF effect size, denominator or week-24 timeframe.",
+            "Dose escalation, heterogeneous prior treatment and absence of a control constrain clinical interpretation."
           ]
         }
       ],
@@ -3845,7 +4508,7 @@
           "hpoId": "HP:0001324",
           "label": "Muscle weakness",
           "mapping": "proxy",
-          "endpoint": "HFMSE motor function",
+          "endpoint": "Change in Hammersmith Functional Motor Scale–Expanded (HFMSE) score",
           "trialRefs": [
             {
               "nctId": "NCT05156320",
@@ -3853,22 +4516,24 @@
             }
           ],
           "diseaseIds": [],
-          "population": "5q spinal muscular atrophy with ongoing SMN2-targeted treatment; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "188 nonambulatory type 2/3 SMA patients age 2–21 randomized, on stable nusinersen ≥10 months or risdiplam ≥6 months, HFMSE 10–45. Main primary age-2–12 population n=156: 53 at 10 mg/kg, 53 at 20 mg/kg, 50 placebo. Older cohort n=32 tested 20 mg/kg versus placebo only.",
+          "comparator": "Double-blind apitegromab intravenously every four weeks added to ongoing nusinersen or risdiplam versus placebo plus the same background treatment.",
+          "timeFrame": "Baseline to month 12.",
+          "role": "primary",
+          "analysis": "Prespecified pooled 10+20-mg/kg comparison in age 2–12, using a modified-ITT repeated-measures mixed model. Separate 20-mg/kg comparison was nonsignificant; the labeled 10-mg/kg comparison has a nominal p-value, not a separately multiplicity-confirmed primary success.",
           "outcome": "benefit",
-          "summary": "188 randomized nonambulatory patients on nusinersen/risdiplam. Prespecified pooled-dose primary age-2–12 analysis: HFMSE difference 1.8 (95% CI 0.30–3.32), p=0.019. Labeled 10-mg/kg analysis: 2.2 (0.49–3.95), nominal p=0.0121.",
+          "summary": "Pooled 106 active versus 50 placebo: HFMSE difference +1.8 points (95% CI 0.30–3.32), p=0.019. 20 mg/kg: +1.4 (−0.34–3.13), p=0.11. Labeled 10 mg/kg: +2.2 (0.49–3.95), nominal p=0.0121.",
           "sourceIds": [
             "apitegromab-label",
             "sapphire-apitegromab",
-            "nct05156320-registry"
+            "nct05156320-registry",
+            "endpoint-review-rna-sapphire-primary-abstract"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Functional measure includes neuronal and muscle contributions; it does not isolate either cell compartment.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Benefit is an add-on comparison, not superiority over nusinersen/risdiplam or efficacy without background SMN-targeted treatment.",
+            "The 20-mg/kg comparison was not significant; older patients were not the main primary population.",
+            "The functional scale combines neuronal and muscular contributions and does not isolate either cell compartment."
           ]
         }
       ],
@@ -4392,7 +5057,7 @@
           "hpoId": "HP:0000083",
           "label": "Renal insufficiency",
           "mapping": "proxy",
-          "endpoint": "Renal capillary GL-3 score and renal/cardiac/cerebrovascular/death composite",
+          "endpoint": "Proportion with renal capillary endothelial GL-3 inclusion score zero",
           "trialRefs": [
             {
               "nctId": null,
@@ -4402,22 +5067,21 @@
           "diseaseIds": [
             "OMIM:301500"
           ],
-          "population": "Fabry disease; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "58 ERT-naïve Fabry patients randomized 29 agalsidase beta/29 placebo; 56 males/two females, age 16–61.",
+          "comparator": "Double-blind agalsidase beta 1 mg/kg intravenously every two weeks versus placebo.",
+          "timeFrame": "Renal biopsy at week 20 compared with baseline.",
+          "role": "primary",
+          "analysis": "Primary blinded semiquantitative light-microscopy endothelial GL-3 assessment (0–3 scale); score zero denotes normal or near-normal inclusions. Cardiac/skin clearance and the later clinical-event trial are separate outcomes.",
           "outcome": "surrogate",
-          "summary": "58 patients over 20 weeks: renal capillary GL-3 score zero in 20/29 treated versus 0/29 placebo patients (P<.001); biopsies also support heart and skin capillary endothelial clearance.",
+          "summary": "Renal capillary endothelial GL-3 score zero in 20/29 (69%) treated patients versus 0/29 placebo, p<0.001.",
           "sourceIds": [
             "agalsidase-beta-biopsy-primary",
-            "agalsidase-beta-events-primary",
             "fabrazyme-current-spl"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Substrate clearance is not kidney function; a multi-organ event composite cannot establish a kidney-specific rescue effect.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "Endothelial substrate clearance is a histological surrogate for renal insufficiency, not a measurement of kidney filtration or renal survival.",
+            "A cleared capillary compartment does not establish rescue of every renal cell type or proof of the website’s causal cell attribution."
           ]
         },
         {
@@ -4425,7 +5089,7 @@
           "hpoId": "HP:0000083",
           "label": "Renal insufficiency",
           "mapping": "proxy",
-          "endpoint": "Renal capillary GL-3 score and renal/cardiac/cerebrovascular/death composite",
+          "endpoint": "Time to first renal, cardiac or cerebrovascular clinical event, or death",
           "trialRefs": [
             {
               "nctId": "NCT00074984",
@@ -4435,27 +5099,61 @@
           "diseaseIds": [
             "OMIM:301500"
           ],
-          "population": "Fabry disease; exact enrollment/genotype restrictions are retained in the cited study, not inferred for every allele.",
-          "comparator": "Not specified in this endpoint record; inspect the cited study design.",
-          "timeFrame": "Not specified in this endpoint record; inspect the cited analysis.",
-          "role": "not_recorded",
-          "analysis": "The sole curated HPO crosswalk is linked to this study result. No extra endpoint, effect size, subgroup or cell mediation is inferred.",
+          "population": "82 ERT-naïve adults with Fabry disease and mild-to-moderate kidney disease randomized 51 active/31 placebo; 72 males/10 females, age 20–72.",
+          "comparator": "Double-blind agalsidase beta 1 mg/kg intravenously every two weeks versus placebo.",
+          "timeFrame": "Up to 35 months of treatment; median follow-up 18.5 months.",
+          "role": "primary",
+          "analysis": "Primary proteinuria-adjusted intention-to-treat time-to-event analysis. FDA label also reports an unadjusted model. Protocol-adherent n=74 and ancillary renal-function subgroups are secondary analyses and do not replace the primary ITT result.",
           "outcome": "null",
-          "summary": "82 adults: primary proteinuria-adjusted intention-to-treat clinical-event HR 0.47 (95% CI 0.21–1.03; P=.06). Protocol-adherent and ancillary subgroup analyses favored treatment, but did not replace the primary result. FDA label reports unadjusted HR 0.57 (CI 0.27–1.22).",
+          "summary": "Events in 14/51 versus 13/31. Primary adjusted HR 0.47 (95% CI 0.21–1.03), p=0.06: nonsignificant. Label unadjusted HR 0.57 (0.27–1.22). Protocol-adherent HR 0.39 (0.16–0.93), p=0.034.",
           "sourceIds": [
-            "agalsidase-beta-biopsy-primary",
             "agalsidase-beta-events-primary",
             "fabrazyme-current-spl",
             "nct00074984-comparator-registry"
           ],
-          "scopeReview": "single_mapped_endpoint",
+          "scopeReview": "endpoint_specific",
           "limits": [
-            "Substrate clearance is not kidney function; a multi-organ event composite cannot establish a kidney-specific rescue effect.",
-            "A measured proxy, biomarker or clinical function does not establish cell-specific rescue."
+            "The primary estimate is imprecise and nonsignificant, not evidence of a known zero effect.",
+            "A multi-organ composite does not establish a kidney-specific rescue effect; renal events included creatinine increase, dialysis or transplantation.",
+            "Small sample/event counts, withdrawals and favorable secondary analyses constrain inference; separate positive biopsy clearance is not clinical primary success."
           ]
         }
       ],
-      "cellObservations": [],
+      "cellObservations": [
+        {
+          "id": "agalsidase-beta-fabry-renal-endothelium",
+          "hpoIds": [
+            "HP:0000083"
+          ],
+          "trialRefs": [],
+          "population": "Classic Fabry disease; randomized biopsy study, 58 participants (29 per group)",
+          "species": "Human treated tissue",
+          "cells": [
+            "Renal microvascular capillary endothelial cells"
+          ],
+          "route": "Intravenous agalsidase beta, 1 mg/kg every two weeks",
+          "assay": "Blinded histological assessment of renal endothelial GL-3 inclusions against placebo",
+          "timeFrame": "Week 20",
+          "evidenceType": "human_tissue",
+          "direction": "supports",
+          "claim": "Renal endothelial GL-3 inclusion score reached zero in 20/29 treated versus 0/29 placebo. Score zero permits nearly none or trace deposits; this is not clearance in every renal cell or proof of restored kidney function.",
+          "sourceIds": [
+            "agalsidase-beta-biopsy-primary",
+            "fabrazyme-current-spl"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Same biopsy cohort as the surrogate result; the later advanced-disease clinical-event trial used a separate cohort. Endothelial clearance does not establish mediation of its renal/cardiac composite.",
+          "endpointResultIds": [
+            "agalsidase-beta-fabry-HP_0000083-result-1",
+            "agalsidase-beta-fabry-HP_0000083-result-2"
+          ],
+          "diseaseIds": [
+            "OMIM:301500"
+          ],
+          "comparator": "Randomized placebo, 29 participants per group"
+        }
+      ],
       "limitations": [
         "Diagnosis crosswalks are discovery links, not allele eligibility or patient-specific treatment recommendations.",
         "Whole-treatment cell arrays and conclusions are background; they are not automatically inherited by this endpoint."
@@ -5633,8 +6331,9 @@
     }
   ],
   "limitations": [
-    "The treatment inventory itself remains bounded; this file does not add missing products or primary experiments.",
-    "Single-endpoint scope is not a fresh exhaustive reanalysis of every trial or subgroup. Unrecorded population, time or analysis metadata remains visible.",
+    "The treatment inventory remains bounded; review of these records does not add every approved product or unrepresented clinical endpoint.",
+    "Endpoint-specific review uses accessible primary publications, abstracts, regulatory labels/reviews and registry records; it does not imply every publisher full text or subgroup was available.",
+    "The initial MONARCH/ADMIRAL seizure result remains source-limited, and extension subgroup size/uncertainty remain unknown.",
     "No cell naming or ontology equality is inferred from narrative evidence.",
     "A null clinical result opposes benefit in its measured scope; it does not by itself refute the disease cell hypothesis."
   ]

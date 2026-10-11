@@ -44,8 +44,9 @@ manufacturing an allele-specific match. Unmapped diagnosis scopes remain unknown
    p values and adverse events where posted. Unposted results remain unknown.
    Selected-HPO results preserve their own population, comparator, time point,
    endpoint role and analysis boundary. Whole-trial summaries remain background;
-   another endpoint's benefit cannot fill an unreviewed result. Single-HPO
-   carry-forward adjudications visibly retain their pending detailed scope review.
+   another endpoint's benefit cannot fill an unreviewed result. A source-limited
+   initial-phase seizure result remains unknown instead of borrowing extension
+   observations; source and denominator limitations remain visible.
 3. Compare disease relevance, delivery, engagement, rescue and bypass with the
    atlas rows. Positive and negative estimates are separate; exact labels do not
    establish lineage equivalence or cellular causality.
@@ -116,8 +117,11 @@ delivery receptor from becoming a disease etiology. `mechanismContexts.json`
 contains individually reviewed disease-scoped mechanisms. Empty gates preserve
 missing evidence, rather than assuming universal delivery, safety or rescue.
 `endpointEvidence.json` holds the separate HPO/result/diagnosis joins and
-structured cellular observations. Its five cellular examples do not assert an
-atlas identity crosswalk or clinical mediation. `variantFunctionalEvidence.json`
+structured cellular observations. Its 16 observations across 14 assessments
+retain comparator and outcome-cohort relationships without asserting an atlas
+identity crosswalk or clinical mediation. Coverage is calculated from the
+records; condition-identifier sources are counted separately from clinical and
+experimental references. `variantFunctionalEvidence.json`
 holds exact allele examples, observed patient phenotypes, assay scope and
 intervention-specific facts. Source-case observations absent from the HPO export
 appear separately when that exact allele is selected; absent phenotypes never
