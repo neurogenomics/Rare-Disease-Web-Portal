@@ -1528,6 +1528,13 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/24118899/",
       "kind": "primary_cell_study",
       "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "fda-novel-approvals-2026",
+      "title": "FDA novel drug approvals 2026 — marketing approval dates",
+      "url": "https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2026",
+      "kind": "regulatory_inventory",
+      "accessedAt": "2026-10-11"
     }
   ],
   "assessments": [
@@ -3982,7 +3989,7 @@
         {
           "id": "pzam-biopsy",
           "direction": "supports",
-          "claim": "Treated-wound biopsies detected collagen VII and anchoring fibrils.",
+          "claim": "Treated-wound biopsies in the earlier seven-participant phase 1/2a cohort detected collagen VII NC2 and anchoring fibrils. These are separate from VIITAL's clinical outcome cohort.",
           "level": "human_tissue",
           "sourceIds": [
             "zevaskyn-review"
@@ -3991,7 +3998,7 @@
         {
           "id": "pzam-pain",
           "direction": "limits",
-          "claim": "Pain improvement is downstream of local skin repair, not evidence of direct neuronal engagement.",
+          "claim": "Wound-pain improvement is compatible with benefit downstream of skin repair; it does not establish cellular mediation or direct neuronal engagement.",
           "level": "human_clinical",
           "sourceIds": [
             "zevaskyn-review"
@@ -4000,7 +4007,7 @@
       ],
       "conclusion": {
         "status": "supports",
-        "summary": "Supports local epidermal structural rescue with secondary pain benefit."
+        "summary": "Supports local epidermal structural repair and wound-pain benefit. Healing and pain were VIITAL co-primary outcomes; biopsy evidence came from an earlier cohort and does not establish mediation of either clinical outcome."
       },
       "limitations": [
         "Open-label assessment and small patient sample.",
@@ -9842,65 +9849,70 @@
       {
         "product": "Zycubo (copper histidinate)",
         "indication": "Menkes disease",
-        "approvalDate": "2026-01-12",
         "reason": "Cofactor replacement endpoints not yet curated",
         "sourceIds": [
-          "fda-arc-rare-approvals"
-        ]
+          "fda-arc-rare-approvals",
+          "fda-novel-approvals-2026"
+        ],
+        "announcementDate": "2026-01-12",
+        "approvalDate": "2026-01-12"
       },
       {
         "product": "Yuviwel (navepegritide)",
         "indication": "Achondroplasia",
-        "approvalDate": "2026-03-04",
         "reason": "Peptide pathway modulation and growth endpoints not yet curated",
         "sourceIds": [
-          "fda-arc-rare-approvals"
-        ]
+          "fda-arc-rare-approvals",
+          "fda-novel-approvals-2026"
+        ],
+        "announcementDate": "2026-03-04",
+        "approvalDate": "2026-02-27",
+        "dateNotes": "Marketing approval date is February 27; the ARC news announcement was March 4. These are distinct dates."
       },
       {
         "product": "Wellcovorin (leucovorin)",
         "indication": "Cerebral folate transport deficiency",
-        "approvalDate": "2026-03-10",
         "reason": "Metabolite/cofactor bypass endpoints not yet curated",
         "sourceIds": [
           "fda-arc-rare-approvals"
-        ]
+        ],
+        "announcementDate": "2026-03-10"
       },
       {
         "product": "Pasatru (garetosmab-grts)",
         "indication": "Fibrodysplasia ossificans progressiva",
-        "approvalDate": "2026-08-19",
         "reason": "Activin-pathway antibody outcomes not yet curated",
         "sourceIds": [
           "fda-arc-rare-approvals"
-        ]
+        ],
+        "announcementDate": "2026-08-19"
       },
       {
         "product": "Joenja (leniolisib), pediatric expansion",
         "indication": "Activated PI3K delta syndrome age 4–11",
-        "approvalDate": "2026-09-11",
         "reason": "Small-molecule immunologic pathway endpoints not yet curated",
         "sourceIds": [
           "fda-arc-rare-approvals"
-        ]
+        ],
+        "announcementDate": "2026-09-11"
       },
       {
         "product": "Aqneursa (levacetylleucine), indication expansion",
         "indication": "Ataxia-telangiectasia",
-        "approvalDate": "2026-09-18",
         "reason": "Disease-specific ataxia endpoints not yet curated",
         "sourceIds": [
           "fda-arc-rare-approvals"
-        ]
+        ],
+        "announcementDate": "2026-09-18"
       },
       {
         "product": "Atebrioz (zilurgisertib)",
         "indication": "Fibrodysplasia ossificans progressiva age 12+",
-        "approvalDate": "2026-09-25",
         "reason": "Kinase inhibition and ectopic-ossification endpoints not yet curated",
         "sourceIds": [
           "fda-arc-rare-approvals"
-        ]
+        ],
+        "announcementDate": "2026-09-25"
       }
     ],
     "reviewedComparatorFamilies": [

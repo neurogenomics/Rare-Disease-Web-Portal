@@ -38,12 +38,21 @@ Private meeting material is used to recover requirements; it must not enter publ
 
 ## Release status — 11 October 2026
 
-The implementation workstreams are complete for the declared evidence scope:
-77 reviewed endpoint assessments with 218 cited sources, 119 registry snapshots,
+The staging release is usable and the broader scientific expansion remains active:
+77 treatment assessments with 219 cited sources, 120 result records with 35
+additional condition-reference sources, five structured cellular observations, 119 registry snapshots,
 92 complete ClinVar gene queries, 27 reviewed disease-mechanism contexts and 22
 modality families. All 30 historical products have an adjudicated assessment;
 additional inherited-disease comparisons include enzyme replacement, bypass,
 chaperones, substrate reduction, stabilizers and CFTR modulation.
+
+All 21 multi-HPO assessments plus STRIVE and two sepofarsen results have specific
+scope review; 57 single-HPO
+carry-forward records still need detailed reanalysis. Eight exact/source allele
+examples distinguish observed phenotypes, assays and treatment endpoints. Seven
+requirement facts and four maturity records are constrained to their cited allele
+and experimental scenario. The unreviewed product, allele and cell-evidence
+inventory remains substantive work, as recorded in the coverage report.
 
 Mechanism direction is distinguished from a demonstrated necessary-condition
 failure. Typical-direction mismatches remain unknown; explicit gate judgments
@@ -53,7 +62,8 @@ limits are documented in [statistical-audit.md](statistical-audit.md) and
 [evidence-workbench.md](evidence-workbench.md). Preclinical evidence,
 measurability, precedent and comparative value remain nonblocking modifiers.
 
-The production build and 138 targeted tests pass. Desktop and 390px mobile
+The production build and targeted tests pass; exact current counts are in the
+validation report. Desktop and 390px mobile
 reviews exercised exact cell/atlas filters, endpoint/trial details, variant
 coordinates and functional evidence, modality requirements and keyboard
 navigation, all-family comparisons and separate nonblocking maturity ledgers.

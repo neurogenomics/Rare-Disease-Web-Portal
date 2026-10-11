@@ -111,15 +111,104 @@ export const modalities = definitions.map(([id,label,description,mechanisms,requ
 const supportedGate = (status,reason,sources=[]) => ({status,reason,sources});
 const validSources = sources => Array.isArray(sources) && sources.length > 0 &&
   sources.every(url => typeof url==='string' && /^https?:\/\//i.test(url));
+const mechanismClasses = new Set(['loss_of_function','haploinsufficiency','gain_of_function','dominant_negative','toxic_gain_of_function','toxic_rna','dosage_gain']);
+export function matchesMechanismFilter(context, filter) {
+  if (!filter) return true;
+  const mechanism=context?.mechanism;
+  return filter === 'unknown' ? mechanism == null || mechanism === '' || mechanism === 'unknown' : mechanism === filter;
+}
+const optionalScopeKeys = ['variantId','constructId','populationId','species','route','cells','atlas','doseContext'];
+const hasAlleleSelection = selection => selection.variantId != null && selection.variantId !== '';
+const scopeValueMatches = (key, declared, selected) => key === 'cells' && Array.isArray(declared)
+  ? Array.isArray(selected) && declared.every(value => typeof value === 'string' && value) &&
+    JSON.stringify([...declared].sort()) === JSON.stringify([...selected].sort())
+  : typeof declared === 'string' && declared.length > 0 && declared === selected;
+
+function factScopeMatches(scope, selection) {
+  if (!scope || !['gene','diseaseId','hpoId','modalityId'].every(key =>
+    typeof scope[key] === 'string' && scope[key] && scope[key] === selection[key])) return false;
+  // A selected allele cannot inherit a generic disease-level judgment.
+  if (hasAlleleSelection(selection) && scope.variantId !== selection.variantId) return false;
+  return !optionalScopeKeys.some(key => scope[key] != null && !scopeValueMatches(key, scope[key], selection[key]));
+}
+
+function selectionScope(context, modalityId, options) {
+  return {gene:context.gene,diseaseId:options.diseaseId,hpoId:options.hpoId,modalityId,
+    ...Object.fromEntries(optionalScopeKeys.map(key => [key,options[key]]))};
+}
+
+function factsById(records = {}) {
+  if (!Array.isArray(records)) return Object.fromEntries(Object.entries(records || {}).map(([id, value]) =>
+    [id, Array.isArray(value) ? value : [value]]));
+  const result = {};
+  for (const fact of records) {
+    if (typeof fact?.id === 'string' && fact.id) (result[fact.id] ||= []).push(fact);
+  }
+  return result;
+}
+
+function mergeFacts(...collections) {
+  const result = {};
+  for (const records of collections) for (const [id, facts] of Object.entries(factsById(records))) {
+    (result[id] ||= []).push(...facts);
+  }
+  return result;
+}
+
+/** Functional observations identify an allele mechanism within their assay scope.
+ * They do not assign every disease phenotype to that allele or establish efficacy. */
+export function resolveAlleleMechanism({gene,diseaseId,variantId,variantFunctionalEvidence,contexts=[]}) {
+  if (variantId == null || variantId === '') return null;
+  const scope = {gene,diseaseId,variantId};
+  const unknown = reason => ({status:'unknown',mechanism:'unknown',reason,sourceUrls:[],scope,
+    matchedCaseIds:[],contextIds:[],gates:{},modifiers:{}});
+  if (typeof variantId !== 'string' || !variantId || typeof gene !== 'string' || typeof diseaseId !== 'string') {
+    return unknown('An exact gene, disease identifier and ClinVar variation identifier are required.');
+  }
+  const records = Array.isArray(variantFunctionalEvidence?.cases) ? variantFunctionalEvidence.cases : [];
+  const cases = records.filter(item => {
+    const evidence = item?.mechanismEvidence;
+    return typeof item?.id === 'string' && item.id && item.gene === gene && item.diseaseId === diseaseId &&
+      Array.isArray(item.variantIds) && item.variantIds.includes(variantId) &&
+      mechanismClasses.has(evidence?.mechanism) && validSources(evidence.sourceUrls) &&
+      ['gene','diseaseId','variantId'].every(key => evidence.scope?.[key] === scope[key]);
+  });
+  if (!cases.length) return unknown('No reviewed functional mechanism matches this exact gene, disease and ClinVar allele. Consequence annotations and a disease-level mechanism cannot resolve the selected allele.');
+  const mechanisms = new Set(cases.map(item => item.mechanismEvidence.mechanism));
+  const sourceUrls = [...new Set(cases.flatMap(item => item.mechanismEvidence.sourceUrls))].sort();
+  const contextIds = [...new Set(cases.flatMap(item => item.mechanismEvidence.contextIds || []))].filter(id =>
+    contexts.some(context => context.id === id && context.gene === gene && context.diseaseIds?.includes(diseaseId) &&
+      mechanisms.has(context.mechanism))).sort();
+  const matchedCaseIds = [...new Set(cases.map(item => item.id))].sort();
+  const qualified = cases.filter(item => item.mechanismEvidence.directionUnresolved === true);
+  const directionUnresolved = qualified.length > 0;
+  const directionReason = [...new Set(qualified.map(item => {
+    const evidence=item.mechanismEvidence;
+    return [evidence.directionReason,evidence.notes].find(value => typeof value === 'string' && value.trim()) ||
+      'The observed functional mechanism does not resolve this allele\'s therapeutic direction; intervention-specific evidence is required.';
+  }))].sort().join(' ');
+  const directionSourceUrls = [...new Set(qualified.flatMap(item => validSources(item.mechanismEvidence.directionSourceUrls)
+    ? item.mechanismEvidence.directionSourceUrls : item.mechanismEvidence.sourceUrls))].sort();
+  if (mechanisms.size !== 1) return {status:'conflicting',mechanism:'conflicting',scope,sourceUrls,contextIds,
+    matchedCaseIds,gates:{},modifiers:{},directionUnresolved,directionReason,directionSourceUrls,
+    reason:'Opposite functional mechanisms are reported for this exact allele and disease. The observations remain unresolved; neither input order nor a consequence annotation selects a therapeutic direction.'};
+  const mechanism = [...mechanisms][0];
+  const limits = [...new Set(cases.flatMap(item => Array.isArray(item.limits) ? item.limits : []))].filter(item =>
+    typeof item === 'string' && item.trim());
+  const notes = [...new Set(cases.map(item => item.mechanismEvidence.notes).filter(item =>
+    typeof item === 'string' && item.trim()))];
+  return {status:'supported',mechanism,sourceUrls,matchedCaseIds,contextIds,directionUnresolved,directionReason,directionSourceUrls,
+    scope:cases.length === 1 ? cases[0].mechanismEvidence.scope : scope,
+    observations:cases.map(item => ({caseId:item.id,...item.mechanismEvidence,limits:item.limits || []})),limits,
+    gates:mergeFacts(...cases.map(item => item.gates)), modifiers:mergeFacts(...cases.map(item => item.modifiers)),
+    reason:[`Reviewed functional evidence for ClinVar ${variantId} supports ${mechanism.replaceAll('_',' ')} within the cited assay/model scope. This does not establish that the allele causes every associated HPO phenotype, matches a selected atlas cell or is clinically suitable for this modality.`,...notes,...(directionReason && !notes.includes(directionReason) ? [directionReason] : [])].join(' ')};
+}
 
 function scopedGateFact(fact, context, modalityId, options) {
   const scope=fact?.scope || {};
-  const selection={gene:context.gene,diseaseId:options.diseaseId,hpoId:options.hpoId,modalityId,
-    variantId:options.variantId,constructId:options.constructId,populationId:options.populationId};
-  if (!['gene','diseaseId','hpoId','modalityId'].every(key => typeof scope[key]==='string' && scope[key] && scope[key]===selection[key]) ||
-      !Array.isArray(context.diseaseIds) || !context.diseaseIds.includes(selection.diseaseId) ||
-      ['variantId','constructId','populationId'].some(key => scope[key] != null && scope[key]!==selection[key])) {
-    return supportedGate('unknown','No gate assessment matches this exact gene, disease, phenotype, modality and any declared variant, construct or population.');
+  const selection=selectionScope(context,modalityId,options);
+  if (!factScopeMatches(scope,selection) || !Array.isArray(context.diseaseIds) || !context.diseaseIds.includes(selection.diseaseId)) {
+    return supportedGate('unknown','No gate assessment matches this exact gene, disease, phenotype, modality, selected allele and any declared experimental scenario.');
   }
   if (!['supported','contradicted','unknown','not_applicable'].includes(fact.status) ||
       typeof fact.reason!=='string' || !fact.reason.trim() || !validSources(fact.sources)) {
@@ -127,6 +216,20 @@ function scopedGateFact(fact, context, modalityId, options) {
   }
   // Evidence annotates a requirement; it cannot redefine its identity or necessity.
   return {status:fact.status,reason:fact.reason,sources:fact.sources,scope};
+}
+
+function scopedGateFacts(value, context, modalityId, options) {
+  if (!Array.isArray(value)) return scopedGateFact(value,context,modalityId,options);
+  const selection = selectionScope(context,modalityId,options);
+  const matched = value.filter(fact => factScopeMatches(fact?.scope,selection));
+  if (!matched.length) return scopedGateFact(null,context,modalityId,options);
+  const results = matched.map(fact => scopedGateFact(fact,context,modalityId,options));
+  if (new Set(results.map(result => result.status)).size !== 1) return {
+    ...supportedGate('unknown','Different assessments match this exact requirement scope; their disagreement remains unresolved.',
+      [...new Set(results.flatMap(result => result.sources || []))].sort()), conflicting:true};
+  if (results.length === 1) return results[0];
+  return {...results[0],reason:[...new Set(results.map(result => result.reason))].sort().join(' '),
+    sources:[...new Set(results.flatMap(result => result.sources || []))].sort()};
 }
 
 export const priorityModifiers = [
@@ -140,20 +243,25 @@ export const priorityModifiers = [
 // Explicit scopes prevent another phenotype, construct or population from
 // inheriting a judgment merely because it shares a gene or modality.
 export function assessPriorityModifiers(context={}, selection={}) {
+  const facts = factsById(context?.modifiers);
   return priorityModifiers.map(definition => {
-    const fact=context?.modifiers?.[definition.id];
     const unknown=reason => ({...definition,strength:'unknown',reason,sources:[],scope:null});
-    if (!fact) return unknown(definition.reason);
-    const scope=fact.scope || {};
-    if (!['gene','diseaseId','hpoId','modalityId'].every(key => scope[key] && scope[key]===selection[key]) ||
-        ['constructId','populationId'].some(key => scope[key] && scope[key]!==selection[key])) {
-      return unknown('No modifier assessment matches this exact gene, disease, phenotype, modality and any declared construct/population.');
-    }
-    if (!['strong','moderate','weak','unknown'].includes(fact.strength) || typeof fact.reason!=='string' || !fact.reason.trim() ||
-        !Array.isArray(fact.sources) || !fact.sources.length || !fact.sources.every(url => typeof url==='string' && /^https?:\/\//i.test(url))) {
+    const records = facts[definition.id];
+    if (!records?.length) return unknown(definition.reason);
+    const matched = records.filter(fact => factScopeMatches(fact?.scope,selection));
+    if (!matched.length) return unknown('No modifier assessment matches this exact gene, disease, phenotype, modality, selected allele and any declared experimental scenario.');
+    if (matched.some(fact => !['strong','moderate','weak','unknown'].includes(fact.strength) ||
+        typeof fact.reason!=='string' || !fact.reason.trim() || !validSources(fact.sources))) {
       return unknown('A scoped assessment, explanation and evidence sources are required; maturity is not inferred from trial status.');
     }
-    return {...definition,strength:fact.strength,reason:fact.reason,sources:fact.sources,scope};
+    if (new Set(matched.map(fact => fact.strength)).size !== 1) return unknown('Different maturity assessments match this exact evidence scope; their disagreement remains unresolved.');
+    if (matched.length === 1) {
+      const fact=matched[0];
+      return {...definition,strength:fact.strength,reason:fact.reason,sources:fact.sources,scope:fact.scope};
+    }
+    return {...definition,strength:matched[0].strength,
+      reason:[...new Set(matched.map(fact => fact.reason))].sort().join(' '),
+      sources:[...new Set(matched.flatMap(fact => fact.sources))].sort(),scope:matched[0].scope};
   });
 }
 
@@ -173,16 +281,35 @@ export function assessModality(modalityId, context={}, reference=null, options={
   const modality = modalities.find(m => m.id===modalityId);
   if (!modality) return {status:'unknown',gates:[],supported:0,unknown:0,contradicted:0};
   context=context || {};
-  const facts=context.gates || {};
+  const facts=factsById(context.gates);
   const gates=modality.gates.map(g => {
-    let result=facts[g.id] ? scopedGateFact(facts[g.id],context,modalityId,options) : supportedGate('unknown',g.reason);
-    if (g.id==='mechanism' && !facts.mechanism) {
-      if (!['loss_of_function','haploinsufficiency','gain_of_function','dominant_negative','toxic_gain_of_function','toxic_rna','dosage_gain'].includes(context.mechanism) || !validSources(context.sourceUrls)) result=supportedGate('unknown',context.mechanism==='conflicting'?'Multiple variant mechanisms share this disease context; allele-specific evidence is required before choosing intervention direction.':g.reason);
+    let result=facts[g.id]?.length ? scopedGateFacts(facts[g.id],context,modalityId,options) : supportedGate('unknown',g.reason);
+    const matchingMechanismFact = facts.mechanism?.some(fact => factScopeMatches(fact?.scope,selectionScope(context,modalityId,options)));
+    if (g.id==='mechanism' && hasAlleleSelection(options) && context.alleleEvidence && context.alleleEvidence.status !== 'supported') {
+      result={...supportedGate('unknown',context.alleleEvidence.reason,context.alleleEvidence.sourceUrls),
+        ...(context.alleleEvidence.status === 'conflicting' ? {conflicting:true} : {})};
+    } else if (g.id==='mechanism' && (!facts.mechanism?.length || hasAlleleSelection(options) && !matchingMechanismFact)) {
+      const alleleEvidence=context.alleleEvidence;
+      const matchedAllele=alleleEvidence?.status==='supported' && alleleEvidence.mechanism===context.mechanism &&
+        validSources(alleleEvidence.sourceUrls) && ['gene','diseaseId','variantId'].every(key =>
+          alleleEvidence.scope?.[key] === (key==='gene' ? context.gene : options[key]));
+      if (hasAlleleSelection(options) && !matchedAllele) result=supportedGate('unknown',
+        alleleEvidence?.status==='conflicting' ? alleleEvidence.reason : 'No reviewed functional mechanism matches the selected allele in this disease. A disease-level mechanism cannot establish its therapeutic direction.');
+      else if (!mechanismClasses.has(context.mechanism) || !validSources(context.sourceUrls)) result=supportedGate('unknown',context.mechanism==='conflicting'?'Multiple variant mechanisms share this disease context; allele-specific evidence is required before choosing intervention direction.':g.reason);
       else if (modality.mechanisms?.includes(context.mechanism)) result=supportedGate('supported',
-        `${context.disease || 'Selected context'}: ${context.mechanism.replaceAll('_',' ')} is consistent with this family's usual intervention direction. Disease-level mechanism does not establish rescue of the selected allele or phenotype.`,context.sourceUrls);
+        `${context.disease || 'Selected context'}: ${context.mechanism.replaceAll('_',' ')} is consistent with this family's usual intervention direction. ${hasAlleleSelection(options) ? 'The cited allele observation is assay/model-scoped and does not establish rescue of the selected phenotype or match to an atlas cell.' : 'Disease-level mechanism does not establish rescue of the selected allele or phenotype.'}`,context.sourceUrls);
       else if (modality.mechanisms) result={...supportedGate('unknown',
         `${context.disease || 'Selected context'}: ${context.mechanism.replaceAll('_',' ')} requires an allele- and intervention-specific direction assessment. Mechanism class alone does not prove this modality incompatible; functional evidence must establish whether the proposed intervention restores the selected endpoint.`,context.sourceUrls),directionConcern:true};
       else result=supportedGate('unknown','Mechanism alone does not determine the required variant-specific design.',context.sourceUrls);
+    }
+    if (g.id==='mechanism' && hasAlleleSelection(options) && context.alleleEvidence?.directionUnresolved &&
+        context.alleleEvidence.status === 'supported' &&
+        ['gene','diseaseId','variantId'].every(key => context.alleleEvidence.scope?.[key] ===
+          (key==='gene' ? context.gene : options[key])) &&
+        !(matchingMechanismFact && ['supported','contradicted'].includes(result.status))) {
+      result={...supportedGate('unknown',context.alleleEvidence.directionReason ||
+        'The observed allele mechanism does not resolve intervention direction for this scenario.',
+      context.alleleEvidence.directionSourceUrls || context.alleleEvidence.sourceUrls),directionConcern:true};
     }
     if (g.id==='cargo' && modality.id==='aav-addition') result=assessCargo(reference,options);
     // Unsupported assertions, invalid states and missing source citations do not pass.
@@ -197,29 +324,77 @@ export function assessModality(modalityId, context={}, reference=null, options={
     supported:gates.filter(g=>g.status==='supported').length,unknown:unknown.length,contradicted:blocking.length};
 }
 
-export function buildCandidates({genePhenotypes, severity=[], predictions={}, atlasIndex=null, contexts=[], variantIndex={}, modalityId='aso-upregulation'}) {
+export function buildCandidates({genePhenotypes, severity=[], predictions={}, atlasIndex=null, contexts=[], variantIndex={},
+  modalityId='aso-upregulation',variantId,variantFunctionalEvidence,constructId,populationId,species,route,cells,atlas,doseContext}) {
   const severityMap=new Map(severity.map(x=>[x.hpo_id,x]));
   const rows=[];
   const seen=new Set();
-  for(const [gene,associations] of Object.entries(genePhenotypes.genes || {})) {
+  const associationsByGene=new Map(Object.entries(genePhenotypes.genes || {}).map(([gene,items]) => [gene,[...items]]));
+  const existingAssociations=new Set([...associationsByGene].flatMap(([gene,items]) =>
+    items.map(item => [gene,item.hpo_id,item.disease_id].join('|'))));
+  if (hasAlleleSelection({variantId})) {
+    // These are separate curator-reviewed observation/endpoint records. They
+    // neither alter the frozen HPO export nor describe phenotype penetrance.
+    for (const item of Array.isArray(variantFunctionalEvidence?.cases) ? variantFunctionalEvidence.cases : []) {
+      if (!item || typeof item.gene !== 'string' || typeof item.diseaseId !== 'string') continue;
+      const evidence=resolveAlleleMechanism({gene:item.gene,diseaseId:item.diseaseId,variantId,variantFunctionalEvidence,contexts});
+      if (!evidence?.matchedCaseIds.includes(item.id)) continue;
+      const observations=[...(Array.isArray(item.phenotypes) ? item.phenotypes.map(phenotype =>
+        ({...phenotype,phenotypeEvidenceKind:'genotype_selected_endpoint'})) : []),
+      ...(Array.isArray(item.observedPhenotypes) ? item.observedPhenotypes.filter(phenotype => phenotype.present === true)
+        .map(phenotype => ({...phenotype,phenotypeEvidenceKind:'patient_observation'})) : [])];
+      for (const phenotype of observations) {
+        const sources=phenotype.sourceUrls || item.sourceUrls;
+        const key=[item.gene,phenotype.hpoId,item.diseaseId].join('|');
+        if (existingAssociations.has(key) || !/^HP:\d{7}$/.test(phenotype.hpoId || '') ||
+            !['direct','proxy'].includes(phenotype.mapping) || phenotype.isPhenotypicAbnormality === false ||
+            typeof phenotype.label !== 'string' || !phenotype.label.trim() || /obsolete/i.test(phenotype.label) ||
+            !validSources(sources)) continue;
+        existingAssociations.add(key);
+        if (!associationsByGene.has(item.gene)) associationsByGene.set(item.gene,[]);
+        associationsByGene.get(item.gene).push({hpo_id:phenotype.hpoId,hpo_name:phenotype.label,disease_id:item.diseaseId,
+          sourceKind:'curated_allele_observation',phenotypeEvidenceKind:phenotype.phenotypeEvidenceKind,
+          phenotypeSources:sources,sourceCaseIds:[item.id]});
+      }
+    }
+  }
+  for(const [gene,associations] of associationsByGene) {
     for(const a of associations) {
       const key=[gene,a.hpo_id,a.disease_id].join('|');
       if(seen.has(key)||a.isPhenotypicAbnormality===false||/obsolete/i.test(a.hpo_name)||['HP:0000001','HP:0000118'].includes(a.hpo_id)) continue;
       seen.add(key);
       const matches=contexts.filter(c=>c.gene===gene&&c.diseaseIds?.includes(a.disease_id));
-      const context=matches.length>1 ? {...matches[0],
+      let context=matches.length>1 ? {...matches[0],
         mechanism:new Set(matches.map(c=>c.mechanism)).size===1?matches[0].mechanism:'conflicting',
         sourceUrls:[...new Set(matches.flatMap(c=>c.sourceUrls||[]))],gates:{},modifiers:{},
         notes:'Multiple variant mechanisms share this disease context. Allele-specific evidence is required; gate facts are not automatically merged. ' + matches.map(c => c.notes || c.scope || '').filter(Boolean).join(' ')} : matches[0];
-      const evaluation=assessModality(modalityId,context||{},variantIndex.genes?.[gene]?.reference,{diseaseId:a.disease_id,hpoId:a.hpo_id});
+      const alleleEvidence=resolveAlleleMechanism({gene,diseaseId:a.disease_id,variantId,variantFunctionalEvidence,contexts});
+      if (alleleEvidence) {
+        // Disease facts stay visible but cannot pass selected-allele scope checks.
+        // Only reviewed observations choose the allele's functional direction.
+        const resolvedContexts=matches.filter(match => alleleEvidence.contextIds.includes(match.id));
+        const base=resolvedContexts.length === 1 ? resolvedContexts[0] : context;
+        context={...(base || {}),gene,diseaseIds:[a.disease_id],
+          ...(alleleEvidence.status !== 'supported' ? {disease:`${gene}-associated disease (${a.disease_id})`} : {}),
+          mechanism:alleleEvidence.mechanism,sourceUrls:alleleEvidence.sourceUrls,alleleEvidence,
+          notes:alleleEvidence.reason,
+          gates:mergeFacts(...matches.map(match => match.gates),alleleEvidence.gates),
+          modifiers:mergeFacts(...matches.map(match => match.modifiers),alleleEvidence.modifiers)};
+      }
+      const evaluation=assessModality(modalityId,context||{},variantIndex.genes?.[gene]?.reference,
+        {diseaseId:a.disease_id,hpoId:a.hpo_id,variantId,constructId,populationId,species,route,cells,atlas,doseContext});
       const s=severityMap.get(a.hpo_id);
       rows.push({id:key,gene,hpoId:a.hpo_id,phenotype:a.hpo_name,diseaseId:a.disease_id,
-        disease:context?.disease||a.disease_id,context:context||null,
+        disease:context?.disease||a.disease_id,context:context||null,alleleEvidence,
         severity:s?.severity_class||'unknown',severityScore:s?.severity_score??null,
         severityProvenance:'Legacy machine-annotated HPO severity; unvalidated and not a treatment-priority probability.',
         predictedCells: Object.values(atlasIndex?.phenotypes?.[a.hpo_id]?.atlases || {}).map(atlas=>atlas.top).filter(Boolean),
         predictedCell:atlasIndex ? Object.values(atlasIndex.phenotypes?.[a.hpo_id]?.atlases || {}).map(atlas=>atlas.top?.cell).filter(Boolean).join(' / ') || null : predictions[a.hpo_id]?.top_cell_type||null,
-        associationKind:'Disease-context phenotype–gene co-association; variant-level phenotype attribution unestablished.',
+        sourceKind:a.sourceKind || 'hpo_disease_join',phenotypeSources:a.phenotypeSources || [],
+        sourceCaseIds:a.sourceCaseIds || [],phenotypeEvidenceKind:a.phenotypeEvidenceKind || null,
+        associationKind:a.sourceKind === 'curated_allele_observation'
+          ? 'Reviewed allele-selected patient observation / genotype-selected endpoint; not phenotype penetrance or sole causality.'
+          : 'Disease-context phenotype–gene co-association; variant-level phenotype attribution unestablished.',
         evaluation});
     }
   }

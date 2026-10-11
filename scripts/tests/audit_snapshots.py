@@ -95,10 +95,47 @@ SCHEMAS = {
     }),
     'variantFunctionalEvidence.json': obj(['schemaVersion', 'reviewedAt', 'scope', 'cases'], {
         'cases': {'type': 'array', 'items': obj(['id', 'gene', 'variantIds', 'variantLabel', 'variantClass',
-            'diseaseId', 'therapyId', 'modalityId', 'phenotypes', 'evidence', 'limits', 'sourceUrls'], {
+            'diseaseId', 'phenotypes', 'evidence', 'limits', 'sourceUrls'], {
                 'variantIds': {'type': 'array', 'items': STRING},
+                'therapyId': {'type': ['string', 'null']},
+                'modalityId': {'type': ['string', 'null']},
                 'sourceUrls': {'type': 'array', 'minItems': 1, 'items': STRING},
+                'observedPhenotypes': {'type': 'array', 'items': obj(['hpoId', 'label', 'present', 'rationale', 'sourceUrls'], {
+                    'present': {'type': 'boolean'}, 'sourceUrls': {'type': 'array', 'minItems': 1, 'items': STRING},
+                })},
+                'functionalObservations': {'type': 'array', 'items': obj(['species', 'cells', 'assay', 'intervention',
+                    'timeFrame', 'direction', 'claim', 'sourceUrls'], {
+                    'direction': {'enum': ['supports', 'opposes', 'limits', 'unknown']},
+                    'sourceUrls': {'type': 'array', 'minItems': 1, 'items': STRING},
+                })},
+                'mechanismEvidence': obj(['mechanism', 'sourceUrls', 'scope'], {
+                    'mechanism': {'enum': ['loss_of_function', 'haploinsufficiency', 'gain_of_function',
+                        'dosage_gain', 'toxic_gain_of_function', 'dominant_negative', 'toxic_rna', 'unknown']},
+                    'scope': obj(['gene', 'diseaseId', 'variantId']),
+                    'sourceUrls': {'type': 'array', 'minItems': 1, 'items': STRING},
+                    'directionUnresolved': {'type': 'boolean'},
+                    'directionReason': STRING,
+                    'directionSourceUrls': {'type': 'array', 'minItems': 1, 'items': STRING},
+                }),
             })},
+    }),
+    'endpointEvidence.json': obj(['schemaVersion', 'reviewedAt', 'scope', 'sources', 'assessments'], {
+        'sources': {'type': 'array', 'items': obj(['id', 'title', 'url', 'kind', 'accessedAt'])},
+        'assessments': {'type': 'array', 'items': obj(['assessmentId', 'diseaseIds', 'endpointResults', 'cellObservations', 'limitations'], {
+            'diseaseIds': {'type': 'array', 'items': obj(['id', 'label', 'sourceIds', 'rationale'])},
+            'endpointResults': {'type': 'array', 'items': obj(['id', 'hpoId', 'diseaseIds', 'trialRefs', 'population',
+                'endpoint', 'comparator', 'role', 'analysis', 'timeFrame', 'outcome', 'summary', 'sourceIds', 'scopeReview', 'limits'], {
+                'outcome': {'enum': ['benefit', 'null', 'harm', 'mixed', 'surrogate', 'unknown', 'not_measured']},
+                'scopeReview': {'enum': ['endpoint_specific', 'single_mapped_endpoint']},
+                'sourceIds': {'type': 'array', 'minItems': 1, 'items': STRING},
+            })},
+            'cellObservations': {'type': 'array', 'items': obj(['id', 'hpoIds', 'trialRefs', 'population', 'species',
+                'cells', 'route', 'assay', 'timeFrame', 'evidenceType', 'direction', 'claim', 'sourceIds',
+                'endpointResultIds', 'diseaseIds', 'studyRelationship', 'clinicalMediation', 'atlasIdentity'], {
+                'direction': {'enum': ['supports', 'opposes', 'limits', 'unknown']},
+                'sourceIds': {'type': 'array', 'minItems': 1, 'items': STRING},
+            })},
+        })},
     }),
     'dosageEvidence.json': obj(['metadata', 'genes'], {'genes': {'type': 'object', 'additionalProperties':
         obj(['gene', 'ncbiGeneId', 'assembly', 'haploinsufficiency', 'triplosensitivity'], {
@@ -247,6 +284,12 @@ class Audit:
         self.check(len(source_ids) == len(curated['sources']), 'Duplicate curated source IDs')
         self.counts['curatedSources'] = len(source_ids)
         self.counts['curatedAssessments'] = len(curated['assessments'])
+        endpoints = data.get('endpointEvidence.json', {})
+        endpoint_source_ids = {source['id'] for source in endpoints.get('sources', [])}
+        self.check(len(endpoint_source_ids) == len(endpoints.get('sources', [])), 'Duplicate endpoint source IDs')
+        self.check(not source_ids.intersection(endpoint_source_ids), 'Endpoint sources reuse curated IDs')
+        source_ids.update(endpoint_source_ids)
+        self.counts['endpointSources'] = len(endpoint_source_ids)
         assessment_ids = [value['id'] for value in curated['assessments']]
         self.check(len(set(assessment_ids)) == len(assessment_ids), 'Duplicate curated assessment IDs')
         for assessment in curated['assessments']:
@@ -266,7 +309,8 @@ class Audit:
                     self.check(term is not None, f'Curated HPO absent: {identifier}')
                     if term:
                         self.check(not term['obsolete'], f'Curated HPO obsolete: {identifier}')
-                        self.check(value['label'] == term['label'], f'Curated HPO label mismatch: {identifier}')
+                        if 'label' in value:
+                            self.check(value['label'] == term['label'], f'Curated HPO label mismatch: {identifier}')
                         self.check(term.get('isPhenotypicAbnormality') is True, f'Curated endpoint is not a clinical phenotype: {identifier}')
                 for child in value.values():
                     references(child)
@@ -274,6 +318,7 @@ class Audit:
                 for child in value:
                     references(child)
         references(curated['assessments'])
+        references(endpoints.get('assessments', []))
         functional = data.get('variantFunctionalEvidence.json', {}).get('cases', [])
         references(functional)
         for therapy in data['legacyCatalog.json']['therapies']:
@@ -425,11 +470,77 @@ class Audit:
         self.counts['distinctCuratedLinkedRegistryIds'] = len(linked_trial_ids)
         therapy_ids = {assessment['id'] for assessment in curated['assessments']}
         self.counts['alleleSpecificCases'] = len(functional)
+        case_ids = [case['id'] for case in functional]
+        self.check(len(set(case_ids)) == len(case_ids), 'Duplicate allele case IDs')
         for case in functional:
-            self.check(case['therapyId'] in therapy_ids, f'{case["id"]}: unresolved therapyId')
+            if case.get('therapyId'):
+                self.check(case['therapyId'] in therapy_ids, f'{case["id"]}: unresolved therapyId')
+            else:
+                self.counts['functionalCasesWithoutTreatment'] += 1
             for identifier in case['variantIds']:
                 self.check(identifier in self.variant_ids[case['gene']], f'{case["id"]}: variation ID absent from same-gene snapshot: {identifier}')
             self.check(case['diseaseId'] in {row['disease_id'] for row in associations.get(case['gene'], [])}, f'{case["id"]}: same-gene disease join absent')
+            evidence = case.get('mechanismEvidence')
+            if evidence:
+                self.counts['exactAlleleMechanismCases'] += 1
+                scope = evidence['scope']
+                self.check(scope['gene'] == case['gene'] and scope['diseaseId'] == case['diseaseId']
+                           and scope['variantId'] in case['variantIds'], f'{case["id"]}: mechanism identity scope mismatch')
+                if evidence.get('directionUnresolved'):
+                    self.check(bool(evidence.get('directionReason', '').strip()), f'{case["id"]}: unresolved intervention direction lacks reason')
+                for context_id in evidence.get('contextIds', []):
+                    match = next((context for context in data['mechanismContexts.json'] if context['id'] == context_id), None)
+                    self.check(match is not None and match['gene'] == case['gene'] and case['diseaseId'] in match['diseaseIds'],
+                               f'{case["id"]}: unresolved same-gene mechanism context {context_id}')
+            scenario_ids = [scenario['id'] for scenario in case.get('assessmentScenarios', [])]
+            self.check(len(set(scenario_ids)) == len(scenario_ids), f'{case["id"]}: duplicate experiment scenario')
+            positive_hpos = {item['hpoId'] for item in case.get('phenotypes', [])}
+            positive_hpos.update(item['hpoId'] for item in case.get('observedPhenotypes', []) if item['present'])
+            for facts_field in ('gates', 'modifiers'):
+                for fact in case.get(facts_field, []):
+                    self.counts['alleleGateFacts' if facts_field == 'gates' else 'alleleMaturityFacts'] += 1
+                    scope = fact.get('scope', {})
+                    self.check(scope.get('gene') == case['gene'] and scope.get('diseaseId') == case['diseaseId']
+                               and scope.get('variantId') in case['variantIds'] and scope.get('hpoId') in positive_hpos,
+                               f'{case["id"]}: requirement/maturity fact lacks matching positive observed/endpoint scope')
+                    self.check(bool(fact.get('sources')), f'{case["id"]}: unsourced gate/maturity fact')
+                    optional = ('constructId', 'populationId', 'species', 'route', 'cells', 'atlas', 'doseContext')
+                    self.check(any(all(scope.get(key) is None or scope[key] == scenario.get(key) for key in optional)
+                                   for scenario in case.get('assessmentScenarios', [])),
+                               f'{case["id"]}: gate/maturity facts cannot be selected in a matching experiment')
+        endpoint_ids = [record['assessmentId'] for record in endpoints.get('assessments', [])]
+        self.check(len(set(endpoint_ids)) == len(endpoint_ids), 'Duplicate endpoint assessment IDs')
+        self.check(set(endpoint_ids) == therapy_ids, 'Endpoint records do not cover the exact current assessment inventory')
+        result_ids = [result['id'] for record in endpoints.get('assessments', []) for result in record['endpointResults']]
+        observation_ids = [observation['id'] for record in endpoints.get('assessments', []) for observation in record['cellObservations']]
+        self.check(len(set(result_ids)) == len(result_ids), 'Duplicate endpoint result IDs')
+        self.check(len(set(observation_ids)) == len(observation_ids), 'Duplicate cellular observation IDs')
+        self.counts['endpointScopedAssessments'] = len(endpoint_ids)
+        for record in endpoints.get('assessments', []):
+            assessment = next((item for item in curated['assessments'] if item['id'] == record['assessmentId']), None)
+            self.check(assessment is not None, f'{record["assessmentId"]}: endpoint assessment unresolved')
+            if not assessment:
+                continue
+            mapped_hpos = {item['hpoId'] for item in assessment['phenotypes']}
+            diseases = {item['id'] for item in record['diseaseIds']}
+            self.counts['endpointDiseaseJoins'] += len(diseases)
+            results_by_id = {result['id']: result for result in record['endpointResults']}
+            for result in record['endpointResults']:
+                self.counts['endpointResults'] += 1
+                self.check(result['hpoId'] in mapped_hpos, f'{result["id"]}: endpoint HPO not in reviewed treatment crosswalk')
+                self.check(set(result['diseaseIds']).issubset(diseases), f'{result["id"]}: disease join lacks reviewed assessment identity')
+                self.check(all(ref.get('nctId') is None or ref['nctId'] in trial_index for ref in result['trialRefs']),
+                           f'{result["id"]}: unresolved registry trial')
+            for observation in record['cellObservations']:
+                self.counts['scopedCellObservations'] += 1
+                self.check(set(observation['hpoIds']).issubset(mapped_hpos), f'{observation["id"]}: cell observation endpoint scope unreviewed')
+                self.check(bool(observation['endpointResultIds']) and set(observation['endpointResultIds']).issubset(results_by_id),
+                           f'{observation["id"]}: unresolved cellular-observation result links')
+                linked_results = [results_by_id[identifier] for identifier in observation['endpointResultIds'] if identifier in results_by_id]
+                self.check(all(any(result['hpoId'] == hpo and set(observation['diseaseIds']).issubset(result['diseaseIds'])
+                                       for result in linked_results) for hpo in observation['hpoIds']),
+                           f'{observation["id"]}: cellular observation has no linked same-HPO diagnosis scope')
+                self.check(bool(observation.get('studyRelationship')), f'{observation["id"]}: experimental/outcome study relationship unrecorded')
         self.counts['distinctVariationIdsAcrossPanel'] = len(set().union(*self.variant_ids.values())) if self.variant_ids else 0
         dosage = data['dosageEvidence.json']
         self.counts['dosageGenes'] = len(dosage['genes'])

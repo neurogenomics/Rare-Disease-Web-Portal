@@ -15,7 +15,7 @@ export function EmptyState({ title = 'No matching records', children, onReset })
 }
 export function EntityLink({ children, className = 'ev-entity-link', ...updates }) {
   const location = useLocation();
-  return <Link className={className} to={buildEvidenceHref(updates, location.search)}>{children}</Link>;
+  return <Link className={className} to={buildEvidenceHref(updates, location.search, { pathname: location.pathname })}>{children}</Link>;
 }
 export function ExplorerLink({ children, kind, selection, className = 'ev-entity-link', ...context }) {
   const location = useLocation();

@@ -1,10 +1,19 @@
 /** Route context is a navigation aid, never an assertion of a biological link. */
 const biologicalKeys = ['gene', 'hpo', 'disease', 'atlas', 'cell'];
-const viewKeys = ['search', 'therapy', 'candidate', 'variant', 'evidence', 'vclass', 'consequence', 'location', 'stars', 'readiness', 'mechanism', 'severity'];
+const viewKeys = ['search', 'therapy', 'candidate', 'variant', 'scenario', 'evidence', 'vclass', 'consequence', 'location', 'stars', 'readiness', 'mechanism', 'severity'];
 const atlasAliases = { DH: 'DescartesHuman', HCL: 'HumanCellLandscape' };
 const valueOf = value => value == null ? '' : String(value);
 const atlasValue = value => atlasAliases[value] || value || '';
 const setValue = (params, key, value) => value == null || value === '' ? params.delete(key) : params.set(key, value);
+const alleleTabs = new Set(['variants', 'modalities']);
+const carriesAllele = (from, to) => alleleTabs.has(from) && alleleTabs.has(to);
+const evidenceEntryTabs = { '/evidence': 'therapies', '/gene-therapy': 'modalities', '/variants': 'variants', '/approved-therapies': 'therapies' };
+
+export function evidenceSourceTab(pathname, search = '') {
+  const source = search instanceof URLSearchParams ? search : new URLSearchParams(search);
+  const tab = source.get('tab');
+  return ['therapies', 'variants', 'modalities', 'methods'].includes(tab) ? tab : evidenceEntryTabs[pathname] || null;
+}
 
 export function biologicalContext(search = '') {
   const source = search instanceof URLSearchParams ? search : new URLSearchParams(search);
@@ -18,18 +27,28 @@ export function biologicalContext(search = '') {
 export function updateEvidenceParams(previous, updates, { currentTab } = {}) {
   const next = new URLSearchParams(previous);
   const fromTab = currentTab || next.get('tab') || 'therapies';
-  if (updates.tab && updates.tab !== fromTab) viewKeys.forEach(key => next.delete(key));
+  if (updates.tab && updates.tab !== fromTab) viewKeys.forEach(key => {
+    if (!['variant', 'scenario'].includes(key) || !carriesAllele(fromTab, updates.tab)) next.delete(key);
+  });
   const changed = key => Object.hasOwn(updates, key) && valueOf(updates[key]) !== (next.get(key) || '');
-  if (changed('gene')) ['therapy', 'candidate', 'variant', 'vclass', 'consequence', 'location', 'stars'].forEach(key => next.delete(key));
+  if (changed('gene')) ['therapy', 'candidate', 'variant', 'scenario', 'vclass', 'consequence', 'location', 'stars'].forEach(key => next.delete(key));
+  if (changed('variant')) next.delete('scenario');
   if (['hpo', 'disease', 'cell', 'atlas'].some(changed)) ['therapy', 'candidate'].forEach(key => next.delete(key));
   Object.entries(updates).forEach(([key, value]) => setValue(next, key, key === 'atlas' && value ? atlasValue(value) : value));
   return next;
 }
 
-export function buildEvidenceHref(updates = {}, currentSearch = '') {
-  // Entity links deliberately carry only durable biology plus explicit destination selections.
+export function buildEvidenceHref(updates = {}, currentSearch = '', { pathname, currentTab } = {}) {
+  // An explicitly selected allele carries between variant inspection and modality
+  // assessment only. Other routes do not imply an allele-specific evidence join.
+  const source = currentSearch instanceof URLSearchParams ? currentSearch : new URLSearchParams(currentSearch);
+  const fromTab = currentTab || evidenceSourceTab(pathname, source);
   const context = biologicalContext(currentSearch);
-  const next = updateEvidenceParams(context, updates);
+  if (carriesAllele(fromTab, updates.tab) && source.get('variant')) {
+    context.set('variant', source.get('variant'));
+    if (source.get('scenario')) context.set('scenario', source.get('scenario'));
+  }
+  const next = updateEvidenceParams(context, updates, { currentTab: fromTab });
   return `/evidence${next.size ? `?${next}` : ''}`;
 }
 

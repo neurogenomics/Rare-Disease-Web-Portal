@@ -1,8 +1,8 @@
 # Evidence validation report
 
-Validated 2026-10-11. The final offline audit of 10,199 JSON files reports **zero schema, count, reference, source-field or archive/public consistency errors**. All 170 regression tests and the production build pass. There is one unresolved disease-alias warning. These checks establish conservative calculations and traceability; passing them does not validate causal cell types, a clinical treatment decision or a treatment-success probability.
+Validated 2026-10-11. The final offline audit of 10,200 JSON files reports **zero schema, count, reference, source-field or archive/public consistency errors**. All 211 regression tests and the production build pass. There is one unresolved disease-alias warning. These checks establish conservative calculations and traceability; passing them does not validate causal cell types, a clinical treatment decision or a treatment-success probability.
 
-The prebuild publisher passed, and Vite completed the production build in 11.77 seconds after the site-wide integration. The evidence-workbench executable is 657.25 kB, or 156.26 kB gzip; the entry executable is 242.12 kB, or 75.27 kB gzip. Large evidence datasets are published as separately fetched data. Existing build warnings concern stale Browserslist data and chunks larger than 500 kB. The completed desktop/mobile and keyboard workbench review found no material scientific-limit mismatch with this report. A further desktop browser check verified the gene browser's unavailable-API warning, disabled unsourced percentile filter and route to the snapshot-backed workbench.
+The prebuild publisher passed, and Vite completed the production build in 13.42 seconds after the endpoint/allele integration. The evidence-workbench executable is 900.07 kB, or 196.04 kB gzip; the entry executable is 242.12 kB, or 75.27 kB gzip. The large frozen source datasets are separately fetched; the new authored endpoint evidence is included in the workbench chunk. Existing build warnings concern stale Browserslist data and chunks larger than 500 kB. Further splitting of authored evidence remains a performance opportunity. Desktop/mobile checks below verified the scoped results and allele controls. Earlier checks also verified the gene browser's unavailable-API warning, disabled unsourced percentile filter and route to the snapshot-backed workbench.
 
 All 13 main, information and evidence entry routes now reuse the established
 portal logo, header, navigation, footer and Ant Design conventions. Browser
@@ -13,8 +13,9 @@ mobile-menu Escape and trial-drawer Escape were exercised. The detailed paths
 are in [site-navigation-audit.md](site-navigation-audit.md). CSS selectors remain
 scoped. Frontend lint passes with the legacy prop-types and exhaustive-deps rules
 excluded; their pre-existing debt has not been represented as a clean full lint.
-All 94 frontend regressions pass. Clinical evidence and the candidate engine
-remain unchanged; the publication adapter derives views from the audited corpus.
+All 135 frontend regressions pass. The publication adapter derives biological
+explorer views from the audited corpus; the new endpoint and allele models are
+validated separately below.
 
 ## Reproducible checks
 
@@ -35,7 +36,7 @@ The corpus audit requires `jsonschema` and the frozen local HPO, ClinGen and API
 | --- | --- |
 | Import, dosage, ontology, registry-refresh and reverse-cell fixtures | 22 passed |
 | Backend candidate engine and annotation missingness | 40 passed |
-| Frontend evidence, modality, annotation, navigation, snapshot and severity handling | 94 passed |
+| Frontend evidence, endpoint scope, allele/modality, annotation, navigation, snapshot and severity handling | 135 passed |
 | Snapshot publication and restoration | 14 passed |
 | Final normalized corpus and archive audit | Zero errors; one disease-alias warning |
 | Prebuild publication and production build | Passed |
@@ -82,9 +83,17 @@ The mechanism-ledger regressions cover all 11 modality families without an autom
 
 All 22 modality families require sourced functional sufficiency for the selected endpoint. Fixtures show that all other gates passing cannot substitute for an unknown biochemical threshold, effective cell fraction or circuit contribution. Unsupported affirmative and negative assertions remain unknown; declaring this necessary gate not applicable cannot bypass it, and sourced failure blocks that scenario. Molecular restoration does not establish benefit across the whole syndrome.
 
-Four separate nonblocking maturity dimensions cover preclinical evidence, endpoint measurability, therapeutic precedent and comparative value. Fixtures preserve valid Strong/Moderate/Weak/Unknown judgments only with an explanation, HTTP(S) source array and matching gene, disease, phenotype and modality. Missing or malformed evidence, mismatched scope and omitted or mismatched declared constructs/populations stay unknown. Strong/weak labels cannot change any modality evaluation or candidate ordering, and ambiguous merged contexts discard these scoped facts. The current corpus has no modifier facts, so the interface displays unknown maturity rather than manufacturing it from trial phase or same-gene precedent.
+Four separate nonblocking maturity dimensions cover preclinical evidence, endpoint measurability, therapeutic precedent and comparative value. Fixtures preserve valid Strong/Moderate/Weak/Unknown judgments only with an explanation, HTTP(S) source array and matching gene, disease, phenotype and modality. Missing or malformed evidence, mismatched scope and omitted or mismatched declared constructs/populations stay unknown. Strong/weak labels cannot change any modality evaluation or candidate ordering, and ambiguous merged contexts discard these scoped facts. Disease-level contexts retain empty modifier ledgers; the exact-allele examples now contain four narrowly scoped maturity records, including an explicit Unknown for untested STXBP1 corrective-ASO evidence.
 
-The final interface review also checked that MacTel does not offer an inherited-disease requirement link when its disease-gene list is empty, while Luxturna retains the matching RPE65 requirement link. Access and treatment-window gates are scoped to the functional compartment, selected endpoint and stage: an extracellular or downstream bypass does not acquire an unjustified requirement to enter or rescue the disease-causing cells. All-family comparisons use the same selected disease context, gene reference and cassette scenario; family changes preserve that exact context and filters even when its new assessment falls outside the shortlist's requirement-status filter. Necessary gate counts remain separate from maturity labels. These interface/engine corrections changed no evidence snapshots, so the completed source-corpus audit remains applicable.
+The interface review also checked that MacTel does not offer an inherited-disease requirement link when its disease-gene list is empty, while Luxturna retains the matching RPE65 requirement link. Access and treatment-window gates are scoped to the functional compartment, selected endpoint and stage: an extracellular or downstream bypass does not acquire an unjustified requirement to enter or rescue the disease-causing cells. All-family comparisons use the same selected disease context, gene reference and cassette scenario; family changes preserve that exact context and filters even when its new assessment falls outside the shortlist's requirement-status filter. Necessary gate counts remain separate from maturity labels. The original source snapshots are unchanged; authored endpoint/allele evidence is covered by the expanded corpus audit.
+
+## Endpoint and exact-allele follow-up
+
+There are 120 result records across the 77 assessments: 63 have specific endpoint/population scope review, including all 21 multi-HPO assessments, STRIVE and two sepofarsen studies; 57 single-HPO carry-forward records visibly retain pending detailed review. Eighteen endpoint regressions cover opposing organ outcomes, hierarchical testing, surrogate/not-measured phenotypes, study-specific citations and exact diagnosis/HPO/cell-associated-HPO intersections. Disease identifiers used for discovery do not establish enrollment of the reference allele.
+
+Eight allele examples separate human phenotype observations, functional assays and clinical endpoints. Seven exact ClinVar mechanism scopes, seven requirement facts and four maturity records are audited. Resolver tests reject generic disease direction under an unreviewed allele, opposite observations, mismatched identity/scope and omitted experimental dimensions. Unknown and conflicting alleles retain neutral diagnosis labels. SCN2A R853Q's mixed experimental findings keep automatic intervention direction unknown even though conventional loss remains visible; a valid intervention-specific assessment can resolve only its matching scope. STXBP1 defect characterization does not become ASO treatment maturity. Model splice rescue for CEP290 does not establish visual efficacy.
+
+Browser checks verified SCN2A gain/loss/unreviewed selections, CFTR intervention-scoped requirements and reciprocal variant/scenario navigation, STXBP1 VUS versus functional evidence and reported seizure absence, CEP290 model rescue versus negative randomized visual results, eplontersen organ switching, tiratricol developmental failure and divergent olipudase spleen results. Alias `/gene-therapy` navigation retains the exact allele/scenario. New selectors and populated allele views have no page overflow at 1280px/390px. Methods displays the new coverage and 254 source-library entries; the actual downloaded manifest contains 219 treatment sources plus 35 condition-reference sources and the scoped counts. Five structured cell observations declare their study relationship, including earlier ZEVASKYN biopsies versus VIITAL outcomes; none asserts atlas identity or clinical mediation.
 
 ## Corpus and source traceability
 
@@ -104,10 +113,14 @@ The final interface review also checked that MacTel does not offer an inherited-
 | Distinct ClinVar Variation IDs across the panel | 148,294 |
 | Registry snapshots | 119 |
 | Registry retrieval failures / retained stale snapshots | 0 / 0 |
-| Curated assessments / source records | 77 / 218 |
-| Resolved curated source-ID references | 612 |
+| Curated assessments / treatment source records | 77 / 219 |
+| Additional endpoint condition-reference sources | 35 |
+| Endpoint result records / specifically scoped / carry-forward pending | 120 / 63 / 57 |
+| Reviewed diagnosis crosswalk entries / structured cell observations | 56 / 5 |
+| Resolved treatment and endpoint source-ID references | 994 |
 | Reviewed disease-mechanism contexts | 27 |
-| Explicit allele-specific functional cases | 2 |
+| Explicit allele/source functional cases / exact mechanism identities | 8 / 7 |
+| Exact-allele requirement facts / maturity records | 7 / 4 |
 | ClinGen dosage genes | 1,532 |
 | Normalized snapshots packed and restored | 9,973 |
 | Packed / uncompressed snapshot bytes | 111,164,041 / 893,291,495 |
@@ -128,7 +141,7 @@ Atlas counts, signed directions, q-threshold decisions, positive-only minimum-q 
 
 All 27 mechanism contexts have at least one same-gene disease-ID join. `MECP2-4` also lists `ORPHA:85281`, which is absent from the current HPO export; its `OMIM:300260` join resolves. This is retained as an alias-resolution warning, without inventing a crosswalk. Opposing mechanisms sharing a disease ID, including SCN2A, STXBP1 and TCF4 contexts, must remain ambiguous until an exact allele and appropriate functional evidence resolve them. The reviewed context is not assigned to every variation in a gene.
 
-Independent primary-source spot checks support the scope of the SCN1A loss/gain distinction, SYNGAP1 dosage loss, MECP2 duplication, SLC6A1 tested-variant functional loss, STXBP1 reduced-dosage human-neuron model, TCF4 variant-specific fly model and SCN2A R1882Q gain versus R853Q loss. For example, the [SCN2A patient-neuron study](https://pmc.ncbi.nlm.nih.gov/articles/PMC10883610/) resolves specific tested variants, while the [TCF4 fly-model study](https://pmc.ncbi.nlm.nih.gov/articles/PMC4736037/) supports a model-specific dominant-negative context. The [SLC6A1 functional study](https://pmc.ncbi.nlm.nih.gov/articles/PMC11179425/) supports tested-variant haploinsufficiency and leaves the developmental rescue requirement unresolved. These checks do not independently verify the full contents or current availability of every curated external reference.
+Independent primary-source spot checks support the scope of the SCN1A loss/gain distinction, SYNGAP1 dosage loss, MECP2 duplication, SLC6A1 tested-variant functional loss, STXBP1 reduced-dosage human-neuron model, TCF4 variant-specific fly model and SCN2A R1882Q gain versus R853Q conventional-current loss. The [SCN2A patient-neuron study](https://pmc.ncbi.nlm.nih.gov/articles/PMC10883610/) reports variant- and assay-specific observations; R853Q's mixed experimental findings leave intervention direction unresolved. The [TCF4 fly-model study](https://pmc.ncbi.nlm.nih.gov/articles/PMC4736037/) supports a model-specific dominant-negative context. The [SLC6A1 functional study](https://pmc.ncbi.nlm.nih.gov/articles/PMC11179425/) supports tested-variant haploinsufficiency and leaves the developmental rescue requirement unresolved. These checks do not independently verify the full contents or current availability of every curated external reference.
 
 The following limits remain material:
 

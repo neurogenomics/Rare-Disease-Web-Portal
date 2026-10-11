@@ -22,13 +22,18 @@ interface. Tab changes preserve gene, phenotype, disease identifier and exact
 atlas/cell context, while clearing view-specific searches, filters and record
 selections that cannot be reused in another view. An atlas change clears the
 former cell context instead of transferring its label to another atlas.
+The exact selected allele and published intervention scenario also survive
+variants ↔ modalities navigation, including `/variants` and `/gene-therapy`
+aliases. Changing the gene or allele clears the former scenario. Treatment
+discovery does not inherit that selection as an allele-specific treatment match.
 
 A navigable connection is not an adjudicated causal claim. Gene–phenotype links
 are disease-context joins. ClinVar tables remain gene-scoped when entered from
 a phenotype or cell; the carried context does not assign a variant to that
 phenotype or cell. Submitted condition identifiers can scope modality discovery
-without an inferred disease crosswalk. Treatment discovery uses gene and endpoint
-and does not manufacture an allele-specific match.
+without an inferred disease crosswalk. Treatment discovery uses reviewed
+diagnosis-to-result population joins as well as gene and HPO context, without
+manufacturing an allele-specific match. Unmapped diagnosis scopes remain unknown.
 
 ## Inspect an evidence chain
 
@@ -37,6 +42,10 @@ and does not manufacture an allele-specific match.
 2. Read trial outcome separately from authorization and programme status. Open
    registry details for measures, groups, effect estimates, confidence intervals,
    p values and adverse events where posted. Unposted results remain unknown.
+   Selected-HPO results preserve their own population, comparator, time point,
+   endpoint role and analysis boundary. Whole-trial summaries remain background;
+   another endpoint's benefit cannot fill an unreviewed result. Single-HPO
+   carry-forward adjudications visibly retain their pending detailed scope review.
 3. Compare disease relevance, delivery, engagement, rescue and bypass with the
    atlas rows. Positive and negative estimates are separate; exact labels do not
    establish lineage equivalence or cellular causality.
@@ -64,6 +73,11 @@ the selected gene, disease identifier, HPO phenotype and modality. Any declared
 variant, construct or population must also match. Evidence from another scope
 cannot pass or contradict the selected gate. A supported disease-level direction
 still does not adjudicate a patient's allele or establish functional rescue.
+Species, route, cells, atlas and dose context must likewise match when declared.
+Select an explicit published intervention or experiment to apply those facts;
+leaving the scenario unselected cannot borrow them. An observed channel effect
+with unresolved intervention direction remains a direction concern even when
+its conventional gain/loss class usually motivates that family.
 
 For example, wild-type BEST1 supplementation, including AAV2 delivery, restored
 chloride currents in dominant-mutant patient-derived retinal pigment epithelial
@@ -101,6 +115,13 @@ truth; identifiers, references, dates and scoped judgments are retained. Typed
 delivery receptor from becoming a disease etiology. `mechanismContexts.json`
 contains individually reviewed disease-scoped mechanisms. Empty gates preserve
 missing evidence, rather than assuming universal delivery, safety or rescue.
+`endpointEvidence.json` holds the separate HPO/result/diagnosis joins and
+structured cellular observations. Its five cellular examples do not assert an
+atlas identity crosswalk or clinical mediation. `variantFunctionalEvidence.json`
+holds exact allele examples, observed patient phenotypes, assay scope and
+intervention-specific facts. Source-case observations absent from the HPO export
+appear separately when that exact allele is selected; absent phenotypes never
+create supplemental positive candidates. The frozen HPO export is preserved.
 
 HPO disease-context associations come from a checksummed official export.
 The frozen ontology supplies labels, synonyms, obsolete status and `is_a`

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {modalities, priorityModifiers, assessPriorityModifiers, assessCargo, assessModality, buildCandidates, rankCandidates} from '../src/lib/modalityModel.js';
+import {modalities, priorityModifiers, assessPriorityModifiers, assessCargo, assessModality, buildCandidates, rankCandidates, resolveAlleleMechanism, matchesMechanismFilter} from '../src/lib/modalityModel.js';
 
 const source = 'https://example.org/condition-specific-evidence';
 const reference = cds => ({canonicalTranscript: {codingBasesExcludingStop: cds}, provenance: {sourceUrl: source}});
@@ -385,7 +385,10 @@ test('declared variant, construct and population must match before a gate judgme
         }
       }
       const generalScoped = {...fact, scope: gateScope(modalityId)};
-      assert.equal(gateOf(assessModality(modalityId, {...diseaseContext, gates: {mechanism: generalScoped}}, null, exact), 'mechanism').status, status);
+      assert.equal(gateOf(assessModality(modalityId, {...diseaseContext, gates: {mechanism: generalScoped}}, null, exact), 'mechanism').status, 'unknown');
+      // Disease-only exploration retains its original scope; selecting an allele
+      // adds an explicit requirement instead of inheriting this general judgment.
+      assert.equal(gateOf(assessModality(modalityId, {...diseaseContext, gates: {mechanism: generalScoped}}, null, gateSelection()), 'mechanism').status, status);
     }
   }
 });
@@ -514,4 +517,362 @@ test('conflicting mechanism records for one disease cannot depend on input order
   assert.deepEqual(reversed.context.modifiers, {});
   assert.ok(assessPriorityModifiers(first.context, modifierSelection()).every(modifier => modifier.strength === 'unknown'));
   assert.deepEqual(assessPriorityModifiers(reversed.context, modifierSelection()), assessPriorityModifiers(first.context, modifierSelection()));
+});
+
+const alleleScope = (overrides = {}) => ({gene:'GENE1',diseaseId:'OMIM:1',variantId:'123',...overrides});
+const alleleCase = (overrides = {}) => ({
+  id:'allele-loss',gene:'GENE1',diseaseId:'OMIM:1',variantIds:['123'],therapyId:null,
+  mechanismEvidence:{mechanism:'loss_of_function',sourceUrls:[source],scope:alleleScope({
+    species:'human',model:'patient-derived neurons',assay:'electrophysiology',
+  })},...overrides,
+});
+const alleleInputs = (overrides = {}) => ({...inputs(),variantId:'123',
+  variantFunctionalEvidence:{cases:[alleleCase()]},...overrides});
+const resolve = (cases, overrides = {}) => resolveAlleleMechanism({...alleleScope(),
+  variantFunctionalEvidence:{cases},...overrides});
+
+test('an exact reviewed allele resolves functional direction without claiming all HPO phenotypes', () => {
+  const observation=resolve([alleleCase()]);
+  assert.equal(observation.status,'supported');
+  assert.equal(observation.mechanism,'loss_of_function');
+  assert.deepEqual(observation.matchedCaseIds,['allele-loss']);
+  assert.equal(observation.scope.model,'patient-derived neurons');
+  assert.match(observation.reason,/does not establish.*every associated HPO phenotype/i);
+  assert.match(observation.reason,/assay\/model scope/i);
+  const row=buildCandidates(alleleInputs()).find(item => item.diseaseId==='OMIM:1');
+  assert.equal(row.context.mechanism,'loss_of_function');
+  assert.equal(row.alleleEvidence.status,'supported');
+  assert.equal(gateOf(row.evaluation,'mechanism').status,'supported');
+  assert.equal(row.evaluation.status,'insufficient_evidence');
+  assert.match(row.associationKind,/variant-level phenotype attribution unestablished/i);
+});
+
+test('allele mechanism requires matching outer identity, exact evidence scope and its own sources', () => {
+  const original=alleleCase();
+  const invalid=[
+    null, {}, {...original,id:undefined},
+    {...original,gene:'OTHER'}, {...original,diseaseId:'OMIM:2'}, {...original,variantIds:['124']},
+    {...original,variantIds:'123'}, {...original,mechanismEvidence:undefined},
+    ...['gene','diseaseId','variantId'].flatMap(key => [undefined,'different'].map(value => ({
+      ...original,mechanismEvidence:{...original.mechanismEvidence,scope:alleleScope({[key]:value})},
+    }))),
+    ...[undefined,[],['javascript:alert(1)'],[source,false]].map(sourceUrls => ({
+      ...original,mechanismEvidence:{...original.mechanismEvidence,sourceUrls},
+    })),
+    {...original,mechanismEvidence:{...original.mechanismEvidence,mechanism:'frameshift'}},
+  ];
+  for (const item of invalid) {
+    const observation=resolve([item]);
+    assert.equal(observation.status,'unknown');
+    assert.deepEqual(observation.sourceUrls,[]);
+    assert.deepEqual(observation.gates,{});
+  }
+  for (const selection of [{gene:'OTHER'}, {diseaseId:'OMIM:2'}, {variantId:'124'}, {variantId:true}]) {
+    assert.equal(resolve([original],selection).status,'unknown');
+  }
+  assert.equal(resolve([original],{variantId:undefined}),null);
+  assert.equal(resolve([original],{variantFunctionalEvidence:{cases:{}}}).status,'unknown');
+});
+
+test('unreviewed selected variants cannot inherit generic mechanisms or gates from a disease', () => {
+  const value=alleleInputs({variantId:'unreviewed'});
+  value.contexts[0].gates={delivery:gateEvidence('aso-upregulation')};
+  value.contexts[0].modifiers={preclinical:modifierFact()};
+  // Pathogenicity, dosage and consequence remain separate from a curated assay.
+  value.variantFunctionalEvidence={cases:[{
+    ...alleleCase(),variantIds:['unreviewed'],mechanismEvidence:undefined,
+    consequence:'stop_gained',classification:'Pathogenic',haploinsufficiency:3,
+  }]};
+  const row=buildCandidates(value).find(item => item.diseaseId==='OMIM:1');
+  assert.equal(row.alleleEvidence.status,'unknown');
+  assert.equal(row.context.mechanism,'unknown');
+  assert.equal(row.disease,'GENE1-associated disease (OMIM:1)');
+  assert.equal(gateOf(row.evaluation,'mechanism').status,'unknown');
+  assert.equal(gateOf(row.evaluation,'delivery').status,'unknown');
+  assert.equal(row.evaluation.status,'insufficient_evidence');
+  assert.ok(assessPriorityModifiers(row.context,{...modifierSelection(),variantId:'unreviewed'})
+    .every(item => item.strength==='unknown'));
+  assert.equal(gateOf(assessModality('aso-upregulation',context(),null,
+    gateSelection({variantId:'unreviewed'})),'mechanism').status,'unknown');
+});
+
+test('the Unestablished mechanism filter includes explicit unknown alleles and missing contexts', () => {
+  for (const missing of [undefined,null,{}, {mechanism:null}, {mechanism:''}, {mechanism:'unknown'}]) {
+    assert.equal(matchesMechanismFilter(missing,'unknown'),true);
+    assert.equal(matchesMechanismFilter(missing,'haploinsufficiency'),false);
+  }
+  for (const mechanism of ['loss_of_function','haploinsufficiency','gain_of_function','conflicting']) {
+    assert.equal(matchesMechanismFilter({mechanism},'unknown'),false);
+    assert.equal(matchesMechanismFilter({mechanism},mechanism),true);
+    assert.equal(matchesMechanismFilter({mechanism},'different'),false);
+    for (const filter of [undefined,null,'']) assert.equal(matchesMechanismFilter({mechanism},filter),true);
+  }
+  const rows=buildCandidates(alleleInputs({variantId:'unreviewed'}));
+  assert.ok(rows.length>0);
+  assert.equal(rows.filter(row => matchesMechanismFilter(row.context,'unknown')).length,rows.length);
+});
+
+test('same disease can retain ambiguity while exact gain/loss observations select different directions', () => {
+  const value=inputs();
+  value.contexts=[{...context(),id:'loss',mechanism:'loss_of_function',disease:'Loss context'},
+    {...context(),id:'gain',mechanism:'gain_of_function',disease:'Gain context'}];
+  value.variantFunctionalEvidence={cases:[alleleCase({mechanismEvidence:{...alleleCase().mechanismEvidence,
+    contextIds:['loss']}}),alleleCase({id:'allele-gain',variantIds:['124'],mechanismEvidence:{
+      mechanism:'gain_of_function',sourceUrls:[source],contextIds:['gain'],scope:alleleScope({variantId:'124'}),
+    }})]};
+  const diseaseOnly=buildCandidates(value).find(item => item.diseaseId==='OMIM:1');
+  assert.equal(diseaseOnly.context.mechanism,'conflicting');
+  assert.equal(diseaseOnly.alleleEvidence,null);
+  const loss=buildCandidates({...value,variantId:'123'}).find(item => item.diseaseId==='OMIM:1');
+  assert.equal(loss.context.disease,'Loss context');
+  assert.equal(gateOf(loss.evaluation,'mechanism').status,'supported');
+  const gain=buildCandidates({...value,variantId:'124'}).find(item => item.diseaseId==='OMIM:1');
+  assert.equal(gain.context.disease,'Gain context');
+  assert.equal(gateOf(gain.evaluation,'mechanism').status,'unknown');
+  assert.equal(gateOf(gain.evaluation,'mechanism').directionConcern,true);
+  const lowering=buildCandidates({...value,variantId:'124',modalityId:'aso-knockdown'})
+    .find(item => item.diseaseId==='OMIM:1');
+  assert.equal(gateOf(lowering.evaluation,'mechanism').status,'supported');
+  assert.equal(lowering.evaluation.status,'insufficient_evidence');
+  const otherDisease=buildCandidates({...value,variantId:'124'}).find(item => item.diseaseId==='OMIM:2');
+  assert.equal(otherDisease.alleleEvidence.status,'unknown');
+  assert.equal(gateOf(otherDisease.evaluation,'mechanism').status,'unknown');
+});
+
+test('a mixed-function allele preserves its observation but does not automatically support increasing expression', () => {
+  const original=alleleCase();
+  const qualified=alleleCase({limits:['Do not infer phenotype rescue.'],mechanismEvidence:{...original.mechanismEvidence,
+    directionUnresolved:true,directionReason:'Conventional channel loss coexists with a noncanonical gating-pore current.',
+    notes:'Assay and maturation affect excitability.',directionSourceUrls:['https://example.org/gating-pore-assay'],
+  }});
+  const value=alleleInputs({variantFunctionalEvidence:{cases:[qualified]}});
+  const observation=resolve([qualified]);
+  assert.equal(observation.status,'supported');
+  assert.equal(observation.mechanism,'loss_of_function');
+  assert.equal(observation.directionUnresolved,true);
+  assert.match(observation.reason,/noncanonical gating-pore current/);
+  assert.match(observation.reason,/Assay and maturation/);
+  assert.ok(!observation.reason.includes('Do not infer phenotype rescue.'));
+  assert.deepEqual(observation.limits,['Do not infer phenotype rescue.']);
+  for (const modalityId of ['aso-upregulation','aav-addition']) {
+    const row=buildCandidates({...value,modalityId}).find(item => item.diseaseId==='OMIM:1');
+    const gate=gateOf(row.evaluation,'mechanism');
+    assert.equal(gate.status,'unknown',modalityId);
+    assert.equal(gate.directionConcern,true,modalityId);
+    assert.match(gate.reason,/noncanonical gating-pore current/);
+    assert.deepEqual(gate.sources,['https://example.org/gating-pore-assay']);
+    assert.equal(row.evaluation.contradicted,0);
+    assert.equal(row.evaluation.status,'insufficient_evidence');
+  }
+});
+
+test('only a sourced exact intervention assessment can resolve qualified allele direction for its scenario', () => {
+  const scenario={variantId:'123',constructId:'construct-A',populationId:'model-A',species:'human cells'};
+  for (const status of ['supported','contradicted']) {
+    const fact={id:'mechanism',...gateEvidence('aso-upregulation',{
+      status,scope:gateScope('aso-upregulation',scenario),reason:'This exact intervention was evaluated in the stated model',
+    })};
+    const original=alleleCase();
+    const qualified=alleleCase({gates:[fact],mechanismEvidence:{...original.mechanismEvidence,
+      directionUnresolved:true,directionReason:'The class alone does not establish a safe direction.',
+    }});
+    const value=alleleInputs({variantFunctionalEvidence:{cases:[qualified]}});
+    const row=buildCandidates({...value,...scenario}).find(item => item.diseaseId==='OMIM:1');
+    assert.equal(gateOf(row.evaluation,'mechanism').status,status);
+    assert.equal(gateOf(row.evaluation,'mechanism').directionConcern,undefined);
+    const defaultRow=buildCandidates(value).find(item => item.diseaseId==='OMIM:1');
+    assert.equal(gateOf(defaultRow.evaluation,'mechanism').status,'unknown');
+    assert.equal(gateOf(defaultRow.evaluation,'mechanism').directionConcern,true);
+    const otherFamily=buildCandidates({...value,...scenario,modalityId:'aav-addition'})
+      .find(item => item.diseaseId==='OMIM:1');
+    assert.equal(gateOf(otherFamily.evaluation,'mechanism').status,'unknown');
+    assert.equal(gateOf(otherFamily.evaluation,'mechanism').directionConcern,true);
+    qualified.gates=[{...fact,sources:[]}];
+    const uncited=buildCandidates({...value,...scenario}).find(item => item.diseaseId==='OMIM:1');
+    assert.equal(gateOf(uncited.evaluation,'mechanism').status,'unknown');
+    assert.equal(gateOf(uncited.evaluation,'mechanism').directionConcern,true);
+  }
+});
+
+test('an unresolved direction is retained across matching observations but never transfers to another allele', () => {
+  const original=alleleCase();
+  const qualified=alleleCase({mechanismEvidence:{...original.mechanismEvidence,directionUnresolved:true}});
+  const unqualified=alleleCase({id:'second-assay'});
+  const otherAllele=alleleCase({id:'other-allele',variantIds:['124'],mechanismEvidence:{
+    ...original.mechanismEvidence,scope:alleleScope({variantId:'124'}),
+  }});
+  const cases=[qualified,unqualified,otherAllele];
+  assert.equal(resolve(cases).directionUnresolved,true);
+  assert.equal(resolve([...cases].reverse()).directionUnresolved,true);
+  const value=alleleInputs({variantId:'124',variantFunctionalEvidence:{cases}});
+  const row=buildCandidates(value).find(item => item.diseaseId==='OMIM:1');
+  assert.equal(row.alleleEvidence.directionUnresolved,false);
+  assert.equal(gateOf(row.evaluation,'mechanism').status,'supported');
+  assert.equal(gateOf(row.evaluation,'mechanism').directionConcern,undefined);
+  const diseaseOnly=buildCandidates({...value,variantId:undefined}).find(item => item.diseaseId==='OMIM:1');
+  assert.equal(diseaseOnly.alleleEvidence,null);
+  assert.equal(gateOf(diseaseOnly.evaluation,'mechanism').status,'supported');
+});
+
+test('opposite observations for the same allele remain unresolved regardless of input order or positive gates', () => {
+  const loss=alleleCase({gates:[{id:'mechanism',...gateEvidence('aso-upregulation',{
+    scope:gateScope('aso-upregulation',{variantId:'123'}),
+  })}]});
+  const gain=alleleCase({id:'allele-gain',mechanismEvidence:{...loss.mechanismEvidence,mechanism:'gain_of_function'}});
+  const first=resolve([loss,gain]), reverse=resolve([gain,loss]);
+  assert.deepEqual(first,reverse);
+  assert.equal(first.status,'conflicting');
+  assert.deepEqual(first.gates,{});
+  const row=buildCandidates(alleleInputs({variantFunctionalEvidence:{cases:[gain,loss]}}))
+    .find(item => item.diseaseId==='OMIM:1');
+  assert.equal(row.disease,'GENE1-associated disease (OMIM:1)');
+  assert.equal(gateOf(row.evaluation,'mechanism').status,'unknown');
+  assert.equal(gateOf(row.evaluation,'mechanism').conflicting,true);
+  assert.equal(row.evaluation.contradicted,0);
+});
+
+test('case gates need the selected allele, phenotype, modality and explicit published scenario', () => {
+  const scenario={variantId:'123',constructId:'drug-A',populationId:'cohort-A',species:'human',
+    route:'oral',cells:['epithelial cells'],doseContext:'trial dose'};
+  const fact={id:'drugResponse',...gateEvidence('small-molecule',{
+    scope:gateScope('small-molecule',scenario),reason:'Response measured for this allele and trial cohort',
+  })};
+  const value=alleleInputs({modalityId:'small-molecule',variantFunctionalEvidence:{cases:[alleleCase({gates:[fact]})]}});
+  const defaultRow=buildCandidates(value).find(item => item.diseaseId==='OMIM:1');
+  assert.equal(gateOf(defaultRow.evaluation,'drugResponse').status,'unknown');
+  const selected=buildCandidates({...value,...scenario}).find(item => item.diseaseId==='OMIM:1');
+  assert.equal(gateOf(selected.evaluation,'drugResponse').status,'supported');
+  assert.equal(selected.evaluation.status,'insufficient_evidence');
+  for (const key of ['variantId','constructId','populationId','species','route','cells','doseContext']) {
+    const different={...scenario,[key]:key==='cells'?['neurons']:'different'};
+    const row=buildCandidates({...value,...different}).find(item => item.diseaseId==='OMIM:1');
+    assert.equal(gateOf(row.evaluation,'drugResponse').status,'unknown',key);
+  }
+  value.genePhenotypes.genes.GENE1.push({hpo_id:'HP:3',hpo_name:'Another phenotype',disease_id:'OMIM:1'});
+  assert.equal(gateOf(buildCandidates({...value,...scenario}).find(item => item.hpoId==='HP:3')
+    .evaluation,'drugResponse').status,'unknown');
+  const otherFamily=buildCandidates({...value,...scenario,modalityId:'aso-upregulation'})
+    .find(item => item.diseaseId==='OMIM:1');
+  assert.equal(gateOf(otherFamily.evaluation,'mechanism').status,'supported');
+});
+
+test('gate arrays separate experimental scopes and preserve disagreement without manufacturing incompatibility', () => {
+  const selection=gateSelection({variantId:'123',constructId:'drug-A',populationId:'cohort-A'});
+  const fact=gateEvidence('small-molecule',{scope:gateScope('small-molecule',selection)});
+  const unrelated={...fact,status:'contradicted',scope:{...fact.scope,variantId:'124'}};
+  const assess=facts => assessModality('small-molecule',{...context(),gates:{drugResponse:facts}},null,selection);
+  assert.equal(gateOf(assess([unrelated,fact]),'drugResponse').status,'supported');
+  const contradicted={...fact,status:'contradicted',reason:'Opposite judgment in the same declared context'};
+  const first=assess([fact,contradicted]), reversed=assess([contradicted,fact]);
+  assert.deepEqual(first,reversed);
+  assert.equal(gateOf(first,'drugResponse').status,'unknown');
+  assert.equal(gateOf(first,'drugResponse').conflicting,true);
+  assert.equal(first.contradicted,0);
+  assert.equal(first.status,'insufficient_evidence');
+});
+
+test('maturity facts require the selected allele and every declared experimental dimension', () => {
+  const selection={...modifierSelection(),variantId:'123',constructId:'drug-A',populationId:'cohort-A',
+    species:'human',route:'oral',cells:['cell A','cell B'],atlas:'DescartesHuman',doseContext:'trial dose'};
+  const fact={id:'preclinical',...modifierFact({scope:selection})};
+  const assess=(facts,selected=selection) => modifierOf(assessPriorityModifiers({modifiers:facts},selected),'preclinical');
+  assert.equal(assess([fact]).strength,'strong');
+  assert.equal(assess([fact],{...selection,cells:['cell B','cell A']}).strength,'strong');
+  assert.equal(assess([modifierFact()]).strength,'unknown');
+  for (const key of ['variantId','constructId','populationId','species','route','cells','atlas','doseContext']) {
+    for (const value of [undefined,key==='cells'?['different']:'different']) {
+      assert.equal(assess([fact],{...selection,[key]:value}).strength,'unknown',key);
+    }
+  }
+  const otherAllele={...fact,strength:'weak',scope:{...selection,variantId:'124'}};
+  assert.equal(assess([otherAllele,fact]).strength,'strong');
+  const disagreement={...fact,strength:'weak'};
+  assert.equal(assess([fact,disagreement]).strength,'unknown');
+  assert.deepEqual(assess([fact,disagreement]),assess([disagreement,fact]));
+});
+
+test('case maturity observations reach the selected context without altering compatibility or rank', () => {
+  const selection={...modifierSelection(),variantId:'123',constructId:'drug-A',populationId:'cohort-A'};
+  const value=alleleInputs({constructId:'drug-A',populationId:'cohort-A'});
+  const original=buildCandidates(value);
+  value.variantFunctionalEvidence.cases[0].modifiers=[{id:'preclinical',...modifierFact({scope:selection})}];
+  const rows=buildCandidates(value);
+  assert.deepEqual(rows.map(row => row.id),original.map(row => row.id));
+  assert.deepEqual(rows.map(row => row.evaluation),original.map(row => row.evaluation));
+  const exact=rows.find(row => row.diseaseId==='OMIM:1');
+  assert.equal(modifierOf(assessPriorityModifiers(exact.context,selection),'preclinical').strength,'strong');
+  assert.equal(modifierOf(assessPriorityModifiers(exact.context,{...selection,variantId:'124'}),'preclinical').strength,'unknown');
+});
+
+test('selected-allele patient observations create separate sourced contexts without altering HPO exports', () => {
+  const value=alleleInputs();
+  value.variantFunctionalEvidence.cases[0].observedPhenotypes=[
+    {hpoId:'HP:0001263',label:'Global developmental delay',present:true,mapping:'direct',sourceUrls:[source]},
+    {hpoId:'HP:0001250',label:'Seizure',present:false,mapping:'direct',sourceUrls:[source]},
+  ];
+  const before=JSON.stringify(value.genePhenotypes);
+  const row=buildCandidates(value).find(item => item.hpoId==='HP:0001263');
+  assert.equal(row.sourceKind,'curated_allele_observation');
+  assert.equal(row.phenotypeEvidenceKind,'patient_observation');
+  assert.deepEqual(row.sourceCaseIds,['allele-loss']);
+  assert.deepEqual(row.phenotypeSources,[source]);
+  assert.match(row.associationKind,/not phenotype penetrance or sole causality/i);
+  assert.equal(row.severity,'unknown');
+  assert.equal(gateOf(row.evaluation,'mechanism').status,'supported');
+  assert.ok(!buildCandidates(value).some(item => item.hpoId==='HP:0001250'));
+  assert.equal(JSON.stringify(value.genePhenotypes),before);
+  assert.equal(buildCandidates({...value,variantId:undefined}).length,2);
+  assert.equal(buildCandidates({...value,variantId:'124'}).length,2);
+});
+
+test('genotype-selected endpoint contexts expose exact assay gates even when no HPO join exists', () => {
+  const scenario={variantId:'123',constructId:'splice-ASO',populationId:'retinal-organoids',species:'human cells'};
+  const evidence={id:'spliceDefect',...gateEvidence('aso-splice-correction',{
+    scope:gateScope('aso-splice-correction',{...scenario,hpoId:'HP:0007663'}),
+    reason:'Aberrant transcript measured in genotype-selected retinal organoids',
+  })};
+  const value=alleleInputs({genePhenotypes:{genes:{}},modalityId:'aso-splice-correction',...scenario,
+    variantFunctionalEvidence:{cases:[alleleCase({sourceUrls:[source],gates:[evidence],phenotypes:[
+      {hpoId:'HP:0007663',label:'Reduced visual acuity',mapping:'direct'},
+    ]})]}});
+  const rows=buildCandidates(value);
+  assert.equal(rows.length,1);
+  assert.equal(rows[0].context.mechanism,'loss_of_function');
+  assert.equal(rows[0].phenotypeEvidenceKind,'genotype_selected_endpoint');
+  assert.equal(gateOf(rows[0].evaluation,'spliceDefect').status,'supported');
+  assert.equal(rows[0].evaluation.status,'insufficient_evidence');
+  assert.equal(buildCandidates({...value,constructId:undefined})[0].evaluation.status,'insufficient_evidence');
+  assert.equal(gateOf(buildCandidates({...value,constructId:undefined})[0].evaluation,'spliceDefect').status,'unknown');
+});
+
+test('source observation contexts require vetted exact alleles, positive observations and valid mappings/sources', () => {
+  const valid={hpoId:'HP:0001263',label:'Global developmental delay',present:true,mapping:'direct',sourceUrls:[source]};
+  for (const override of [{present:false}, {present:undefined}, {present:'true'}, {mapping:'unmapped'},
+    {sourceUrls:[]}, {sourceUrls:['javascript:alert(1)']}, {hpoId:'not-an-HPO-ID'},
+    {label:'obsolete term'}, {isPhenotypicAbnormality:false}]) {
+    const value=alleleInputs({genePhenotypes:{genes:{}},variantFunctionalEvidence:{cases:[
+      alleleCase({observedPhenotypes:[{...valid,...override}]}),
+    ]}});
+    assert.equal(buildCandidates(value).length,0,JSON.stringify(override));
+  }
+  const noMechanism=alleleInputs({genePhenotypes:{genes:{}},variantFunctionalEvidence:{cases:[
+    alleleCase({mechanismEvidence:undefined,observedPhenotypes:[valid]}),
+  ]}});
+  assert.equal(buildCandidates(noMechanism).length,0);
+  const rootTerm=alleleInputs({genePhenotypes:{genes:{}},variantFunctionalEvidence:{cases:[
+    alleleCase({observedPhenotypes:[{...valid,hpoId:'HP:0000118'}]}),
+  ]}});
+  assert.equal(buildCandidates(rootTerm).length,0);
+});
+
+test('existing HPO disease joins remain the primary row when an exact case observes the same phenotype', () => {
+  const value=alleleInputs();
+  value.genePhenotypes.genes.GENE1.push({hpo_id:'HP:0001263',hpo_name:'Global developmental delay',disease_id:'OMIM:1'});
+  value.variantFunctionalEvidence.cases[0].observedPhenotypes=[{
+    hpoId:'HP:0001263',label:'Global developmental delay',present:true,mapping:'direct',sourceUrls:[source],
+  }];
+  const rows=buildCandidates(value).filter(item => item.hpoId==='HP:0001263');
+  assert.equal(rows.length,1);
+  assert.equal(rows[0].sourceKind,'hpo_disease_join');
+  assert.match(rows[0].associationKind,/variant-level phenotype attribution unestablished/i);
 });

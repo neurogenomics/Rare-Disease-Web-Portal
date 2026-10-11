@@ -1,7 +1,7 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "reviewedAt": "2026-10-11",
-  "scope": "Selected allele-specific functional and clinical examples; not a comprehensive variant\u2013phenotype database. Case-level evidence does not automatically transfer to other variants or cell subtypes.",
+  "scope": "Selected exact-allele functional observations, human phenotype observations and treatment examples. Experimental mechanism, clinical classification, phenotype attribution and treatment response are separate claims. This is not a comprehensive variant–phenotype database.",
   "cases": [
     {
       "id": "cftr-g551d",
@@ -51,6 +51,156 @@
         "https://www.ncbi.nlm.nih.gov/clinvar/variation/7120/",
         "https://pubmed.ncbi.nlm.nih.gov/22047557/",
         "https://clinicaltrials.gov/study/NCT00909532"
+      ],
+      "mechanismEvidence": {
+        "mechanism": "loss_of_function",
+        "sourceUrls": [
+          "https://pubmed.ncbi.nlm.nih.gov/22047557/"
+        ],
+        "contextIds": [
+          "CFTR-11"
+        ],
+        "scope": {
+          "gene": "CFTR",
+          "diseaseId": "OMIM:219700",
+          "variantId": "7120",
+          "assay": "G551D gating response and genotype-selected randomized clinical trial"
+        }
+      },
+      "assessmentScenarios": [
+        {
+          "id": "cftr-g551d-strive",
+          "label": "Published STRIVE G551D cohort — ivacaftor 150 mg twice daily",
+          "constructId": "ivacaftor-150mg-bid",
+          "populationId": "strive-g551d-age12plus",
+          "species": "human",
+          "route": "oral",
+          "doseContext": "150 mg twice daily"
+        }
+      ],
+      "gates": [
+        {
+          "id": "mechanism",
+          "status": "supported",
+          "reason": "G551D gating loss and the potentiator direction are established for this genotype-selected cohort.",
+          "sources": [
+            "https://pubmed.ncbi.nlm.nih.gov/22047557/"
+          ],
+          "scope": {
+            "gene": "CFTR",
+            "diseaseId": "OMIM:219700",
+            "variantId": "7120",
+            "hpoId": "HP:0032342",
+            "modalityId": "small-molecule",
+            "constructId": "ivacaftor-150mg-bid",
+            "populationId": "strive-g551d-age12plus",
+            "species": "human",
+            "route": "oral",
+            "doseContext": "150 mg twice daily"
+          }
+        },
+        {
+          "id": "drugMechanism",
+          "status": "supported",
+          "reason": "Ivacaftor potentiates CFTR gating in the studied G551D context; this does not transfer to every CFTR allele.",
+          "sources": [
+            "https://pubmed.ncbi.nlm.nih.gov/22047557/"
+          ],
+          "scope": {
+            "gene": "CFTR",
+            "diseaseId": "OMIM:219700",
+            "variantId": "7120",
+            "hpoId": "HP:0032342",
+            "modalityId": "small-molecule",
+            "constructId": "ivacaftor-150mg-bid",
+            "populationId": "strive-g551d-age12plus",
+            "species": "human",
+            "route": "oral",
+            "doseContext": "150 mg twice daily"
+          }
+        },
+        {
+          "id": "drugResponse",
+          "status": "supported",
+          "reason": "STRIVE measured a pulmonary response to ivacaftor versus placebo in participants aged at least 12 years with at least one G551D allele.",
+          "sources": [
+            "https://pubmed.ncbi.nlm.nih.gov/22047557/"
+          ],
+          "scope": {
+            "gene": "CFTR",
+            "diseaseId": "OMIM:219700",
+            "variantId": "7120",
+            "hpoId": "HP:0032342",
+            "modalityId": "small-molecule",
+            "constructId": "ivacaftor-150mg-bid",
+            "populationId": "strive-g551d-age12plus",
+            "species": "human",
+            "route": "oral",
+            "doseContext": "150 mg twice daily"
+          }
+        },
+        {
+          "id": "functionalSufficiency",
+          "status": "supported",
+          "reason": "Percent-predicted FEV1 improved by 10.6 percentage points versus placebo through week 24. This establishes cohort endpoint response, not individual eligibility or an atlas-cell mediator.",
+          "sources": [
+            "https://pubmed.ncbi.nlm.nih.gov/22047557/"
+          ],
+          "scope": {
+            "gene": "CFTR",
+            "diseaseId": "OMIM:219700",
+            "variantId": "7120",
+            "hpoId": "HP:0032342",
+            "modalityId": "small-molecule",
+            "constructId": "ivacaftor-150mg-bid",
+            "populationId": "strive-g551d-age12plus",
+            "species": "human",
+            "route": "oral",
+            "doseContext": "150 mg twice daily"
+          }
+        }
+      ],
+      "modifiers": [
+        {
+          "id": "measurability",
+          "strength": "strong",
+          "reason": "The randomized study measured the named pulmonary endpoint through week 24.",
+          "sources": [
+            "https://pubmed.ncbi.nlm.nih.gov/22047557/"
+          ],
+          "scope": {
+            "gene": "CFTR",
+            "diseaseId": "OMIM:219700",
+            "variantId": "7120",
+            "hpoId": "HP:0032342",
+            "modalityId": "small-molecule",
+            "constructId": "ivacaftor-150mg-bid",
+            "populationId": "strive-g551d-age12plus",
+            "species": "human",
+            "route": "oral",
+            "doseContext": "150 mg twice daily"
+          }
+        },
+        {
+          "id": "precedent",
+          "strength": "strong",
+          "reason": "Direct genotype-selected randomized treatment evidence exists for this intervention and pulmonary endpoint.",
+          "sources": [
+            "https://pubmed.ncbi.nlm.nih.gov/22047557/"
+          ],
+          "scope": {
+            "gene": "CFTR",
+            "diseaseId": "OMIM:219700",
+            "variantId": "7120",
+            "hpoId": "HP:0032342",
+            "modalityId": "small-molecule",
+            "constructId": "ivacaftor-150mg-bid",
+            "populationId": "strive-g551d-age12plus",
+            "species": "human",
+            "route": "oral",
+            "doseContext": "150 mg twice daily"
+          }
+        }
       ]
     },
     {
@@ -108,6 +258,652 @@
         "https://pmc.ncbi.nlm.nih.gov/articles/PMC6961983/",
         "https://pubmed.ncbi.nlm.nih.gov/31597037/"
       ]
+    },
+    {
+      "id": "scn2a-arg1882gln",
+      "gene": "SCN2A",
+      "variantIds": [
+        "196039"
+      ],
+      "variantLabel": "NM_001040142.2:c.5645G>A (p.Arg1882Gln)",
+      "variantClass": "Exonic missense with experimentally studied channel dysfunction",
+      "diseaseId": "OMIM:613721",
+      "disease": "SCN2A developmental and epileptic encephalopathy (DEE11)",
+      "diseaseScope": "The published patient was described as SCN2A DEE; this contextual disease identifier is a curator crosswalk, distinct from the frozen aggregate ClinVar condition.",
+      "therapyId": null,
+      "modalityId": "aso-knockdown",
+      "phenotypes": [],
+      "observedPhenotypes": [
+        {
+          "hpoId": "HP:0001250",
+          "label": "Seizure",
+          "present": true,
+          "mapping": "direct",
+          "rationale": "Seizures began on the first day of life in the sampled patient.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC10883610/"
+          ]
+        },
+        {
+          "hpoId": "HP:0001263",
+          "label": "Global developmental delay",
+          "present": true,
+          "mapping": "direct",
+          "rationale": "Developmental delay was reported in this patient; it is not a measured rescue endpoint.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC10883610/"
+          ]
+        }
+      ],
+      "mechanismEvidence": {
+        "mechanism": "gain_of_function",
+        "sourceUrls": [
+          "https://pubmed.ncbi.nlm.nih.gov/29844171/",
+          "https://pmc.ncbi.nlm.nih.gov/articles/PMC6795554/",
+          "https://pmc.ncbi.nlm.nih.gov/articles/PMC10883610/"
+        ],
+        "contextIds": [
+          "SCN2A-gain-of-function"
+        ],
+        "scope": {
+          "gene": "SCN2A",
+          "diseaseId": "OMIM:613721",
+          "variantId": "196039",
+          "species": "Experimental expression systems and human patient-derived cells",
+          "cells": "Heterologous channel models and NGN2-induced patient-derived neurons; these are distinct experiments",
+          "assay": "Channel biophysics and isogenic neuronal electrophysiology"
+        }
+      },
+      "functionalObservations": [
+        {
+          "species": "human cells",
+          "cells": "NGN2-induced patient-derived neurons with isogenic correction controls",
+          "assay": "Patch clamp and multielectrode recordings",
+          "intervention": "Phenytoin in culture",
+          "timeFrame": "Maturation-dependent measurements",
+          "direction": "supports",
+          "claim": "R1882Q neurons showed increased evoked firing; phenytoin reduced firing toward the untreated isogenic control.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC10883610/"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "level": "in_vitro",
+          "direction": "supports",
+          "claim": "Electrophysiology supports increased channel activity.",
+          "sourceUrls": [
+            "https://pubmed.ncbi.nlm.nih.gov/29844171/"
+          ]
+        }
+      ],
+      "cells": "Experimental induced-neuron identity is not an exact atlas cell label.",
+      "limits": [
+        "A functional channel effect is distinct from clinical pathogenicity and does not assign every disease phenotype to this allele.",
+        "These experiments do not establish ASO delivery, safe dosage, seizure rescue or developmental rescue in patients.",
+        "Assay, developmental isoform and neuronal maturation can alter the observed phenotype."
+      ],
+      "sourceUrls": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/196039/",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC10883610/",
+        "https://pubmed.ncbi.nlm.nih.gov/29844171/",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC6795554/"
+      ],
+      "gates": [],
+      "modifiers": []
+    },
+    {
+      "id": "scn2a-arg853gln",
+      "gene": "SCN2A",
+      "variantIds": [
+        "194555"
+      ],
+      "variantLabel": "NM_001040142.2:c.2558G>A (p.Arg853Gln)",
+      "variantClass": "Exonic missense with experimentally studied channel dysfunction",
+      "diseaseId": "OMIM:613721",
+      "disease": "SCN2A developmental and epileptic encephalopathy (DEE11)",
+      "diseaseScope": "The published patient was described as SCN2A DEE; this contextual disease identifier is a curator crosswalk, distinct from the frozen aggregate ClinVar condition.",
+      "therapyId": null,
+      "modalityId": "aso-upregulation",
+      "phenotypes": [],
+      "observedPhenotypes": [
+        {
+          "hpoId": "HP:0001250",
+          "label": "Seizure",
+          "present": true,
+          "mapping": "direct",
+          "rationale": "Developmental delay preceded tonic seizures and spasms beginning at eight months in the sampled patient.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC10883610/"
+          ]
+        },
+        {
+          "hpoId": "HP:0001263",
+          "label": "Global developmental delay",
+          "present": true,
+          "mapping": "direct",
+          "rationale": "Developmental delay was reported in this patient; it is not a measured rescue endpoint.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC10883610/"
+          ]
+        }
+      ],
+      "mechanismEvidence": {
+        "mechanism": "loss_of_function",
+        "notes": "Reduced conventional sodium-channel function is the scoped finding, not a complete binary mechanism: R853Q also produced a noncanonical gating-pore current in another assay. Neuronal maturation and recording method change the observed excitability. Increasing expression therefore remains a direction hypothesis requiring intervention-specific testing.",
+        "directionUnresolved": true,
+        "directionReason": "Conventional current loss coexists with a noncanonical gating-pore current and assay-dependent neuronal excitability. This evidence does not resolve whether increasing or lowering SCN2A expression would restore the selected phenotype; the exact intervention requires testing.",
+        "sourceUrls": [
+          "https://pubmed.ncbi.nlm.nih.gov/29844171/",
+          "https://pmc.ncbi.nlm.nih.gov/articles/PMC6795554/",
+          "https://pmc.ncbi.nlm.nih.gov/articles/PMC10883610/"
+        ],
+        "contextIds": [
+          "SCN2A-loss-of-function"
+        ],
+        "scope": {
+          "gene": "SCN2A",
+          "diseaseId": "OMIM:613721",
+          "variantId": "194555",
+          "species": "Experimental expression systems and human patient-derived cells",
+          "cells": "Heterologous channel models and NGN2-induced patient-derived neurons; these are distinct experiments",
+          "assay": "Conventional channel current, dynamic clamp, gating-pore current and isogenic neuronal electrophysiology"
+        }
+      },
+      "functionalObservations": [
+        {
+          "species": "human cells",
+          "cells": "NGN2-induced patient-derived neurons with isogenic correction controls",
+          "assay": "Patch clamp and multielectrode recordings",
+          "intervention": "Phenytoin in culture",
+          "timeFrame": "Maturation-dependent measurements",
+          "direction": "limits",
+          "claim": "R853Q cultures developed reduced network activity later; phenytoin suppressed firing below the untreated isogenic control.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC10883610/"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "level": "in_vitro",
+          "direction": "supports",
+          "claim": "Reduced conventional channel current coexists with a noncanonical gating-pore current in another assay; binary loss is incomplete.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC6795554/"
+          ]
+        }
+      ],
+      "cells": "Experimental induced-neuron identity is not an exact atlas cell label.",
+      "limits": [
+        "A functional channel effect is distinct from clinical pathogenicity and does not assign every disease phenotype to this allele.",
+        "These experiments do not establish ASO delivery, safe dosage, seizure rescue or developmental rescue in patients.",
+        "Assay, developmental isoform and neuronal maturation can alter the observed phenotype."
+      ],
+      "sourceUrls": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/194555/",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC10883610/",
+        "https://pubmed.ncbi.nlm.nih.gov/29844171/",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC6795554/"
+      ],
+      "gates": [],
+      "modifiers": []
+    },
+    {
+      "id": "stxbp1-c429-plus5",
+      "gene": "STXBP1",
+      "variantIds": [
+        "932635"
+      ],
+      "variantLabel": "NM_001032221.6:c.429+5G>A",
+      "variantClass": "Noncanonical intronic splice-region variant; experimentally demonstrated exon skipping",
+      "diseaseId": "OMIM:612164",
+      "disease": "STXBP1-related neurodevelopmental disorder",
+      "diseaseScope": "Contextual syndrome crosswalk from the published STXBP1 disorder; the frozen ClinVar submission has no named condition.",
+      "therapyId": null,
+      "modalityId": "aso-splice-correction",
+      "phenotypes": [],
+      "observedPhenotypes": [
+        {
+          "hpoId": "HP:0001263",
+          "label": "Global developmental delay",
+          "present": true,
+          "mapping": "direct",
+          "rationale": "The reported patient had delayed early milestones.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC13270418/"
+          ]
+        },
+        {
+          "hpoId": "HP:0001250",
+          "label": "Seizure",
+          "present": false,
+          "mapping": "direct",
+          "rationale": "No seizures were reported in this individual at assessment; this is not a universal absence for this allele.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC13270418/"
+          ]
+        }
+      ],
+      "mechanismEvidence": {
+        "mechanism": "loss_of_function",
+        "sourceUrls": [
+          "https://pmc.ncbi.nlm.nih.gov/articles/PMC13270418/"
+        ],
+        "contextIds": [
+          "STXBP1-haploinsufficiency"
+        ],
+        "scope": {
+          "gene": "STXBP1",
+          "diseaseId": "OMIM:612164",
+          "variantId": "932635",
+          "species": "human cells",
+          "cells": "Patient-derived induced neurons",
+          "assay": "RT-PCR, minigene, protein and NMD-inhibition assays"
+        }
+      },
+      "functionalObservations": [
+        {
+          "species": "human cells",
+          "cells": "Patient-derived induced neurons",
+          "assay": "Splicing, RNA and protein assays",
+          "intervention": "NMD inhibition used as a diagnostic experiment",
+          "timeFrame": "In vitro",
+          "direction": "supports",
+          "claim": "Exon 6 skipping produced a frameshift and transcript decay; RNA and MUNC18-1 protein were reduced by more than 40%.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC13270418/"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "level": "patient_derived_cells",
+          "direction": "supports",
+          "claim": "Primary functional evidence supports transcript loss; it does not demonstrate therapeutic splice correction.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC13270418/"
+          ]
+        }
+      ],
+      "cells": "Induced-neuron evidence does not identify an atlas subtype.",
+      "limits": [
+        "The frozen ClinVar classification remains uncertain significance; this functional review does not overwrite it.",
+        "One patient observation cannot establish phenotype penetrance.",
+        "Blocking NMD does not prove that the resulting mutant transcript is safe or functional."
+      ],
+      "sourceUrls": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/932635/",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC13270418/"
+      ],
+      "gates": [
+        {
+          "id": "spliceDefect",
+          "status": "supported",
+          "reason": "Exon 6 skipping and transcript decay were experimentally demonstrated. No splice-correcting treatment was tested.",
+          "sources": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC13270418/"
+          ],
+          "scope": {
+            "gene": "STXBP1",
+            "diseaseId": "OMIM:612164",
+            "hpoId": "HP:0001263",
+            "modalityId": "aso-splice-correction",
+            "variantId": "932635",
+            "constructId": "unmodified-patient-derived-neurons",
+            "populationId": "stxbp1-c429-plus5-cell-model",
+            "species": "human cells",
+            "route": "in vitro",
+            "cells": "Patient-derived induced neurons"
+          }
+        }
+      ],
+      "modifiers": [
+        {
+          "id": "preclinical",
+          "strength": "unknown",
+          "reason": "Direct RNA and protein evidence identifies the splice defect, but preclinical evidence for a corrective ASO remains unknown: neither a corrective ASO nor phenotype rescue was tested. Defect characterization alone does not establish treatment maturity.",
+          "sources": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC13270418/"
+          ],
+          "scope": {
+            "gene": "STXBP1",
+            "diseaseId": "OMIM:612164",
+            "hpoId": "HP:0001263",
+            "modalityId": "aso-splice-correction",
+            "variantId": "932635",
+            "constructId": "unmodified-patient-derived-neurons",
+            "populationId": "stxbp1-c429-plus5-cell-model",
+            "species": "human cells",
+            "route": "in vitro",
+            "cells": "Patient-derived induced neurons"
+          }
+        }
+      ],
+      "assessmentScenarios": [
+        {
+          "id": "stxbp1-c429-neurons",
+          "label": "Published c.429+5G>A induced-neuron splicing experiment",
+          "constructId": "unmodified-patient-derived-neurons",
+          "populationId": "stxbp1-c429-plus5-cell-model",
+          "species": "human cells",
+          "route": "in vitro",
+          "cells": "Patient-derived induced neurons"
+        }
+      ]
+    },
+    {
+      "id": "cep290-deep-intronic",
+      "gene": "CEP290",
+      "variantIds": [
+        "1337"
+      ],
+      "variantLabel": "NM_025114.4:c.2991+1655A>G",
+      "variantClass": "Deep intronic cryptic-splice-donor variant introducing a pseudoexon",
+      "diseaseId": "OMIM:611755",
+      "disease": "CEP290-associated Leber congenital amaurosis type 10",
+      "therapyId": "sepofarsen-cep290",
+      "modalityId": "aso-splice-correction",
+      "phenotypes": [
+        {
+          "hpoId": "HP:0007663",
+          "label": "Reduced visual acuity",
+          "mapping": "direct",
+          "endpoint": "Best-corrected visual acuity at month 12",
+          "rationale": "Genotype-selected ILLUMINATE did not meet its prespecified comparison with sham; earlier uncontrolled responses remain separate."
+        }
+      ],
+      "observedPhenotypes": [],
+      "mechanismEvidence": {
+        "mechanism": "loss_of_function",
+        "sourceUrls": [
+          "https://pmc.ncbi.nlm.nih.gov/articles/PMC6092551/"
+        ],
+        "contextIds": [],
+        "scope": {
+          "gene": "CEP290",
+          "diseaseId": "OMIM:611755",
+          "variantId": "1337",
+          "species": "human cells",
+          "cells": "LCA10 patient-derived fibroblasts and retinal organoids",
+          "assay": "Splice correction and ciliation"
+        }
+      },
+      "functionalObservations": [
+        {
+          "species": "human cells",
+          "cells": "Patient-derived fibroblasts and homozygous retinal organoids",
+          "assay": "RNA, protein and cilia assays",
+          "intervention": "QR-110 (sepofarsen) exposure",
+          "timeFrame": "In vitro",
+          "direction": "supports",
+          "claim": "QR-110 restored productive CEP290 splicing and improved ciliation in the tested models.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC6092551/"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "level": "human_clinical",
+          "direction": "supports",
+          "claim": "An open-label 11-patient phase 1b/2 study reported exploratory visual improvements.",
+          "sourceUrls": [
+            "https://www.nature.com/articles/s41591-022-01755-w"
+          ]
+        },
+        {
+          "level": "human_clinical",
+          "direction": "opposes",
+          "claim": "The randomized ILLUMINATE primary visual-acuity comparison against sham was not met.",
+          "sourceUrls": [
+            "https://www.proqr.com/press-releases/proqr-announces-top-line-results-from-phase-23-illuminate-trial-of-sepofarsen-in-cep290-mediated-lca10"
+          ]
+        }
+      ],
+      "cells": "Retinal-organoid ciliation rescue is not direct proof of photoreceptor rescue in treated patients.",
+      "limits": [
+        "The second allele, retinal viability, dose and study population remain relevant.",
+        "A demonstrated splice target does not establish clinical efficacy.",
+        "ClinVar nucleotide identity is matched; disease context is independently curated from the LCA10 studies."
+      ],
+      "sourceUrls": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/1337/",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC6092551/",
+        "https://www.nature.com/articles/s41591-022-01755-w",
+        "https://www.proqr.com/press-releases/proqr-announces-top-line-results-from-phase-23-illuminate-trial-of-sepofarsen-in-cep290-mediated-lca10"
+      ],
+      "gates": [
+        {
+          "id": "spliceDefect",
+          "status": "supported",
+          "reason": "The exact variant creates a cryptic exon in tested patient models.",
+          "sources": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC6092551/"
+          ],
+          "scope": {
+            "gene": "CEP290",
+            "diseaseId": "OMIM:611755",
+            "hpoId": "HP:0007663",
+            "modalityId": "aso-splice-correction",
+            "variantId": "1337",
+            "constructId": "qr110",
+            "populationId": "cep290-c2991-1655-g-cell-model",
+            "species": "human cells",
+            "route": "in vitro",
+            "cells": "LCA10 patient-derived fibroblasts and retinal organoids"
+          }
+        },
+        {
+          "id": "spliceRescue",
+          "status": "supported",
+          "reason": "QR-110 increased productive transcript and protein with ciliation improvement in these models. This is cellular splice rescue, not demonstrated visual benefit.",
+          "sources": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC6092551/"
+          ],
+          "scope": {
+            "gene": "CEP290",
+            "diseaseId": "OMIM:611755",
+            "hpoId": "HP:0007663",
+            "modalityId": "aso-splice-correction",
+            "variantId": "1337",
+            "constructId": "qr110",
+            "populationId": "cep290-c2991-1655-g-cell-model",
+            "species": "human cells",
+            "route": "in vitro",
+            "cells": "LCA10 patient-derived fibroblasts and retinal organoids"
+          }
+        }
+      ],
+      "modifiers": [
+        {
+          "id": "preclinical",
+          "strength": "moderate",
+          "reason": "Human genotype-matched cellular correction exists; clinical visual benefit remains a separate question.",
+          "sources": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC6092551/"
+          ],
+          "scope": {
+            "gene": "CEP290",
+            "diseaseId": "OMIM:611755",
+            "hpoId": "HP:0007663",
+            "modalityId": "aso-splice-correction",
+            "variantId": "1337",
+            "constructId": "qr110",
+            "populationId": "cep290-c2991-1655-g-cell-model",
+            "species": "human cells",
+            "route": "in vitro",
+            "cells": "LCA10 patient-derived fibroblasts and retinal organoids"
+          }
+        }
+      ],
+      "assessmentScenarios": [
+        {
+          "id": "cep290-qr110-organoids",
+          "label": "Published QR-110 LCA10 cell/organoid experiment",
+          "constructId": "qr110",
+          "populationId": "cep290-c2991-1655-g-cell-model",
+          "species": "human cells",
+          "route": "in vitro",
+          "cells": "LCA10 patient-derived fibroblasts and retinal organoids"
+        }
+      ]
+    },
+    {
+      "id": "scn8a-asn1768asp",
+      "gene": "SCN8A",
+      "variantIds": [
+        "30123"
+      ],
+      "variantLabel": "NM_001330260.2:c.5302A>G (p.Asn1768Asp)",
+      "variantClass": "Exonic missense; experimentally increased persistent sodium current",
+      "diseaseId": "OMIM:614558",
+      "disease": "SCN8A developmental and epileptic encephalopathy (DEE13)",
+      "therapyId": null,
+      "modalityId": "aso-knockdown",
+      "phenotypes": [],
+      "observedPhenotypes": [
+        {
+          "hpoId": "HP:0001250",
+          "label": "Seizure",
+          "present": true,
+          "mapping": "direct",
+          "rationale": "The proband had infantile refractory seizures.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC3309181/"
+          ]
+        },
+        {
+          "hpoId": "HP:0001249",
+          "label": "Intellectual disability",
+          "present": true,
+          "mapping": "direct",
+          "rationale": "Intellectual disability was reported in the proband.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC3309181/"
+          ]
+        }
+      ],
+      "mechanismEvidence": {
+        "mechanism": "gain_of_function",
+        "sourceUrls": [
+          "https://pmc.ncbi.nlm.nih.gov/articles/PMC3309181/"
+        ],
+        "contextIds": [
+          "SCN8A-gain-of-function"
+        ],
+        "scope": {
+          "gene": "SCN8A",
+          "diseaseId": "OMIM:614558",
+          "variantId": "30123",
+          "species": "Experimental cells",
+          "assay": "Sodium-channel electrophysiology"
+        }
+      },
+      "functionalObservations": [
+        {
+          "species": "Experimental cells",
+          "cells": "Heterologous channel expression and cultured neurons",
+          "assay": "Voltage/current clamp",
+          "intervention": "Mutant versus wild-type channel",
+          "timeFrame": "In vitro",
+          "direction": "supports",
+          "claim": "N1768D increased persistent current and neuronal excitability in the tested systems.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC3309181/"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "level": "in_vitro",
+          "direction": "supports",
+          "claim": "A de novo allele was linked to disease in a family study with functional channel measurements.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC3309181/"
+          ]
+        }
+      ],
+      "cells": "Experimental neuronal effects are not an exact human atlas identity.",
+      "limits": [
+        "This human allele case does not inherit ASO rescue from another SCN8A mouse allele.",
+        "Individual phenotype observations do not establish penetrance in all carriers."
+      ],
+      "sourceUrls": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/30123/",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC3309181/"
+      ],
+      "gates": [],
+      "modifiers": []
+    },
+    {
+      "id": "scn8a-arg1872trp",
+      "gene": "SCN8A",
+      "variantIds": [
+        "207131"
+      ],
+      "variantLabel": "NM_001330260.2:c.5614C>T (p.Arg1872Trp)",
+      "variantClass": "Exonic missense with a conditional gain-channel mouse model",
+      "diseaseId": "OMIM:614558",
+      "disease": "SCN8A developmental and epileptic encephalopathy (DEE13)",
+      "therapyId": null,
+      "modalityId": "aso-knockdown",
+      "phenotypes": [],
+      "observedPhenotypes": [],
+      "mechanismEvidence": {
+        "mechanism": "gain_of_function",
+        "sourceUrls": [
+          "https://pmc.ncbi.nlm.nih.gov/articles/PMC7064908/"
+        ],
+        "contextIds": [
+          "SCN8A-gain-of-function"
+        ],
+        "scope": {
+          "gene": "SCN8A",
+          "diseaseId": "OMIM:614558",
+          "variantId": "207131",
+          "species": "mouse",
+          "cells": "Globally activated conditional Scn8a R1872W model",
+          "assay": "Seizure onset, survival and brain RNA"
+        }
+      },
+      "functionalObservations": [
+        {
+          "species": "mouse",
+          "cells": "Globally activated conditional Scn8a R1872W model",
+          "assay": "Brain RNA, seizure onset and survival",
+          "intervention": "Mouse-sequence Scn8a-lowering ASO by neonatal ICV injection",
+          "timeFrame": "Postnatal day 2; some mice redosed day 30",
+          "direction": "supports",
+          "claim": "Transcript reduction delayed seizures and lethality in this model.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC7064908/"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "level": "animal_model",
+          "direction": "limits",
+          "claim": "Neonatal model benefit does not establish human delivery, safety or rescue of established disease.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC7064908/"
+          ]
+        }
+      ],
+      "cells": "Bulk brain RNA and global mutant activation do not isolate the sufficient neuronal subtype.",
+      "limits": [
+        "The ASO sequence targets mouse Scn8a; this is not a verified human treatment.",
+        "Human variant identity and the homologous mouse construct are explicitly distinct.",
+        "Benefit in this model does not transfer to SCN8A loss-of-function alleles or every other gain-channel allele."
+      ],
+      "sourceUrls": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/207131/",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC7064908/"
+      ],
+      "gates": [],
+      "modifiers": []
     }
   ]
 }

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { biologicalContext, buildEvidenceHref, buildExplorerHref, conditionDiseaseIds, evidenceDestination, updateEvidenceParams } from '../src/lib/evidenceNavigation.js';
+import { biologicalContext, buildEvidenceHref, buildExplorerHref, conditionDiseaseIds, evidenceDestination, evidenceSourceTab, updateEvidenceParams } from '../src/lib/evidenceNavigation.js';
 
 const genes = { 6323: 'SCN1A', 1080: 'CFTR' };
 const paramsOf = href => new URL(href, 'https://portal.example').searchParams;
@@ -23,6 +23,84 @@ test('aliased entry routes clear view filters using their effective current tab'
   assert.equal(next.get('gene'), 'CFTR');
   assert.equal(next.has('variant'), false);
   assert.equal(next.has('search'), false);
+});
+
+test('an explicitly selected allele survives variant–modality tabs and the return link only', () => {
+  const original = 'tab=variants&gene=SCN2A&disease=OMIM:613721&hpo=HP:0001250&variant=196039&search=R1882Q&consequence=missense_variant';
+  const assessment = updateEvidenceParams(original, { tab: 'modalities' });
+  assert.equal(assessment.get('variant'), '196039');
+  assert.equal(assessment.has('search'), false);
+  assert.equal(assessment.has('consequence'), false);
+  const returned = updateEvidenceParams(assessment, { tab: 'variants' });
+  assert.equal(returned.get('variant'), '196039');
+  const link = paramsOf(buildEvidenceHref({ tab: 'modalities', disease: 'OMIM:613721' }, original));
+  assert.equal(link.get('variant'), '196039');
+  const returnLink = paramsOf(buildEvidenceHref({ tab: 'variants' }, link));
+  assert.equal(returnLink.get('variant'), '196039');
+  for (const tab of ['therapies', 'methods']) {
+    assert.equal(updateEvidenceParams(assessment, { tab }).has('variant'), false);
+    assert.equal(paramsOf(buildEvidenceHref({ tab }, assessment)).has('variant'), false);
+  }
+});
+
+test('aliased variant routes can retain the explicit allele when changing to modalities', () => {
+  const next = updateEvidenceParams('gene=CFTR&variant=7120&vclass=Pathogenic', { tab: 'modalities' }, { currentTab: 'variants' });
+  assert.equal(next.get('variant'), '7120');
+  assert.equal(next.has('vclass'), false);
+});
+
+test('entity links infer the effective source tab from entry aliases when the query has no tab', () => {
+  const original = '?gene=CFTR&variant=7120&scenario=cftr-g551d-strive&hpo=HP:0032342&disease=OMIM:219700';
+  for (const [pathname, tab] of [['/gene-therapy', 'variants'], ['/variants', 'modalities']]) {
+    const next = paramsOf(buildEvidenceHref({ tab }, original, { pathname }));
+    assert.equal(next.get('variant'), '7120');
+    assert.equal(next.get('scenario'), 'cftr-g551d-strive');
+    assert.equal(next.get('gene'), 'CFTR');
+  }
+  for (const pathname of ['/approved-therapies', '/evidence']) {
+    const next = paramsOf(buildEvidenceHref({ tab: 'modalities' }, original, { pathname }));
+    assert.equal(next.has('variant'), false, 'A treatment entry cannot imply an allele-specific join');
+    assert.equal(next.has('scenario'), false);
+  }
+});
+
+test('valid tab overrides and invalid tab fallbacks match the workbench entry-route behavior', () => {
+  assert.equal(evidenceSourceTab('/gene-therapy', '?tab=variants'), 'variants');
+  assert.equal(evidenceSourceTab('/variants', '?tab=methods'), 'methods');
+  assert.equal(evidenceSourceTab('/gene-therapy', '?tab=invalid'), 'modalities');
+  assert.equal(evidenceSourceTab('/variants', '?tab=invalid'), 'variants');
+  assert.equal(evidenceSourceTab('/approved-therapies', ''), 'therapies');
+  const overridden = paramsOf(buildEvidenceHref({ tab: 'modalities' }, '?tab=therapies&gene=CFTR&variant=7120&scenario=cftr-g551d-strive', { pathname: '/variants' }));
+  assert.equal(overridden.has('variant'), false, 'The actual treatment tab takes precedence over its variant alias');
+  assert.equal(overridden.has('scenario'), false);
+});
+
+test('changing phenotype or disease retains the selected allele without attributing those phenotypes', () => {
+  const original = 'tab=modalities&gene=SCN2A&disease=OMIM:613721&hpo=HP:0001250&variant=196039&candidate=old';
+  const phenotype = updateEvidenceParams(original, { hpo: 'HP:0001263' });
+  assert.equal(phenotype.get('variant'), '196039');
+  assert.equal(phenotype.has('candidate'), false);
+  const disease = updateEvidenceParams(original, { disease: 'OMIM:182390' });
+  assert.equal(disease.get('variant'), '196039');
+  const otherGene = paramsOf(buildEvidenceHref({ tab: 'variants', gene: 'SCN8A' }, original));
+  assert.equal(otherGene.has('variant'), false);
+  const explicit = paramsOf(buildEvidenceHref({ tab: 'modalities', gene: 'CFTR', variant: '7120', disease: 'OMIM:219700', hpo: null }, original));
+  assert.equal(explicit.get('variant'), '7120', 'Explicit destination allele replaces the former gene allele');
+});
+
+test('published experimental scope travels with its exact allele and clears when that allele or gene changes', () => {
+  const original = 'tab=modalities&gene=CFTR&variant=7120&scenario=cftr-g551d-strive&hpo=HP:0032342&disease=OMIM:219700';
+  const inspection = updateEvidenceParams(original, { tab: 'variants' });
+  assert.equal(inspection.get('scenario'), 'cftr-g551d-strive');
+  assert.equal(paramsOf(buildEvidenceHref({ tab: 'variants' }, original)).get('scenario'), 'cftr-g551d-strive');
+  assert.equal(updateEvidenceParams(original, { hpo: 'HP:0002205' }).get('scenario'), 'cftr-g551d-strive');
+  for (const updates of [{ variant: '1337' }, { variant: null }, { gene: 'SCN2A' }, { tab: 'therapies' }, { tab: 'methods' }]) {
+    assert.equal(updateEvidenceParams(original, updates).has('scenario'), false);
+  }
+  const exact = updateEvidenceParams(original, { gene: 'CEP290', variant: '1337', scenario: 'cep290-qr110-organoids' });
+  assert.equal(exact.get('scenario'), 'cep290-qr110-organoids', 'An explicitly selected destination experiment replaces the former one');
+  assert.equal(paramsOf(buildExplorerHref('phenotype', 'HP:0032342', original)).has('variant'), false);
+  assert.equal(paramsOf(buildExplorerHref('phenotype', 'HP:0032342', original)).has('scenario'), false);
 });
 
 test('changing genes invalidates an allele selection and transcript filters but same-gene updates retain them', () => {
