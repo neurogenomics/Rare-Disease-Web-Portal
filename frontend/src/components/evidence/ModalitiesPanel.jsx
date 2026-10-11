@@ -1,0 +1,98 @@
+/* eslint-disable react/prop-types */
+import { useEffect, useMemo, useState } from 'react';
+import { assessModality, assessPriorityModifiers, buildCandidates, modalities } from '../../lib/modalityModel';
+import { downloadData, toCsv } from '../../lib/evidenceModel';
+import { EmptyState, EntityLink, SectionLabel, StatusBadge } from './EvidenceCommon';
+import { number } from './evidenceUtils';
+import AtlasAssociations from './AtlasAssociations';
+
+const evaluationLabel = { incompatible: 'Requirement contradicted', insufficient_evidence: 'Evidence incomplete', requirements_supported: 'Requirements supported', unknown: 'Unknown' };
+const mechanismLabel = (value) => value === 'conflicting' ? 'Allele-dependent / unresolved' : value?.replaceAll('_', ' ') || 'Unestablished';
+
+function GateLedger({ evaluation }) {
+  return <div className="ev-gate-ledger">{evaluation.gates.map((gate, i) => <article key={gate.id} className={`ev-gate ev-gate--${gate.status}${gate.directionConcern ? ' ev-gate--direction-concern' : ''}`}><div className="ev-gate-index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</div><div><div className="ev-inline-heading"><h4>{gate.label}</h4><StatusBadge status={gate.directionConcern ? 'conditional' : gate.status}>{gate.directionConcern ? 'Direction requires assessment' : null}</StatusBadge></div><span className="ev-requirement-label">{gate.hard ? 'Necessary requirement for this scoped modality' : 'Research planning consideration'}</span><p>{gate.reason}</p>{gate.sources?.length > 0 && <div className="ev-source-links">{gate.sources.map((url, j) => <a key={url} href={url} target="_blank" rel="noopener noreferrer">Evidence source {j + 1} ↗</a>)}</div>}</div></article>)}</div>;
+}
+
+function MaturityLedger({ modifiers }) {
+  const strengthLabel = { strong: 'Strong', moderate: 'Moderate', weak: 'Weak', unknown: 'Unknown' };
+  return <details className="ev-outcome ev-maturity">
+    <summary>Evidence maturity · {modifiers.length} nonblocking modifiers</summary>
+    <div className="ev-outcome-body">
+      <p className="ev-note">Strong, Moderate, Weak and Unknown describe source-scoped evidence maturity. These modifiers do not change requirement status, add a score or affect shortlist ordering. Applicability to the exact phenotype, intervention, construct and population must be adjudicated; another same-gene therapy or a trial phase is not transferable success.</p>
+      <div className="ev-maturity-ledger">{modifiers.map((modifier) => <article key={modifier.id}>
+        <div className="ev-inline-heading"><h4>{modifier.label}</h4><StatusBadge status="unknown">{strengthLabel[modifier.strength] || 'Unknown'}</StatusBadge></div>
+        <p>{modifier.reason}</p>
+        {modifier.scope && <p className="ev-note">Scope: {modifier.scope.gene} · {modifier.scope.diseaseId} · {modifier.scope.hpoId} · {modifier.scope.modalityId}{modifier.scope.constructId ? ` · construct: ${modifier.scope.constructId}` : ''}{modifier.scope.populationId ? ` · population: ${modifier.scope.populationId}` : ''}</p>}
+        {modifier.sources?.length > 0 && <div className="ev-source-links">{modifier.sources.map((url, i) => <a key={url} href={url} target="_blank" rel="noopener noreferrer">Modifier source {i + 1} ↗</a>)}</div>}
+      </article>)}</div>
+    </div>
+  </details>;
+}
+
+export default function ModalitiesPanel({ filters, updateFilters, genePhenotypes, severity, predictions, contexts, variantIndex, atlasIndex, cellHpoIds = null }) {
+  const modalityId = modalities.some((item) => item.id === filters.modality) ? filters.modality : 'aso-upregulation';
+  const modality = modalities.find((item) => item.id === modalityId);
+  const [page, setPage] = useState(0);
+  const [capacity, setCapacity] = useState('4700');
+  const [otherCassette, setOtherCassette] = useState('');
+  const rows = useMemo(() => buildCandidates({ genePhenotypes: genePhenotypes || {}, severity: severity || [], predictions, contexts, variantIndex, modalityId, atlasIndex }), [genePhenotypes, severity, predictions, contexts, variantIndex, modalityId, atlasIndex]);
+  const severityFilter = filters.severity || (filters.hpo || filters.cell ? 'all' : 'serious');
+  const contextRows = useMemo(() => rows.filter((row) => {
+    const query = filters.search?.trim().toLowerCase();
+    return (!filters.gene || row.gene === filters.gene) && (!filters.hpo || row.hpoId === filters.hpo) && (cellHpoIds === null || cellHpoIds.includes(row.hpoId)) && (!filters.mechanism || (filters.mechanism === 'unknown' ? !row.context?.mechanism : row.context?.mechanism === filters.mechanism)) && (!query || `${row.gene} ${row.phenotype} ${row.hpoId} ${row.disease} ${row.diseaseId}`.toLowerCase().includes(query)) && (severityFilter === 'all' || (severityFilter === 'serious' ? ['severe', 'profound'].includes(row.severity) : row.severity === severityFilter));
+  }), [rows, filters, severityFilter, cellHpoIds]);
+  const filtered = useMemo(() => contextRows.filter((row) => !filters.readiness || row.evaluation.status === filters.readiness), [contextRows, filters.readiness]);
+  useEffect(() => { setPage(0); }, [filters.gene, filters.hpo, filters.cell, filters.atlas, filters.search, filters.readiness, filters.mechanism, severityFilter, modalityId]);
+  const selected = contextRows.find((row) => row.id === filters.candidate) || filtered[0];
+  const reference = selected ? variantIndex.genes?.[selected.gene]?.reference : null;
+  const scenario = { capacityBp: capacity.trim() ? Number(capacity) : NaN, otherCassetteBp: otherCassette.trim() ? Number(otherCassette) : undefined, diseaseId: selected?.diseaseId, hpoId: selected?.hpoId };
+  const evaluation = selected ? assessModality(modalityId, selected.context || {}, reference, scenario) : null;
+  const comparisons = selected ? modalities.map((item) => ({ ...item, evaluation: assessModality(item.id, selected.context || {}, reference, scenario) })) : [];
+  const modifiers = selected ? assessPriorityModifiers(selected.context || {}, { gene: selected.gene, diseaseId: selected.diseaseId, hpoId: selected.hpoId, modalityId }) : [];
+  const selectModality = (id) => updateFilters({ modality: id, candidate: selected?.id || null });
+  const pageSize = 20;
+  const reset = () => updateFilters({ gene: null, hpo: null, cell: null, atlas: null, search: null, readiness: null, mechanism: null, severity: 'all', candidate: null });
+  return <div className="ev-modalities-panel"><header className="ev-panel-header"><div><span className="ev-eyebrow">Phenotype → disease mechanism → requirements</span><h2>Which approaches are plausible?</h2><p>A transparent research shortlist with condition-specific mechanisms and explicit evidence gaps.</p></div><label className="ev-select-label">Therapeutic approach<select value={modalityId} onChange={(event) => selectModality(event.target.value)}>{modalities.map((item) => <option key={item.id} value={item.id}>{item.label}</option>)}</select></label></header>
+    <div className="ev-modality-intro"><span className="ev-modality-symbol" aria-hidden="true">↗</span><div><h3>{modality.label}</h3><p>{modality.description}</p><span className="ev-note">All necessary requirements must be supported within the same disease, allele, construct and treatment context. One contradicted requirement blocks that scenario; an unknown requirement remains unresolved.</span></div></div>
+    <section className="ev-section"><div className="ev-inline-heading"><SectionLabel number="01">Prioritise research contexts</SectionLabel><button className="ev-text-button" disabled={!filtered.length} onClick={() => downloadData(`${modalityId}-phenotype-contexts.csv`, toCsv(filtered.map((row) => ({ gene: row.gene, hpoId: row.hpoId, phenotype: row.phenotype, diseaseId: row.diseaseId, disease: row.disease, severity: row.severity, severityProvenance: row.severityProvenance, mechanism: row.context?.mechanism, status: row.evaluation.status, unknownRequirements: row.evaluation.unknown, contradictedRequirements: row.evaluation.contradicted, associationKind: row.associationKind })), ['gene', 'hpoId', 'phenotype', 'diseaseId', 'disease', 'severity', 'severityProvenance', 'mechanism', 'status', 'unknownRequirements', 'contradictedRequirements', 'associationKind']), 'text/csv')}>Download research shortlist ↓</button></div>
+      <div className="ev-filter-row"><label>Phenotype severity<select value={severityFilter} onChange={(event) => updateFilters({ severity: event.target.value, candidate: null })}><option value="serious">Severe + profound</option><option value="all">All annotations</option><option value="profound">Profound</option><option value="severe">Severe</option><option value="moderate">Moderate</option><option value="mild">Mild</option><option value="unknown">Unknown</option></select></label><label>Disease mechanism<select value={filters.mechanism || ''} onChange={(event) => updateFilters({ mechanism: event.target.value, candidate: null })}><option value="">All mechanisms</option><option value="haploinsufficiency">Haploinsufficiency</option><option value="loss_of_function">Loss of function</option><option value="gain_of_function">Gain of function</option><option value="dominant_negative">Dominant negative</option><option value="toxic_gain_of_function">Toxic gain of function</option><option value="toxic_rna">Toxic RNA</option><option value="dosage_gain">Dosage gain</option><option value="conflicting">Allele-dependent / unresolved</option><option value="unknown">Unestablished</option></select></label><label>Requirement status<select value={filters.readiness || ''} onChange={(event) => updateFilters({ readiness: event.target.value, candidate: null })}><option value="">All evidence states</option><option value="insufficient_evidence">Evidence incomplete</option><option value="incompatible">Requirement contradicted</option><option value="requirements_supported">Requirements supported</option></select></label><p className="ev-filter-explainer">{number(filtered.length)} disease–gene–phenotype contexts<br /><span>Mechanism is disease-scoped; dosage scores and variant consequence do not automatically establish it.</span></p></div>
+      <details className="ev-outcome"><summary>How this ordering and severity annotation work</summary><div className="ev-outcome-body"><p>Contexts with no contradicted requirement come first. A supported disease mechanism then takes precedence, followed by the legacy severity class, fewer unknown requirements and a stable identifier. No weighted probability or efficacy score is calculated.</p><p className="ev-notice">Severity comes from historical machine annotations, with incomplete source/version lineage. The legacy numeric formula has known scaling and missingness defects. It is not a calibrated 0–100 measure of suffering, urgency or treatment suitability. Source rationales were not retained in this reduced export; inspect the phenotype before using its class.</p><p className="ev-note">Gene–phenotype associations come from the HPO disease-context export ({genePhenotypes?.metadata?.source_last_modified || 'source date unavailable'}). They do not establish variant-specific phenotype causality.</p>{genePhenotypes?.metadata?.source_url && <a href={genePhenotypes.metadata.source_url} target="_blank" rel="noopener noreferrer">HPO source export ↗</a>}</div></details>
+      <div className="ev-table-scroll"><table className="ev-table ev-candidate-table"><caption className="ev-sr-only">Ranked research contexts, without a probability of success</caption><thead><tr><th>Order</th><th>Phenotype / gene</th><th>Disease context</th><th>Legacy severity</th><th>Mechanism evidence</th><th>Requirements</th></tr></thead><tbody>{filtered.slice(page * pageSize, (page + 1) * pageSize).map((row, i) => <tr key={row.id} className={selected?.id === row.id ? 'is-selected' : ''}><td className="ev-numeric">{page * pageSize + i + 1}</td><td><button className="ev-text-button" onClick={() => updateFilters({ candidate: row.id })}>{row.phenotype}</button><small><strong>{row.gene}</strong> · <span className="ev-mono">{row.hpoId}</span></small></td><td>{row.disease}<small className="ev-mono">{row.diseaseId}</small></td><td><span className={`ev-severity ev-severity--${row.severity}`}>{row.severity}</span><small>Unvalidated annotation</small></td><td>{mechanismLabel(row.context?.mechanism)}<small>{row.context ? 'Disease-scoped sources' : 'No curated context'}</small></td><td><StatusBadge status={row.evaluation.status}>{evaluationLabel[row.evaluation.status]}</StatusBadge><small>{row.evaluation.unknown} unknown · {row.evaluation.contradicted} contradicted</small></td></tr>)}</tbody></table></div>
+      {!filtered.length && <EmptyState onReset={reset}>No disease–gene–phenotype contexts match these filters. Unknown evidence is retained; severity filters may exclude an otherwise relevant phenotype.</EmptyState>}
+      {filtered.length > pageSize && <div className="ev-pagination"><span>{number(page * pageSize + 1)}–{number(Math.min((page + 1) * pageSize, filtered.length))} of {number(filtered.length)}</span><button className="ev-button ev-button--quiet" disabled={!page} onClick={() => setPage(page - 1)}>← Previous</button><button className="ev-button ev-button--quiet" disabled={(page + 1) * pageSize >= filtered.length} onClick={() => setPage(page + 1)}>Next →</button></div>}
+    </section>
+    {selected && <><section className="ev-section ev-context-detail"><SectionLabel number="02">Inspect a candidate context</SectionLabel><div className="ev-inline-heading"><div><h3>{selected.phenotype}</h3><p className="ev-lead-small">{selected.gene} · {selected.disease}</p></div><StatusBadge status={evaluation.status}>{evaluationLabel[evaluation.status]}</StatusBadge></div><div className="ev-action-row"><EntityLink tab="variants" gene={selected.gene}>Inspect {selected.gene} variants →</EntityLink><EntityLink tab="therapies" gene={selected.gene} hpo={selected.hpoId}>Find endpoint-specific treatments →</EntityLink><button className="ev-text-button" onClick={() => updateFilters({ gene: selected.gene, hpo: selected.hpoId })}>Focus on this gene & phenotype</button></div>
+      <p className="ev-notice">{selected.associationKind} No patient-specific allele has been adjudicated for this context.</p>
+      {filters.readiness && !filtered.some((row) => row.id === selected.id) && <p className="ev-notice">This exact context remains selected for comparison, although its current modality assessment is outside the shortlist requirement-status filter.</p>}
+      {selected.context ? <div className="ev-mechanism-note"><span className="ev-field-label">Condition-scoped mechanism</span><h4>{mechanismLabel(selected.context.mechanism)}</h4><p>{selected.context.notes || selected.context.scope}</p><div className="ev-source-links">{selected.context.sourceUrls.map((url, i) => <a key={url} href={url} target="_blank" rel="noopener noreferrer">Mechanism source {i + 1} ↗</a>)}</div></div> : <p className="ev-note">No curated mechanism matches this exact disease identifier. Mechanisms from another disease caused by the same gene are not inherited automatically.</p>}
+      {['aav-addition', 'dual-aav'].includes(modalityId) && <div className="ev-cargo-scenario"><h4>Explore a single-AAV cassette-size scenario</h4><p className="ev-note">The canonical coding sequence is a lower bound. Enter all other bases, including the stop codon, promoter, regulatory sequence, polyA and ITRs. The same scenario is retained when switching families. A dual-AAV design needs two defined cassettes and reconstitution evidence; a larger total capacity is not assumed.</p><div className="ev-filter-row"><label>Vector capacity (bp)<input type="number" min="1" value={capacity} onChange={(event) => setCapacity(event.target.value)} /></label><label>Other cassette sequence (bp)<input type="number" min="0" placeholder="Unknown" value={otherCassette} onChange={(event) => setOtherCassette(event.target.value)} /></label><p className="ev-filter-explainer">Canonical CDS: {number(reference?.canonicalTranscript?.codingBasesExcludingStop)} bp<br /><span>Scenario updates the selected context and comparison; the shortlist uses default capacity and unknown other sequence.</span></p></div></div>}
+      <GateLedger evaluation={evaluation} />
+      <MaturityLedger modifiers={modifiers} />
+    </section>
+    <section className="ev-section">
+      <SectionLabel number="03">Compare therapeutic approaches</SectionLabel>
+      <details className="ev-outcome ev-modality-comparison">
+        <summary>Compare all {comparisons.length} modality families for {selected.gene}</summary>
+        <div className="ev-outcome-body">
+          <p><strong>{selected.gene} · {selected.disease}</strong> <span className="ev-mono">{selected.diseaseId} · {selected.hpoId}</span></p>
+          <p className="ev-note">Every row uses this same exact disease context, gene reference and current cassette scenario. Select a family to inspect its requirements while retaining this context and the URL filters. Unknown requirements are unresolved. Requirements supported does not establish efficacy, and this comparison does not select a preferred treatment.</p>
+          <p className="ev-comparison-scenario"><span className="ev-field-label">Single-AAV scenario</span>Canonical CDS: {number(reference?.canonicalTranscript?.codingBasesExcludingStop)} bp · capacity: {Number.isFinite(scenario.capacityBp) && scenario.capacityBp > 0 ? number(scenario.capacityBp) : 'unspecified'} bp · other cassette sequence: {Number.isFinite(scenario.otherCassetteBp) && scenario.otherCassetteBp >= 0 ? `${number(scenario.otherCassetteBp)} bp` : 'unknown'}. Dual-AAV cassette fit and reconstitution remain separate requirements.</p>
+          <p className="ev-table-hint">Scroll horizontally to inspect all requirement counts.</p>
+          <div className="ev-table-scroll" tabIndex="0" aria-label="All modality families for the selected disease context">
+            <table className="ev-table ev-modality-matrix">
+              <caption className="ev-sr-only">Modality requirement comparison for {selected.gene}, {selected.diseaseId}, {selected.hpoId}; no efficacy ranking</caption>
+              <thead><tr><th scope="col">Modality family</th><th scope="col">Assessment</th><th scope="col">Supported necessary</th><th scope="col">Unknown necessary</th><th scope="col">Contradicted necessary</th></tr></thead>
+              <tbody>{comparisons.map((item) => { const result = item.evaluation; return <tr key={item.id} className={modalityId === item.id ? 'is-selected' : ''}>
+                <th scope="row"><button className="ev-text-button" aria-pressed={modalityId === item.id} onClick={() => selectModality(item.id)}>{item.label}</button></th>
+                <td><StatusBadge status={result.status}>{evaluationLabel[result.status]}</StatusBadge>{result.gates.some((gate) => gate.directionConcern) && <small className="ev-direction-concern">Direction requires assessment</small>}</td>
+                <td className="ev-numeric">{result.gates.filter((gate) => gate.hard && gate.status === 'supported').length}</td>
+                <td className="ev-numeric">{result.unknown}</td><td className="ev-numeric">{result.contradicted}</td>
+              </tr>; })}</tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+    </section>
+    <section className="ev-section"><SectionLabel number="04">Phenotype → cells</SectionLabel><AtlasAssociations hpoId={selected.hpoId} atlasIndex={atlasIndex} predictions={predictions} /></section></>}
+  </div>;
+}

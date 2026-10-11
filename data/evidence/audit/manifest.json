@@ -1,0 +1,37 @@
+{
+  "scope": "Pinned public source excerpts used for the independent calculation audit. Repository commits and public links are in docs/statistical-audit.md.",
+  "files": [
+    {
+      "file": "rare_disease_celltyping/manuscript/index.qmd",
+      "sha256": "42986bd5894c311ff39586e30f0566b60493c36b8cf5779f2fa93039a776d8e0"
+    },
+    {
+      "file": "MSTExplorer/R/ttd_check.R",
+      "sha256": "dc8ad09d2b2d983082ffc3cc8c0e1fc1b2dfe8683c3120168db6e26eaa3342f4"
+    },
+    {
+      "file": "MSTExplorer/R/ttd_hypergeo.R",
+      "sha256": "82f0cd1746f440d517cd63e8b891842a392efec70538b37b84d8716df25f6cea"
+    },
+    {
+      "file": "MSTExplorer/R/add_logfc.R",
+      "sha256": "3c075a3d7ea7c594d405a375c77182932f788797cc2657364162ae58a57b95c9"
+    },
+    {
+      "file": "HPOExplorer/R/gpt_annot_codify.R",
+      "sha256": "b8c70d926a759a42d748396fe84a0c4d833b400b7ceb1fc99a811ce2a5dbcc78"
+    },
+    {
+      "file": "HPOExplorer/R/gpt_annot_class.R",
+      "sha256": "aa02b52392a426af188389b024c3d07beec4c9735d88a0ee2d424ffb5fee13cd"
+    },
+    {
+      "file": "phenomix.core/R/iterate_lm_long_glm.R",
+      "sha256": "808a0fdd54748b2ea190216c9fa91c3daeb8461484538e916aae7957f9bf0d07"
+    },
+    {
+      "file": "KGExplorer/R/get_gencc.R",
+      "sha256": "d6e5559d0353d7589f1ed0b4945429aa1e0e4041562d34339fbca180db4106b4"
+    }
+  ]
+}

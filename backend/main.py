@@ -37,7 +37,7 @@ from gene_annotations import (
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import HTTPException
 from config import CORS_ORIGINS, HOST, PORT
-from typing import AsyncIterator, Optional, List
+from typing import AsyncIterator, Optional, List, Literal
 from pydantic import BaseModel
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.inmemory import InMemoryBackend
@@ -363,31 +363,24 @@ def severity_scores():
 
 @app.get("/api/gene-therapy")
 def get_gene_therapy_candidates(
-    congenital_onset_max: int = Query(1, description="Max congenital_onset (0-3). Use 1 for post-natal only"),
-    severity_min: float = Query(20.0, description="Minimum severity score (0-100)"),
-    q_threshold: float = Query(0.05, description="Maximum q-value for significance"),
-    db_type: str = Query("DescartesHuman", description="Cell atlas: DescartesHuman or HumanCellLandscape"),
+    congenital_onset_max: int = Query(1, ge=0, le=3, description="Maximum legacy GPT congenital-onset annotation; not a measured patient age"),
+    severity_min: float = Query(20.0, ge=0, le=100, description="Minimum legacy GPT phenotype severity annotation (0-100)"),
+    q_threshold: float = Query(0.05, gt=0, le=1, description="Maximum q-value for enrichment prediction"),
+    db_type: Literal["DescartesHuman", "HumanCellLandscape"] = Query("DescartesHuman", description="Cell atlas"),
     cell_types: str = Query("All", description="Comma-separated cell types or 'All'"),
-    expression_specificity_min: float = Query(0.1, description="Minimum expression specificity (0-1)"),
+    expression_specificity_min: float = Query(0.1, ge=0, le=1, description="Minimum expression specificity (0-1)"),
     cns_only: bool = Query(True, description="Filter to CNS phenotypes only"),
-    terminally_differentiated_only: bool = Query(False, description="Only include terminally differentiated cell types"),
-    pageSize: int = Query(20, description="Results per page"),
-    current: int = Query(1, description="Page number"),
+    terminally_differentiated_only: bool = Query(False, description="Require sourced terminal differentiation; currently unavailable, so this filter returns no rows"),
+    pageSize: int = Query(20, ge=1, le=500, description="Results per page"),
+    current: int = Query(1, ge=1, description="Page number"),
 ):
     """
-    Fetch gene therapy candidates by joining phenotype severity, cell type associations,
-    and gene expression data.
-
-    This endpoint supports the gene therapy prioritization pipeline by filtering:
-    - Post-natal onset phenotypes (congenital_onset <= congenital_onset_max)
-    - Minimum severity threshold
-    - Significant cell type associations (q < q_threshold)
-    - High gene expression specificity in target cell types
-    - Optionally filtered to CNS phenotypes only
-    - Optionally filtered to terminally differentiated cell types only (for AAV durability)
-
-    Returns:
-        List of candidate gene-phenotype-celltype combinations with scores and AAV tractability.
+    Explore source-supported disease/gene/phenotype research associations with
+    atlas enrichment predictions. The HPO source must support the exact gene,
+    phenotype and disease combination; expression alone never creates an edge.
+    This endpoint does not establish variant causality, a causal cell type,
+    mechanism, delivery, cargo compatibility or therapeutic suitability. Unknown
+    evidence remains null and does not pass an affirmative feasibility filter.
     """
     # Parse cell_types from comma-separated string to list
     cell_types_list = [ct.strip() for ct in cell_types.split(",")] if cell_types != "All" else ["All"]
@@ -402,14 +395,8 @@ def get_gene_therapy_candidates(
         pageSize=pageSize,
         current=current,
         require_terminally_differentiated=terminally_differentiated_only,
+        hpo_ids=fetch_cns_phenotype_ids() if cns_only else None,
     )
-
-    # If cns_only is True, filter results to CNS phenotypes
-    # This is done at the API level for flexibility, but could be optimized
-    # by doing it in the database query if performance is an issue
-    if cns_only and response:
-        cns_ids = set(fetch_cns_phenotype_ids())
-        response = [r for r in response if r.get("hpo_id") in cns_ids]
 
     if response:
         return response
@@ -452,9 +439,9 @@ def get_approved_therapies(
     category: Optional[str] = Query(None, description="Filter by disease category (CNS, Hematology, etc.)"),
 ):
     """
-    Get list of FDA/EMA approved gene therapies.
-
-    This endpoint provides reference data for competitive landscape analysis.
+    Get legacy gene-therapy reference records from commit 6820916.
+    Current approval, indication and safety status have not been verified for
+    these records. They must not establish current treatment availability.
 
     Returns:
         List of approved gene therapy records.
@@ -469,10 +456,10 @@ def get_approved_therapies(
 @cache(expire=36000, namespace="aav-tractability")  # Cache for 10 hours
 def get_aav_tractability():
     """
-    Get AAV tractability data for all cell types.
+    Get unassessed delivery-evidence placeholders for legacy cell labels.
 
     Returns:
-        Dict mapping cell type names to tractability scores.
+        Cell labels with null scores. Unvalidated heuristic rankings are retired.
     """
     log.info("Fetching AAV tractability data.")
     return load_aav_tractability()
@@ -824,15 +811,14 @@ def browse_genes_api(
 @cache(expire=3600, namespace="gene-hpo")
 def get_gene_hpo(
     symbol: str,
-    db_type: str = Query("DescartesHuman", description="Cell atlas to use"),
-    min_specificity: float = Query(0.01, description="Minimum expression specificity for gene-cell"),
-    q_threshold: float = Query(0.05, description="Maximum q-value for cell-HPO association"),
+    db_type: Literal["DescartesHuman", "HumanCellLandscape"] = Query("DescartesHuman", description="Cell atlas to use"),
+    min_specificity: float = Query(0.01, ge=0, le=1, description="Minimum expression specificity for gene-cell"),
+    q_threshold: float = Query(0.05, gt=0, le=1, description="Maximum q-value for cell-HPO association"),
 ):
     """
-    Get HPO phenotypes associated with a gene via cell type pathway.
-
-    The pathway is: gene → cell type (high specificity) → HPO phenotypes (significant association).
-    This endpoint is used for lazy-loading HPO data in the gene browser expanded rows.
+    Get source-supported gene/phenotype associations with disease context.
+    Cell enrichment predictions decorate existing source associations; they do
+    not create gene–phenotype causality. These data are not variant-specific.
     """
     return get_gene_hpo_phenotypes(
         gene_symbol=symbol,

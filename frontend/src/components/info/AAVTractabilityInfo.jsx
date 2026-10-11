@@ -1,73 +1,10 @@
-import React from "react";
-import { Tooltip, Popover, Table } from "antd";
-import { InfoOutlined, Launch } from "@mui/icons-material";
-
+import { Popover } from "antd";
+import { InfoOutlined } from "@mui/icons-material";
 export default function AAVTractabilityInfo() {
-    const info =
-        "AAV tractability scores reflect how effectively different AAV serotypes can transduce (deliver genes to) specific cell types.";
-
-    const tractabilityData = [
-        { cellType: "Neurons", score: "High (0.9)", serotype: "AAV-PHP.eB, AAV9", note: "Terminally differentiated" },
-        { cellType: "Astrocytes", score: "High (0.85)", serotype: "AAV-PHP.eB", note: "Terminally differentiated" },
-        { cellType: "Oligodendrocytes", score: "Medium (0.6)", serotype: "AAV9", note: "Terminally differentiated" },
-        { cellType: "Microglia", score: "Low (0.2)", serotype: "Limited", note: "Difficult to transduce" },
-        { cellType: "Epithelial", score: "Variable", serotype: "AAV2/5", note: "Cell turnover limits durability" },
-    ];
-
-    const columns = [
-        { title: "Cell Type", dataIndex: "cellType", key: "cellType" },
-        { title: "Score", dataIndex: "score", key: "score" },
-        { title: "Best Serotype", dataIndex: "serotype", key: "serotype" },
-    ];
-
-    function popoverContent() {
-        return (
-            <>
-                <p className="mb-2">{info}</p>
-                <div className="bg-gray-50 p-3 rounded mb-2">
-                    <p className="font-semibold mb-1">AAV Tropism by Cell Type:</p>
-                    <Table
-                        dataSource={tractabilityData}
-                        columns={columns}
-                        size="small"
-                        pagination={false}
-                        rowKey="cellType"
-                    />
-                </div>
-                <div className="bg-blue-50 p-3 rounded mb-2">
-                    <p className="font-semibold mb-1">Key considerations:</p>
-                    <ul className="list-disc ml-4 text-sm">
-                        <li><strong>Terminally differentiated cells</strong> (neurons, cardiomyocytes) maintain AAV episomes for years to lifetime</li>
-                        <li><strong>Dividing cells</strong> dilute AAV DNA with each division, limiting durability</li>
-                        <li><strong>Microglia</strong> are difficult to transduce with current AAV serotypes</li>
-                        <li><strong>Gene size</strong> must be &lt;4.7kb to fit in AAV capsid</li>
-                    </ul>
-                </div>
-                <p className="mt-2 text-sm">
-                    <span className="font-semibold">More information:</span>{" "}
-                    <Tooltip title={<i>Gene therapy clinical trials worldwide to 2017</i>} placement="bottom">
-                        <a
-                            href="https://www.nature.com/articles/s41573-020-0090-8"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            AAV Gene Therapy Review
-                            <sup className="text-xs">
-                                <Launch fontSize="inherit" />
-                            </sup>
-                        </a>
-                    </Tooltip>
-                </p>
-            </>
-        );
-    }
-
-    return (
-        <Popover
-            content={popoverContent}
-            styles={{ root: { maxWidth: "550px" } }}
-        >
-            <InfoOutlined fontSize="inherit" className="cursor-help" />
-        </Popover>
-    );
+  return <Popover content={<div style={{maxWidth:440}}>
+    <p>AAV delivery requires evidence for the specific capsid, species, administration route, dose, age and cell state. Exposure, transduction and functional rescue are different observations. This portal does not assign a universal cell-type transduction score.</p>
+    <p>Mouse PHP.B/PHP.eB blood–brain barrier performance depends on mouse receptor biology and cannot be assumed in humans. Dividing cells can dilute vector genomes; durable benefit still needs direct measurement.</p>
+    <p>For a single conventional AAV, the roughly 4.7 kb vector-genome budget includes the chosen coding sequence, promoter, regulatory elements, polyA and ITRs. A short CDS alone does not prove that a cassette fits. Self-complementary and dual-vector designs have different requirements.</p>
+    <p><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6520463/" target="_blank" rel="noreferrer">Primary species/tropism study</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/8934224/" target="_blank" rel="noreferrer">Primary packaging study</a> · <a href="/evidence?tab=modalities">Assess modality requirements</a></p>
+  </div>}><InfoOutlined fontSize="inherit" className="cursor-help" /></Popover>;
 }

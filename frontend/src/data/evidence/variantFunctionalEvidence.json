@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-11",
+  "scope": "Selected allele-specific functional and clinical examples; not a comprehensive variant\u2013phenotype database. Case-level evidence does not automatically transfer to other variants or cell subtypes.",
+  "cases": [
+    {
+      "id": "cftr-g551d",
+      "gene": "CFTR",
+      "variantIds": [
+        "7120"
+      ],
+      "variantLabel": "NM_000492.4:c.1652G>A (p.Gly551Asp; G551D)",
+      "variantClass": "Exonic missense; channel gating defect",
+      "diseaseId": "OMIM:219700",
+      "disease": "Cystic fibrosis",
+      "therapyId": "ivacaftor-cf",
+      "modalityId": "small-molecule",
+      "phenotypes": [
+        {
+          "hpoId": "HP:0032342",
+          "label": "Reduced forced expiratory volume in one second",
+          "mapping": "direct",
+          "endpoint": "Percent-predicted FEV1",
+          "rationale": "FEV1 is measured in the stated CF genotype cohort; the trial does not attribute every respiratory feature to this allele alone."
+        }
+      ],
+      "evidence": [
+        {
+          "level": "in_vitro",
+          "direction": "supports",
+          "claim": "G551D protein response supports potentiation of a channel gating defect; missense classification alone would not establish this mechanism.",
+          "sourceUrls": [
+            "https://www.nejm.org/doi/full/10.1056/NEJMoa1105185"
+          ]
+        },
+        {
+          "level": "human_clinical",
+          "direction": "supports",
+          "claim": "Randomized participants with at least one G551D allele had a 10.6 percentage-point FEV1 advantage over placebo through week24. The other allele and disease background remain relevant.",
+          "sourceUrls": [
+            "https://pubmed.ncbi.nlm.nih.gov/22047557/"
+          ]
+        }
+      ],
+      "cells": "Epithelial CFTR activity is implicated; this trial does not identify a single atlas epithelial subtype responsible for the endpoint.",
+      "limits": [
+        "Functional response does not generalize to all CFTR variants.",
+        "FEV1 is a directly measured phenotype in the variant-selected trial cohort. The clinical outcome does not establish variant-specific cell-type causality or cellular rescue."
+      ],
+      "sourceUrls": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/7120/",
+        "https://pubmed.ncbi.nlm.nih.gov/22047557/",
+        "https://clinicaltrials.gov/study/NCT00909532"
+      ]
+    },
+    {
+      "id": "mfsd8-intron6-sva",
+      "gene": "MFSD8",
+      "variantIds": [],
+      "variantLabel": "Patient-specific SVA retrotransposon insertion in MFSD8 intron6",
+      "variantClass": "Intronic insertion activating aberrant splicing",
+      "diseaseId": "OMIM:610951",
+      "disease": "CLN7 neuronal ceroid lipofuscinosis, compound-heterozygous case",
+      "therapyId": "milasen-cln7",
+      "modalityId": "aso-splice-correction",
+      "phenotypes": [
+        {
+          "hpoId": "HP:0001250",
+          "label": "Seizure",
+          "mapping": "direct",
+          "endpoint": "Seizure frequency and duration, including EEG",
+          "rationale": "Seizures were measured in one affected patient; this is case evidence rather than proof that this allele alone determines the phenotype."
+        }
+      ],
+      "evidence": [
+        {
+          "level": "patient_derived_cells",
+          "direction": "supports",
+          "claim": "Patient fibroblast RNA and functional assays supported correction of aberrant splicing and lysosomal dysfunction.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC6961983/"
+          ]
+        },
+        {
+          "level": "human_clinical",
+          "direction": "supports",
+          "claim": "The uncontrolled individual-treatment report described reduced seizure frequency and duration.",
+          "sourceUrls": [
+            "https://pubmed.ncbi.nlm.nih.gov/31597037/"
+          ]
+        },
+        {
+          "level": "human_clinical",
+          "direction": "limits",
+          "claim": "A single case and fibroblast rescue do not establish reversal of neurodegeneration or rescue in an atlas-defined neuronal subtype.",
+          "sourceUrls": [
+            "https://pmc.ncbi.nlm.nih.gov/articles/PMC6961983/"
+          ]
+        }
+      ],
+      "cells": "Functional rescue was tested in patient-derived fibroblasts; direct human neuronal rescue was not demonstrated.",
+      "limits": [
+        "No exact ClinVar variation match is asserted for the reported insertion.",
+        "Genomic coordinates and full insertion sequence are not normalized here.",
+        "The second allele and treatment timing matter; a truncating-variant label is not sufficient for splice-correction eligibility."
+      ],
+      "sourceUrls": [
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC6961983/",
+        "https://pubmed.ncbi.nlm.nih.gov/31597037/"
+      ]
+    }
+  ]
+}

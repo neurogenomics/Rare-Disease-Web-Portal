@@ -11,6 +11,13 @@ This is the code part, please contact me if you're interested in the whole repor
 
 **This project has already deployed at [Rare Disease Web Portal](https://neurogenomics-ukdri.dsi.ic.ac.uk/)**
 
+The new [evidence workbench](docs/evidence-workbench.md) adds reviewed treatment
+endpoints, cell-mechanism ledgers, ClinVar/transcript inspection and explicit
+modality requirements. See its [coverage](docs/therapeutic-evidence-coverage.md),
+[calculation audit](docs/statistical-audit.md) and
+[validation report](docs/validation-report.md). Source snapshots build locally;
+the branch is not evidence that the existing public deployment was updated.
+
 ## Abstract
 
 Rare diseases (RDs) collectively affect millions of individuals worldwide, presenting significant challenges in diagnostics and treatment due to their genetic and phenotypic diversity. Despite advances in cellular and genetic research, current platforms remain fragmented, often lacking effective data integration or intuitive visualizations, which hinders the exploration of complex relationships between phenotypes and genes. Additionally, most platforms do not incorporate cell type data and phenotype severity data, limiting their scope and utility for rare disease research.

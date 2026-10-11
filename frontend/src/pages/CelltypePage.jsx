@@ -123,6 +123,9 @@ export default function CelltypePage() {
     const [data, setData] = useState([]);
     const [data1, setData1] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [phenotypeError, setPhenotypeError] = useState(false);
+    const [geneError, setGeneError] = useState(false);
+    const [networkError, setNetworkError] = useState(false);
     const [decimalPoints, setDecimalPoints] = useState(3);
 
     const networkDivRef = useRef();
@@ -342,7 +345,13 @@ export default function CelltypePage() {
         setDecimalPoints(decimalPoints);
     };
     const handleSubmit = async (event) => {
+        event?.preventDefault();
         setLoading(true);
+        setPhenotypeError(false);
+        setGeneError(false);
+        setNetworkError(false);
+        setData([]);
+        setData1([]);
         urlSetter({
             jump: sliderValues.celltype_name,
             db_type: sliderValues.db_type,
@@ -374,7 +383,7 @@ export default function CelltypePage() {
             }
 
             fetch(`${BASE_API_URL}/api/hpjFiltered?${queryParams}`)
-                .then((res) => res.json())
+                .then((res) => { if (!res.ok) throw new Error('Network source unavailable'); return res.json(); })
                 .then((results) => {
                     node = node.filter(function (v) {
                         return v.name !== undefined;
@@ -394,15 +403,17 @@ export default function CelltypePage() {
                     createRoot(document.getElementById("network")).render(
                         <PhenotypeNetwork elementRef={networkDivRef} data={data} height={400} />
                     )
-                });
+                }).catch(() => setNetworkError(true));
         } catch (error) {
             console.error("Error fetching data:", error);
+            setPhenotypeError(true);
+            setLoading(false);
         }
 
         fetch(
             `${BASE_API_URL}/gene1/${sliderValues.celltype_name}/${sliderValues.db_type}`
         )
-            .then((res) => res.json())
+            .then((res) => { if (!res.ok) throw new Error('Gene source unavailable'); return res.json(); })
             .then((results) => {
                 results = results.filter(
                     (item) => item.expression_specificity > 0.00001
@@ -412,12 +423,13 @@ export default function CelltypePage() {
                 });
                 setData1(results);
                 setLoading(false);
-            });
+            }).catch(() => { setGeneError(true); setLoading(false); });
         setActiveCellType(sliderValues.celltype_name);
     };
 
     const onload = async (event) => {
         setLoading(true);
+        setPhenotypeError(false);
         const queryParams = new URLSearchParams(event).toString();
         const url = `${BASE_API_URL}/api/cell?${queryParams}`;
         try {
@@ -450,6 +462,8 @@ export default function CelltypePage() {
                 });
         } catch (error) {
             console.error("Error fetching data:", error);
+            setPhenotypeError(true);
+            setLoading(false);
         }
     };
 
@@ -718,6 +732,8 @@ export default function CelltypePage() {
                                 <ShareButton />
                                 </div>
                                 <br />
+                                {(phenotypeError || geneError) && <Alert type="warning" showIcon role="alert" message="Source request failed; association results are unknown." description={`${phenotypeError ? 'Phenotype associations could not be retrieved. ' : ''}${geneError ? 'Gene expression associations could not be retrieved. ' : ''}A failed request does not establish absence of an association. Retry Search or follow the static evidence snapshots.`} />}
+                                {networkError && <Alert type="info" showIcon message="The network source could not be retrieved; the relationship graph is unavailable." />}
                                 <Tabs
                                     type="card"
                                     items={new Array(2)
@@ -734,8 +750,9 @@ export default function CelltypePage() {
                                                             spinning={loading}
                                                         >
                                                             <br />
-                                                            <div id="network" ref={networkDivRef} className="mb-3 -mt-3 border rounded-lg" />
+                                                            <div id="network" ref={networkDivRef} style={{ display: phenotypeError || networkError ? 'none' : undefined }} className="mb-3 -mt-3 border rounded-lg" />
                                                             <Table
+                                                                locale={{ emptyText: phenotypeError ? 'Source unavailable; phenotype associations remain unknown.' : undefined }}
                                                                 columns={
                                                                     columns
                                                                 }
@@ -789,6 +806,7 @@ export default function CelltypePage() {
                                                                     width: 50,
                                                                 }}
                                                                 type="primary"
+                                                                disabled={geneError || !data1.length}
                                                                 icon={
                                                                     <DownloadOutlined />
                                                                 }
@@ -798,13 +816,14 @@ export default function CelltypePage() {
                                                                 }
                                                                 className="z-10"
                                                             />
-                                                            <DemoColumn
+                                                            {!geneError && <DemoColumn
                                                                 data={data1.slice(0, 50)}
                                                                 decimalPoints={
                                                                     decimalPoints
                                                                 }
-                                                            />
+                                                            />}
                                                             <Table
+                                                                locale={{ emptyText: geneError ? 'Source unavailable; gene associations remain unknown.' : undefined }}
                                                                 columns={
                                                                     columns1
                                                                 }

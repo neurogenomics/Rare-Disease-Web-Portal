@@ -21,6 +21,8 @@ from typing import Optional, Dict, List, Any
 from pymongo import MongoClient
 from pymongo.collation import Collation
 from config import MONGODB_URI
+from candidate_evidence import ATLAS_NAMES, finite_number
+from phenotype_associations import (ASSOCIATION_KIND, get_phenotype_gene_associations, get_source_manifest)
 
 # Establish MongoDB connection (reuse existing client pattern)
 client = MongoClient(MONGODB_URI)
@@ -901,65 +903,62 @@ def get_gene_hpo_phenotypes(
     min_specificity: float = 0.01,
     q_threshold: float = 0.05
 ) -> Dict[str, Any]:
+    """Return sourced disease-context HPO associations, decorated by predictions.
+
+    Sharing a cell type is not evidence that a gene causes a phenotype. HPO
+    associations persist even when the selected atlas has no prediction.
     """
-    Get HPO phenotypes associated with a gene via cell type pathway.
-
-    The pathway is: gene → cell type (where gene is specific) → HPO phenotypes (associated with cell type)
-
-    Args:
-        gene_symbol: HGNC gene symbol
-        db_type: Cell atlas to use
-        min_specificity: Minimum expression specificity for gene-cell association
-        q_threshold: Maximum q-value for cell-HPO association
-
-    Returns:
-        Dict with gene symbol and list of HPO phenotypes with via_cell_types.
-    """
-    # Get cell types where gene is specifically expressed
-    gene_celltypes = get_cell_specificity(
-        gene_symbol,
-        db_type=db_type,
-        min_specificity=min_specificity,
-        limit=50
-    )
-
-    if not gene_celltypes:
-        return {"gene_symbol": gene_symbol, "phenotypes": []}
-
-    celltype_names = [ct["celltype_name"] for ct in gene_celltypes]
-
-    # Get HPO phenotypes associated with these cell types
-    # Use the cell-HPO association collection
-    cell_hpo_collection = db[f"celltype_hpo_{db_type}"]
-
-    # Query for all HPO associations with these cell types
-    hpo_query = {
-        "celltype_name": {"$in": celltype_names},
-        "q": {"$lt": q_threshold}
+    if db_type not in ATLAS_NAMES:
+        raise ValueError("Unknown cell atlas")
+    if finite_number(min_specificity, 0, 1) is None or finite_number(q_threshold, 0, 1) is None:
+        raise ValueError("Invalid specificity or q threshold")
+    associations = get_phenotype_gene_associations(gene_symbols=[gene_symbol])
+    manifest = get_source_manifest()
+    result = {
+        "gene_symbol": gene_symbol, "phenotypes": [],
+        "association_kind": ASSOCIATION_KIND, "variant_specific": False,
+        "source": manifest,
+        "evidence_status": "available" if manifest else "source_unavailable",
     }
-
-    cursor = cell_hpo_collection.find(
-        hpo_query,
-        projection={"_id": 0, "hpo_id": 1, "hpo_name": 1, "celltype_name": 1, "q": 1}
-    )
-
-    # Group by HPO, collect cell types
+    if not associations:
+        return result
     hpo_map = {}
-    for doc in cursor:
-        hpo_id = doc["hpo_id"]
-        if hpo_id not in hpo_map:
-            hpo_map[hpo_id] = {
-                "hpo_id": hpo_id,
-                "name": doc.get("hpo_name", ""),
-                "via_cell_types": []
-            }
-        hpo_map[hpo_id]["via_cell_types"].append(doc["celltype_name"])
-
-    # Convert to list and sort by number of associated cell types
-    phenotypes = list(hpo_map.values())
-    phenotypes.sort(key=lambda x: len(x["via_cell_types"]), reverse=True)
-
-    return {
-        "gene_symbol": gene_symbol,
-        "phenotypes": phenotypes[:50]  # Limit to top 50
-    }
+    for association in associations:
+        hpo_id = association["hpo_id"]
+        phenotype = hpo_map.setdefault(hpo_id, {
+            "hpo_id": hpo_id, "name": association["hpo_name"],
+            "via_cell_types": [], "cell_type_predictions": [],
+            "disease_ids": [], "associations": [],
+        })
+        if association["disease_id"] not in phenotype["disease_ids"]:
+            phenotype["disease_ids"].append(association["disease_id"])
+            phenotype["associations"].append(association)
+    gene_celltypes = get_cell_specificity(gene_symbol, db_type=db_type,
+                                         min_specificity=min_specificity, limit=10000)
+    cell_names = {cell["celltype_name"] for cell in gene_celltypes
+                  if finite_number(cell.get("specificity"), 0, 1) is not None
+                  and cell["specificity"] >= min_specificity}
+    if cell_names:
+        # Same collection naming and atlas as the main cell prediction API.
+        collection = db[f"hpo_celltype_{db_type}"]
+        cursor = collection.find({
+            "hpo_id": {"$in": list(hpo_map)},
+            "celltype_name": {"$in": sorted(cell_names)},
+            "q": {"$gte": 0, "$lt": q_threshold},
+        }, projection={"_id": 0, "hpo_id": 1, "celltype_name": 1, "q": 1})
+        seen = set()
+        for row in cursor:
+            hpo_id, cell_name = row.get("hpo_id"), row.get("celltype_name")
+            q_value = finite_number(row.get("q"), 0, 1)
+            if (hpo_id not in hpo_map or cell_name not in cell_names
+                    or q_value is None or q_value >= q_threshold or (hpo_id, cell_name) in seen):
+                continue
+            seen.add((hpo_id, cell_name))
+            hpo_map[hpo_id]["via_cell_types"].append(cell_name)
+            hpo_map[hpo_id]["cell_type_predictions"].append({
+                "celltype_name": cell_name, "q": q_value, "atlas": db_type,
+                "evidence_status": "enrichment_prediction_not_causal_validation",
+            })
+    result["phenotypes"] = sorted(hpo_map.values(), key=lambda row: (row["name"], row["hpo_id"]))
+    result["total"] = len(result["phenotypes"])
+    return result

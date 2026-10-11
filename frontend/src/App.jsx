@@ -1,20 +1,22 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import PhenotypePage from "./pages/PhenotypePage";
-import CelltypePage from "./pages/CelltypePage";
-import GenePage from "./pages/GenePage";
-import SeverityPage from "./pages/SeverityPage";
-import GeneTherapyPage from "./pages/GeneTherapyPage";
-import ApprovedTherapiesPage from "./pages/ApprovedTherapiesPage";
-import PublicationsPage from "./pages/PublicationsPage";
-import AboutPage from "./pages/AboutPage";
-import GeneBrowserPage from "./pages/GeneBrowserPage";
+import { lazy, Suspense } from "react";
+import PortalHome from "./pages/PortalHome";
+import EvidenceEntry from "./components/EvidenceEntry";
+const PhenotypePage = lazy(() => import('./pages/PhenotypePage'));
+const CelltypePage = lazy(() => import('./pages/CelltypePage'));
+const GenePage = lazy(() => import('./pages/GenePage'));
+const SeverityPage = lazy(() => import('./pages/SeverityPage'));
+const PublicationsPage = lazy(() => import('./pages/PublicationsPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const GeneBrowserPage = lazy(() => import('./pages/GeneBrowserPage'));
+const EvidenceWorkbench = lazy(() => import('./pages/EvidenceWorkbench'));
 
 function App() {
     return (
         <BrowserRouter>
+            <Suspense fallback={<main style={{padding:'4rem'}}>Loading evidence explorer…</main>}>
             <Routes>
-                <Route path="/" element={<HomePage />} />
+                <Route path="/" element={<PortalHome />} />
                 <Route path="/phenotype" element={<PhenotypePage />} />
                 <Route path="/celltype" element={<CelltypePage />} />
                 <Route path="/gene" element={<GenePage />} />
@@ -24,12 +26,16 @@ function App() {
                     element={<SeverityPage />}
                 />
                 <Route path="/severity" element={<SeverityPage />} />
-                <Route path="/gene-therapy" element={<GeneTherapyPage />} />
-                <Route path="/approved-therapies" element={<ApprovedTherapiesPage />} />
+                <Route path="/evidence" element={<EvidenceWorkbench />} />
+                <Route path="/gene-therapy" element={<EvidenceWorkbench initialTab="modalities" />} />
+                <Route path="/approved-therapies" element={<EvidenceWorkbench initialTab="therapies" />} />
+                <Route path="/variants" element={<EvidenceWorkbench initialTab="variants" />} />
                 <Route path="/gene-browser" element={<GeneBrowserPage />} />
                 <Route path="/publications" element={<PublicationsPage />} />
                 <Route path="/about" element={<AboutPage />} />
             </Routes>
+            <EvidenceEntry />
+            </Suspense>
         </BrowserRouter>
     );
 }

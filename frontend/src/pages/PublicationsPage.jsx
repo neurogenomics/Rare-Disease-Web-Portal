@@ -9,20 +9,20 @@ const { Content } = Layout;
 // Description ~50words
 const publications = [
     {
-        title: "Harnessing generative AI to annotate the severity of all phenotypic abnormalities within the Human Phenotype Ontology",
-        description: "Using GPT-4, we systematically annotated the severity of all Human Phenotype Ontology (HPO) phenotypes based on clinical characteristics and frequency. Benchmarking showed high accuracy (89–100% recall). A novel severity scoring system enables prioritization of the most detrimental phenotypes, aiding gene therapy selection and therapeutic intervention efforts.",
+        title: "Using GPT-4 to annotate the severity of all phenotypic abnormalities within the human phenotype ontology",
+        description: "This work uses GPT-4 to annotate clinical characteristics of HPO terms and proposes a phenotype severity scheme. The portal retains these annotations as historical research data. Severity classes and scores require independent validation and are not calibrated treatment-priority measures; see Methods & coverage for the current interpretation.",
         authors: "Kitty B Murphy, Brian M Schilder, Nathan G Skene",
-        journal: "medRxiv",
-        year: 2024,
-        doi: "https://doi.org/10.1101/2024.06.10.24308475"
+        journal: "Frontiers in Digital Health",
+        year: 2026,
+        doi: "https://doi.org/10.3389/fdgth.2026.1794934"
     },
     {
-        title: "Identification of cell type-specific gene targets underlying thousands of rare diseases and subtraits",
-        description: "Rare diseases are understudied due to their diversity and low prevalence. Using the Human Phenotype Ontology and single-cell transcriptomics, we conducted >688,000 enrichment tests, identifying >13,888 cell type-phenotype associations. We introduce a pipeline for gene target prioritization and provide R packages to enhance accessibility.",
-        authors: "Kitty B. Murphy, Robert Gordon-Smith, Jai Chapman, Momoko Otani, Brian M. Schilder, Nathan G. Skene",
-        journal: "medRxiv",
-        year: 2023,
-        doi: "https://doi.org/10.1101/2023.02.13.23285820"
+        title: "Cell type-specific contextualisation of the human phenome: towards the systematic treatment of all rare diseases",
+        description: "This study combines disease-linked phenotype and gene evidence with single-cell expression atlases to nominate cellular contexts and therapeutic research targets. The portal exposes these associations with their atlas, signed estimates and source limits. Concordance with known treatments does not independently validate cellular causality or predict clinical efficacy.",
+        authors: "Brian M. Schilder, Kitty B. Murphy, Hiranyamaya Dash, Yichun Zhang, Robert Gordon-Smith, Jai Chapman, Momoko Otani, Nathan G. Skene",
+        journal: "Genome Medicine",
+        year: 2026,
+        doi: "https://doi.org/10.1186/s13073-026-01692-0"
     }
     // Add more publications as needed
 ];
@@ -50,7 +50,7 @@ export default function PublicationsPage() {
                                     <p><strong>Authors:</strong> {pub.authors}</p>
                                     <p><strong>Journal:</strong> {pub.journal}</p>
                                     <p><strong>Year:</strong> {pub.year}</p>
-                                    <p><strong>DOI: </strong><a href={pub.doi} target="_blank" className="text-blue-500 hover:underline">{pub.doi}</a></p>
+                                    <p><strong>DOI: </strong><a href={pub.doi} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{pub.doi}</a></p>
                                 </div>
                             </div>
                         ))}

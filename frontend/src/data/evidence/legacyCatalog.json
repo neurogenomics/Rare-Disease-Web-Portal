@@ -1,0 +1,1842 @@
+{
+  "metadata": {
+    "sourceCommit": "6820916",
+    "historicalAsOf": "2026-01",
+    "status": "quarantined_for_review",
+    "note": "Historical catalog, not a current regulatory list. Review is per intervention, indication and endpoint. Brands may share an intervention."
+  },
+  "therapies": [
+    {
+      "id": "legacy-1",
+      "legacyId": 1,
+      "name": "Zolgensma",
+      "gene": "SMN1",
+      "disease": "Spinal Muscular Atrophy (SMA)",
+      "modality": "AAV9",
+      "category": "CNS",
+      "route": "IV",
+      "historicalApproval": {
+        "year": 2019,
+        "agency": "FDA, EMA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT03306277",
+          "trial_name": "STR1VE",
+          "phase": "Phase 3"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0001324",
+          "historicalLabel": "Muscle weakness",
+          "referenceLabel": "Muscle weakness",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Achievement of Independent Sitting for at Least 30 Seconds",
+          "nctId": "NCT03306277",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03306277",
+            "https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/125694s000lbl.pdf"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0002093",
+          "historicalLabel": "Respiratory insufficiency",
+          "referenceLabel": "Respiratory insufficiency",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Event-free Survival",
+          "nctId": "NCT03306277",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03306277",
+            "https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/125694s000lbl.pdf"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0011968",
+          "historicalLabel": "Feeding difficulties",
+          "referenceLabel": "Feeding difficulties",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Ability to Thrive",
+          "nctId": "NCT03306277",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03306277"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0001263",
+          "historicalLabel": "Global developmental delay",
+          "referenceLabel": "Global developmental delay",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Achievement of Independent Sitting for at Least 30 Seconds",
+          "nctId": "NCT03306277",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03306277"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-2",
+      "legacyId": 2,
+      "name": "Upstaza",
+      "gene": "DDC",
+      "disease": "AADC Deficiency",
+      "modality": "AAV2",
+      "category": "CNS",
+      "route": "Intracranial",
+      "historicalApproval": {
+        "year": 2022,
+        "agency": "EMA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT02852213",
+          "trial_name": "AADC Gene Therapy",
+          "phase": "Phase 1"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0002194",
+          "historicalLabel": "Delayed gross motor development",
+          "referenceLabel": "Delayed gross motor development",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Gross Motor Function Measure-88 (GMFM-88)",
+          "nctId": "NCT02852213",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02852213"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0000511",
+          "historicalLabel": "Oculogyric crisis",
+          "referenceLabel": "Vertical supranuclear gaze palsy",
+          "labelAgrees": false,
+          "status": "needs_review",
+          "endpoint": "Symptom Diary - Oculogyric Episodes",
+          "nctId": "NCT02852213",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02852213"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0001332",
+          "historicalLabel": "Dystonia",
+          "referenceLabel": "Dystonia",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Adverse events including post-operative dyskinesia severity",
+          "nctId": "NCT02852213",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02852213"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-3",
+      "legacyId": 3,
+      "name": "Kebilidi",
+      "gene": "DDC",
+      "disease": "AADC Deficiency",
+      "modality": "AAV2",
+      "category": "CNS",
+      "route": "Intracranial",
+      "historicalApproval": {
+        "year": 2023,
+        "agency": "FDA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT02852213",
+          "trial_name": "AADC Gene Therapy",
+          "phase": "Phase 1"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0002194",
+          "historicalLabel": "Delayed gross motor development",
+          "referenceLabel": "Delayed gross motor development",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Gross Motor Function Measure-88 (GMFM-88)",
+          "nctId": "NCT02852213",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02852213"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0000511",
+          "historicalLabel": "Oculogyric crisis",
+          "referenceLabel": "Vertical supranuclear gaze palsy",
+          "labelAgrees": false,
+          "status": "needs_review",
+          "endpoint": "Symptom Diary - Oculogyric Episodes",
+          "nctId": "NCT02852213",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02852213"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0001332",
+          "historicalLabel": "Dystonia",
+          "referenceLabel": "Dystonia",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Adverse events including post-operative dyskinesia severity",
+          "nctId": "NCT02852213",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02852213"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-4",
+      "legacyId": 4,
+      "name": "Skysona",
+      "gene": "ABCD1",
+      "disease": "Cerebral Adrenoleukodystrophy (CALD)",
+      "modality": "Lentivirus (ex vivo)",
+      "category": "CNS",
+      "route": "HSCT (ex vivo)",
+      "historicalApproval": {
+        "year": 2022,
+        "agency": "FDA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT01896102",
+          "trial_name": "ALD-102/103 (Lenti-D)",
+          "phase": "Phase 2/3"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0002352",
+          "historicalLabel": "Leukoencephalopathy",
+          "referenceLabel": "Leukoencephalopathy",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Resolution of Gadolinium Positivity on MRI",
+          "nctId": "NCT01896102",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01896102"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0002015",
+          "historicalLabel": "Dysphagia",
+          "referenceLabel": "Dysphagia",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Major Functional Disability-Free Survival - Tube Feeding",
+          "nctId": "NCT01896102",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01896102"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0000572",
+          "historicalLabel": "Visual loss",
+          "referenceLabel": "Visual loss",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Major Functional Disability-Free Survival - Cortical Blindness",
+          "nctId": "NCT01896102",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01896102"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0001249",
+          "historicalLabel": "Intellectual disability",
+          "referenceLabel": "Intellectual disability",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Major Functional Disability-Free Survival - Loss of Communication",
+          "nctId": "NCT01896102",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01896102"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0002167",
+          "historicalLabel": "Abnormality of speech or vocalization",
+          "referenceLabel": null,
+          "labelAgrees": false,
+          "status": "needs_review",
+          "endpoint": "Neurologic Function Score - Aphasia/Apraxia",
+          "nctId": "NCT01896102",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01896102"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-5",
+      "legacyId": 5,
+      "name": "Libmeldy",
+      "gene": "ARSA",
+      "disease": "Metachromatic Leukodystrophy (MLD)",
+      "modality": "Lentivirus (ex vivo)",
+      "category": "CNS",
+      "route": "HSCT (ex vivo)",
+      "historicalApproval": {
+        "year": 2020,
+        "agency": "EMA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT01560182",
+          "trial_name": "MLD Gene Therapy",
+          "phase": "Phase 1/2"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0002194",
+          "historicalLabel": "Delayed gross motor development",
+          "referenceLabel": "Delayed gross motor development",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Gross Motor Function Measure (GMFM) Score",
+          "nctId": "NCT01560182",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01560182"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0002352",
+          "historicalLabel": "Leukoencephalopathy",
+          "referenceLabel": "Leukoencephalopathy",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Total Brain MRI Score",
+          "nctId": "NCT01560182",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01560182"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0007328",
+          "historicalLabel": "Impaired peripheral nerve conduction",
+          "referenceLabel": "Impaired pain sensation",
+          "labelAgrees": false,
+          "status": "needs_review",
+          "endpoint": "Nerve Conduction Velocity (NCV) Index",
+          "nctId": "NCT01560182",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01560182"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0001249",
+          "historicalLabel": "Intellectual disability",
+          "referenceLabel": "Intellectual disability",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "IQ Measurement Above 55",
+          "nctId": "NCT01560182",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01560182"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-6",
+      "legacyId": 6,
+      "name": "Lenmeldy",
+      "gene": "ARSA",
+      "disease": "Metachromatic Leukodystrophy (MLD)",
+      "modality": "Lentivirus (ex vivo)",
+      "category": "CNS",
+      "route": "HSCT (ex vivo)",
+      "historicalApproval": {
+        "year": 2024,
+        "agency": "FDA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT01560182",
+          "trial_name": "MLD Gene Therapy",
+          "phase": "Phase 1/2"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0002194",
+          "historicalLabel": "Delayed gross motor development",
+          "referenceLabel": "Delayed gross motor development",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Gross Motor Function Measure (GMFM) Score",
+          "nctId": "NCT01560182",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01560182"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0002352",
+          "historicalLabel": "Leukoencephalopathy",
+          "referenceLabel": "Leukoencephalopathy",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Total Brain MRI Score",
+          "nctId": "NCT01560182",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01560182"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0007328",
+          "historicalLabel": "Impaired peripheral nerve conduction",
+          "referenceLabel": "Impaired pain sensation",
+          "labelAgrees": false,
+          "status": "needs_review",
+          "endpoint": "Nerve Conduction Velocity (NCV) Index",
+          "nctId": "NCT01560182",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01560182"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0001249",
+          "historicalLabel": "Intellectual disability",
+          "referenceLabel": "Intellectual disability",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "IQ Measurement Above 55",
+          "nctId": "NCT01560182",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01560182"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-7",
+      "legacyId": 7,
+      "name": "Elevidys",
+      "gene": "DMD",
+      "disease": "Duchenne Muscular Dystrophy (DMD)",
+      "modality": "AAVrh74",
+      "category": "Neuromuscular",
+      "route": "IV",
+      "historicalApproval": {
+        "year": 2023,
+        "agency": "FDA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT03375164",
+          "trial_name": "microDys-IV-001",
+          "phase": "Phase 1/2"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0003202",
+          "historicalLabel": "Amyotrophy",
+          "referenceLabel": "Skeletal muscle atrophy",
+          "labelAgrees": false,
+          "status": "needs_review",
+          "endpoint": "Change From Baseline at Day 90 in Delandistrogene Moxeparvovec Dystrophin Expression as Measured by Western Blot",
+          "nctId": "NCT03375164",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03375164"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0001324",
+          "historicalLabel": "Muscle weakness",
+          "referenceLabel": "Muscle weakness",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Change From Baseline at Year 5 in the 100 Meter Timed Test",
+          "nctId": "NCT03375164",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03375164"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0003236",
+          "historicalLabel": "Elevated circulating creatine kinase",
+          "referenceLabel": "Elevated serum creatine kinase",
+          "labelAgrees": false,
+          "status": "needs_review",
+          "endpoint": "Change From Baseline at Day 90 in Delandistrogene Moxeparvovec Dystrophin Expression as Measured by Immunofluorescence (IF) Fiber Intensity",
+          "nctId": "NCT03375164",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03375164"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-8",
+      "legacyId": 8,
+      "name": "Luxturna",
+      "gene": "RPE65",
+      "disease": "Inherited Retinal Dystrophy (RPE65-mediated)",
+      "modality": "AAV2",
+      "category": "Ophthalmology",
+      "route": "Subretinal",
+      "historicalApproval": {
+        "year": 2017,
+        "agency": "FDA, EMA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT00999609",
+          "trial_name": "AAV2-hRPE65v2-301",
+          "phase": "Phase 3"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0000662",
+          "historicalLabel": "Nyctalopia",
+          "referenceLabel": "Nyctalopia",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Multi-luminance Mobility Testing (MLMT), Bilateral",
+          "nctId": "NCT00999609",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT00999609",
+            "https://www.fda.gov/vaccines-blood-biologics/cellular-gene-therapy-products/luxturna"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0007663",
+          "historicalLabel": "Reduced visual acuity",
+          "referenceLabel": "Reduced visual acuity",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Visual Acuity",
+          "nctId": "NCT00999609",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT00999609"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0000505",
+          "historicalLabel": "Visual impairment",
+          "referenceLabel": "Visual impairment",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Full-field Light Sensitivity Threshold (FST) Testing: White Light",
+          "nctId": "NCT00999609",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT00999609"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-9",
+      "legacyId": 9,
+      "name": "Encelto",
+      "gene": "CNTF",
+      "disease": "Retinitis Pigmentosa",
+      "modality": "Encapsulated cell technology",
+      "category": "Ophthalmology",
+      "route": "Intravitreal implant",
+      "historicalApproval": {
+        "year": 2025,
+        "agency": "FDA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT00447993",
+          "trial_name": "CNTF for Late Stage RP",
+          "phase": "Phase 2"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0007663",
+          "historicalLabel": "Reduced visual acuity",
+          "referenceLabel": "Reduced visual acuity",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Change in Best-corrected Visual Acuity (BCVA) Using Electronic Visual Acuity (EVA) Technology at Month 12",
+          "nctId": "NCT00447993",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT00447993"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0000546",
+          "historicalLabel": "Retinal degeneration",
+          "referenceLabel": "Retinal degeneration",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Number of Participants With and Without Best Corrected Visual Acuity Response Over the 18-month Follow-up Period",
+          "nctId": "NCT00447993",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT00447993"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-10",
+      "legacyId": 10,
+      "name": "Zynteglo",
+      "gene": "HBB",
+      "disease": "Beta-Thalassemia",
+      "modality": "Lentivirus (ex vivo)",
+      "category": "Hematology",
+      "route": "HSCT (ex vivo)",
+      "historicalApproval": {
+        "year": 2022,
+        "agency": "FDA, EMA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT02906202",
+          "trial_name": "Northstar-2",
+          "phase": "Phase 3"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0001903",
+          "historicalLabel": "Anemia",
+          "referenceLabel": "Anemia",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Percentage of Participants Who Meet the Definition of Transfusion Independence (TI)",
+          "nctId": "NCT02906202",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02906202"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0011902",
+          "historicalLabel": "Abnormal hemoglobin",
+          "referenceLabel": "Abnormal hemoglobin",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Weighted Average Hemoglobin (Hb) During Transfusion Independence (TI)",
+          "nctId": "NCT02906202",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02906202"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0003281",
+          "historicalLabel": "Increased circulating ferritin concentration",
+          "referenceLabel": "Increased circulating ferritin concentration",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Change From Baseline in Serum Ferritin at Months 12 and 24",
+          "nctId": "NCT02906202",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02906202"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-11",
+      "legacyId": 11,
+      "name": "Casgevy",
+      "gene": "BCL11A",
+      "disease": "Sickle Cell Disease / Beta-Thalassemia",
+      "modality": "CRISPR/Cas9 (ex vivo)",
+      "category": "Hematology",
+      "route": "HSCT (ex vivo)",
+      "historicalApproval": {
+        "year": 2023,
+        "agency": "FDA, EMA, UK MHRA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT03745287",
+          "trial_name": "CLIMB-121",
+          "phase": "Phase 2/3"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0012531",
+          "historicalLabel": "Pain",
+          "referenceLabel": "Pain",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Proportion of subjects who have not experienced any severe vaso-occlusive crisis (VOC) for at least 12 consecutive months (VF12)",
+          "nctId": "NCT03745287",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03745287"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0001903",
+          "historicalLabel": "Anemia",
+          "referenceLabel": "Anemia",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Hb concentration over time",
+          "nctId": "NCT03745287",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03745287"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0011902",
+          "historicalLabel": "Abnormal hemoglobin",
+          "referenceLabel": "Abnormal hemoglobin",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Proportion of subjects with sustained HbF >=20% for at least 12 months",
+          "nctId": "NCT03745287",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03745287"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0001878",
+          "historicalLabel": "Hemolytic anemia",
+          "referenceLabel": "Hemolytic anemia",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Change from baseline in indirect bilirubin, reticulocyte count, haptoglobin, and lactate dehydrogenase over time",
+          "nctId": "NCT03745287",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03745287"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-12",
+      "legacyId": 12,
+      "name": "Lyfgenia",
+      "gene": "HBB",
+      "disease": "Sickle Cell Disease",
+      "modality": "Lentivirus (ex vivo)",
+      "category": "Hematology",
+      "route": "HSCT (ex vivo)",
+      "historicalApproval": {
+        "year": 2023,
+        "agency": "FDA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT02140554",
+          "trial_name": "HGB-206",
+          "phase": "Phase 1/2"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0012531",
+          "historicalLabel": "Pain",
+          "referenceLabel": "Pain",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Percentage of Group C Participants Who Achieved Complete Resolution of Vaso-occlusive Events (VOE-CR)",
+          "nctId": "NCT02140554",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02140554"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0001903",
+          "historicalLabel": "Anemia",
+          "referenceLabel": "Anemia",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Weighted Average of Non-transfused Total Hb in Group C Participants",
+          "nctId": "NCT02140554",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02140554"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0011902",
+          "historicalLabel": "Abnormal hemoglobin",
+          "referenceLabel": "Abnormal hemoglobin",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Weighted Average of HbAT87Q % in Non-transfused Total Hb in Group C Participants",
+          "nctId": "NCT02140554",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02140554"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0001878",
+          "historicalLabel": "Hemolytic anemia",
+          "referenceLabel": "Hemolytic anemia",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Change From Baseline in Total Bilirubin, Haptoglobin, and Lactate Dehydrogenase (LDH) in Group C Participants",
+          "nctId": "NCT02140554",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02140554"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-13",
+      "legacyId": 13,
+      "name": "Hemgenix",
+      "gene": "F9",
+      "disease": "Hemophilia B",
+      "modality": "AAV5",
+      "category": "Hematology",
+      "route": "IV",
+      "historicalApproval": {
+        "year": 2022,
+        "agency": "FDA, EMA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT03569891",
+          "trial_name": "HOPE-B",
+          "phase": "Phase 3"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0001892",
+          "historicalLabel": "Abnormal bleeding",
+          "referenceLabel": "Abnormal bleeding",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Annualized Bleeding Rate (ABR) for All Bleeding Episodes",
+          "nctId": "NCT03569891",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03569891"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0003125",
+          "historicalLabel": "Reduced factor IX activity",
+          "referenceLabel": "Reduced factor VIII activity",
+          "labelAgrees": false,
+          "status": "needs_review",
+          "endpoint": "Factor IX Activity Levels After AMT-061 Dosing",
+          "nctId": "NCT03569891",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03569891"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0005261",
+          "historicalLabel": "Joint hemorrhage",
+          "referenceLabel": "Joint hemorrhage",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Number of Joint Bleeding Episodes",
+          "nctId": "NCT03569891",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03569891"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-14",
+      "legacyId": 14,
+      "name": "Beqvez",
+      "gene": "F9",
+      "disease": "Hemophilia B",
+      "modality": "AAV (Spark100)",
+      "category": "Hematology",
+      "route": "IV",
+      "historicalApproval": {
+        "year": 2024,
+        "agency": "FDA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT03861273",
+          "trial_name": "BeneGene-2",
+          "phase": "Phase 3"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0001892",
+          "historicalLabel": "Abnormal bleeding",
+          "referenceLabel": "Abnormal bleeding",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Annualized Bleeding Rate (ABR) for Total Bleeds (Treated and Untreated) From Week 12 to Month 15",
+          "nctId": "NCT03861273",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03861273"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0003125",
+          "historicalLabel": "Reduced factor IX activity",
+          "referenceLabel": "Reduced factor VIII activity",
+          "labelAgrees": false,
+          "status": "needs_review",
+          "endpoint": "Steady State Circulating Factor IX (FIX:C) From Week 12 to Month 15",
+          "nctId": "NCT03861273",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03861273"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0005261",
+          "historicalLabel": "Joint hemorrhage",
+          "referenceLabel": "Joint hemorrhage",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Number of Target Joint Bleeds From Week 12 to Month 15",
+          "nctId": "NCT03861273",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03861273"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-15",
+      "legacyId": 15,
+      "name": "Roctavian",
+      "gene": "F8",
+      "disease": "Hemophilia A",
+      "modality": "AAV5",
+      "category": "Hematology",
+      "route": "IV",
+      "historicalApproval": {
+        "year": 2023,
+        "agency": "FDA, EMA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT03370913",
+          "trial_name": "BMN 270-301 (GENEr8-1)",
+          "phase": "Phase 3"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0001892",
+          "historicalLabel": "Abnormal bleeding",
+          "referenceLabel": "Abnormal bleeding",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Change From Baseline in Annualized Number of Bleeding Episodes (ABR for All Bleeds) in EEP",
+          "nctId": "NCT03370913",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03370913"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0003324",
+          "historicalLabel": "Generalized muscle weakness",
+          "referenceLabel": "Generalized muscle weakness",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Change From Baseline in FVIII Activity at Week 104",
+          "nctId": "NCT03370913",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03370913"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0001928",
+          "historicalLabel": "Abnormal coagulation",
+          "referenceLabel": "Abnormality of coagulation",
+          "labelAgrees": false,
+          "status": "needs_review",
+          "endpoint": "Change From Baseline in Annualized FVIII Utilization in EEP",
+          "nctId": "NCT03370913",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03370913"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-16",
+      "legacyId": 16,
+      "name": "Strimvelis",
+      "gene": "ADA",
+      "disease": "ADA-SCID",
+      "modality": "Retrovirus (ex vivo)",
+      "category": "Immunology",
+      "route": "HSCT (ex vivo)",
+      "historicalApproval": {
+        "year": 2016,
+        "agency": "EMA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT00598481",
+          "trial_name": "ADA Gene Transfer",
+          "phase": "Phase 2"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0005387",
+          "historicalLabel": "Combined immunodeficiency",
+          "referenceLabel": "Combined immunodeficiency",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Survival",
+          "nctId": "NCT00598481",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT00598481"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0002719",
+          "historicalLabel": "Recurrent infections",
+          "referenceLabel": "Recurrent infections",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Rate of Severe Infections",
+          "nctId": "NCT00598481",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT00598481"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0004430",
+          "historicalLabel": "Severe combined immunodeficiency",
+          "referenceLabel": "Severe combined immunodeficiency",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "CD3+ Cell Counts",
+          "nctId": "NCT00598481",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT00598481"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-17",
+      "legacyId": 17,
+      "name": "Vyjuvek",
+      "gene": "COL7A1",
+      "disease": "Dystrophic Epidermolysis Bullosa (DEB)",
+      "modality": "HSV-1 (topical)",
+      "category": "Dermatology",
+      "route": "Topical",
+      "historicalApproval": {
+        "year": 2023,
+        "agency": "FDA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT03536143",
+          "trial_name": "GEM-3",
+          "phase": "Phase 1/2"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0200041",
+          "historicalLabel": "Skin erosion",
+          "referenceLabel": "Skin erosion",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Complete Wound Closure Responder",
+          "nctId": "NCT03536143",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03536143"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0008066",
+          "historicalLabel": "Abnormal blistering of the skin",
+          "referenceLabel": "Abnormal blistering of the skin",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Duration of Wound Closure",
+          "nctId": "NCT03536143",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03536143"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0012531",
+          "historicalLabel": "Pain",
+          "referenceLabel": "Pain",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Time to Wound Closure Analysis",
+          "nctId": "NCT03536143",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03536143"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-18",
+      "legacyId": 18,
+      "name": "Zevaskyn",
+      "gene": "COL7A1",
+      "disease": "Dystrophic Epidermolysis Bullosa (DEB)",
+      "modality": "Autologous gene-corrected keratinocytes",
+      "category": "Dermatology",
+      "route": "Topical (cell sheet)",
+      "historicalApproval": {
+        "year": 2025,
+        "agency": "FDA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT04227106",
+          "trial_name": "VIITAL",
+          "phase": "Phase 3"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0200041",
+          "historicalLabel": "Skin erosion",
+          "referenceLabel": "Skin erosion",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Wound Healing",
+          "nctId": "NCT04227106",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT04227106"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0012531",
+          "historicalLabel": "Pain",
+          "referenceLabel": "Pain",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Pain Reduction",
+          "nctId": "NCT04227106",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT04227106"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0008066",
+          "historicalLabel": "Abnormal blistering of the skin",
+          "referenceLabel": "Abnormal blistering of the skin",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Wound Healing",
+          "nctId": "NCT04227106",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT04227106"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-19",
+      "legacyId": 19,
+      "name": "Adstiladrin",
+      "gene": "IFN-alpha",
+      "disease": "Non-muscle invasive Bladder Cancer (NMIBC)",
+      "modality": "Adenovirus",
+      "category": "Oncology",
+      "route": "Intravesical",
+      "historicalApproval": {
+        "year": 2022,
+        "agency": "FDA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT02773849",
+          "trial_name": "BOND-003",
+          "phase": "Phase 3"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0002862",
+          "historicalLabel": "Bladder carcinoma",
+          "referenceLabel": "Bladder carcinoma",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Complete Response Rate in Patients With Carcinoma in Situ (CIS)",
+          "nctId": "NCT02773849",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02773849",
+            "https://www.accessdata.fda.gov/drugsatfda_docs/label/2022/761217s000lbl.pdf"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0002862",
+          "historicalLabel": "Bladder carcinoma",
+          "referenceLabel": "Bladder carcinoma",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Durability of Complete Response",
+          "nctId": "NCT02773849",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02773849"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0002862",
+          "historicalLabel": "Bladder carcinoma",
+          "referenceLabel": "Bladder carcinoma",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Incidence of Cystectomy",
+          "nctId": "NCT02773849",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02773849"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-20",
+      "legacyId": 20,
+      "name": "Imlygic",
+      "gene": "GM-CSF",
+      "disease": "Melanoma",
+      "modality": "Oncolytic HSV-1",
+      "category": "Oncology",
+      "route": "Intralesional",
+      "historicalApproval": {
+        "year": 2015,
+        "agency": "FDA, EMA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT00769704",
+          "trial_name": "OPTiM",
+          "phase": "Phase 3"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0002861",
+          "historicalLabel": "Melanoma",
+          "referenceLabel": "Melanoma",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Durable Response Rate",
+          "nctId": "NCT00769704",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT00769704",
+            "https://www.accessdata.fda.gov/drugsatfda_docs/label/2015/125518lbl.pdf"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0002861",
+          "historicalLabel": "Melanoma",
+          "referenceLabel": "Melanoma",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Overall Survival",
+          "nctId": "NCT00769704",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT00769704"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0002861",
+          "historicalLabel": "Melanoma",
+          "referenceLabel": "Melanoma",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Objective Response Rate",
+          "nctId": "NCT00769704",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT00769704"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-21",
+      "legacyId": 21,
+      "name": "Papzimeos",
+      "gene": "IL-12",
+      "disease": "Recurrent Respiratory Papillomatosis (RRP)",
+      "modality": "Adenovirus",
+      "category": "Oncology",
+      "route": "Intralesional",
+      "historicalApproval": {
+        "year": 2025,
+        "agency": "FDA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT04724980",
+          "trial_name": "PRGN-2012 Phase 1/2",
+          "phase": "Phase 1/2"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0030680",
+          "historicalLabel": "Papilloma",
+          "referenceLabel": "Abnormality of cardiovascular system morphology",
+          "labelAgrees": false,
+          "status": "needs_review",
+          "endpoint": "Complete Response Rate",
+          "nctId": "NCT04724980",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT04724980",
+            "https://investors.precigen.com/news-releases/news-release-details/precigen-announces-groundbreaking-pivotal-study-data-prgn-2012"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0030680",
+          "historicalLabel": "Papilloma",
+          "referenceLabel": "Abnormality of cardiovascular system morphology",
+          "labelAgrees": false,
+          "status": "needs_review",
+          "endpoint": "Change in RRP Staging Assessment Scores (Derkay Score)",
+          "nctId": "NCT04724980",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT04724980"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0002015",
+          "historicalLabel": "Dysphagia",
+          "referenceLabel": "Dysphagia",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Change in Vocal Function Scores (VHI-10)",
+          "nctId": "NCT04724980",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT04724980"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0002094",
+          "historicalLabel": "Dyspnea",
+          "referenceLabel": "Dyspnea",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Rate of Pulmonary RRP Response",
+          "nctId": "NCT04724980",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT04724980"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-22",
+      "legacyId": 22,
+      "name": "Glybera",
+      "gene": "LPL",
+      "disease": "Lipoprotein Lipase Deficiency (LPLD)",
+      "modality": "AAV1",
+      "category": "Metabolic",
+      "route": "IM",
+      "historicalApproval": {
+        "year": 2012,
+        "agency": "EMA (withdrawn 2017)",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT01109498",
+          "trial_name": "AMT-011 LPLD",
+          "phase": "Phase 2/3"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0002155",
+          "historicalLabel": "Hypertriglyceridemia",
+          "referenceLabel": "Hypertriglyceridemia",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Reduction of fasting triglyceride (TG) concentrations",
+          "nctId": "NCT01109498",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01109498"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0003077",
+          "historicalLabel": "Hyperlipidemia",
+          "referenceLabel": "Hyperlipidemia",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Sustained reduction of TG concentrations",
+          "nctId": "NCT01109498",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01109498"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0001081",
+          "historicalLabel": "Chylomicronemia",
+          "referenceLabel": "Cholelithiasis",
+          "labelAgrees": false,
+          "status": "needs_review",
+          "endpoint": "Biological activity and expression of the transgene product",
+          "nctId": "NCT01109498",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT01109498"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-23",
+      "legacyId": 23,
+      "name": "Kymriah",
+      "gene": "CD19-CAR",
+      "disease": "B-cell ALL / Large B-cell Lymphoma",
+      "modality": "Lentivirus CAR-T (ex vivo)",
+      "category": "Oncology",
+      "route": "IV (autologous)",
+      "historicalApproval": {
+        "year": 2017,
+        "agency": "FDA, EMA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT02435849",
+          "trial_name": "ELIANA",
+          "phase": "Phase 2"
+        },
+        {
+          "nct_id": "NCT02445248",
+          "trial_name": "JULIET",
+          "phase": "Phase 2"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0001909",
+          "historicalLabel": "Leukemia",
+          "referenceLabel": "Leukemia",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Overall Remission Rate (ORR)",
+          "nctId": "NCT02435849",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02435849",
+            "https://www.fda.gov/vaccines-blood-biologics/cellular-gene-therapy-products/kymriah-tisagenlecleucel"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0012539",
+          "historicalLabel": "Non-Hodgkin lymphoma",
+          "referenceLabel": "Non-Hodgkin lymphoma",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Overall Response Rate (ORR) Per Independent Review Committee",
+          "nctId": "NCT02445248",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02445248",
+            "https://www.fda.gov/vaccines-blood-biologics/cellular-gene-therapy-products/kymriah-tisagenlecleucel"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-24",
+      "legacyId": 24,
+      "name": "Yescarta",
+      "gene": "CD19-CAR",
+      "disease": "Large B-cell Lymphoma",
+      "modality": "Retrovirus CAR-T (ex vivo)",
+      "category": "Oncology",
+      "route": "IV (autologous)",
+      "historicalApproval": {
+        "year": 2017,
+        "agency": "FDA, EMA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT02348216",
+          "trial_name": "ZUMA-1",
+          "phase": "Phase 1/2"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0012539",
+          "historicalLabel": "Non-Hodgkin lymphoma",
+          "referenceLabel": "Non-Hodgkin lymphoma",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Overall Response Rate (ORR) Per Revised IWG Response Criteria",
+          "nctId": "NCT02348216",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02348216",
+            "https://www.fda.gov/vaccines-blood-biologics/cellular-gene-therapy-products/yescarta-axicabtagene-ciloleucel"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-25",
+      "legacyId": 25,
+      "name": "Tecartus",
+      "gene": "CD19-CAR",
+      "disease": "Mantle Cell Lymphoma / B-cell ALL",
+      "modality": "Retrovirus CAR-T (ex vivo)",
+      "category": "Oncology",
+      "route": "IV (autologous)",
+      "historicalApproval": {
+        "year": 2020,
+        "agency": "FDA, EMA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT02601313",
+          "trial_name": "ZUMA-2",
+          "phase": "Phase 2"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0012539",
+          "historicalLabel": "Non-Hodgkin lymphoma",
+          "referenceLabel": "Non-Hodgkin lymphoma",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Objective Response (OR) Per Lugano Classification",
+          "nctId": "NCT02601313",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02601313",
+            "https://www.fda.gov/vaccines-blood-biologics/cellular-gene-therapy-products/tecartus-brexucabtagene-autoleucel"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-26",
+      "legacyId": 26,
+      "name": "Breyanzi",
+      "gene": "CD19-CAR",
+      "disease": "Large B-cell Lymphoma",
+      "modality": "Lentivirus CAR-T (ex vivo)",
+      "category": "Oncology",
+      "route": "IV (autologous)",
+      "historicalApproval": {
+        "year": 2021,
+        "agency": "FDA, EMA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT02631044",
+          "trial_name": "TRANSCEND-NHL-001",
+          "phase": "Phase 1"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0012539",
+          "historicalLabel": "Non-Hodgkin lymphoma",
+          "referenceLabel": "Non-Hodgkin lymphoma",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Objective Response Rate (ORR)",
+          "nctId": "NCT02631044",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02631044",
+            "https://www.fda.gov/vaccines-blood-biologics/cellular-gene-therapy-products/breyanzi-lisocabtagene-maraleucel"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-27",
+      "legacyId": 27,
+      "name": "Abecma",
+      "gene": "BCMA-CAR",
+      "disease": "Multiple Myeloma",
+      "modality": "Lentivirus CAR-T (ex vivo)",
+      "category": "Oncology",
+      "route": "IV (autologous)",
+      "historicalApproval": {
+        "year": 2021,
+        "agency": "FDA, EMA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT03361748",
+          "trial_name": "KarMMa",
+          "phase": "Phase 2"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0006775",
+          "historicalLabel": "Multiple myeloma",
+          "referenceLabel": "Multiple myeloma",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Overall Response Rate (ORR)",
+          "nctId": "NCT03361748",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03361748",
+            "https://www.fda.gov/vaccines-blood-biologics/cellular-gene-therapy-products/abecma-idecabtagene-vicleucel"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0012531",
+          "historicalLabel": "Pain",
+          "referenceLabel": "Pain",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Mean Change From Baseline on EORTC QLQ-C30 Pain",
+          "nctId": "NCT03361748",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03361748"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-28",
+      "legacyId": 28,
+      "name": "Carvykti",
+      "gene": "BCMA-CAR",
+      "disease": "Multiple Myeloma",
+      "modality": "Lentivirus CAR-T (ex vivo)",
+      "category": "Oncology",
+      "route": "IV (autologous)",
+      "historicalApproval": {
+        "year": 2022,
+        "agency": "FDA, EMA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT03548207",
+          "trial_name": "CARTITUDE-1",
+          "phase": "Phase 1b/2"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0006775",
+          "historicalLabel": "Multiple myeloma",
+          "referenceLabel": "Multiple myeloma",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Overall Response Rate (ORR)",
+          "nctId": "NCT03548207",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03548207",
+            "https://www.fda.gov/vaccines-blood-biologics/cellular-gene-therapy-products/carvykti"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        },
+        {
+          "hpoId": "HP:0012531",
+          "historicalLabel": "Pain",
+          "referenceLabel": "Pain",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Patient Global Impression of Severity (PGIS) Score",
+          "nctId": "NCT03548207",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT03548207"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-29",
+      "legacyId": 29,
+      "name": "Aucatzyl",
+      "gene": "CD19-CAR",
+      "disease": "B-cell ALL",
+      "modality": "Retrovirus CAR-T (ex vivo)",
+      "category": "Oncology",
+      "route": "IV (autologous)",
+      "historicalApproval": {
+        "year": 2024,
+        "agency": "FDA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT02935257",
+          "trial_name": "ALLCAR19",
+          "phase": "Phase 1"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0001909",
+          "historicalLabel": "Leukemia",
+          "referenceLabel": "Leukemia",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Toxicity and Feasibility of CD19CAR T-cell Administration",
+          "nctId": "NCT02935257",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT02935257",
+            "https://www.fda.gov/vaccines-blood-biologics/cellular-gene-therapy-products/aucatzyl-obecabtagene-autoleucel"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    },
+    {
+      "id": "legacy-30",
+      "legacyId": 30,
+      "name": "Tecelra",
+      "gene": "MAGE-A4 TCR",
+      "disease": "Synovial Sarcoma",
+      "modality": "Lentivirus TCR-T (ex vivo)",
+      "category": "Oncology",
+      "route": "IV (autologous)",
+      "historicalApproval": {
+        "year": 2024,
+        "agency": "FDA",
+        "status": "unverified_historical"
+      },
+      "trials": [
+        {
+          "nct_id": "NCT04044768",
+          "trial_name": "SPEARHEAD-1",
+          "phase": "Phase 2"
+        }
+      ],
+      "mappings": [
+        {
+          "hpoId": "HP:0100242",
+          "historicalLabel": "Sarcoma",
+          "referenceLabel": "Sarcoma",
+          "labelAgrees": true,
+          "status": "needs_review",
+          "endpoint": "Overall Response Rate (ORR)",
+          "nctId": "NCT04044768",
+          "sourceUrls": [
+            "https://clinicaltrials.gov/study/NCT04044768",
+            "https://www.fda.gov/vaccines-blood-biologics/cellular-gene-therapy-products/tecelra-afamitresgene-autoleucel"
+          ],
+          "warning": "Legacy machine annotation. Label agreement does not validate endpoint equivalence, efficacy or cell identity."
+        }
+      ]
+    }
+  ]
+}

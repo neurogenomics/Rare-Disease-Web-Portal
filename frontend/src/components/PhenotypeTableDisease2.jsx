@@ -8,6 +8,7 @@ import truncateText from "../scripts/truncateText.js";
 import MathJax from "react-mathjax2";
 import QValueInfo from "./info/QValueInfo.jsx";
 import CellGeneAssociations from "./CellGeneAssociations.jsx";
+import { formatQ } from '../lib/evidenceModel.js';
 
 const DemoColumn = (data) => {
     const chartRef = useRef();
@@ -24,7 +25,7 @@ const DemoColumn = (data) => {
                 },
             },
             y: {
-                title: "Enrichment Significance (-log10(q-value))",
+                title: "Source -log10(q) (not effect size or causal evidence)",
             },
         },
         interaction: {
@@ -114,6 +115,7 @@ const PhenotypeTableDisease = (hpid) => {
                 let temp = [];
                 data.forEach((item) => {
                     item.key = item.id;
+                    if (typeof item.q !== 'number' || !Number.isFinite(item.q) || item.q <= 0 || item.q > 1) return;
                     temp.push({
                         q: Math.log10(item.q) * -1,
                         Cell: item.celltype_name,
@@ -137,6 +139,7 @@ const PhenotypeTableDisease = (hpid) => {
                 let temp = [];
                 data.forEach((item) => {
                     item.key = item.id;
+                    if (typeof item.q !== 'number' || !Number.isFinite(item.q) || item.q <= 0 || item.q > 1) return;
                     temp.push({
                         q: Math.log10(item.q) * -1,
                         Cell: item.celltype_name,
@@ -195,7 +198,7 @@ const PhenotypeTableDisease = (hpid) => {
             key: "q",
             sorter: (a, b) => a.q - b.q,
             sortDirections: ["ascend", "descend"],
-            render: (num) => num.toFixed(hpid.decimalPoints),
+            render: (num) => formatQ(num),
         },
     ];
     const expandedRowRender = (record, index, indent, expanded) => {
@@ -283,6 +286,7 @@ const PhenotypeTableDisease = (hpid) => {
     return (
         <>
             <Spin spinning={loading}>
+                <p className="text-sm text-gray-600">The chart omits q values reported as zero and invalid values because their logarithms cannot be plotted reliably. The table retains the source values. Association significance does not establish cellular causality.</p>
                 {chart.length > 0 && (
                     <>
                         <Button
