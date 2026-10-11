@@ -104,7 +104,7 @@
 .ev-inline-heading { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
 .ev-inline-tags { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; font-size: 12px; }
 .ev-pill { font-size: 12px; color: var(--ev-muted); background: var(--ev-subtle); border: 1px solid var(--ev-line); border-radius: 6px; padding: 4px 9px; }
-.ev-entity-link { color: var(--ev-primary); font-weight: 600; font-size: 13px; line-height: 1.45; }
+.ev-entity-link { display: inline-block; max-width: 100%; overflow-wrap: anywhere; color: var(--ev-primary); font-weight: 600; font-size: 13px; line-height: 1.45; }
 .ev-evidence-path { display: grid; grid-template-columns: repeat(4, 1fr); padding: 15px 0; border-top: 1px solid var(--ev-line); border-bottom: 1px solid var(--ev-line); margin-bottom: 25px; gap: 10px; }
 .ev-evidence-path a { font-size: 12px; color: var(--ev-muted); }
 .ev-evidence-path span { display: block; margin-bottom: 3px; color: var(--ev-muted); font-size: 12px; }

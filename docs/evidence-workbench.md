@@ -150,7 +150,7 @@ The workbench runs from published static snapshots without MongoDB. Local
 development also uses a bounded snapshot adapter for covered paths in the
 original phenotype, gene and cell explorers when no API override is supplied.
 It provides frozen HPO search/ancestry, disease-context gene–phenotype joins,
-92 source-backed gene identities, panel expression and signed atlas associations.
+103 source-backed gene identities, panel expression and signed atlas associations.
 Reverse cell views use exact labels and source rows with q < 0.05; thresholds
 above 0.05 require the full atlas API. Source q values reported as zero retain
 their precision limit and do not become infinite evidence.
@@ -212,7 +212,7 @@ needs its own exact preview origins and database configuration.
 
 `predev` and `prebuild` restore the checksummed, lossless normalized snapshot
 bundles from `data/evidence/published/` and publish nine lazily fetched source
-datasets, including a 92-gene NCBI identity bridge. The bridge uses exact HPO
+datasets, including a 103-gene NCBI identity bridge. The bridge uses exact HPO
 gene identifiers and unambiguous ClinVar gene symbol/identifier records for
 panel targets with no HPO export rows; missing HPO joins do not remove their
 available expression or variant evidence. Reverse exact-cell files are derived
@@ -234,6 +234,7 @@ python3 scripts/refresh_evidence.py --genes --trials
 python3 scripts/refresh_dosage.py
 python3 scripts/refresh_hpo_terms.py
 python3 backend/scripts/ingest_hpo_associations.py --export-only
+python3 scripts/refresh_gene_phenotypes.py
 python3 scripts/import_atlas_evidence.py --source-dir /path/to/original/portal/data
 python3 scripts/build_cell_index.py
 python3 scripts/pack_evidence_snapshots.py
@@ -243,8 +244,10 @@ node scripts/publish_evidence_indexes.mjs
 The HPO label normalizer checks its frozen OBO checksum; selecting a different
 ontology release requires a reviewed source-metadata update. The official
 gene–phenotype export refresh is `ingest_hpo_associations.py` without
-`--export-only`. Run the atlas import **after** the gene panel, HPO subset and
-curated endpoints settle. Repack **before** starting the publisher/build: the
+`--export-only`. `refresh_gene_phenotypes.py` projects the explicit panel from the
+checksummed frozen association export and preserves existing row multiplicity and
+display order. It does not select a new HPO release or create allele-level links.
+Run the atlas import **after** the gene panel, HPO subset and curated endpoints settle. Repack **before** starting the publisher/build: the
 versioned bundles define the frozen public snapshot restored at build time.
 The full HPO source and branch dictionary are versioned compressed backend files;
 SQLite is a local, atomic, checksummed rebuild cache, not an additional truth set.

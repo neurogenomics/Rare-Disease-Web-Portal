@@ -128,6 +128,7 @@ SCHEMAS = {
                 'outcome': {'enum': ['benefit', 'null', 'harm', 'mixed', 'surrogate', 'unknown', 'not_measured']},
                 'scopeReview': {'enum': ['endpoint_specific', 'single_mapped_endpoint', 'source_limited']},
                 'sourceIds': {'type': 'array', 'minItems': 1, 'items': STRING},
+                'hpoId': {'type': ['string', 'null']},
             })},
             'cellObservations': {'type': 'array', 'items': obj(['id', 'hpoIds', 'trialRefs', 'population', 'species',
                 'cells', 'route', 'assay', 'comparator', 'timeFrame', 'evidenceType', 'direction', 'claim', 'sourceIds',
@@ -302,7 +303,10 @@ class Audit:
                 for identifier in value.get('sourceIds', []):
                     self.counts['curatedSourceReferences'] += 1
                     self.check(identifier in source_ids, f'Unresolved curated sourceId: {identifier}')
-                if 'hpoId' in value:
+                if 'hpoId' in value and value['hpoId'] is None:
+                    self.check(value.get('mapping') == 'unmapped' and bool(value.get('limits')),
+                               'Unmapped endpoint lacks explicit mapping and limits')
+                elif 'hpoId' in value:
                     identifier = value['hpoId']
                     term = hpo.get(identifier)
                     self.counts['curatedHpoMentions'] += 1
@@ -318,7 +322,17 @@ class Audit:
                 for child in value:
                     references(child)
         references(curated['assessments'])
+        references(curated.get('coverage', {}))
         references(endpoints.get('assessments', []))
+        reviewed_products = curated.get('coverage', {}).get('reviewedRecentPharmacotherapies', [])
+        product_keys = [(product['product'], product['approvalDate']) for product in reviewed_products]
+        self.check(len(product_keys) == len(set(product_keys)), 'Duplicate reviewed product/approval events')
+        for product in reviewed_products:
+            self.check(bool(product.get('assessmentIds')) and set(product['assessmentIds']).issubset(assessment_ids),
+                       f'{product["product"]}: reviewed approval lacks resolvable indication records')
+            self.check(bool(product.get('sourceIds')) and bool(product.get('currentRegulatoryStatus')),
+                       f'{product["product"]}: regulatory inventory lacks sources or current status')
+        self.counts['reviewedRecentProductIndications'] = len(reviewed_products)
         functional = data.get('variantFunctionalEvidence.json', {}).get('cases', [])
         references(functional)
         for therapy in data['legacyCatalog.json']['therapies']:
@@ -528,7 +542,13 @@ class Audit:
             for result in record['endpointResults']:
                 self.counts['endpointResults'] += 1
                 self.counts['endpointResultsReviewed' if result['scopeReview'] == 'endpoint_specific' else 'endpointResultsPending'] += 1
-                self.check(result['hpoId'] in mapped_hpos, f'{result["id"]}: endpoint HPO not in reviewed treatment crosswalk')
+                if result['hpoId'] is None:
+                    self.counts['unmappedEndpointResults'] += 1
+                    self.check(result.get('mapping') == 'unmapped', f'{result["id"]}: null HPO requires unmapped status')
+                else:
+                    self.check(result['hpoId'] in mapped_hpos, f'{result["id"]}: endpoint HPO not in reviewed treatment crosswalk')
+                    self.check(result.get('mapping') in ('direct', 'proxy', 'indirect'),
+                               f'{result["id"]}: invalid measurement-specific phenotype crosswalk')
                 self.check(set(result['diseaseIds']).issubset(diseases), f'{result["id"]}: disease join lacks reviewed assessment identity')
                 self.check(all(ref.get('nctId') is None or ref['nctId'] in trial_index for ref in result['trialRefs']),
                            f'{result["id"]}: unresolved registry trial')

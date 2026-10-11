@@ -1,8 +1,8 @@
 # Evidence validation report
 
-Validated 2026-10-11. The final offline audit of 10,200 JSON files reports **zero schema, count, reference, source-field or archive/public consistency errors**. The release has 222 passing regression checks. This follow-up reran all 146 frontend and 14 bundle checks; the 22 importer and 40 backend checks remain unchanged from the previously passing release. The production build passes. There is one unresolved disease-alias warning. These checks establish conservative calculations and traceability; passing them does not validate causal cell types, a clinical treatment decision or a treatment-success probability.
+Validated 2026-10-11. The current offline audit of 10,269 JSON files reports **zero schema, count, reference, source-field or archive/public consistency errors**. The release evidence comprises 235 passing checks: this follow-up reran 154 frontend, 14 bundle and 27 Python checks (195 rerun); 40 unchanged backend checks retain their previously passing result. The final production build passes. There is one unresolved disease-alias warning. These checks establish conservative calculations and traceability; passing them does not validate causal cell types, a clinical treatment decision or a treatment-success probability.
 
-The prebuild publisher passed, and Vite completed the production build in 15.30 seconds after the endpoint/cell-scope review. The evidence-workbench executable is 942.10 kB, or 215.97 kB gzip; the entry executable is 242.12 kB, or 75.27 kB gzip. The large frozen source datasets are separately fetched; the new authored endpoint evidence is included in the workbench chunk. Existing build warnings concern stale Browserslist data and chunks larger than 500 kB. Further splitting of authored evidence remains a performance opportunity. Desktop/mobile checks below verified the scoped results and allele controls. Earlier checks also verified the gene browser's unavailable-API warning, disabled unsourced percentile filter and route to the snapshot-backed workbench.
+The prebuild publisher passed, and the final Vite production build took 33.22 seconds after the recent pharmacotherapy, CSS and fixed-example navigation follow-up. The evidence-workbench executable is 1,149.43 kB, or 262.11 kB gzip; the entry executable is 242.12 kB, or 75.27 kB gzip. The large frozen source datasets are separately fetched; the new authored endpoint evidence is included in the workbench chunk. Existing build warnings concern stale Browserslist data and chunks larger than 500 kB. Further splitting of authored evidence remains a performance opportunity. Desktop/mobile checks below verified the scoped results and allele controls. Earlier checks also verified the gene browser's unavailable-API warning, disabled unsourced percentile filter and route to the snapshot-backed workbench.
 
 All 13 main, information and evidence entry routes now reuse the established
 portal logo, header, navigation, footer and Ant Design conventions. Browser
@@ -10,10 +10,12 @@ checks at 1280px and 390px found no horizontal page overflow, including populate
 phenotype, gene, cell, variant and treatment views. Actual reciprocal navigation,
 atlas changes, same-route selections, Back/Forward, unavailable source recovery,
 mobile-menu Escape and trial-drawer Escape were exercised. The detailed paths
-are in [site-navigation-audit.md](site-navigation-audit.md). CSS selectors remain
+are in [site-navigation-audit.md](site-navigation-audit.md). Fixed Methods examples
+were additionally exercised from an unrelated ATM/ataxia/A-T context and open
+populated treatment or modality records after clearing unrelated filters. CSS selectors remain
 scoped. Frontend lint passes with the legacy prop-types and exhaustive-deps rules
 excluded; their pre-existing debt has not been represented as a clean full lint.
-All 146 frontend regressions pass. The publication adapter derives biological
+All 154 frontend regressions pass. The publication adapter derives biological
 explorer views from the audited corpus; the new endpoint and allele models are
 validated separately below.
 
@@ -34,12 +36,12 @@ The corpus audit requires `jsonschema` and the frozen local HPO, ClinGen and API
 
 | Check | Result |
 | --- | --- |
-| Import, dosage, ontology, registry-refresh and reverse-cell fixtures | 22 passed |
-| Backend candidate engine and annotation missingness | 40 passed |
-| Frontend evidence, endpoint scope, allele/modality, annotation, navigation, snapshot and severity handling | 146 passed |
-| Snapshot publication and restoration | 14 passed |
+| Import, dosage, ontology, registry-refresh, gene-phenotype projection and reverse-cell fixtures | 27 passed; rerun |
+| Backend candidate engine and annotation missingness | 40 previously passed; unchanged, not rerun in this follow-up |
+| Frontend evidence, endpoint scope, allele/modality, annotation, navigation, snapshot and severity handling | 154 passed; rerun |
+| Snapshot publication and restoration | 14 passed; rerun |
 | Final normalized corpus and archive audit | Zero errors; one disease-alias warning |
-| Prebuild publication and production build | Passed |
+| Prebuild publication and final production build | Passed |
 | Diff whitespace hygiene | Passed |
 
 The 15 added annotation regressions distinguish an unassessed reference from a
@@ -85,59 +87,81 @@ All 22 modality families require sourced functional sufficiency for the selected
 
 Four separate nonblocking maturity dimensions cover preclinical evidence, endpoint measurability, therapeutic precedent and comparative value. Fixtures preserve valid Strong/Moderate/Weak/Unknown judgments only with an explanation, HTTP(S) source array and matching gene, disease, phenotype and modality. Missing or malformed evidence, mismatched scope and omitted or mismatched declared constructs/populations stay unknown. Strong/weak labels cannot change any modality evaluation or candidate ordering, and ambiguous merged contexts discard these scoped facts. Disease-level contexts retain empty modifier ledgers; the exact-allele examples now contain four narrowly scoped maturity records, including an explicit Unknown for untested STXBP1 corrective-ASO evidence.
 
-The interface review also checked that MacTel does not offer an inherited-disease requirement link when its disease-gene list is empty, while Luxturna retains the matching RPE65 requirement link. Access and treatment-window gates are scoped to the functional compartment, selected endpoint and stage: an extracellular or downstream bypass does not acquire an unjustified requirement to enter or rescue the disease-causing cells. All-family comparisons use the same selected disease context, gene reference and cassette scenario; family changes preserve that exact context and filters even when its new assessment falls outside the shortlist's requirement-status filter. Necessary gate counts remain separate from maturity labels. The original source snapshots are unchanged; authored endpoint/allele evidence is covered by the expanded corpus audit.
+The interface review also checked that MacTel does not offer an inherited-disease requirement link when its disease-gene list is empty, while Luxturna retains the matching RPE65 requirement link. Access and treatment-window gates are scoped to the functional compartment, selected endpoint and stage: an extracellular or downstream bypass does not acquire an unjustified requirement to enter or rescue the disease-causing cells. All-family comparisons use the same selected disease context, gene reference and cassette scenario; family changes preserve that exact context and filters even when its new assessment falls outside the shortlist's requirement-status filter. Necessary gate counts remain separate from maturity labels. The original 92 variant files and 119 trial files remain byte-identical; existing atlas exports append source rows without removing the earlier rows. Authored endpoint/allele evidence is covered by the expanded corpus audit.
 
 ## Endpoint and exact-allele follow-up
 
-There are 120 result records across 77 assessments: 119 have specific endpoint/population/comparator/time/analysis review. All 57 formerly carried-forward records were investigated; 56 are now scoped, while the initial MONARCH/ADMIRAL seizure result is source-limited and unknown. Its extension observations retain the antecedent high-dose subgroup with its unverified denominator/uncertainty explicit. Twenty-nine endpoint regressions cover opposing organ outcomes, primary/secondary analysis, surrogate/not-measured phenotypes, cohort-specific citations, exact diagnosis/HPO/cell intersections and cross-product biopsy isolation. Accessible primary abstracts, labels/reviews and registry protocols support the reviewed facts; inaccessible full text and missing analysis detail are not claimed resolved. Disease identifiers used for discovery do not establish enrollment of the reference allele.
+There are 175 result records across 86 assessments: 172 have reviewed endpoint/population/comparator/time/role/analysis scope, and three remain source-limited and unknown. The initial MONARCH/ADMIRAL seizure result retains its inaccessible antecedent analysis; its extension subgroup has explicit denominator/uncertainty limits. Two pediatric leniolisib results retain qualitative sponsor claims without a numerical endpoint analysis. The earlier follow-up investigated all 57 carried-forward records, specifically scoped 56 and left the original seizure result unresolved; that historical review scope has not been recast as the current total.
+
+Eight measured outcomes remain explicitly unmapped to an eligible HPO phenotype: overall survival, heterogeneous neurological response, overall NPC disability/severity and global clinical/improvement scales cannot borrow a motor or ataxia HPO. `direct` and `proxy` describe the relationship of a measurement to its assigned phenotype; neither label establishes treatment benefit, cell identity or mediation. Tests cover mapped/unmapped discovery, source-limited results, independent model context, indication separation and preservation of opposing outcomes. Diagnosis identifiers support discovery, not enrollment or eligibility of the reference allele. Accessible primary abstracts, labels/reviews, original conference reports and registry protocols support the reviewed facts; inaccessible full text and missing analysis detail remain explicit.
+
+Recent primary-source curation adds separate Menkes survival, development and circulating pharmacodynamic scopes; heterogeneous and individual FOLR1 responses; older versus pediatric APDS; A-T versus NPC; and growth/FOP interventions. [Wellcovorin's signed supplement](https://www.accessdata.fda.gov/drugsatfda_docs/appletter/2026/018342Orig1s015ltr.pdf) was approved March 9, 2026, but [FDA withdrew NDA018342 and all supplements](https://www.federalregister.gov/documents/2026/04/10/2026-06911/glaxosmithkline-withdrawal-of-approval-of-a-new-drug-application-for-wellcovorin-leucovorin-calcium) effective April 10. The clinical literature remains, while current generic-product status remains unreviewed. [Joenja's label](https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/217759s006lbl.pdf) supports pediatric use through older controlled efficacy and eight current-dose PK/safety participants; the sponsor's 21-child study does not supply a quantified pediatric effect in the accessed report. The older +37.30 result is percentage points of naive B cells among total B cells, with 8 treated and 5 placebo in the analysis, not an absolute count or pediatric estimate.
+
+FOP retains opposing scopes: garetosmab's new-lesion-count success coexists with null incidence/volume secondary analyses; zilurgisertib's [registered-primary incidence comparison](https://endo2026.eventscribe.net/fsPopup.asp?PresentationID=1844848&mode=presInfo) is null while its [FDA label](https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/221198Orig1s000lbl.pdf) reports favourable volume progression. The inaccessible zilurgisertib integrated review prevents a full statistical reconstruction. [Original NPC model results](https://pmc.ncbi.nlm.nih.gov/articles/PMC7954382/) separate racemic-DL Purkinje preservation from nonsignificant purified-L preservation, purified-L CD68 histology and non-neuronal culture assays. Independent model support or counterevidence never inherits a human outcome cohort, drug formulation or mediation conclusion.
+
+The final browser pass at 1280px and 390px found no page overflow. ATP7A Variation ID 5007604 links to exact OMIM:309400 and on to treatment evidence while retaining diagnosis scope; this navigation does not establish that the allele was enrolled or responsive. The Methods inventory route to Joenja clears unrelated filters, Wellcovorin status dates are visible, and the NCT00001262 drawer shows its actual source values and closes with Escape. Wrapped entity links now retain a clickable bounding box. [The recent pharmacotherapy review](recent-pharmacotherapy-review.md) records the source-access limits and exact-allele normalization leads.
 
 Eight allele examples separate human phenotype observations, functional assays and clinical endpoints. Seven exact ClinVar mechanism scopes, seven requirement facts and four maturity records are audited. Resolver tests reject generic disease direction under an unreviewed allele, opposite observations, mismatched identity/scope and omitted experimental dimensions. Unknown and conflicting alleles retain neutral diagnosis labels. SCN2A R853Q's mixed experimental findings keep automatic intervention direction unknown even though conventional loss remains visible; a valid intervention-specific assessment can resolve only its matching scope. STXBP1 defect characterization does not become ASO treatment maturity. Model splice rescue for CEP290 does not establish visual efficacy.
 
-Browser checks verified SCN2A gain/loss/unreviewed selections, CFTR intervention-scoped requirements and reciprocal variant/scenario navigation, STXBP1 VUS versus functional evidence and reported seizure absence, CEP290 model rescue versus negative randomized visual results, eplontersen organ switching, tiratricol developmental failure and divergent olipudase spleen results. Alias `/gene-therapy` navigation retains the exact allele/scenario. New selectors and populated allele views have no page overflow at 1280px/390px. Methods displays 293 source-library records; the actual downloaded manifest contains 219 treatment and 74 endpoint source records, of which 35 are condition references, and the dynamic scoped counts. Sixteen cellular observations across 14 assessments retain explicit comparators and outcome-cohort relationships; none asserts atlas identity or clinical mediation. Independent review corrected cross-product golodirsen/casimersen biopsy links and sharpened B-VEC microscopy denominators and the Fabry score-zero definition.
+Browser checks verified SCN2A gain/loss/unreviewed selections, CFTR intervention-scoped requirements and reciprocal variant/scenario navigation, STXBP1 VUS versus functional evidence and reported seizure absence, CEP290 model rescue versus negative randomized visual results, eplontersen organ switching, tiratricol developmental failure and divergent olipudase spleen results. Alias `/gene-therapy` navigation retains the exact allele/scenario. New selectors and populated allele views have no page overflow at 1280px/390px. At the earlier 77-assessment browser check, Methods and the downloaded manifest contained 293 records (219 treatment plus 74 endpoint sources). The current audited library contains 364 records (290 treatment plus 74 endpoint sources, including 35 endpoint condition references). Thirty-seven cellular observations across 21 assessments retain explicit comparators and outcome-cohort relationships; none asserts atlas identity or clinical mediation. Independent review corrected cross-product golodirsen/casimersen biopsy links and sharpened B-VEC microscopy denominators and the Fabry score-zero definition.
 
-The latest browser pass verified eteplirsen’s null controlled walking result beside its separate biopsy cohort, neutrophil expression beside uninterpretable infection efficacy, and direct secondary hypoglycemia worsening. Mobile testing found that rc-tabs could forward an undefined key after mouse focus and Enter, deleting the selected tab parameter. Valid-key checking and explicit Enter/Space activation now preserve the focused tab; a stable two-column mobile grid keeps all four tabs visible. Mouse switching across all four tabs, Enter/Space, desktop return and 390px/1280px page widths were verified. The source manifest download matched the corpus counts.
+An earlier browser pass verified eteplirsen’s null controlled walking result beside its separate biopsy cohort, neutrophil expression beside uninterpretable infection efficacy, and direct secondary hypoglycemia worsening. Mobile testing found that rc-tabs could forward an undefined key after mouse focus and Enter, deleting the selected tab parameter. Valid-key checking and explicit Enter/Space activation now preserve the focused tab; a stable two-column mobile grid keeps all four tabs visible. Mouse switching across all four tabs, Enter/Space, desktop return and 390px/1280px page widths were verified. The source manifest download matched the corpus counts.
 
 ## Corpus and source traceability
 
 | Audited quantity | Count |
 | --- | ---: |
-| Explicit gene panel | 92 |
-| Genes with HPO disease-context rows | 84 |
-| HPO gene/disease rows | 24,332 |
-| Nonclinical ontology rows among those associations | 1,214 |
+| Explicit gene panel | 103 |
+| Genes with HPO disease-context rows | 94 |
+| HPO gene/disease rows | 28,794 |
+| Nonclinical ontology rows among those associations | 1,404 |
 | HPO identifiers tested in the atlas source files | 11,028 |
-| Panel, curated and legacy HPO identifiers selected for all-tested retention | 3,609 |
-| Exported atlas files / retained association rows | 9,762 / 726,881 |
-| Panel gene-expression rows across both atlases | 17,842 |
+| Panel, curated and legacy HPO identifiers selected for all-tested retention | 4,069 |
+| Exported atlas files / retained association rows | 9,809 / 814,979 |
+| Panel gene-expression rows across both atlases | 20,053 |
 | Exact reverse-index cell labels: Descartes / Human Cell Landscape | 77 / 124 |
 | Derived exact atlas/cell snapshots / signed q<0.05 rows | 201 / 46,514 |
-| Complete ClinVar gene queries / per-gene variation rows | 92 / 150,894 |
-| Distinct ClinVar Variation IDs across the panel | 148,294 |
-| Registry snapshots | 119 |
+| Complete ClinVar gene queries / per-gene variation rows | 103 / 181,802 |
+| Distinct ClinVar Variation IDs across the panel | 178,780 |
+| Registry snapshots | 130 |
 | Registry retrieval failures / retained stale snapshots | 0 / 0 |
-| Curated assessments / treatment source records | 77 / 219 |
+| Curated assessments / treatment source records | 86 / 290 |
 | Additional endpoint sources / condition-reference subset | 74 / 35 |
-| Endpoint result records / specifically scoped / source-limited pending | 120 / 119 / 1 |
-| Reviewed diagnosis crosswalk entries / structured cell observations | 56 / 16 |
-| Resolved treatment and endpoint source-ID references | 1,055 |
+| Endpoint result records / reviewed / source-limited unknown | 175 / 172 / 3 |
+| Measured results with no eligible phenotype HPO mapping | 8 |
+| Reviewed diagnosis crosswalk entries / structured cell observations | 68 / 37 |
+| Resolved authored source-ID references, including coverage and allele records | 1,428 |
 | Reviewed disease-mechanism contexts | 27 |
 | Explicit allele/source functional cases / exact mechanism identities | 8 / 7 |
 | Exact-allele requirement facts / maturity records | 7 / 4 |
 | ClinGen dosage genes | 1,532 |
-| Normalized snapshots packed and restored | 9,973 |
-| Packed / uncompressed snapshot bytes | 111,164,041 / 893,291,495 |
+| Current normalized snapshots packed and restored | 10,042 |
+| Packed / uncompressed snapshot bytes | 125,718,848 / 1,025,754,444 |
 
-Every stored ClinVar variation is traceable to its cached NCBI summary and equals normalization of that source response. Source URLs, retrieval dates and checksums agree with the caches. For complete queries, the returned variation-ID set equals the saved search-ID set; all 92 retrieval denominators agree. These are complete **gene-symbol queries at their recorded retrieval dates**, including every returned classification, rather than all possible disease alleles or a phenotype-specific pathogenic-allele catalogue. A variation spanning several genes can appear in several gene files, which explains the difference between per-gene rows and distinct variation IDs.
+Every stored ClinVar variation is traceable to its cached NCBI summary and equals normalization of that source response. Source URLs, retrieval dates and checksums agree with the caches. For complete queries, the returned variation-ID set equals the saved search-ID set; all 103 retrieval denominators agree. These are complete **gene-symbol queries at their recorded retrieval dates**, including every returned classification, rather than all possible disease alleles or a phenotype-specific pathogenic-allele catalogue. A variation spanning several genes can appear in several gene files, which explains the difference between per-gene rows and distinct variation IDs.
 
 API caches retain decoded JSON and a recorded HTTP-body hash. The offline audit compares the decoded source content and recorded provenance; it does not reconstruct the original HTTP body's whitespace or independently rehash those original response bytes.
 
-All 92 gene-reference snapshots also agree with their cached Ensembl responses and the variant index: gene bounds, assembly, chromosome, strand, canonical transcript identity/version, translation length, transcript counts and the complete exported exon list are preserved. Every source response has at most one canonical transcript, so selecting a first transcript does not conceal an unresolved canonical choice in this snapshot.
+All 103 gene-reference snapshots also agree with their cached Ensembl responses and the variant index: gene bounds, assembly, chromosome, strand, canonical transcript identity/version, translation length, transcript counts and the complete exported exon list are preserved. Every source response has at most one canonical transcript, so selecting a first transcript does not conceal an unresolved canonical choice in this snapshot.
 
-All 119 registry snapshots agree with normalization of their cached ClinicalTrials.gov responses, including registered and reported outcomes, design, adverse-event data and references. All 38 distinct registry IDs linked through exact curated source URLs have snapshots, including companion cohorts. Their outcome interpretation remains `not_automatically_assessed`; registry status and result availability are not automatically turned into a favorable clinical finding.
+All 130 registry snapshots agree with normalization of their cached ClinicalTrials.gov responses, including registered and reported outcomes, design, adverse-event data and references. All 49 distinct registry IDs linked through exact curated source URLs have snapshots, including companion cohorts. Their outcome interpretation remains `not_automatically_assessed`; registry status and result availability are not automatically turned into a favorable clinical finding.
 
 Frozen HPO ontology and association source bytes match their recorded SHA256 values. The ontology is `hp/releases/2026-09-01`; the association export records a source modification date of 2026-09-02. An independent ancestry traversal reproduces the clinical-phenotype flags, and the backend and frontend use the same known IDs, clinical branch and ontology checksum. Inheritance, course and other ontology metadata remain in the source evidence but are excluded from therapeutic phenotype candidates.
 
-Atlas counts, signed directions, q-threshold decisions, positive-only minimum-q display choices and coverage declarations agree with every retained row. Independent reconstruction of the reverse-cell index agrees with every significant signed association, including associations beyond the displayed top cell. The nine public metadata datasets equal their authored source snapshots. The 92-gene identifier bridge independently agrees with exact ClinVar symbol/NCBI-ID records, including all eight genes without HPO rows. The audit reconstructs all 201 derived cell files and their 46,514 signed rows, checks exact source values and context, source SHA references, bounded coverage and filename encoding. These are compatibility views, not new clinical evidence. All three compressed archives pass their outer checksums; all 9,973 original records pass individual checksums, byte counts and manifest membership checks and are byte-identical to the public files.
+Atlas counts, signed directions, q-threshold decisions, positive-only minimum-q display choices and coverage declarations agree with every retained row. Independent reconstruction of the reverse-cell index agrees with every significant signed association, including associations beyond the displayed top cell. The nine public metadata datasets equal their authored source snapshots. The 103-gene identifier bridge independently agrees with exact ClinVar symbol/NCBI-ID records, including all nine genes without HPO rows. The audit reconstructs all 201 derived cell files and their 46,514 signed rows, checks exact source values and context, source SHA references, bounded coverage and filename encoding. These are compatibility views, not new clinical evidence. All three compressed archives pass their outer checksums; all 10,042 current records pass individual checksums, byte counts and manifest membership checks and are byte-identical to the current public files.
+
+The preservation audit compares the earlier 92-gene release with this expansion. All 92 existing variant files and 119 existing trial files are byte-identical. The original 92 expression arrays and HPO gene arrays are identical, including their ordering. All 9,762 earlier atlas files and 726,881 rows are retained; 88,098 source rows were added overall, including 78,651 appended in existing files and 9,447 in 47 new HPO files. The earlier 9,973 packed/public records describe the old release; archive/public byte equality above applies to the 10,042 current records, not to an assertion that every old atlas file stayed byte-identical.
+
+Panel expansion is reproduced from the checksummed frozen HPO export before the atlas import. This sequence adds exact source associations for newly declared genes without refreshing the HPO release implicitly or creating variant-to-phenotype evidence:
+
+```sh
+python3 scripts/refresh_gene_phenotypes.py
+python3 scripts/import_atlas_evidence.py --source-dir /path/to/original/portal/data
+python3 scripts/build_cell_index.py
+python3 scripts/pack_evidence_snapshots.py
+node scripts/publish_evidence_indexes.mjs
+python3 scripts/tests/audit_snapshots.py
+```
 
 ## Scientific interpretation and remaining gaps
 
@@ -147,11 +171,11 @@ Independent primary-source spot checks support the scope of the SCN1A loss/gain 
 
 The following limits remain material:
 
-- **Coverage:** 110 selected panel/curated/legacy HPO identifiers are absent from the imported atlas sources. Eight panel genes have no HPO disease-context rows: ALAS1, CNTF, CSF2, HAO1, IFNA2, MAGEA4, TNFRSF17 and UGCG. Missing evidence is not a negative causal or therapeutic finding.
-- **Staging compatibility:** local original explorers use the frozen HPO source and explicit 92-gene phenotype/expression panel; reverse cell views cover only q<0.05. Definitions, comments, cross-references and disease labels are not fully included. Annotation-browser reference filters, severity distributions and full severity facets still need a matching API/database. The interface reports unavailable sources rather than filling these gaps with synthetic data.
+- **Coverage:** 124 selected panel/curated/legacy HPO identifiers are absent from the imported atlas sources. Nine panel genes have no HPO disease-context rows: ALAS1, CNTF, CSF2, HAO1, IFNA2, MAGEA4, TNFRSF17, UGCG and INHBA. Missing evidence is not a negative causal or therapeutic finding.
+- **Staging compatibility:** local original explorers use the frozen HPO source and explicit 103-gene phenotype/expression panel; reverse cell views cover only q<0.05. Definitions, comments, cross-references and disease labels are not fully included. Annotation-browser reference filters, severity distributions and full severity facets still need a matching API/database. The interface reports unavailable sources rather than filling these gaps with synthetic data.
 - **Historical curation:** the preserved severity dataset contains 17,141 rows, including 444 obsolete HPO IDs and 948 disagreements with current labels; the legacy product catalogue has 13 label disagreements. These values are historical machine annotations with an unvalidated construct, not patient-specific severity or treatment-priority probabilities. Current curated HPO labels resolve, are nonobsolete and belong to the clinical phenotype branch.
 - **Atlas lineage:** exact import-file hashes and numerical precision are restored, but the analysis commit, expression and HPO releases and model configuration that generated those matrices remain unknown. Signed association, specificity and q-values do not establish causal cells, exposure, target engagement or clinical rescue. Source q=0 retains its unknown upstream precision.
-- **Allele and transcript information:** 11,062 per-gene variation rows have no SPDI representation. Canonical Ensembl transcript identifiers, versions, strands and exons support conservative genomic overlap; protein length times three supplies a coding-length lower bound. The snapshots do not provide transcript-normalized CDS/cDNA positions, complete local sequence or a guaranteed clinically relevant transcript. They cannot determine actual splice repair, NMD, editing eligibility, functional effect or a full vector cassette.
+- **Allele and transcript information:** 12,226 per-gene variation rows have no SPDI representation. Canonical Ensembl transcript identifiers, versions, strands and exons support conservative genomic overlap; protein length times three supplies a coding-length lower bound. The snapshots do not provide transcript-normalized CDS/cDNA positions, complete local sequence or a guaranteed clinically relevant transcript. They cannot determine actual splice repair, NMD, editing eligibility, functional effect or a full vector cassette.
 - **Evidence roles:** HPO gene/disease annotations do not create allele-to-phenotype links. ClinGen dosage scores do not promote themselves to a selected allele's mechanism. A registered or completed trial does not establish a favorable clinical outcome. Biomarker changes, subgroup analyses, delivery-receptor targets and downstream bypass mechanisms remain distinct from direct clinical benefit and rescue of the disease-causing cells.
 - **Modality decisions:** a matching disease mechanism alone cannot establish suitability, safe dose, the useful remaining allele, an appropriate treatment window or access to the functional compartment. Unsupported gates remain unknown; asserted research compatibility is a scoped conjunction, never an approval or efficacy probability.
 

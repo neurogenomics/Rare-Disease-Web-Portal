@@ -177,9 +177,9 @@ test('actual published seizure snapshot links SCN1A with correct exact IDs and s
   assert.ok(rows.every(row => row.celltype_database === 'DescartesHuman'));
 });
 
-test('actual therapeutic targets with zero HPO rows still hydrate all eight source-backed gene identities', async () => {
+test('actual therapeutic targets with zero HPO rows still hydrate source-backed gene identities including a newly added ligand target', async () => {
   const portal = createSnapshotPortal(path => readFile(new URL(`../public${path}`, import.meta.url), 'utf8').then(JSON.parse));
-  for (const gene of ['ALAS1', 'CNTF', 'CSF2', 'HAO1', 'IFNA2', 'MAGEA4', 'TNFRSF17', 'UGCG']) {
+  for (const gene of ['ALAS1', 'CNTF', 'CSF2', 'HAO1', 'IFNA2', 'MAGEA4', 'TNFRSF17', 'UGCG', 'INHBA']) {
     const identity = (await portal.request(`/api/network/search/gene?q=${gene}`)).results.find(row => row.name === gene);
     assert.match(identity.id, /^NCBIGene:\d+$/);
     const expression = await portal.request(`/gene/${identity.id}/DescartesHuman`);
@@ -198,4 +198,17 @@ test('actual differently cased atlas neuron labels retrieve their own independen
     assert.ok(second.every(row => row.celltype_name === two));
     assert.notDeepEqual(first.map(row => row.sourceRecordId), second.map(row => row.sourceRecordId));
   }
+});
+
+
+test('new indication genes preserve exact disease routes, while ligand targets never inherit the disease allele', async () => {
+  const portal = createSnapshotPortal(path => readFile(new URL(`../public${path}`, import.meta.url), 'utf8').then(JSON.parse));
+  for (const [gene, disease] of [['ATP7A', 'OMIM:309400'], ['FOLR1', 'OMIM:613068'], ['FGFR3', 'OMIM:100800'], ['ACVR1', 'OMIM:135100'], ['PIK3CD', 'OMIM:615513'], ['PIK3R1', 'OMIM:616005'], ['ATM', 'OMIM:208900'], ['NPC1', 'OMIM:257220'], ['NPC2', 'OMIM:607625']]) {
+    const identity = (await portal.request(`/api/network/search/gene?q=${gene}`)).results.find(row => row.name === gene);
+    const annotation = await portal.request(`/api/network/annotation/${identity.id}`);
+    assert.ok(annotation.diseases.some(row => row.id === disease), `${gene}: ${disease}`);
+    assert.ok(annotation.phenotypes.length > 0, gene);
+    assert.ok(!Object.hasOwn(annotation, 'variants'));
+  }
+  assert.deepEqual((await portal.request('/api/network/annotation/INHBA')).diseases, []);
 });

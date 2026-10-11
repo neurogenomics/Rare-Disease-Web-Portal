@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "reviewedAt": "2026-10-11",
-  "scope": "Endpoint-level joins for the 77 existing treatment assessments: 120 result records, 119 with reviewed endpoint/population/comparator/time/analysis scope and one source-limited initial-phase seizure result. Sixteen structured cellular observations distinguish experimental, tissue and clinical scope. Source-specific limitations and unverified denominators remain explicit. No universal allele-to-phenotype mapping, cell causality or treatment suitability is inferred.",
+  "scope": "Endpoint-level joins for 86 treatment assessments: 175 result records, 172 with reviewed endpoint/population/comparator/time/analysis scope and 3 source-limited unknown results. 8 measured outcomes remain explicitly unmapped to an eligible HPO phenotype. 37 structured cellular observations distinguish direct study assays from independent experimental context. No universal allele-to-phenotype mapping, cell causality or treatment suitability is inferred.",
   "sources": [
     {
       "id": "endpoint-identity-smn1-253300",
@@ -6328,6 +6328,2720 @@
         "Diagnosis crosswalks are discovery links, not allele eligibility or patient-specific treatment recommendations.",
         "Whole-treatment cell arrays and conclusions are background; they are not automatically inherited by this endpoint."
       ]
+    },
+    {
+      "assessmentId": "copper-histidinate-menkes",
+      "diseaseIds": [
+        {
+          "id": "OMIM:309400",
+          "label": "Menkes kinky-hair syndrome",
+          "sourceIds": [
+            "recent-metabolic-menkes-identity",
+            "recent-metabolic-zycubo-label"
+          ],
+          "rationale": "Manually reviewed Menkes diagnosis identity only. The ClinVar reference allele is a VUS and supplies no causal, eligibility or response assertion."
+        }
+      ],
+      "endpointResults": [
+        {
+          "id": "copper-histidinate-menkes-overall-survival-early-result-1",
+          "hpoId": null,
+          "label": "Overall survival (no eligible phenotype HPO mapping)",
+          "mapping": "unmapped",
+          "endpoint": "Overall survival, early-treatment pooled primary analysis",
+          "trialRefs": [
+            {
+              "nctId": "NCT00001262",
+              "name": "NIH Trial 1 (90-CH-0149)"
+            },
+            {
+              "nctId": "NCT00811785",
+              "name": "NIH Trial 2 (09-CH-0059)"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:309400"
+          ],
+          "population": "Menkes patients born after 1999 with severe ATP7A variant classes; 31 treated within 4 weeks of birth, corrected for prematurity.",
+          "comparator": "17 contemporaneous untreated external controls meeting early-cohort criteria.",
+          "timeFrame": "Up to 3 years of treatment; long-term survival follow-up, including survivors beyond 12 years.",
+          "role": "primary",
+          "analysis": "FDA pooled primary analysis across two single-arm studies; Kaplan–Meier survival and Cox hazard ratio; unknown death dates censored at last known alive.",
+          "outcome": "benefit",
+          "summary": "Median survival 177.1 versus 17.6 months; death hazard ratio 0.22 (95% CI 0.10–0.49).",
+          "sourceIds": [
+            "recent-metabolic-zycubo-snapshot",
+            "recent-metabolic-zycubo-review"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Death in infancy (HP:0001522) and Death in childhood (HP:0003819) are clinical-course terms outside the eligible phenotypic-abnormality branch in the frozen 2026-09-01 HPO ontology. Overall survival has no eligible phenotype mapping here; survival benefit is not assigned to motor or seizure phenotypes.",
+            "Nonrandomized external comparison with selection and source-data limitations; FDA sensitivity analyses addressed several survival and genotype-documentation discrepancies.",
+            "The 17 controls also supply the nested 16 late controls; comparisons are not independent."
+          ]
+        },
+        {
+          "id": "copper-histidinate-menkes-overall-survival-late-result-1",
+          "hpoId": null,
+          "label": "Overall survival (no eligible phenotype HPO mapping)",
+          "mapping": "unmapped",
+          "endpoint": "Overall survival, late-treatment pooled secondary analysis",
+          "trialRefs": [
+            {
+              "nctId": "NCT00001262",
+              "name": "NIH Trial 1 (90-CH-0149)"
+            },
+            {
+              "nctId": "NCT00811785",
+              "name": "NIH Trial 2 (09-CH-0059)"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:309400"
+          ],
+          "population": "Same severe-variant, post-1999 Menkes efficacy population; 35 treated after 4 weeks of birth, corrected for prematurity.",
+          "comparator": "16 eligible late-diagnosed untreated controls, a subset of the 17 early external controls.",
+          "timeFrame": "Up to 3 years of treatment with subsequent long-term survival follow-up.",
+          "role": "secondary",
+          "analysis": "FDA pooled secondary Kaplan–Meier/Cox comparison; distinct late-treatment eligibility and comparator scope.",
+          "outcome": "benefit",
+          "summary": "Median survival 62.4 versus 20.7 months; death hazard ratio 0.27 (95% CI 0.12–0.57).",
+          "sourceIds": [
+            "recent-metabolic-zycubo-snapshot",
+            "recent-metabolic-zycubo-review"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Death in infancy (HP:0001522) and Death in childhood (HP:0003819) are clinical-course terms outside the eligible phenotypic-abnormality branch in the frozen 2026-09-01 HPO ontology. Overall survival has no eligible phenotype mapping here; survival benefit is not assigned to motor or seizure phenotypes.",
+            "This nonrandomized comparison cannot establish that late and early treatment have equivalent neurological effects."
+          ]
+        },
+        {
+          "id": "copper-histidinate-menkes-gross-motor-result-1",
+          "hpoId": "HP:0002194",
+          "label": "Delayed gross motor development",
+          "mapping": "direct",
+          "endpoint": "Denver gross-motor developmental age",
+          "trialRefs": [
+            {
+              "nctId": "NCT00001262",
+              "name": "NIH Trial 1 (90-CH-0149)"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:309400"
+          ],
+          "population": "NCT00001262 posted classic-Menkes groups: early treatment before 1 month (n=35) versus later treatment after symptom onset (n=22). Three milder patients form a separate group, excluded from this comparison.",
+          "comparator": "Earlier versus later copper-treated patients; no randomized or untreated comparator.",
+          "timeFrame": "36 months of age or earlier death.",
+          "role": "primary",
+          "analysis": "Posted mean attained developmental age in months; no formal comparative statistical analysis posted for this measure.",
+          "outcome": "mixed",
+          "summary": "Mean attained developmental age: early 13.743 months versus late 2.455 months. This timing association coexists with substantial developmental limitation.",
+          "sourceIds": [
+            "recent-metabolic-menkes-trial1"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "All comparator patients also received copper histidine; this is a nonrandomized timing/severity comparison, not drug versus untreated efficacy.",
+            "Assessment at 36 months or earlier death is not a uniform visit among survivors; achieved developmental age and survival affect interpretation.",
+            "Registry denominators differ from the FDA selected severe-variant pooled survival population; do not merge these cohorts."
+          ]
+        },
+        {
+          "id": "copper-histidinate-menkes-fine-motor-result-1",
+          "hpoId": "HP:0010862",
+          "label": "Delayed fine motor development",
+          "mapping": "direct",
+          "endpoint": "Denver fine-motor adaptive developmental age",
+          "trialRefs": [
+            {
+              "nctId": "NCT00001262",
+              "name": "NIH Trial 1 (90-CH-0149)"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:309400"
+          ],
+          "population": "NCT00001262 posted classic-Menkes groups: early treatment before 1 month (n=35) versus later treatment after symptom onset (n=22). Three milder patients form a separate group, excluded from this comparison.",
+          "comparator": "Earlier versus later copper-treated patients; no randomized or untreated comparator.",
+          "timeFrame": "36 months of age or earlier death.",
+          "role": "primary",
+          "analysis": "Posted mean attained developmental age in months; no formal comparative statistical analysis posted for this measure.",
+          "outcome": "mixed",
+          "summary": "Mean attained developmental age: early 16.200 months versus late 2.409 months. This timing association coexists with substantial developmental limitation.",
+          "sourceIds": [
+            "recent-metabolic-menkes-trial1"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "All comparator patients also received copper histidine; this is a nonrandomized timing/severity comparison, not drug versus untreated efficacy.",
+            "Assessment at 36 months or earlier death is not a uniform visit among survivors; achieved developmental age and survival affect interpretation.",
+            "Registry denominators differ from the FDA selected severe-variant pooled survival population; do not merge these cohorts."
+          ]
+        },
+        {
+          "id": "copper-histidinate-menkes-language-result-1",
+          "hpoId": "HP:0000750",
+          "label": "Delayed speech and language development",
+          "mapping": "direct",
+          "endpoint": "Denver language developmental age",
+          "trialRefs": [
+            {
+              "nctId": "NCT00001262",
+              "name": "NIH Trial 1 (90-CH-0149)"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:309400"
+          ],
+          "population": "NCT00001262 posted classic-Menkes groups: early treatment before 1 month (n=35) versus later treatment after symptom onset (n=22). Three milder patients form a separate group, excluded from this comparison.",
+          "comparator": "Earlier versus later copper-treated patients; no randomized or untreated comparator.",
+          "timeFrame": "36 months of age or earlier death.",
+          "role": "primary",
+          "analysis": "Posted mean attained developmental age in months; no formal comparative statistical analysis posted for this measure.",
+          "outcome": "mixed",
+          "summary": "Mean attained developmental age: early 15.800 months versus late 3.227 months. This timing association coexists with substantial developmental limitation.",
+          "sourceIds": [
+            "recent-metabolic-menkes-trial1"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "All comparator patients also received copper histidine; this is a nonrandomized timing/severity comparison, not drug versus untreated efficacy.",
+            "Assessment at 36 months or earlier death is not a uniform visit among survivors; achieved developmental age and survival affect interpretation.",
+            "Registry denominators differ from the FDA selected severe-variant pooled survival population; do not merge these cohorts."
+          ]
+        },
+        {
+          "id": "copper-histidinate-menkes-copper-result-1",
+          "hpoId": "HP:0011967",
+          "label": "Decreased circulating copper concentration",
+          "mapping": "direct",
+          "endpoint": "Serum copper",
+          "trialRefs": [
+            {
+              "nctId": "NCT00001262",
+              "name": "NIH Trial 1 (90-CH-0149)"
+            },
+            {
+              "nctId": "NCT00811785",
+              "name": "NIH Trial 2 (09-CH-0059)"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:309400"
+          ],
+          "population": "Menkes clinical-study patients receiving the recommended copper-histidinate regimen; time-point denominators not specified in label section 12.3.",
+          "comparator": "Pretreatment concentrations; no concurrent untreated biomarker comparison specified.",
+          "timeFrame": "Baseline, 12 and 36 months.",
+          "role": "pharmacodynamic",
+          "analysis": "Descriptive serum mean (SD); later measurements may involve different surviving subjects.",
+          "outcome": "surrogate",
+          "summary": "Serum copper, mcg/dL: 30 (25) at baseline, 114 (38) at 12 months and 63 (31) at 36 months.",
+          "sourceIds": [
+            "recent-metabolic-zycubo-label",
+            "recent-metabolic-zycubo-review"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "A circulating biomarker increase does not measure uptake or rescue in neurons or choroid-plexus cells.",
+            "Exposure–response, optimal biomarker targets and the full pharmacodynamic time course remain incompletely characterized."
+          ]
+        },
+        {
+          "id": "copper-histidinate-menkes-ceruloplasmin-result-1",
+          "hpoId": "HP:0010837",
+          "label": "Decreased circulating ceruloplasmin concentration",
+          "mapping": "direct",
+          "endpoint": "Serum ceruloplasmin",
+          "trialRefs": [
+            {
+              "nctId": "NCT00001262",
+              "name": "NIH Trial 1 (90-CH-0149)"
+            },
+            {
+              "nctId": "NCT00811785",
+              "name": "NIH Trial 2 (09-CH-0059)"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:309400"
+          ],
+          "population": "Menkes clinical-study patients receiving the recommended copper-histidinate regimen; time-point denominators not specified in label section 12.3.",
+          "comparator": "Pretreatment concentrations; no concurrent untreated biomarker comparison specified.",
+          "timeFrame": "Baseline, 12 and 36 months.",
+          "role": "pharmacodynamic",
+          "analysis": "Descriptive serum mean (SD); later measurements may involve different surviving subjects.",
+          "outcome": "surrogate",
+          "summary": "Serum ceruloplasmin, mg/dL: 12 (12) at baseline, 33 (11) at 12 months and 20 (8) at 36 months.",
+          "sourceIds": [
+            "recent-metabolic-zycubo-label",
+            "recent-metabolic-zycubo-review"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "A circulating biomarker increase does not measure uptake or rescue in neurons or choroid-plexus cells.",
+            "Exposure–response, optimal biomarker targets and the full pharmacodynamic time course remain incompletely characterized."
+          ]
+        }
+      ],
+      "cellObservations": [
+        {
+          "id": "recent-metabolic-menkes-mouse-combination",
+          "hpoIds": [
+            "HP:0002194"
+          ],
+          "endpointResultIds": [
+            "copper-histidinate-menkes-gross-motor-result-1"
+          ],
+          "diseaseIds": [
+            "OMIM:309400"
+          ],
+          "trialRefs": [],
+          "population": "Severe Atp7a mottled-brindled mouse model; brain tissue cohorts separate from human trials.",
+          "species": "mouse",
+          "cells": [
+            "Choroid plexus tissue (regional copper signal)",
+            "Cortical and cerebellar neurons (ultrastructure)"
+          ],
+          "route": "CSF-directed rAAV9-rsATP7A on day 2 plus subcutaneous copper histidinate on days 4–6.",
+          "assay": "Regional X-ray fluorescence copper mapping and neuronal electron microscopy.",
+          "timeFrame": "Brain assays at postnatal day 12.",
+          "evidenceType": "animal_tissue",
+          "direction": "limits",
+          "claim": "Combination-treated brains showed regional copper delivery and improved neuronal ultrastructure. This does not isolate copper-histidinate rescue; copper alone failed the model survival test.",
+          "sourceIds": [
+            "recent-metabolic-menkes-haddad2018"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Different species and combined intervention. The gross-motor result link is broad independent neurological-mechanism context only; these day-12 tissue assays did not test the human Denver endpoint. No linkage to registry developmental patients or FDA survival patients.",
+          "comparator": "Untreated mutants and wild-type tissue for these assays; copper-alone and gene-therapy-alone arms were evaluated separately for survival."
+        }
+      ],
+      "limitations": [
+        "Overall survival remains an unmapped clinical endpoint.",
+        "Diagnosis crosswalks are discovery routes, not allele-specific treatment eligibility.",
+        "Different study populations and species are not joined by sharing a drug or gene name."
+      ]
+    },
+    {
+      "assessmentId": "leucovorin-folr1-cftd",
+      "diseaseIds": [
+        {
+          "id": "OMIM:613068",
+          "label": "Neurodegeneration due to cerebral folate transport deficiency",
+          "sourceIds": [
+            "recent-metabolic-folr1-identity",
+            "recent-metabolic-wellcovorin-approval"
+          ],
+          "rationale": "Primary case publication explicitly identifies this OMIM disease and FOLR1 etiology. Diagnosis identity only; not eligibility of all alleles or proof of response."
+        }
+      ],
+      "endpointResults": [
+        {
+          "id": "leucovorin-folr1-cftd-oral-multidomain-result-1",
+          "hpoId": null,
+          "label": "Neurological response across domains (no single phenotype HPO mapping)",
+          "mapping": "unmapped",
+          "endpoint": "Qualitative multi-domain clinical change after oral leucovorin",
+          "trialRefs": [
+            {
+              "nctId": null,
+              "name": "FDA published-case review (through 2024; no efficacy clinical trial)"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:613068"
+          ],
+          "population": "27 oral-only FOLR1-CFTD cases in FDA literature review through 2024; treatment started approximately 2 months to 33 years of age.",
+          "comparator": "Within-patient pretreatment condition, interpreted against expected progressive natural history; no randomized control.",
+          "timeFrame": "Published follow-up varied; no uniform assessment time.",
+          "role": "literature_review",
+          "analysis": "FDA descriptive review of neurological symptoms; the response count is not a seizure, motor or MRI-specific denominator.",
+          "outcome": "mixed",
+          "summary": "24/27 oral-only cases had reported neurological improvement; 3 had no change or no progression.",
+          "sourceIds": [
+            "recent-metabolic-wellcovorin-label"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "The aggregate spans different symptoms and cannot be inherited by each mapped phenotype.",
+            "These 27 patients are a subset of 46 distinct cases described in 26 publications; 30 cases appeared in multiple reports.",
+            "Oral evidence is not a randomized comparison of the Wellcovorin formulation."
+          ]
+        },
+        {
+          "id": "leucovorin-folr1-cftd-csf-folate-oral-result-1",
+          "hpoId": "HP:0012446",
+          "label": "Decreased CSF 5-methyltetrahydrofolate concentration",
+          "mapping": "direct",
+          "endpoint": "CSF 5-methyltetrahydrofolate (5-MTHF)",
+          "trialRefs": [
+            {
+              "nctId": null,
+              "name": "FDA published-case review (through 2024; no efficacy clinical trial)"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:613068"
+          ],
+          "population": "7 oral-only FOLR1-CFTD cases with paired CSF measurements, from the 27 oral-only cases.",
+          "comparator": "Each patient before treatment.",
+          "timeFrame": "Before versus after initiation; sampling times differed and were generally unspecified.",
+          "role": "pharmacodynamic",
+          "analysis": "Paired descriptive biochemical response, not an isolated clinical responder analysis.",
+          "outcome": "surrogate",
+          "summary": "CSF 5-MTHF increased in all 7; 5 exceeded 40 nmol/L after treatment.",
+          "sourceIds": [
+            "recent-metabolic-wellcovorin-label"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "CSF measures extracellular compartment folate availability; it does not identify the responding cell subtype.",
+            "This subset is not the 15 paired cases across all administration routes in the FDA review."
+          ]
+        },
+        {
+          "id": "leucovorin-folr1-cftd-hypomyelination-older-result-1",
+          "hpoId": "HP:0006808",
+          "label": "Cerebral hypomyelination",
+          "mapping": "direct",
+          "endpoint": "Serial MRI cerebral myelination",
+          "trialRefs": [
+            {
+              "nctId": null,
+              "name": "Potic 2023 sibling case report (oral levofolinic acid)"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:613068"
+          ],
+          "population": "Older brother, age 8 at treatment initiation. Potic 2023: two siblings homozygous for FOLR1 c.465_466delinsTG (p.W156G); older brother began oral levofolinic acid at 8 years, younger sister at 2 years.",
+          "comparator": "Individual pretreatment MRI.",
+          "timeFrame": "Four years after treatment initiation; serial interim imaging.",
+          "role": "case_report",
+          "analysis": "Qualitative MRI comparison for this sibling, not a pooled two-patient success rate.",
+          "outcome": "mixed",
+          "summary": "MRI myelination improved at ages 10 and 12 but remained incomplete at age 12.",
+          "sourceIds": [
+            "recent-metabolic-folr1-potic2023"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Uncontrolled case report with concurrent clinical care; no randomized causal estimate.",
+            "Levofolinic acid is the active L-isomer; this is not a trial of branded racemic Wellcovorin tablets.",
+            "MRI is tissue-level evidence; oligodendrocyte rescue or mediation was not directly measured."
+          ]
+        },
+        {
+          "id": "leucovorin-folr1-cftd-hypomyelination-younger-result-1",
+          "hpoId": "HP:0006808",
+          "label": "Cerebral hypomyelination",
+          "mapping": "direct",
+          "endpoint": "Serial MRI cerebral myelination",
+          "trialRefs": [
+            {
+              "nctId": null,
+              "name": "Potic 2023 sibling case report (oral levofolinic acid)"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:613068"
+          ],
+          "population": "Younger sister, age 2 at treatment initiation. Potic 2023: two siblings homozygous for FOLR1 c.465_466delinsTG (p.W156G); older brother began oral levofolinic acid at 8 years, younger sister at 2 years.",
+          "comparator": "Individual pretreatment MRI.",
+          "timeFrame": "Four years after treatment initiation; serial interim imaging.",
+          "role": "case_report",
+          "analysis": "Qualitative MRI comparison for this sibling, not a pooled two-patient success rate.",
+          "outcome": "benefit",
+          "summary": "Myelination gradually improved and appeared normal on MRI at age 6.",
+          "sourceIds": [
+            "recent-metabolic-folr1-potic2023"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Uncontrolled case report with concurrent clinical care; no randomized causal estimate.",
+            "Levofolinic acid is the active L-isomer; this is not a trial of branded racemic Wellcovorin tablets.",
+            "MRI is tissue-level evidence; oligodendrocyte rescue or mediation was not directly measured."
+          ]
+        },
+        {
+          "id": "leucovorin-folr1-cftd-seizure-older-result-1",
+          "hpoId": "HP:0001250",
+          "label": "Seizure",
+          "mapping": "direct",
+          "endpoint": "Reported seizure frequency",
+          "trialRefs": [
+            {
+              "nctId": null,
+              "name": "Potic 2023 sibling case report (oral levofolinic acid)"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:613068"
+          ],
+          "population": "Older Potic 2023 sibling with daily refractory epilepsy before treatment.",
+          "comparator": "Patient pretreatment seizures with changing concomitant antiepileptic therapy.",
+          "timeFrame": "Follow-up over four years, to age 12.",
+          "role": "case_report",
+          "analysis": "Clinical narrative; concomitant antiepileptic drugs reduced but retained.",
+          "outcome": "mixed",
+          "summary": "Frequency fell from dozens daily to 0–3 brief seizures; attempts to further reduce antiepileptics aggravated seizures.",
+          "sourceIds": [
+            "recent-metabolic-folr1-potic2023"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Uncontrolled case report with concurrent clinical care; no randomized causal estimate.",
+            "Levofolinic acid is the active L-isomer; this is not a trial of branded racemic Wellcovorin tablets.",
+            "Residual seizures persisted; the younger sibling had no baseline seizures and supplies no seizure-treatment response."
+          ]
+        },
+        {
+          "id": "leucovorin-folr1-cftd-speech-older-result-1",
+          "hpoId": "HP:0002371",
+          "label": "Loss of speech",
+          "mapping": "direct",
+          "endpoint": "Recovery of expressive speech",
+          "trialRefs": [
+            {
+              "nctId": null,
+              "name": "Potic 2023 sibling case report (oral levofolinic acid)"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:613068"
+          ],
+          "population": "Older Potic 2023 sibling with complete speech loss before treatment.",
+          "comparator": "Patient pretreatment speech.",
+          "timeFrame": "Eight-month early observation and latest examination four years after initiation.",
+          "role": "case_report",
+          "analysis": "Patient-specific narrative of language recovery.",
+          "outcome": "mixed",
+          "summary": "A few meaningful words returned, but expressive language remained substantially impaired at latest examination.",
+          "sourceIds": [
+            "recent-metabolic-folr1-potic2023"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Uncontrolled case report with concurrent clinical care; no randomized causal estimate.",
+            "Levofolinic acid is the active L-isomer; this is not a trial of branded racemic Wellcovorin tablets.",
+            "Motor and MRI improvement do not imply restoration of expressive language."
+          ]
+        },
+        {
+          "id": "leucovorin-folr1-cftd-ataxia-older-result-1",
+          "hpoId": "HP:0001251",
+          "label": "Ataxia",
+          "mapping": "direct",
+          "endpoint": "Clinical ataxia examination",
+          "trialRefs": [
+            {
+              "nctId": null,
+              "name": "Potic 2023 sibling case report (oral levofolinic acid)"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:613068"
+          ],
+          "population": "Older brother treated at 8 years.",
+          "comparator": "Individual pretreatment examination.",
+          "timeFrame": "Latest examination four years after initiation.",
+          "role": "case_report",
+          "analysis": "Separate sibling observation; not a randomized comparison of treatment timing.",
+          "outcome": "mixed",
+          "summary": "Ataxia became milder and independent motor tasks returned, but cerebellar signs persisted.",
+          "sourceIds": [
+            "recent-metabolic-folr1-potic2023"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Uncontrolled case report with concurrent clinical care; no randomized causal estimate.",
+            "Levofolinic acid is the active L-isomer; this is not a trial of branded racemic Wellcovorin tablets."
+          ]
+        },
+        {
+          "id": "leucovorin-folr1-cftd-ataxia-younger-result-1",
+          "hpoId": "HP:0001251",
+          "label": "Ataxia",
+          "mapping": "direct",
+          "endpoint": "Clinical ataxia examination",
+          "trialRefs": [
+            {
+              "nctId": null,
+              "name": "Potic 2023 sibling case report (oral levofolinic acid)"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:613068"
+          ],
+          "population": "Younger sister treated at 2 years with mild truncal ataxia and intention tremor.",
+          "comparator": "Individual pretreatment examination.",
+          "timeFrame": "Three months and four-year follow-up.",
+          "role": "case_report",
+          "analysis": "Separate sibling observation; not a randomized comparison of treatment timing.",
+          "outcome": "benefit",
+          "summary": "Neurological signs resolved within three months; examination remained normal at age 6.",
+          "sourceIds": [
+            "recent-metabolic-folr1-potic2023"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Uncontrolled case report with concurrent clinical care; no randomized causal estimate.",
+            "Levofolinic acid is the active L-isomer; this is not a trial of branded racemic Wellcovorin tablets."
+          ]
+        },
+        {
+          "id": "leucovorin-folr1-cftd-late-sibling-nonresponse-result-1",
+          "hpoId": null,
+          "label": "Clinical/neurophysiological response (no isolated phenotype HPO mapping)",
+          "mapping": "unmapped",
+          "endpoint": "Overall clinical and neurophysiological change",
+          "trialRefs": [
+            {
+              "nctId": null,
+              "name": "Brunetti 2021 three-sibling case report"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:613068"
+          ],
+          "population": "Brunetti 2021: three siblings with homozygous FOLR1 nonsense variant and longstanding severe disease; folinic acid given orally and intravenously.",
+          "comparator": "Each patient before treatment; uncontrolled case report.",
+          "timeFrame": "Treatment began after prolonged illness; post-treatment assessment duration not reported in accessible abstract.",
+          "role": "case_report",
+          "analysis": "Authors report no sizeable overall clinical or neurophysiological improvement; individual seizure, motor and MRI effects cannot be isolated.",
+          "outcome": "null",
+          "summary": "The three siblings did not show sizeable overall improvement after delayed folinic-acid treatment.",
+          "sourceIds": [
+            "recent-metabolic-folr1-brunetti2021",
+            "recent-metabolic-wellcovorin-review"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Only the original abstract and FDA patient summaries were accessible; exact follow-up and endpoint-specific estimates are unavailable.",
+            "FDA individual delay estimates span approximately 13–16 years; the abstract summarizes more than 15 years of illness.",
+            "Nonresponse in these late-treated cases cannot establish nonresponse in every patient with a long delay."
+          ]
+        }
+      ],
+      "cellObservations": [
+        {
+          "id": "recent-metabolic-folr1-fibroblast-receptor-rescue",
+          "hpoIds": [
+            "HP:0012446"
+          ],
+          "endpointResultIds": [
+            "leucovorin-folr1-cftd-csf-folate-oral-result-1"
+          ],
+          "diseaseIds": [
+            "OMIM:613068"
+          ],
+          "trialRefs": [],
+          "population": "Patient-derived fibroblast cultures in the original three-patient FOLR1 study. Binding loss was shown for patients 1 and 3; transfection rescue shown for patient 1, not a three-donor pooled drug-response assay.",
+          "species": "human",
+          "cells": [
+            "Cultured patient fibroblasts"
+          ],
+          "route": "In vitro retroviral wild-type FRalpha or FRbeta gene transfer; no leucovorin treatment arm.",
+          "assay": "Radiolabeled folate-binding assay.",
+          "timeFrame": "15-minute binding incubation; clinical sampling schedule is separate.",
+          "evidenceType": "human_in_vitro",
+          "direction": "limits",
+          "claim": "Receptor transfection rescued folate binding. This confirms a cellular receptor defect and experimental gene rescue, not drug-mediated receptor repair.",
+          "sourceIds": [
+            "recent-metabolic-folr1-steinfeld2009"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Disease-mechanism culture study, distinct from the oral-only paired-CSF subgroup; no patient-level culture-to-response join established.",
+          "comparator": "Uncorrected patient cultures versus receptor-transfected cultures; folate competition controls."
+        },
+        {
+          "id": "recent-metabolic-folr1-human-choroid-localization",
+          "hpoIds": [
+            "HP:0012446"
+          ],
+          "endpointResultIds": [
+            "leucovorin-folr1-cftd-csf-folate-oral-result-1"
+          ],
+          "diseaseIds": [
+            "OMIM:613068"
+          ],
+          "trialRefs": [],
+          "population": "Human choroid-plexus specimens in Grapp 2013; not a leucovorin-treated clinical outcome biopsy cohort.",
+          "species": "human",
+          "cells": [
+            "Choroid plexus epithelium"
+          ],
+          "route": "No therapeutic dosing in the localization experiment.",
+          "assay": "Immunohistochemistry and immunofluorescence of FRalpha and PCFT.",
+          "timeFrame": "Baseline fixed specimens; longitudinal treatment response not measured.",
+          "evidenceType": "human_tissue",
+          "direction": "limits",
+          "claim": "Human choroid-plexus epithelium showed polarized receptor localization. This identifies a broad transport site, not drug exposure or treatment-induced cell rescue.",
+          "sourceIds": [
+            "recent-metabolic-folr1-grapp2013"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Independent mechanism study; not tissue from the seven oral paired-CSF cases or the Potic siblings.",
+          "comparator": "Receptor/localization staining, rather than pre/post-treatment comparison."
+        },
+        {
+          "id": "recent-metabolic-folr1-rat-choroid-transcytosis",
+          "hpoIds": [
+            "HP:0012446"
+          ],
+          "endpointResultIds": [
+            "leucovorin-folr1-cftd-csf-folate-oral-result-1"
+          ],
+          "diseaseIds": [
+            "OMIM:613068"
+          ],
+          "trialRefs": [],
+          "population": "Polarized rat choroid-plexus Z310 cultures expressing human FRalpha; not patient-derived brain cells.",
+          "species": "rat",
+          "cells": [
+            "Rat choroid plexus Z310 cells"
+          ],
+          "route": "In vitro human-receptor transfection and labeled 5-MTHF exposure; no clinical leucovorin regimen.",
+          "assay": "Directional labeled-folate transport and FRalpha-positive exosome release.",
+          "timeFrame": "Culture experiment; no clinical follow-up time.",
+          "evidenceType": "animal_in_vitro",
+          "direction": "limits",
+          "claim": "The culture model demonstrated receptor-associated directional folate transport. It does not demonstrate that leucovorin restores mutant human choroid-plexus cells.",
+          "sourceIds": [
+            "recent-metabolic-folr1-grapp2013"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Separate experimental species/model and substrate; linked only as context for CSF-folate mechanism, not as mediation of oral clinical response.",
+          "comparator": "FRalpha-expression/transport conditions in the mechanism study; no randomized human drug comparator."
+        }
+      ],
+      "limitations": [
+        "Multi-domain clinical counts are unmapped and not assigned wholesale to each phenotype.",
+        "Cell culture, baseline tissue and CSF observations do not establish an atlas subtype or clinical mediation.",
+        "Historical brand approval withdrawal is separate from the existence of published therapeutic evidence."
+      ]
+    },
+    {
+      "assessmentId": "leniolisib-apds-12plus",
+      "diseaseIds": [
+        {
+          "id": "OMIM:615513",
+          "label": "Activated PI3Kδ syndrome 1 / immunodeficiency 14A",
+          "sourceIds": [
+            "recent-immune-neuro-apds1-condition-identity",
+            "recent-immune-neuro-joenja-label-2026"
+          ],
+          "rationale": "Diagnosis crosswalks are discovery links. They do not assert that a displayed ClinVar allele was enrolled, responsive or treatment-eligible."
+        },
+        {
+          "id": "OMIM:616005",
+          "label": "Activated PI3Kδ syndrome 2 / immunodeficiency 36",
+          "sourceIds": [
+            "recent-immune-neuro-apds2-condition-identity",
+            "recent-immune-neuro-joenja-label-2026"
+          ],
+          "rationale": "Diagnosis crosswalks are discovery links. They do not assert that a displayed ClinVar allele was enrolled, responsive or treatment-eligible."
+        }
+      ],
+      "endpointResults": [
+        {
+          "id": "leniolisib-apds-12plus-nodes-primary",
+          "hpoId": "HP:0002716",
+          "label": "Lymphadenopathy",
+          "mapping": "direct",
+          "endpoint": "Change in log10-transformed sum of products of index lymph-node diameters",
+          "trialRefs": [
+            {
+              "nctId": "NCT02435173",
+              "name": "Study 2201 Part II randomized trial"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:615513",
+            "OMIM:616005"
+          ],
+          "population": "Genetically confirmed APDS aged ≥12 years, n=31 randomized (21 leniolisib, 10 placebo); 25 PIK3CD and 6 PIK3R1 participants in the safety set; enrolled weight ≥45 kg. Primary imaging analysis: 18 treated and 8 placebo.",
+          "comparator": "Randomized placebo; leniolisib 70 mg orally twice daily",
+          "timeFrame": "Baseline to day 85 (12 weeks)",
+          "role": "co_primary",
+          "analysis": "Covariate-adjusted ANCOVA in the protocol-adherent pharmacodynamic set; glucocorticoid/IRT use and baseline endpoint covariates.",
+          "outcome": "benefit",
+          "summary": "Adjusted difference −0.25 log10 SPD units (95% CI −0.38 to −0.12; p=0.0006).",
+          "sourceIds": [
+            "recent-immune-neuro-joenja-label-2026",
+            "recent-immune-neuro-leniolisib-phase3"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "This is index-node anatomy, not an infection, lymphoma-prevention or survival endpoint.",
+            "Two participants per arm were excluded for protocol deviations; a treated participant with complete node resolution was excluded because log10(0) is undefined.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell."
+          ]
+        },
+        {
+          "id": "leniolisib-apds-12plus-naive-b-primary",
+          "hpoId": "HP:0030372",
+          "label": "Decreased naive B cell proportion",
+          "mapping": "direct",
+          "endpoint": "Change in naïve B cells as a percentage of total circulating B cells",
+          "trialRefs": [
+            {
+              "nctId": "NCT02435173",
+              "name": "Study 2201 Part II randomized trial"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:615513",
+            "OMIM:616005"
+          ],
+          "population": "Genetically confirmed APDS aged ≥12 years, n=31 randomized (21 leniolisib, 10 placebo); 25 PIK3CD and 6 PIK3R1 participants in the safety set; enrolled weight ≥45 kg. Analysis restricted to baseline naïve-B proportion <48% with evaluable flow cytometry: 8 treated and 5 placebo.",
+          "comparator": "Randomized placebo; leniolisib 70 mg orally twice daily",
+          "timeFrame": "Baseline to day 85 (12 weeks)",
+          "role": "co_primary",
+          "analysis": "Covariate-adjusted ANCOVA in the selected pharmacodynamic analysis subset; CD19+ CD27− CD10− naïve B cells.",
+          "outcome": "surrogate",
+          "summary": "Between-arm change difference +37.30 percentage points in naïve-B proportion (95% CI 24.06 to 50.54; p=0.0002).",
+          "sourceIds": [
+            "recent-immune-neuro-joenja-label-2026",
+            "recent-immune-neuro-leniolisib-phase3"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "This is a proportion, not a 37% relative rise in absolute B-cell count.",
+            "Cell composition is measured directly for this HPO term but is a surrogate for broader immune function.",
+            "Analysis exclusions and missing assays reduced 31 randomized participants to 13; clinical infection reduction is not proved by this comparison.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell."
+          ]
+        },
+        {
+          "id": "leniolisib-apds-12plus-spleen-secondary",
+          "hpoId": "HP:0001744",
+          "label": "Splenomegaly",
+          "mapping": "direct",
+          "endpoint": "Change in three-dimensional spleen volume on CT/MRI",
+          "trialRefs": [
+            {
+              "nctId": "NCT02435173",
+              "name": "Study 2201 Part II randomized trial"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:615513",
+            "OMIM:616005"
+          ],
+          "population": "Genetically confirmed APDS aged ≥12 years, n=31 randomized (21 leniolisib, 10 placebo); 25 PIK3CD and 6 PIK3R1 participants in the safety set; enrolled weight ≥45 kg. Registered secondary PD imaging set: 19 treated and 8 placebo.",
+          "comparator": "Randomized placebo; leniolisib 70 mg orally twice daily",
+          "timeFrame": "Baseline to day 85 (12 weeks)",
+          "role": "secondary_anatomic",
+          "analysis": "Adjusted continuous volume comparison; registry lists the PD denominators and volumes in mm³; paper reports the effect in cm³.",
+          "outcome": "benefit",
+          "summary": "Adjusted difference −186 cm³ (95% CI −297 to −76.2; p=0.0020).",
+          "sourceIds": [
+            "recent-immune-neuro-leniolisib-phase3",
+            "recent-immune-neuro-leniolisib-study2201-registry"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Secondary anatomic result; no independent proof of spleen-cell rescue or global immune recovery.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell."
+          ]
+        },
+        {
+          "id": "leniolisib-apds-12plus-adolescent-nodes-subgroup",
+          "hpoId": "HP:0002716",
+          "label": "Lymphadenopathy",
+          "mapping": "direct",
+          "endpoint": "Age-12-to-<18 subgroup: change in log10 index-node SPD",
+          "trialRefs": [
+            {
+              "nctId": "NCT02435173",
+              "name": "Study 2201 Part II randomized trial"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:615513",
+            "OMIM:616005"
+          ],
+          "population": "Adolescent subgroup aged 12 to <18 years; 12 randomized overall, imaging analysis 7 treated and 3 placebo.",
+          "comparator": "Randomized placebo within the age subgroup",
+          "timeFrame": "Baseline to day 85 (12 weeks)",
+          "role": "exploratory",
+          "analysis": "Age-stratified estimate in label Figure 1; not an independently powered pediatric efficacy trial.",
+          "outcome": "null",
+          "summary": "Difference −0.27 log10 SPD units (95% CI −0.57 to 0.02); the interval includes zero.",
+          "sourceIds": [
+            "recent-immune-neuro-joenja-label-2026"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Small subgroup estimate; this does not refute the positive pooled co-primary analysis.",
+            "These are adolescents aged ≥12, not the newly approved age-4–11 cohort.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell."
+          ]
+        }
+      ],
+      "cellObservations": [
+        {
+          "id": "leniolisib-apds-12plus-naive-b-flow",
+          "hpoIds": [
+            "HP:0030372"
+          ],
+          "endpointResultIds": [
+            "leniolisib-apds-12plus-naive-b-primary"
+          ],
+          "diseaseIds": [
+            "OMIM:615513",
+            "OMIM:616005"
+          ],
+          "trialRefs": [
+            {
+              "nctId": "NCT02435173",
+              "name": "Study 2201 Part II randomized trial"
+            }
+          ],
+          "population": "The randomized trial’s evaluable baseline-low naïve-B subset (8 treated, 5 placebo)",
+          "species": "Human peripheral blood",
+          "cells": [
+            "CD19+ CD27− CD10− naïve B cells; total B-cell denominator"
+          ],
+          "route": "Oral leniolisib 70 mg twice daily",
+          "assay": "Flow-cytometric B-cell subset proportions",
+          "timeFrame": "Baseline and day 85",
+          "evidenceType": "human_cell_pharmacodynamics",
+          "direction": "supports",
+          "claim": "Treatment changed the circulating naïve-B fraction; this does not identify which exposed cell population caused improvement in node anatomy or clinical immunity.",
+          "sourceIds": [
+            "recent-immune-neuro-joenja-label-2026",
+            "recent-immune-neuro-leniolisib-phase3"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Same randomized cohort and same immunophenotype endpoint, with restricted evaluable denominators; no clinical mediation analysis.",
+          "comparator": "Randomized placebo"
+        },
+        {
+          "id": "leniolisib-apds-12plus-adult-pakt",
+          "hpoIds": [
+            "HP:0030372",
+            "HP:0002716"
+          ],
+          "endpointResultIds": [
+            "leniolisib-apds-12plus-nodes-primary",
+            "leniolisib-apds-12plus-naive-b-primary"
+          ],
+          "diseaseIds": [
+            "OMIM:615513",
+            "OMIM:616005"
+          ],
+          "trialRefs": [
+            {
+              "nctId": "NCT02435173",
+              "name": "Study 2201 Part I adult dose-finding"
+            }
+          ],
+          "population": "Six adults with APDS in the earlier within-person dose-escalation study",
+          "species": "Human peripheral blood assessed ex vivo",
+          "cells": [
+            "CD20+ peripheral-blood B lymphocytes"
+          ],
+          "route": "Oral 10, 30 and 70 mg twice daily, each for four weeks",
+          "assay": "Flow cytometry of pAkt-positive B cells in ex vivo stimulated blood; concentration-response pharmacodynamic model",
+          "timeFrame": "Three sequential four-week dose levels; estimated steady-state effect at 70 mg twice daily",
+          "evidenceType": "human_cell_pharmacodynamics",
+          "direction": "supports",
+          "claim": "The label reports an estimated time-averaged approximately 80% reduction in pAkt-positive B cells at 70 mg twice daily. This is model-derived pathway inhibition, not proof of cell-specific clinical rescue.",
+          "sourceIds": [
+            "recent-immune-neuro-joenja-label-2026",
+            "recent-immune-neuro-leniolisib-study2201-registry"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Earlier adult dose-finding population sharing a registry identifier with Part II; not the randomized endpoint subset or pediatric LE3301.",
+          "comparator": "Own pretreatment baseline and unstimulated assay controls; no randomized comparator"
+        },
+        {
+          "id": "leniolisib-apds-12plus-transitional-b-function",
+          "hpoIds": [
+            "HP:0030372"
+          ],
+          "endpointResultIds": [
+            "leniolisib-apds-12plus-naive-b-primary"
+          ],
+          "diseaseIds": [
+            "OMIM:615513"
+          ],
+          "trialRefs": [],
+          "population": "Sort-purified transitional B cells from five PIK3CD gain-of-function patients and healthy donors (Avery Fig 9A–C)",
+          "species": "Human patient-derived cells in vitro",
+          "cells": [
+            "Transitional B lymphocytes"
+          ],
+          "route": "In-vitro leniolisib concentration series during CD40L/IL-21 stimulation",
+          "assay": "IgM, IgG and IgA secretion after cell culture",
+          "timeFrame": "Five days",
+          "evidenceType": "human_in_vitro",
+          "direction": "supports",
+          "claim": "Leniolisib increased class-switched IgG and IgA secretion in PIK3CD gain-of-function patient B cells; healthy-donor cells instead showed lower IgM/IgG secretion. The effect depends on the disease/assay context.",
+          "sourceIds": [
+            "recent-immune-neuro-leniolisib-patient-b-cell-assay"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Separate patient-cell experiment from the randomized trial; secretion is a functional readout, not a measurement of naïve-B abundance or clinical infection mediation.",
+          "comparator": "Stimulated cultures without leniolisib / equivalent DMSO; healthy-donor comparator"
+        }
+      ],
+      "limitations": [
+        "Diagnosis crosswalks are discovery links. They do not assert that a displayed ClinVar allele was enrolled, responsive or treatment-eligible.",
+        "Shared NCT02435173 includes sequential adult dose-finding and a later randomized cohort; their cell observations and sample sizes are distinct."
+      ]
+    },
+    {
+      "assessmentId": "leniolisib-apds-4to11",
+      "diseaseIds": [
+        {
+          "id": "OMIM:615513",
+          "label": "Activated PI3Kδ syndrome 1 / immunodeficiency 14A",
+          "sourceIds": [
+            "recent-immune-neuro-apds1-condition-identity",
+            "recent-immune-neuro-joenja-label-2026"
+          ],
+          "rationale": "Diagnosis crosswalks are discovery links. They do not assert that a displayed ClinVar allele was enrolled, responsive or treatment-eligible."
+        },
+        {
+          "id": "OMIM:616005",
+          "label": "Activated PI3Kδ syndrome 2 / immunodeficiency 36",
+          "sourceIds": [
+            "recent-immune-neuro-apds2-condition-identity",
+            "recent-immune-neuro-joenja-label-2026"
+          ],
+          "rationale": "Diagnosis crosswalks are discovery links. They do not assert that a displayed ClinVar allele was enrolled, responsive or treatment-eligible."
+        }
+      ],
+      "endpointResults": [
+        {
+          "id": "leniolisib-apds-4to11-nodes-source-limited",
+          "hpoId": "HP:0002716",
+          "label": "Lymphadenopathy",
+          "mapping": "direct",
+          "endpoint": "Pediatric change in index lymph-node lesion size",
+          "trialRefs": [
+            {
+              "nctId": "NCT05438407",
+              "name": "LE3301 pediatric single-arm study"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:615513",
+            "OMIM:616005"
+          ],
+          "population": "APDS children aged 4–11; sponsor reports 21 treated and 21 completing 12 weeks across four dose levels. The currently approved ≥27 kg dose PK/safety subset is eight, not the full study.",
+          "comparator": "Own pretreatment baseline; no randomized/concurrent control",
+          "timeFrame": "Baseline to 12 weeks",
+          "role": "reported_primary_efficacy",
+          "analysis": "Sponsor-only qualitative topline; exact effect estimate, assay denominator, variance and statistical analysis are unavailable in the reviewed report.",
+          "outcome": "unknown",
+          "summary": "Sponsor reports favorable mean change but supplies no numerical endpoint analysis. A separately quantified pediatric treatment effect cannot be assigned.",
+          "sourceIds": [
+            "recent-immune-neuro-leniolisib-le3301-topline",
+            "recent-immune-neuro-leniolisib-le3301-registry",
+            "recent-immune-neuro-joenja-label-2026"
+          ],
+          "scopeReview": "source_limited",
+          "limits": [
+            "Scope is source-limited: no posted registry results or accessible numerical pediatric efficacy publication was located.",
+            "FDA approval uses the ≥12 controlled evidence plus pediatric PK/safety bridging; the older +37.30 percentage-point B-cell result is not a pediatric estimate.",
+            "Sponsor calls nodes and naïve-B proportions primary efficacy outcomes; current registry primary listings include imaging and pAkt but not a separately listed naïve-B primary.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell."
+          ]
+        },
+        {
+          "id": "leniolisib-apds-4to11-naive-b-source-limited",
+          "hpoId": "HP:0030372",
+          "label": "Decreased naive B cell proportion",
+          "mapping": "direct",
+          "endpoint": "Pediatric change in naïve-B proportion",
+          "trialRefs": [
+            {
+              "nctId": "NCT05438407",
+              "name": "LE3301 pediatric single-arm study"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:615513",
+            "OMIM:616005"
+          ],
+          "population": "APDS children aged 4–11; sponsor reports 21 treated and 21 completing 12 weeks across four dose levels. The currently approved ≥27 kg dose PK/safety subset is eight, not the full study.",
+          "comparator": "Own pretreatment baseline; no randomized/concurrent control",
+          "timeFrame": "Baseline to 12 weeks",
+          "role": "reported_primary_efficacy",
+          "analysis": "Sponsor-only qualitative topline; exact effect estimate, assay denominator, variance and statistical analysis are unavailable in the reviewed report.",
+          "outcome": "unknown",
+          "summary": "Sponsor reports favorable mean change but supplies no numerical endpoint analysis. A separately quantified pediatric treatment effect cannot be assigned.",
+          "sourceIds": [
+            "recent-immune-neuro-leniolisib-le3301-topline",
+            "recent-immune-neuro-leniolisib-le3301-registry",
+            "recent-immune-neuro-joenja-label-2026"
+          ],
+          "scopeReview": "source_limited",
+          "limits": [
+            "Scope is source-limited: no posted registry results or accessible numerical pediatric efficacy publication was located.",
+            "FDA approval uses the ≥12 controlled evidence plus pediatric PK/safety bridging; the older +37.30 percentage-point B-cell result is not a pediatric estimate.",
+            "Sponsor calls nodes and naïve-B proportions primary efficacy outcomes; current registry primary listings include imaging and pAkt but not a separately listed naïve-B primary.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell."
+          ]
+        }
+      ],
+      "cellObservations": [],
+      "limitations": [
+        "Diagnosis crosswalks are discovery links. They do not assert that a displayed ClinVar allele was enrolled, responsive or treatment-eligible.",
+        "No pediatric cellular outcome is inherited from adult dose-finding or the ≥12 randomized trial.",
+        "Approval bridging is not a numerical pediatric efficacy endpoint."
+      ]
+    },
+    {
+      "assessmentId": "levacetylleucine-ataxia-telangiectasia",
+      "diseaseIds": [
+        {
+          "id": "OMIM:208900",
+          "label": "Ataxia-telangiectasia",
+          "sourceIds": [
+            "recent-immune-neuro-at-condition-identity",
+            "recent-immune-neuro-aqneursa-label-2026"
+          ],
+          "rationale": "Diagnosis crosswalks are discovery links. They do not assert that a displayed ClinVar allele was enrolled, responsive or treatment-eligible."
+        }
+      ],
+      "endpointResults": [
+        {
+          "id": "levacetylleucine-ataxia-telangiectasia-fsara-regulatory",
+          "hpoId": "HP:0001251",
+          "label": "Ataxia",
+          "mapping": "proxy",
+          "endpoint": "Functional SARA (fSARA, 0–16): gait, stance, sitting and speech domains",
+          "trialRefs": [
+            {
+              "nctId": "NCT06673056",
+              "name": "IB1001-303 A-T randomized crossover"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:208900"
+          ],
+          "population": "Genetically confirmed A-T aged ≥4: 73 randomized (36 active-first, 37 placebo-first), 47 children/adolescents and 26 adults; observed ages 4–50. Seventy completed both periods.",
+          "comparator": "Randomized blinded placebo crossover; oral weight-tiered levacetylleucine",
+          "timeFrame": "Two consecutive 12-week treatment periods, immediate crossover",
+          "role": "regulatory_primary",
+          "analysis": "Label least-squares crossover comparison of functional-domain totals; observed week-12 denominators 34/37 and week-24 35/35.",
+          "outcome": "benefit",
+          "summary": "Label LS mean fSARA 7.2 on active drug versus 7.8 on placebo; difference −0.6 (95% CI −0.9 to −0.2; two-sided p=0.0013).",
+          "sourceIds": [
+            "recent-immune-neuro-aqneursa-label-2026"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Functional-domain composite proxies ataxia-associated function; no individual-domain effect is inferred from the total.",
+            "Do not pool or equate 0–16 fSARA with published 0–40 SARA.",
+            "No washout between crossover periods; this short comparison does not establish disease modification.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell."
+          ]
+        },
+        {
+          "id": "levacetylleucine-ataxia-telangiectasia-sara-publication",
+          "hpoId": "HP:0001251",
+          "label": "Ataxia",
+          "mapping": "direct",
+          "endpoint": "Published original SARA total score (0–40)",
+          "trialRefs": [
+            {
+              "nctId": "NCT06673056",
+              "name": "IB1001-303 A-T randomized crossover"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:208900"
+          ],
+          "population": "Genetically confirmed A-T aged ≥4: 73 randomized (36 active-first, 37 placebo-first), 47 children/adolescents and 26 adults; observed ages 4–50. Seventy completed both periods.",
+          "comparator": "Randomized blinded placebo crossover; ≥35 kg 4 g/day, lower weight approximately 0.1 g/kg/day in tiers",
+          "timeFrame": "Baseline to end of each 12-week treatment period",
+          "role": "primary",
+          "analysis": "Published primary abstract: linear mixed-effects model; all 73 randomized/dosed patients in primary and safety analysis, with missing-at-random assumption.",
+          "outcome": "benefit",
+          "summary": "Mean changes −1.92 (SD 2.81) on active drug and −0.14 (SD 2.38) on placebo; adjusted treatment effect −1.88 (95% CI −2.70 to −1.06; p<0.0001).",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-at-phase3"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "The accessible original abstract was reviewed; the full publisher article and supplementary secondary/subgroup tables were not obtained in this pass.",
+            "Clinical ataxia improvement does not show ATM protein restoration, DNA repair correction or neuron-specific mediation.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell."
+          ]
+        }
+      ],
+      "cellObservations": [],
+      "limitations": [
+        "Diagnosis crosswalks are discovery links. They do not assert that a displayed ClinVar allele was enrolled, responsive or treatment-eligible.",
+        "No NPC cellular experiment is inherited by the A-T clinical endpoint."
+      ]
+    },
+    {
+      "assessmentId": "levacetylleucine-npc",
+      "diseaseIds": [
+        {
+          "id": "OMIM:257220",
+          "label": "Niemann-Pick disease type C1",
+          "sourceIds": [
+            "recent-immune-neuro-npc1-condition-identity",
+            "recent-immune-neuro-aqneursa-label-2026"
+          ],
+          "rationale": "Diagnosis crosswalks are discovery links. They do not assert that a displayed ClinVar allele was enrolled, responsive or treatment-eligible."
+        },
+        {
+          "id": "OMIM:607625",
+          "label": "Niemann-Pick disease type C2",
+          "sourceIds": [
+            "recent-immune-neuro-npc2-condition-identity",
+            "recent-immune-neuro-aqneursa-label-2026"
+          ],
+          "rationale": "Diagnosis-family discovery link; NPC2 trial enrollment and genotype-specific response have not been verified from the reviewed primary table/supplement."
+        }
+      ],
+      "endpointResults": [
+        {
+          "id": "levacetylleucine-npc-fsara-regulatory",
+          "hpoId": "HP:0001251",
+          "label": "Ataxia",
+          "mapping": "proxy",
+          "endpoint": "FDA functional SARA (fSARA, 0–16) total",
+          "trialRefs": [
+            {
+              "nctId": "NCT05163288",
+              "name": "IB1001-301 NPC randomized crossover"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:257220",
+            "OMIM:607625"
+          ],
+          "population": "Genetically confirmed symptomatic NPC, 60 randomized (30 per sequence), observed ages 5–67; 37 adults and 23 pediatric participants, weight ≥15 kg. Fifty-one used concomitant miglustat; 59 completed both periods.",
+          "comparator": "Randomized blinded placebo crossover; oral levacetylleucine 2–4 g/day according to trial age/weight tiers",
+          "timeFrame": "Two consecutive 12-week periods, immediate crossover",
+          "role": "regulatory_primary",
+          "analysis": "FDA-selected four-domain rescoring, mixed-model crossover analysis; distinct from the applicant 0–30 mSARA endpoint.",
+          "outcome": "benefit",
+          "summary": "FDA review difference −0.45 fSARA points (95% CI −0.70 to −0.19; p=0.0009); current label rounds the difference to −0.4 (95% CI −0.7 to −0.2).",
+          "sourceIds": [
+            "recent-immune-neuro-aqneursa-npc-fda-integrated-review",
+            "recent-immune-neuro-aqneursa-label-2026"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Composite assesses neurologic/ataxia-associated function across domains, not an isolated cerebellar-cell readout or uniform response in every component.",
+            "FDA revised domain selection/rescoring during development; this is not the same prespecified numerical scale reported as primary in NEJM.",
+            "No washout; active treatment lasts 12 weeks, so long-term disease modification is not established.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell."
+          ]
+        },
+        {
+          "id": "levacetylleucine-npc-sara-publication",
+          "hpoId": "HP:0001251",
+          "label": "Ataxia",
+          "mapping": "proxy",
+          "endpoint": "Published original SARA total (0–40)",
+          "trialRefs": [
+            {
+              "nctId": "NCT05163288",
+              "name": "IB1001-301 NPC randomized crossover"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:257220",
+            "OMIM:607625"
+          ],
+          "population": "Genetically confirmed symptomatic NPC, 60 randomized (30 per sequence), observed ages 5–67; 37 adults and 23 pediatric participants, weight ≥15 kg. Fifty-one used concomitant miglustat; 59 completed both periods. Observed end-treatment assessments: 59 active, 58 placebo.",
+          "comparator": "Randomized blinded placebo crossover",
+          "timeFrame": "End of each 12-week period",
+          "role": "primary",
+          "analysis": "NEJM global primary analysis; intention-to-treat n=60, covariate-adjusted crossover/mixed-model estimate with reported handling of missing observations.",
+          "outcome": "benefit",
+          "summary": "Mean changes −1.97 (SD 2.43) on treatment and −0.60 (SD 2.39) on placebo; adjusted difference −1.28 (95% CI −1.91 to −0.65; p<0.001).",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-npc-phase3"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Composite assesses neurologic/ataxia-associated function across domains, not an isolated cerebellar-cell readout or uniform response in every component.",
+            "The publication says SARA is not validated specifically for NPC and is not an isolated measure of cerebellar ataxia.",
+            "The same study is FDA key secondary on the full SARA scale; this is not an independent replication of the regulatory fSARA.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell."
+          ]
+        },
+        {
+          "id": "levacetylleucine-npc-msara-applicant",
+          "hpoId": "HP:0001251",
+          "label": "Ataxia",
+          "mapping": "proxy",
+          "endpoint": "Applicant modified SARA (mSARA, 0–30), excluding sitting and stance",
+          "trialRefs": [
+            {
+              "nctId": "NCT05163288",
+              "name": "IB1001-301 NPC randomized crossover"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:257220",
+            "OMIM:607625"
+          ],
+          "population": "Genetically confirmed symptomatic NPC, 60 randomized (30 per sequence), observed ages 5–67; 37 adults and 23 pediatric participants, weight ≥15 kg. Fifty-one used concomitant miglustat; 59 completed both periods. Observed end-treatment assessments: 59 active, 58 placebo.",
+          "comparator": "Randomized blinded placebo crossover",
+          "timeFrame": "End of each 12-week period",
+          "role": "regulatory_efficacy",
+          "analysis": "Applicant-proposed US primary outcome; ancillary in the NEJM analysis. FDA review reports nominal two-sided p; publication omits an ancillary-analysis p-value.",
+          "outcome": "benefit",
+          "summary": "Adjusted difference −0.96 mSARA points (95% CI −1.45 to −0.46); FDA review p=0.0003. This is not the 0–16 fSARA result.",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-npc-phase3",
+            "recent-immune-neuro-aqneursa-npc-fda-integrated-review"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Composite assesses neurologic/ataxia-associated function across domains, not an isolated cerebellar-cell readout or uniform response in every component.",
+            "Overlapping data from the same trial and different scoring rules; cannot be counted as an independent trial.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell."
+          ]
+        },
+        {
+          "id": "levacetylleucine-npc-scafi-secondary-null",
+          "hpoId": "HP:0001251",
+          "label": "Ataxia",
+          "mapping": "proxy",
+          "endpoint": "Spinocerebellar Ataxia Functional Index (SCAFI): composite z score",
+          "trialRefs": [
+            {
+              "nctId": "NCT05163288",
+              "name": "IB1001-301 NPC randomized crossover"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:257220",
+            "OMIM:607625"
+          ],
+          "population": "Genetically confirmed symptomatic NPC, 60 randomized (30 per sequence), observed ages 5–67; 37 adults and 23 pediatric participants, weight ≥15 kg. Fifty-one used concomitant miglustat; 59 completed both periods. Observed end-treatment SCAFI assessments: 57 active, 56 placebo.",
+          "comparator": "Randomized blinded placebo crossover",
+          "timeFrame": "End of each 12-week period",
+          "role": "secondary",
+          "analysis": "Composite timed walking, peg-test and speech performance; nominal unadjusted secondary comparison.",
+          "outcome": "null",
+          "summary": "Difference approximately +0.07 z-score units; FDA review nominal p=0.06 (95% CI rounded 0.0 to 0.15).",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-npc-phase3",
+            "recent-immune-neuro-aqneursa-npc-fda-integrated-review"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Composite assesses neurologic/ataxia-associated function across domains, not an isolated cerebellar-cell readout or uniform response in every component.",
+            "Statistical significance is not established; CI rounding must not turn this p=0.06 secondary result into a positive claim.",
+            "No multiplicity-adjusted secondary testing plan.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell."
+          ]
+        },
+        {
+          "id": "levacetylleucine-npc-mdrs-secondary",
+          "hpoId": null,
+          "label": "Multidomain neurological disability / severity (no eligible phenotype crosswalk)",
+          "mapping": "unmapped",
+          "endpoint": "Modified Disability Rating Scale (mDRS), scaled 0–1 total",
+          "trialRefs": [
+            {
+              "nctId": "NCT05163288",
+              "name": "IB1001-301 NPC randomized crossover"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:257220",
+            "OMIM:607625"
+          ],
+          "population": "Genetically confirmed symptomatic NPC, 60 randomized (30 per sequence), observed ages 5–67; 37 adults and 23 pediatric participants, weight ≥15 kg. Fifty-one used concomitant miglustat; 59 completed both periods. Observed end-treatment assessments: 59 active, 58 placebo.",
+          "comparator": "Randomized blinded placebo crossover",
+          "timeFrame": "End of each 12-week period",
+          "role": "secondary",
+          "analysis": "NEJM secondary neurologic-disability composite; nominal confidence interval without multiplicity correction.",
+          "outcome": "benefit",
+          "summary": "Published difference −0.029 (95% CI −0.048 to −0.010). FDA reanalysis differs in rounding/model; the publication estimate is retained for this result.",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-npc-phase3"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Composite assesses neurologic/ataxia-associated function across domains, not an isolated cerebellar-cell readout or uniform response in every component.",
+            "Contains ambulation, manipulation, seizures, language, swallowing and ocular domains; total benefit does not establish benefit in each phenotype.",
+            "Secondary estimate is not multiplicity adjusted.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell.",
+            "The total score combines several neurological domains. No isolated ataxia-domain analysis is established by this record; its favourable or null total cannot supply the ataxia phenotype result."
+          ]
+        },
+        {
+          "id": "levacetylleucine-npc-npc-css-exploratory-null",
+          "hpoId": null,
+          "label": "Multidomain neurological disability / severity (no eligible phenotype crosswalk)",
+          "mapping": "unmapped",
+          "endpoint": "NPC Clinical Severity Scale (NPC-CSS) exploratory total",
+          "trialRefs": [
+            {
+              "nctId": "NCT05163288",
+              "name": "IB1001-301 NPC randomized crossover"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:257220",
+            "OMIM:607625"
+          ],
+          "population": "Genetically confirmed symptomatic NPC, 60 randomized (30 per sequence), observed ages 5–67; 37 adults and 23 pediatric participants, weight ≥15 kg. Fifty-one used concomitant miglustat; 59 completed both periods. Observed endpoint assessments: 58 on each treatment.",
+          "comparator": "Randomized blinded placebo crossover",
+          "timeFrame": "End of each 12-week period",
+          "role": "exploratory",
+          "analysis": "Published observed-data neurologic-severity total; not an established biomarker of long-term treatment modification.",
+          "outcome": "null",
+          "summary": "Difference −0.5 points (95% CI −1.2 to 0.2); no statistically established treatment separation.",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-npc-phase3"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Composite assesses neurologic/ataxia-associated function across domains, not an isolated cerebellar-cell readout or uniform response in every component.",
+            "Short-duration symptom trial; this null result does not alone prove or disprove long-term disease modification.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell.",
+            "The total score combines several neurological domains. No isolated ataxia-domain analysis is established by this record; its favourable or null total cannot supply the ataxia phenotype result."
+          ]
+        },
+        {
+          "id": "levacetylleucine-npc-younger-subgroup-null",
+          "hpoId": "HP:0001251",
+          "label": "Ataxia",
+          "mapping": "proxy",
+          "endpoint": "Original SARA: age-4–9 subgroup",
+          "trialRefs": [
+            {
+              "nctId": "NCT05163288",
+              "name": "IB1001-301 NPC randomized crossover"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:257220",
+            "OMIM:607625"
+          ],
+          "population": "Seven complete-case NPC participants aged 4–9 in the predefined age subgroup; eligibility ≥4, observed youngest participant age 5.",
+          "comparator": "Randomized placebo crossover within age subgroup",
+          "timeFrame": "End of each 12-week period",
+          "role": "exploratory",
+          "analysis": "NEJM Figure 3 observed paired completers; trial not powered for subgroup inference.",
+          "outcome": "null",
+          "summary": "Subgroup difference −1.07 SARA points (95% CI −3.36 to 1.22).",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-npc-phase3"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Composite assesses neurologic/ataxia-associated function across domains, not an isolated cerebellar-cell readout or uniform response in every component.",
+            "Small interval includes benefit and no benefit; does not establish failure in young children or overturn the overall trial.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell."
+          ]
+        },
+        {
+          "id": "levacetylleucine-npc-no-miglustat-subgroup-null",
+          "hpoId": "HP:0001251",
+          "label": "Ataxia",
+          "mapping": "proxy",
+          "endpoint": "Original SARA: participants without background miglustat",
+          "trialRefs": [
+            {
+              "nctId": "NCT05163288",
+              "name": "IB1001-301 NPC randomized crossover"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:257220",
+            "OMIM:607625"
+          ],
+          "population": "Nine paired-completer NPC participants without miglustat; distinct from the 50 completers who used miglustat.",
+          "comparator": "Randomized placebo crossover within non-miglustat subgroup",
+          "timeFrame": "End of each 12-week period",
+          "role": "exploratory",
+          "analysis": "NEJM Figure 3 complete-case predefined subgroup; not powered to establish independent monotherapy efficacy.",
+          "outcome": "null",
+          "summary": "Subgroup difference −0.61 SARA points (95% CI −1.88 to 0.66).",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-npc-phase3"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Composite assesses neurologic/ataxia-associated function across domains, not an isolated cerebellar-cell readout or uniform response in every component.",
+            "This interval crosses zero; cannot claim that this small subgroup independently establishes monotherapy efficacy.",
+            "This does not mean concomitant miglustat is required by the FDA indication.",
+            "Neither this endpoint nor its treatment comparison establishes a cell-restricted causal mechanism or an exact match to a portal atlas cell."
+          ]
+        }
+      ],
+      "cellObservations": [
+        {
+          "id": "levacetylleucine-npc-model-purkinje-null",
+          "hpoIds": [
+            "HP:0001251"
+          ],
+          "endpointResultIds": [
+            "levacetylleucine-npc-fsara-regulatory",
+            "levacetylleucine-npc-sara-publication"
+          ],
+          "diseaseIds": [
+            "OMIM:257220"
+          ],
+          "trialRefs": [],
+          "population": "Female BALB/c Npc1−/− mice; five animals per acetyl-leucine treatment group; pre-symptomatic dietary dosing from age 3 weeks, assessment at day 59.",
+          "species": "Mouse NPC1-loss-of-function model",
+          "cells": [
+            "Cerebellar Purkinje neurons"
+          ],
+          "route": "Dietary purified N-acetyl-L-leucine 0.1 g/kg/day",
+          "assay": "Calbindin immunostaining; Purkinje-cell density normalized by cerebellar-lobule perimeter",
+          "timeFrame": "From age 3 weeks to day 59",
+          "evidenceType": "preclinical_cell",
+          "direction": "limits",
+          "claim": "Purified L-enantiomer did not significantly preserve Purkinje-cell survival in tested lobules: I–II p=0.107, III p=0.157, IV–V p=0.533 (Kaya Fig 2H). This is a null structural readout despite other model benefits.",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-npc-model"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Different preclinical system from the clinical trial; no human neuronal target-engagement or clinical mediation inference.",
+          "comparator": "Untreated Npc1−/− littermates; wild-type counts provide a separate reference"
+        },
+        {
+          "id": "levacetylleucine-npc-model-microglia",
+          "hpoIds": [
+            "HP:0001251"
+          ],
+          "endpointResultIds": [
+            "levacetylleucine-npc-fsara-regulatory",
+            "levacetylleucine-npc-sara-publication"
+          ],
+          "diseaseIds": [
+            "OMIM:257220"
+          ],
+          "trialRefs": [],
+          "population": "Female BALB/c Npc1−/− mice; five animals per acetyl-leucine treatment group; pre-symptomatic dietary dosing from age 3 weeks, assessment at day 59.",
+          "species": "Mouse NPC1-loss-of-function model",
+          "cells": [
+            "CD68-positive cerebellar microglia"
+          ],
+          "route": "Dietary purified N-acetyl-L-leucine 0.1 g/kg/day",
+          "assay": "CD68-positive cell density in cerebellar immunostaining",
+          "timeFrame": "From age 3 weeks to day 59",
+          "evidenceType": "preclinical_cell",
+          "direction": "supports",
+          "claim": "Purified L-enantiomer reduced CD68-positive activated microglial density by 20% (p=0.0177; original Fig 2I). A marker-density change is not demonstrated human cell rescue or proof that microglia mediate ataxia improvement.",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-npc-model"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Different preclinical system from the clinical trial; limited evidence of a model inflammatory-cell response, without cellular mediation.",
+          "comparator": "Untreated Npc1−/− littermates"
+        },
+        {
+          "id": "levacetylleucine-npc-model-racemic-purkinje",
+          "hpoIds": [
+            "HP:0001251"
+          ],
+          "endpointResultIds": [
+            "levacetylleucine-npc-fsara-regulatory",
+            "levacetylleucine-npc-sara-publication"
+          ],
+          "diseaseIds": [
+            "OMIM:257220"
+          ],
+          "trialRefs": [],
+          "population": "Female BALB/c Npc1−/− mice; five animals per acetyl-leucine treatment group; pre-symptomatic dietary dosing from age 3 weeks, assessment at day 59. Different drug formulation from marketed Aqneursa.",
+          "species": "Mouse NPC1-loss-of-function model",
+          "cells": [
+            "Cerebellar Purkinje neurons"
+          ],
+          "route": "Dietary racemic N-acetyl-DL-leucine, not purified levacetylleucine",
+          "assay": "Calbindin immunostaining and lobule-normalized Purkinje-cell density",
+          "timeFrame": "Pre-symptomatic dosing from age 3 weeks to day 59",
+          "evidenceType": "preclinical_cell",
+          "direction": "limits",
+          "claim": "Racemic DL treatment increased Purkinje-cell counts versus untreated mutants in lobules I–II (+133%, p=0.0027) and III (+402%, p=0.0108). The published purified-L arm did not reproduce significant preservation; DL results cannot be credited to Aqneursa.",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-npc-model"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Different preclinical system and different formulation from the clinical trial; included to prevent incorrect formulation transfer.",
+          "comparator": "Untreated Npc1−/− littermates"
+        },
+        {
+          "id": "levacetylleucine-npc-model-cho-lysosome",
+          "hpoIds": [
+            "HP:0001251"
+          ],
+          "endpointResultIds": [
+            "levacetylleucine-npc-fsara-regulatory",
+            "levacetylleucine-npc-sara-publication"
+          ],
+          "diseaseIds": [
+            "OMIM:257220"
+          ],
+          "trialRefs": [],
+          "population": "NPC1-deficient Chinese hamster ovary cell model; an in-vitro system, not treated human neurons",
+          "species": "Chinese hamster ovary cells in vitro",
+          "cells": [
+            "NPC1-deficient CHO cells"
+          ],
+          "route": "Purified N-acetyl-L-leucine 1 mM in culture",
+          "assay": "LysoTracker-based relative acidic-compartment volume by live-cell flow cytometry",
+          "timeFrame": "24 and 72 hours",
+          "evidenceType": "preclinical_cell",
+          "direction": "supports",
+          "claim": "L-only treatment reduced relative lysosomal volume by 16% after 24 h (p=0.0177) and 22.8% after 72 h (p=0.0036), original Fig 3E. This supports a non-neuronal cellular effect, not repair of NPC1 or mediation of clinical ataxia.",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-npc-model"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Different preclinical system from the clinical trial; no clinically established crosswalk from CHO-cell lysosomal volume to human functional benefit.",
+          "comparator": "Untreated NPC1-deficient cells; wild-type cells as reference"
+        }
+      ],
+      "limitations": [
+        "Diagnosis crosswalks are discovery links. They do not assert that a displayed ClinVar allele was enrolled, responsive or treatment-eligible.",
+        "Clinical composites, mouse histology and CHO-cell assays are different systems; none establishes exact atlas-cell correspondence.",
+        "The NPC2 disease-family link is not an observed NPC2 subgroup result."
+      ]
+    },
+    {
+      "assessmentId": "yuviwel-fgfr3",
+      "diseaseIds": [
+        {
+          "id": "OMIM:100800",
+          "label": "Achondroplasia",
+          "sourceIds": [
+            "recent-skeletal-achondroplasia-identity",
+            "recent-skeletal-yuviwel-label"
+          ],
+          "rationale": "Reviewed condition identity; discovery crosswalk only, not evidence that every disease-associated allele was enrolled or responsive."
+        }
+      ],
+      "endpointResults": [
+        {
+          "id": "yuviwel-fgfr3-approach-agv",
+          "hpoId": "HP:0004322",
+          "label": "Short stature",
+          "mapping": "proxy",
+          "endpoint": "Annualized growth velocity (AGV) at week 52",
+          "trialRefs": [
+            {
+              "nctId": "NCT05598320",
+              "name": "APPROACH / ASND0036"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:100800"
+          ],
+          "population": "84 randomized children with genetically confirmed achondroplasia, eligible age 2–11; 57 navepegritide 100 micrograms CNP/kg/week and 27 placebo.",
+          "comparator": "Randomized placebo, double blind",
+          "timeFrame": "52 weeks",
+          "role": "primary_growth_surrogate",
+          "analysis": "ANCOVA; full randomized analysis with multiple imputation for missing height. Growth rate is an intermediate endpoint.",
+          "outcome": "surrogate",
+          "summary": "LS mean AGV 5.89 vs 4.41 cm/year; difference +1.49 (95% CI 1.05–1.93), P<0.001. FDA accelerated approval uses AGV to predict final adult height.",
+          "sourceIds": [
+            "recent-skeletal-approach-primary",
+            "recent-skeletal-yuviwel-label",
+            "recent-skeletal-approach-registry"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Positive growth-rate result does not establish final adult height, normalization of stature or prevention of neurological complications."
+          ]
+        },
+        {
+          "id": "yuviwel-fgfr3-approach-ach-height",
+          "hpoId": "HP:0004322",
+          "label": "Short stature",
+          "mapping": "direct",
+          "endpoint": "Change in achondroplasia-specific height Z-score",
+          "trialRefs": [
+            {
+              "nctId": "NCT05598320",
+              "name": "APPROACH / ASND0036"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:100800"
+          ],
+          "population": "84 randomized children with genetically confirmed achondroplasia, eligible age 2–11; 57 navepegritide 100 micrograms CNP/kg/week and 27 placebo.",
+          "comparator": "Randomized placebo",
+          "timeFrame": "Baseline to week 52",
+          "role": "key_secondary_height",
+          "analysis": "ANCOVA, prespecified multiple-testing strategy; untreated-achondroplasia reference distribution.",
+          "outcome": "benefit",
+          "summary": "LS difference +0.28 Z-score units (95% CI 0.18–0.39); height improved relative to the achondroplasia reference distribution.",
+          "sourceIds": [
+            "recent-skeletal-approach-primary",
+            "recent-skeletal-yuviwel-label",
+            "recent-skeletal-approach-registry"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "This reference is other children with achondroplasia, not normal-population adult height."
+          ]
+        },
+        {
+          "id": "yuviwel-fgfr3-approach-cdc-height",
+          "hpoId": "HP:0004322",
+          "label": "Short stature",
+          "mapping": "direct",
+          "endpoint": "Change in CDC-based height Z-score",
+          "trialRefs": [
+            {
+              "nctId": "NCT05598320",
+              "name": "APPROACH / ASND0036"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:100800"
+          ],
+          "population": "84 randomized children with genetically confirmed achondroplasia, eligible age 2–11; 57 navepegritide 100 micrograms CNP/kg/week and 27 placebo.",
+          "comparator": "Randomized placebo",
+          "timeFrame": "Baseline to week 52",
+          "role": "exploratory_height",
+          "analysis": "FDA review ANCOVA; not included in the confirmatory multiple-testing strategy despite listed registry-secondary status.",
+          "outcome": "benefit",
+          "summary": "LS difference +0.30 Z-score units (95% CI 0.16–0.45); nominal analysis.",
+          "sourceIds": [
+            "recent-skeletal-yuviwel-review",
+            "recent-skeletal-approach-registry"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Exploratory result; final adult height and complete correction of short stature remain unconfirmed."
+          ]
+        },
+        {
+          "id": "yuviwel-fgfr3-approach-proportions",
+          "hpoId": "HP:0003498",
+          "label": "Disproportionate short stature",
+          "mapping": "proxy",
+          "endpoint": "Change in upper-to-lower body segment ratio",
+          "trialRefs": [
+            {
+              "nctId": "NCT05598320",
+              "name": "APPROACH / ASND0036"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:100800"
+          ],
+          "population": "84 randomized children with genetically confirmed achondroplasia, eligible age 2–11; 57 navepegritide 100 micrograms CNP/kg/week and 27 placebo.",
+          "comparator": "Randomized placebo",
+          "timeFrame": "Baseline to week 52",
+          "role": "exploratory_proportionality",
+          "analysis": "Exploratory ANCOVA comparison of body proportions, distinct from growth velocity.",
+          "outcome": "null",
+          "summary": "LS difference −0.02 (95% CI −0.07–0.03); the randomized ratio comparison did not establish proportionality improvement.",
+          "sourceIds": [
+            "recent-skeletal-approach-primary"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "A ratio is one aspect of disproportionate short stature; increased growth alone is not proportionality rescue."
+          ]
+        },
+        {
+          "id": "yuviwel-fgfr3-approach-tfa",
+          "hpoId": "HP:0002970",
+          "label": "Genu varum",
+          "mapping": "proxy",
+          "endpoint": "Change in radiographic tibiofemoral angle",
+          "trialRefs": [
+            {
+              "nctId": "NCT05598320",
+              "name": "APPROACH / ASND0036"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:100800"
+          ],
+          "population": "84 randomized children with genetically confirmed achondroplasia, eligible age 2–11; 57 navepegritide 100 micrograms CNP/kg/week and 27 placebo.",
+          "comparator": "Randomized placebo",
+          "timeFrame": "Baseline to week 52",
+          "role": "exploratory_radiographic",
+          "analysis": "Exploratory LS mean comparison; no multiple-testing-adjusted inference. Most baseline angles indicated varus.",
+          "outcome": "benefit",
+          "summary": "LS difference −1.81 degrees (95% CI −3.16 to −0.47), favoring the drug on this leg-alignment measure.",
+          "sourceIds": [
+            "recent-skeletal-approach-primary"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Angle change does not establish elimination of genu varum or avoidance of corrective surgery."
+          ]
+        },
+        {
+          "id": "yuviwel-fgfr3-accomplish-agv",
+          "hpoId": "HP:0004322",
+          "label": "Short stature",
+          "mapping": "proxy",
+          "endpoint": "Annualized growth velocity in dose-finding trial",
+          "trialRefs": [
+            {
+              "nctId": "NCT04085523",
+              "name": "ACcomplisH / TCC-201"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:100800"
+          ],
+          "population": "57 prepubertal children age 2–10 with genetic confirmation; 11 received 100 micrograms/kg/week, 15 pooled placebo; other active cohorts received lower doses.",
+          "comparator": "Pooled randomized placebo across dose cohorts",
+          "timeFrame": "52 weeks",
+          "role": "primary_growth_surrogate",
+          "analysis": "Full-analysis-set ANCOVA of dose cohort against pooled placebo.",
+          "outcome": "surrogate",
+          "summary": "At 100 micrograms/kg/week AGV was 5.42 vs 4.35 cm/year, P=0.0218; supports the dose chosen for APPROACH.",
+          "sourceIds": [
+            "recent-skeletal-accomplish-primary",
+            "recent-skeletal-accomplish-registry"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Small dose-specific cohort; other doses and longer open-label periods cannot be pooled as a new randomized comparison."
+          ]
+        },
+        {
+          "hpoId": null,
+          "mapping": "unmapped",
+          "trialRefs": [
+            {
+              "nctId": "NCT05598320",
+              "name": "APPROACH / ASND0036"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:100800"
+          ],
+          "comparator": "Randomized placebo",
+          "timeFrame": "Baseline to week 52",
+          "outcome": "null",
+          "sourceIds": [
+            "recent-skeletal-yuviwel-review"
+          ],
+          "scopeReview": "endpoint_specific",
+          "id": "yuviwel-fgfr3-approach-acem-pf",
+          "label": "Achondroplasia Child Experience Measure: Physical Functioning",
+          "endpoint": "Change in caregiver-reported ACEM Physical Functioning score",
+          "population": "Full randomized cohort: 57 navepegritide and 27 placebo; observed week-52 scores in 54 and 26 respectively. FDA multiple-imputation analysis retains full denominators.",
+          "role": "key_secondary_physical_function",
+          "analysis": "ANCOVA with treatment, stratification factor, baseline age and baseline score; prespecified key secondary included in graphical multiple-testing strategy. Missing scores multiply imputed. FDA reports nominal P=0.22; no multiplicity-controlled significance.",
+          "summary": "LS change 0.4 versus 5.3 points; difference −4.9 (95% CI −12.6 to 2.9), P=0.22. Higher scores mean greater impairment.",
+          "limits": [
+            "No sufficiently specific HPO mapping asserted for this broad caregiver scale.",
+            "Overall physical-function benefit was not established; favorable younger-child/subgroup results cannot replace the full-cohort result.",
+            "FDA stated ACEM/SF-10 measures had not been shown fit for purpose in this programme."
+          ]
+        },
+        {
+          "hpoId": null,
+          "mapping": "unmapped",
+          "trialRefs": [
+            {
+              "nctId": "NCT05598320",
+              "name": "APPROACH / ASND0036"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:100800"
+          ],
+          "comparator": "Randomized placebo",
+          "timeFrame": "Baseline to week 52",
+          "outcome": "null",
+          "sourceIds": [
+            "recent-skeletal-yuviwel-review"
+          ],
+          "scopeReview": "endpoint_specific",
+          "id": "yuviwel-fgfr3-approach-sf10-phs",
+          "label": "SF-10 Physical Health Summary",
+          "endpoint": "Change in caregiver-reported Short Form 10 Physical Health Summary score",
+          "population": "APPROACH age ≥5 years at baseline: 36 navepegritide and 17 placebo; observed week-52 scores in 32 and 16. Multiple-imputation analysis retains 36/17.",
+          "role": "key_secondary_age_subset_physical_health",
+          "analysis": "ANCOVA with treatment, stratification factor, baseline age and baseline SF-10 score; prespecified age-eligible subset included in graphical multiple-testing strategy. Missing scores multiply imputed. FDA reports nominal P=0.64; no multiplicity-controlled significance.",
+          "summary": "LS change −6.3 versus −4.5 points; difference −1.8 (95% CI −9.3 to 5.7), P=0.64. The scale is a broad physical-health summary.",
+          "limits": [
+            "No gait, joint-mobility or other specific HPO phenotype inferred from this broad scale.",
+            "Subset excludes children below five; observed-score denominators differ from imputed analysis denominators.",
+            "FDA did not accept these patient-reported measures as demonstrated fit for purpose in this programme."
+          ]
+        }
+      ],
+      "cellObservations": [
+        {
+          "id": "yuviwel-fgfr3-mouse-growthplate",
+          "hpoIds": [
+            "HP:0004322"
+          ],
+          "endpointResultIds": [
+            "yuviwel-fgfr3-approach-agv",
+            "yuviwel-fgfr3-accomplish-agv"
+          ],
+          "diseaseIds": [
+            "OMIM:100800"
+          ],
+          "trialRefs": [],
+          "population": "Neonatal Fgfr3Y367C/+ achondroplasia-like model; no human trial patients.",
+          "species": "Mouse",
+          "cells": [
+            "Hypertrophic growth-plate chondrocytes (tissue histology)"
+          ],
+          "route": "Subcutaneous navepegritide, nonclinical doses",
+          "assay": "Growth-plate cellularity/thickness, bone length and synchondrosis closure",
+          "timeFrame": "15 days",
+          "evidenceType": "nonclinical_tissue",
+          "direction": "supports",
+          "claim": "Growth-plate hypertrophic-zone cellularity and thickness increased alongside bone length. This supports a growth-plate mechanism in this model.",
+          "sourceIds": [
+            "recent-skeletal-yuviwel-review",
+            "recent-skeletal-transcon-preclinical"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Separate nonclinical model; Y367C is not the G380R genotype predominant in the human trial.",
+          "comparator": "Nonclinical model comparison; accessible review does not report a complete group-level sample size."
+        },
+        {
+          "id": "yuviwel-fgfr3-human-cgmp",
+          "hpoIds": [
+            "HP:0004322"
+          ],
+          "endpointResultIds": [
+            "yuviwel-fgfr3-approach-agv",
+            "yuviwel-fgfr3-accomplish-agv"
+          ],
+          "diseaseIds": [
+            "OMIM:100800"
+          ],
+          "trialRefs": [
+            {
+              "nctId": "NCT05598320",
+              "name": "APPROACH / ASND0036"
+            },
+            {
+              "nctId": "NCT04085523",
+              "name": "ACcomplisH / TCC-201"
+            }
+          ],
+          "population": "Plasma samples in TCC-201 and ASND0036; circulating biomarker, not a chondrocyte biopsy.",
+          "species": "Human",
+          "cells": [],
+          "route": "Weekly subcutaneous navepegritide",
+          "assay": "Plasma cGMP quantitative radioimmunoassay",
+          "timeFrame": "Clinical programme through 52 weeks",
+          "evidenceType": "human_compartment_pharmacodynamics",
+          "direction": "limits",
+          "claim": "cGMP supports systemic NPR-B pathway activity; it does not identify the producing cell type. Low-QC interassay variation in TCC-201 exceeded acceptance criteria.",
+          "sourceIds": [
+            "recent-skeletal-yuviwel-review"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Samples in the outcome-study programme, but no participant-level growth-plate mediation test; dose was not selected using cGMP.",
+          "comparator": "Dose/exposure comparison; no cell-isolated comparator."
+        },
+        {
+          "id": "yuviwel-fgfr3-primate-growthplate-limit",
+          "hpoIds": [
+            "HP:0004322"
+          ],
+          "endpointResultIds": [
+            "yuviwel-fgfr3-approach-agv"
+          ],
+          "diseaseIds": [
+            "OMIM:100800"
+          ],
+          "trialRefs": [],
+          "population": "Healthy juvenile male cynomolgus monkeys without FGFR3 overactivation.",
+          "species": "Cynomolgus monkey",
+          "cells": [
+            "Growth-plate chondrocytes (tissue histology)"
+          ],
+          "route": "Weekly subcutaneous navepegritide, including 100 micrograms/kg/week",
+          "assay": "Bone growth and growth-plate histopathology",
+          "timeFrame": "26 weeks at high dose after initial low-dose period",
+          "evidenceType": "nonclinical_tissue",
+          "direction": "limits",
+          "claim": "Growth increased, but minimal/mild growth-plate degeneration or necrosis occurred in 1/4 high-dose animals; disease genotype and exposure context limit human transfer.",
+          "sourceIds": [
+            "recent-skeletal-yuviwel-review"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Separate healthy-animal experiment, not a safety finding in the randomized children.",
+          "comparator": "Vosoritide positive control; healthy animals rather than mutant-achondroplasia controls."
+        }
+      ],
+      "limitations": [
+        "Each endpoint retains its own population, comparator and role; treatment-level conclusions are not inherited as endpoint outcomes.",
+        "Model experiments, circulating biomarkers and outcome-cohort assays are distinguished; clinical mediation and exact atlas identity remain unestablished."
+      ]
+    },
+    {
+      "assessmentId": "garetosmab-fop",
+      "diseaseIds": [
+        {
+          "id": "OMIM:135100",
+          "label": "Fibrodysplasia ossificans progressiva",
+          "sourceIds": [
+            "recent-skeletal-lumina1-primary",
+            "recent-skeletal-pasatru-label"
+          ],
+          "rationale": "Reviewed condition identity; discovery crosswalk only, not evidence that every disease-associated allele was enrolled or responsive."
+        }
+      ],
+      "endpointResults": [
+        {
+          "id": "garetosmab-fop-optima-count-10",
+          "hpoId": "HP:0011986",
+          "label": "Ectopic ossification",
+          "mapping": "direct",
+          "endpoint": "Number of new CT-detected heterotopic ossification lesions, 10 mg/kg",
+          "trialRefs": [
+            {
+              "nctId": "NCT05394116",
+              "name": "OPTIMA / R2477-FOP-2175"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "population": "63 adults with genetically confirmed FOP and CAJIS ≤19; 95% ACVR1 R206H. Randomized 23 to 10 mg/kg, 19 to 3 mg/kg and 21 to placebo, IV every four weeks.",
+          "comparator": "Randomized placebo, 21 patients",
+          "timeFrame": "56 weeks",
+          "role": "primary_structural",
+          "analysis": "Negative-binomial regression; multiplicity controlled across the two primary dose comparisons.",
+          "outcome": "benefit",
+          "summary": "Two new lesions in 23 high-dose patients versus 19 in 21 placebo patients; rate ratio 0.10 (95% CI 0.01–0.76), P=0.026.",
+          "sourceIds": [
+            "recent-skeletal-optima-primary",
+            "recent-skeletal-pasatru-label",
+            "recent-skeletal-optima-registry"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Lesion counts are not patient counts; fewer new lesions is not disappearance of established HO."
+          ]
+        },
+        {
+          "id": "garetosmab-fop-optima-count-3",
+          "hpoId": "HP:0011986",
+          "label": "Ectopic ossification",
+          "mapping": "direct",
+          "endpoint": "Number of new CT-detected heterotopic ossification lesions, 3 mg/kg",
+          "trialRefs": [
+            {
+              "nctId": "NCT05394116",
+              "name": "OPTIMA / R2477-FOP-2175"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "population": "63 adults with genetically confirmed FOP and CAJIS ≤19; 95% ACVR1 R206H. Randomized 23 to 10 mg/kg, 19 to 3 mg/kg and 21 to placebo, IV every four weeks.",
+          "comparator": "Randomized placebo, 21 patients",
+          "timeFrame": "56 weeks",
+          "role": "primary_structural",
+          "analysis": "Negative-binomial regression; multiplicity controlled for the primary dose comparisons.",
+          "outcome": "benefit",
+          "summary": "One new lesion in 19 low-dose patients versus 19 in 21 placebo patients; rate ratio 0.06 (95% CI 0.00–0.73), P=0.027.",
+          "sourceIds": [
+            "recent-skeletal-optima-primary",
+            "recent-skeletal-pasatru-label",
+            "recent-skeletal-optima-registry"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Rounded lower CI is not a proven zero risk; 3 mg/kg is distinct from the labeled starting dose."
+          ]
+        },
+        {
+          "id": "garetosmab-fop-optima-patient-incidence",
+          "hpoId": "HP:0011986",
+          "label": "Ectopic ossification",
+          "mapping": "direct",
+          "endpoint": "Proportion of patients developing new HO lesions",
+          "trialRefs": [
+            {
+              "nctId": "NCT05394116",
+              "name": "OPTIMA / R2477-FOP-2175"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "population": "63 adults with genetically confirmed FOP and CAJIS ≤19; 95% ACVR1 R206H. Randomized 23 to 10 mg/kg, 19 to 3 mg/kg and 21 to placebo, IV every four weeks.",
+          "comparator": "Randomized placebo",
+          "timeFrame": "56 weeks",
+          "role": "key_secondary_structural",
+          "analysis": "Barnard unconditional exact test; secondary hierarchy stopped at this endpoint for 10 mg/kg and earlier for 3 mg/kg.",
+          "outcome": "null",
+          "summary": "New-lesion patients: 2/23 at 10 mg/kg, 1/19 at 3 mg/kg and 5/21 placebo; nominal P=0.22 and 0.12 respectively.",
+          "sourceIds": [
+            "recent-skeletal-pasatru-review"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Nonsignificance does not establish equal incidence; this is a different estimand from the successful lesion-count primary."
+          ]
+        },
+        {
+          "id": "garetosmab-fop-optima-volume",
+          "hpoId": "HP:0011986",
+          "label": "Ectopic ossification",
+          "mapping": "direct",
+          "endpoint": "Total volume of new HO lesions",
+          "trialRefs": [
+            {
+              "nctId": "NCT05394116",
+              "name": "OPTIMA / R2477-FOP-2175"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "population": "63 adults with genetically confirmed FOP and CAJIS ≤19; 95% ACVR1 R206H. Randomized 23 to 10 mg/kg, 19 to 3 mg/kg and 21 to placebo, IV every four weeks.",
+          "comparator": "Randomized placebo",
+          "timeFrame": "56 weeks",
+          "role": "key_secondary_structural",
+          "analysis": "Prespecified Wilcoxon rank-sum test; nominal after secondary hierarchy failure. Mean-difference bootstrap CIs use a different statistic.",
+          "outcome": "null",
+          "summary": "Mean new-HO volume 0.02 cm³ at 10 mg/kg, 0.01 at 3 mg/kg and 10.45 placebo; nominal rank-test P=0.13 and 0.085.",
+          "sourceIds": [
+            "recent-skeletal-pasatru-review",
+            "recent-skeletal-pasatru-label"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Bootstrap mean-difference CIs excluding zero do not override the nonsignificant prespecified rank tests."
+          ]
+        },
+        {
+          "id": "garetosmab-fop-optima-clinician-flare-10",
+          "hpoId": "HP:0012531",
+          "label": "Pain",
+          "mapping": "proxy",
+          "endpoint": "Number of clinician-assessed FOP flare-ups, 10 mg/kg",
+          "trialRefs": [
+            {
+              "nctId": "NCT05394116",
+              "name": "OPTIMA / R2477-FOP-2175"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "population": "63 adults with genetically confirmed FOP and CAJIS ≤19; 95% ACVR1 R206H. Randomized 23 to 10 mg/kg, 19 to 3 mg/kg and 21 to placebo, IV every four weeks.",
+          "comparator": "Randomized placebo",
+          "timeFrame": "Through week 56",
+          "role": "key_secondary_flare_composite",
+          "analysis": "Negative-binomial regression, exposure-duration offset; first key-secondary test passed for 10 mg/kg.",
+          "outcome": "benefit",
+          "summary": "Nine clinician-assessed flares at 10 mg/kg versus 66 placebo; rate ratio 0.12 (95% CI 0.03–0.42), P=0.001.",
+          "sourceIds": [
+            "recent-skeletal-pasatru-review",
+            "recent-skeletal-pasatru-label",
+            "recent-skeletal-optima-registry"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Flare-ups combine painful swelling and other features; this does not isolate pain intensity or restore joint function."
+          ]
+        },
+        {
+          "id": "garetosmab-fop-optima-clinician-flare-3",
+          "hpoId": "HP:0012531",
+          "label": "Pain",
+          "mapping": "proxy",
+          "endpoint": "Number of clinician-assessed FOP flare-ups, 3 mg/kg",
+          "trialRefs": [
+            {
+              "nctId": "NCT05394116",
+              "name": "OPTIMA / R2477-FOP-2175"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "population": "63 adults with genetically confirmed FOP and CAJIS ≤19; 95% ACVR1 R206H. Randomized 23 to 10 mg/kg, 19 to 3 mg/kg and 21 to placebo, IV every four weeks.",
+          "comparator": "Randomized placebo",
+          "timeFrame": "Through week 56",
+          "role": "key_secondary_flare_composite",
+          "analysis": "First secondary hierarchy test for 3 mg/kg.",
+          "outcome": "null",
+          "summary": "53 flares at 3 mg/kg versus 66 placebo; rate ratio 0.85 (95% CI 0.26–2.73), P=0.78.",
+          "sourceIds": [
+            "recent-skeletal-pasatru-review",
+            "recent-skeletal-pasatru-label"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Do not transfer the high-dose flare result to the lower dose."
+          ]
+        },
+        {
+          "id": "garetosmab-fop-optima-patient-flare",
+          "hpoId": "HP:0012531",
+          "label": "Pain",
+          "mapping": "proxy",
+          "endpoint": "Patients reporting FOP flare-ups in daily diary",
+          "trialRefs": [
+            {
+              "nctId": "NCT05394116",
+              "name": "OPTIMA / R2477-FOP-2175"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "population": "63 adults with genetically confirmed FOP and CAJIS ≤19; 95% ACVR1 R206H. Randomized 23 to 10 mg/kg, 19 to 3 mg/kg and 21 to placebo, IV every four weeks.",
+          "comparator": "Randomized placebo",
+          "timeFrame": "Through week 56",
+          "role": "key_secondary_patient_report",
+          "analysis": "Barnard exact test; nominal comparisons after hierarchy stopped.",
+          "outcome": "null",
+          "summary": "11/23 at 10 mg/kg and 11/19 at 3 mg/kg reported flare-ups versus 13/21 placebo; nominal P=0.53 and 0.86.",
+          "sourceIds": [
+            "recent-skeletal-pasatru-review",
+            "recent-skeletal-pasatru-label",
+            "recent-skeletal-optima-registry"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Diary and clinician assessments differ; clinical flare benefit is not uniform across methods."
+          ]
+        },
+        {
+          "id": "garetosmab-fop-lumina-primary-pet",
+          "hpoId": "HP:0011986",
+          "label": "Ectopic ossification",
+          "mapping": "proxy",
+          "endpoint": "Time-weighted percent change in total lesion activity by 18F-NaF PET",
+          "trialRefs": [
+            {
+              "nctId": "NCT03188666",
+              "name": "LUMINA-1 / R2477-FOP-1623"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "population": "44 adults with active HO: 20 garetosmab 10 mg/kg IV every four weeks, 24 placebo; 42/44 had ACVR1 R206H.",
+          "comparator": "Randomized placebo, double blind",
+          "timeFrame": "28 weeks",
+          "role": "primary_imaging_activity",
+          "analysis": "AHO analysis set, ANCOVA; prespecified two-sided 5% primary testing. PET activity differs from CT bone volume.",
+          "outcome": "null",
+          "summary": "LS treatment difference −24.6% (95% CI −51.8–2.5), P=0.0741; primary endpoint was not met.",
+          "sourceIds": [
+            "recent-skeletal-lumina1-primary",
+            "recent-skeletal-lumina1-registry",
+            "recent-skeletal-pasatru-review"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Post-hoc new-lesion results do not turn this primary analysis positive; established lesions did not show the anticipated response."
+          ]
+        },
+        {
+          "id": "garetosmab-fop-lumina-pain",
+          "hpoId": "HP:0012531",
+          "label": "Pain",
+          "mapping": "direct",
+          "endpoint": "Time-weighted change in daily average FOP pain numerical rating",
+          "trialRefs": [
+            {
+              "nctId": "NCT03188666",
+              "name": "LUMINA-1 / R2477-FOP-1623"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "population": "Same 44-person LUMINA-1 randomized AHO population.",
+          "comparator": "Randomized placebo",
+          "timeFrame": "28 weeks",
+          "role": "key_secondary_pain",
+          "analysis": "ANCOVA; formal hierarchical testing stopped after primary failure.",
+          "outcome": "null",
+          "summary": "LS difference −0.34 on the pain rating (95% CI −0.96–0.27); no established randomized pain improvement.",
+          "sourceIds": [
+            "recent-skeletal-lumina1-primary",
+            "recent-skeletal-lumina1-registry"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Pain result is distinct from later OPTIMA clinician flare count; no confirmatory inference after hierarchy failure."
+          ]
+        },
+        {
+          "id": "garetosmab-fop-lumina-crossover-ct",
+          "hpoId": "HP:0011986",
+          "label": "Ectopic ossification",
+          "mapping": "direct",
+          "endpoint": "Patients with new CT-detected HO after placebo-to-garetosmab crossover",
+          "trialRefs": [
+            {
+              "nctId": "NCT03188666",
+              "name": "LUMINA-1 / R2477-FOP-1623"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "population": "22 evaluable placebo-to-garetosmab crossover patients in the COVID-19-modified analysis set.",
+          "comparator": "Their preceding 28-week placebo period; no concurrent untreated group",
+          "timeFrame": "Weeks 28–56 versus weeks 0–28",
+          "role": "amended_within_patient_endpoint",
+          "analysis": "Prospectively amended after period-1 review; within-patient temporal comparison.",
+          "outcome": "unknown",
+          "summary": "New CT lesions occurred in 9/22 (40.9%) during placebo and 0/22 after crossover, P=0.0027; favorable observed change without randomized period-2 causality.",
+          "sourceIds": [
+            "recent-skeletal-lumina1-primary",
+            "recent-skeletal-lumina1-registry"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Time, selection and open-label effects are not controlled; not independent randomized replication."
+          ]
+        }
+      ],
+      "cellObservations": [
+        {
+          "id": "garetosmab-fop-mutant-reporter",
+          "hpoIds": [
+            "HP:0011986"
+          ],
+          "endpointResultIds": [
+            "garetosmab-fop-optima-count-10",
+            "garetosmab-fop-optima-count-3"
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "trialRefs": [],
+          "population": "Engineered HEK293/BRE-Luc cells expressing ACVR1 R206H.",
+          "species": "Human-derived engineered cell line",
+          "cells": [
+            "HEK293 reporter cells"
+          ],
+          "route": "Garetosmab applied in vitro with activin ligands",
+          "assay": "BMP-response luciferase signaling assay",
+          "timeFrame": "In-vitro assay; review does not provide assay duration",
+          "evidenceType": "in_vitro_functional",
+          "direction": "supports",
+          "claim": "Garetosmab inhibited activin A-induced mutant-receptor signaling (IC50 8.2 nM). These are reporter cells, not patient FAPs.",
+          "sourceIds": [
+            "recent-skeletal-pasatru-review"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Separate preclinical assay, not a cellular measurement in OPTIMA.",
+          "comparator": "Ligand-induced signaling without antibody."
+        },
+        {
+          "id": "garetosmab-fop-fap-target-model",
+          "hpoIds": [
+            "HP:0011986"
+          ],
+          "endpointResultIds": [
+            "garetosmab-fop-optima-count-10"
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "trialRefs": [],
+          "population": "Conditional Acvr1R206H mouse lineage and isolated/transplanted fibro/adipogenic progenitors.",
+          "species": "Mouse",
+          "cells": [
+            "PDGFRα+/SCA1+ fibro/adipogenic progenitors"
+          ],
+          "route": "Conditional expression; separate Acceleron anti-activin-A antibody, not garetosmab",
+          "assay": "Lineage tracing, osteogenic signaling and μCT after injury/transplantation",
+          "timeFrame": "Injury/transplant experiments over 2–3 weeks; longer blockade/washout experiments separately",
+          "evidenceType": "nonclinical_cell_lineage",
+          "direction": "supports",
+          "claim": "FAP-restricted mutant expression caused HO; activin blockade prevented it. Muscle-lineage/endothelial mutant expression did not suffice. Prolonged blockade left intrinsic FAP osteogenic potential intact.",
+          "sourceIds": [
+            "recent-skeletal-fop-fap-primary"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Target-pathway experiment using a different antibody, not evidence that Pasatru repaired human FAPs.",
+          "comparator": "Wild-type and conditional-lineage controls; antibody/control conditions. Animal allocation/analysis were not randomized/blinded."
+        },
+        {
+          "id": "garetosmab-fop-human-ipsc-pathway",
+          "hpoIds": [
+            "HP:0011986"
+          ],
+          "endpointResultIds": [
+            "garetosmab-fop-optima-count-10"
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "trialRefs": [],
+          "population": "ACVR1 R206H patient-derived iPSCs differentiated into mesenchymal stromal cells; isogenic gene-corrected comparators.",
+          "species": "Human-derived cells in vitro; separate mouse transplantation",
+          "cells": [
+            "iPSC-derived mesenchymal stromal cells"
+          ],
+          "route": "Activin A in vitro; cells also transplanted into immunodeficient mice",
+          "assay": "BMP reporter, SMAD signaling and chondrogenic differentiation",
+          "timeFrame": "16-hour reporter and 7-day micromass experiments; transplantation separately",
+          "evidenceType": "human_in_vitro",
+          "direction": "supports",
+          "claim": "Activin A induced aberrant BMP signaling and enhanced chondrogenesis in mutant iMSCs relative to corrected cells. Main figures used one patient line.",
+          "sourceIds": [
+            "recent-skeletal-fop-human-ipsc-primary"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Mechanistic disease model, not Pasatru-treated patients or a proven atlas FAP identity.",
+          "comparator": "Isogenic gene-corrected cells; neither current product was tested."
+        },
+        {
+          "id": "garetosmab-fop-human-serum",
+          "hpoIds": [
+            "HP:0011986"
+          ],
+          "endpointResultIds": [
+            "garetosmab-fop-lumina-primary-pet",
+            "garetosmab-fop-lumina-crossover-ct"
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "trialRefs": [
+            {
+              "nctId": "NCT03188666",
+              "name": "LUMINA-1 / R2477-FOP-1623"
+            }
+          ],
+          "population": "44 LUMINA-1 patients with serum drug/ligand measurements; changing per-visit denominators.",
+          "species": "Human",
+          "cells": [],
+          "route": "IV garetosmab 10 mg/kg every four weeks",
+          "assay": "ELISA of functional drug, total activin A and BMP9; exposure-response analyses",
+          "timeFrame": "Predose samples through weeks 28–76; plateau near week 12",
+          "evidenceType": "human_compartment_pharmacodynamics",
+          "direction": "limits",
+          "claim": "Total activin A rose alongside serum drug; this includes bound ligand. Higher trough drug exposure was not associated with greater clinical efficacy or safety outcomes.",
+          "sourceIds": [
+            "recent-skeletal-lumina1-pharmacology"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Outcome-cohort serum measurements, but no cell-specific target engagement or mediation analysis.",
+          "comparator": "Placebo before crossover and comparative drug exposure; no FAP biopsy."
+        }
+      ],
+      "limitations": [
+        "Each endpoint retains its own population, comparator and role; treatment-level conclusions are not inherited as endpoint outcomes.",
+        "Model experiments, circulating biomarkers and outcome-cohort assays are distinguished; clinical mediation and exact atlas identity remain unestablished."
+      ]
+    },
+    {
+      "assessmentId": "zilurgisertib-fop",
+      "diseaseIds": [
+        {
+          "id": "OMIM:135100",
+          "label": "Fibrodysplasia ossificans progressiva",
+          "sourceIds": [
+            "recent-skeletal-lumina1-primary",
+            "recent-skeletal-atebrioz-label"
+          ],
+          "rationale": "Reviewed condition identity; discovery crosswalk only, not evidence that every disease-associated allele was enrolled or responsive."
+        }
+      ],
+      "endpointResults": [
+        {
+          "id": "zilurgisertib-fop-progress-volume",
+          "hpoId": "HP:0011986",
+          "label": "Ectopic ossification",
+          "mapping": "direct",
+          "endpoint": "CT total new HO volume including expansion of existing lesions",
+          "trialRefs": [
+            {
+              "nctId": "NCT05090891",
+              "name": "PROGRESS cohort 1 / INCB00928-201"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "population": "PROGRESS cohort 1: 63 FOP patients age 12–64 (28 adults, 35 pediatric), CAJIS 2–22; 32 randomized to 100 mg/day and 31 to placebo. Label does not specify genotype frequencies.",
+          "comparator": "Randomized placebo, 31 patients",
+          "timeFrame": "Baseline to week 24",
+          "role": "regulatory_efficacy_registry_secondary",
+          "analysis": "Label regulatory efficacy comparison; registry separates all-lesion change from new-lesion volume. Hodges–Lehmann estimate differs from arithmetic difference of means.",
+          "outcome": "benefit",
+          "summary": "Mean change −3.2 cm³ (SD 19.9) versus +24.6 (51.9); Hodges–Lehmann difference −15.8 cm³ (95% CI −32.1 to −6.0).",
+          "sourceIds": [
+            "recent-skeletal-atebrioz-label",
+            "recent-skeletal-progress-registry",
+            "recent-skeletal-progress-endo-primary"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Composite volume includes growth of existing lesions; a negative group mean is not complete regression of established bone."
+          ]
+        },
+        {
+          "id": "zilurgisertib-fop-progress-incidence",
+          "hpoId": "HP:0011986",
+          "label": "Ectopic ossification",
+          "mapping": "direct",
+          "endpoint": "Patients developing new CT-detected HO lesions",
+          "trialRefs": [
+            {
+              "nctId": "NCT05090891",
+              "name": "PROGRESS cohort 1 / INCB00928-201"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "population": "PROGRESS cohort 1: 63 FOP patients age 12–64 (28 adults, 35 pediatric), CAJIS 2–22; 32 randomized to 100 mg/day and 31 to placebo. Label does not specify genotype frequencies. Week-24 imaging denominators: 32 active and 30 placebo.",
+          "comparator": "Randomized placebo, 30 evaluable scans",
+          "timeFrame": "24 weeks",
+          "role": "registered_primary_structural",
+          "analysis": "Conference primary endpoint analysis; 63 dosed, 62 evaluable for this endpoint.",
+          "outcome": "null",
+          "summary": "One of 32 active patients versus five of 30 placebo patients developed new HO; P=0.0986, nonsignificant despite the favorable numerical difference.",
+          "sourceIds": [
+            "recent-skeletal-progress-endo-primary",
+            "recent-skeletal-progress-registry"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Do not substitute 31 randomized placebo patients for the 30 scan-evaluable denominator or call the primary endpoint met."
+          ]
+        },
+        {
+          "id": "zilurgisertib-fop-progress-new-volume",
+          "hpoId": "HP:0011986",
+          "label": "Ectopic ossification",
+          "mapping": "direct",
+          "endpoint": "Volume of new discrete HO lesions",
+          "trialRefs": [
+            {
+              "nctId": "NCT05090891",
+              "name": "PROGRESS cohort 1 / INCB00928-201"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "population": "PROGRESS cohort 1: 63 FOP patients age 12–64 (28 adults, 35 pediatric), CAJIS 2–22; 32 randomized to 100 mg/day and 31 to placebo. Label does not specify genotype frequencies.",
+          "comparator": "Randomized placebo; denominators differ by imaging availability",
+          "timeFrame": "24 weeks",
+          "role": "secondary_structural",
+          "analysis": "Conference result and nominal sponsor-disclosed test; distinct from the labeled volume composite.",
+          "outcome": "benefit",
+          "summary": "Mean new-lesion volume 0.003 cm³ (SD 0.02) versus 6.57 (20.71); nominal P<0.0001.",
+          "sourceIds": [
+            "recent-skeletal-progress-endo-primary",
+            "recent-skeletal-progress-sponsor-results",
+            "recent-skeletal-progress-registry"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Primary incidence test was nonsignificant; secondary P is nominal, without confirmatory multiplicity control."
+          ]
+        },
+        {
+          "id": "zilurgisertib-fop-progress-flare",
+          "hpoId": "HP:0012531",
+          "label": "Pain",
+          "mapping": "proxy",
+          "endpoint": "Annualized number of new FOP flares",
+          "trialRefs": [
+            {
+              "nctId": "NCT05090891",
+              "name": "PROGRESS cohort 1 / INCB00928-201"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "population": "PROGRESS cohort 1: 63 FOP patients age 12–64 (28 adults, 35 pediatric), CAJIS 2–22; 32 randomized to 100 mg/day and 31 to placebo. Label does not specify genotype frequencies.",
+          "comparator": "Randomized placebo",
+          "timeFrame": "24-week double-blind period",
+          "role": "secondary_flare_composite",
+          "analysis": "Descriptive conference comparison; formal CI/test not supplied in reviewed primary abstract.",
+          "outcome": "unknown",
+          "summary": "Mean annualized flares 2.34 (SD 6.06) versus 4.55 (7.71); a favorable numerical difference, without established inferential pain benefit.",
+          "sourceIds": [
+            "recent-skeletal-progress-endo-primary",
+            "recent-skeletal-progress-registry"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Flares are a composite proxy for pain, not an isolated pain endpoint; uncertainty is retained."
+          ]
+        },
+        {
+          "id": "zilurgisertib-fop-progress-extension",
+          "hpoId": "HP:0011986",
+          "label": "Ectopic ossification",
+          "mapping": "direct",
+          "endpoint": "New HO lesions during open-label extension",
+          "trialRefs": [
+            {
+              "nctId": "NCT05090891",
+              "name": "PROGRESS cohort 1 / INCB00928-201"
+            }
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "population": "61 participants with week-48 WBCT, continued zilurgisertib or crossed over from placebo at week 24.",
+          "comparator": "No concurrent placebo after crossover",
+          "timeFrame": "Weeks 24–48",
+          "role": "open_label_structural",
+          "analysis": "Descriptive extension imaging, not a second randomized comparison.",
+          "outcome": "unknown",
+          "summary": "No new lesions were reported during the extension interval in either prior randomization group.",
+          "sourceIds": [
+            "recent-skeletal-progress-endo-primary",
+            "recent-skeletal-progress-sponsor-results"
+          ],
+          "scopeReview": "endpoint_specific",
+          "limits": [
+            "Complete-scan selection and absence of concurrent control preclude a causal long-term efficacy estimate."
+          ]
+        }
+      ],
+      "cellObservations": [
+        {
+          "id": "zilurgisertib-fop-ipsc-pathway-background",
+          "hpoIds": [
+            "HP:0011986"
+          ],
+          "endpointResultIds": [
+            "zilurgisertib-fop-progress-volume",
+            "zilurgisertib-fop-progress-incidence"
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "trialRefs": [],
+          "population": "Patient-derived ACVR1 R206H iMSCs and isogenic corrected controls.",
+          "species": "Human-derived model cells",
+          "cells": [
+            "iPSC-derived mesenchymal stromal cells"
+          ],
+          "route": "Activin A stimulation; research signaling inhibitors, not zilurgisertib",
+          "assay": "Aberrant BMP signaling and chondrogenesis",
+          "timeFrame": "In-vitro and transplantation experiments in primary publication",
+          "evidenceType": "human_in_vitro",
+          "direction": "supports",
+          "claim": "The model supports mutant-ACVR1/activin biology; it did not test zilurgisertib or clinical FAP rescue.",
+          "sourceIds": [
+            "recent-skeletal-fop-human-ipsc-primary"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Disease-mechanism background, separate from PROGRESS.",
+          "comparator": "Gene-corrected cells; no current-product treatment arm."
+        },
+        {
+          "id": "zilurgisertib-fop-hepatocyte-scope-limit",
+          "hpoIds": [
+            "HP:0011986"
+          ],
+          "endpointResultIds": [
+            "zilurgisertib-fop-progress-volume"
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "trialRefs": [],
+          "population": "Human liver cell lines/primary hepatocytes and separate rodent anemia models in ASH 2020 abstract.",
+          "species": "Human-derived cells; rodent models",
+          "cells": [
+            "Primary human hepatocytes",
+            "Human liver cell lines"
+          ],
+          "route": "INCB00928 in vitro; nonclinical treatment separately",
+          "assay": "BMP-induced hepcidin expression; liver pSMAD1/5 in rodents",
+          "timeFrame": "Abstract does not provide complete cell-assay time points",
+          "evidenceType": "human_in_vitro",
+          "direction": "limits",
+          "claim": "Direct drug assays show ALK2/hepcidin effects in liver systems. They do not establish engagement of heterotopic-bone progenitors or treat an HO endpoint.",
+          "sourceIds": [
+            "recent-skeletal-incb00928-hepatocytes"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Preclinical anemia programme, not a FOP cellular assay or the PROGRESS cohort.",
+          "comparator": "BMP-stimulated/treated conditions; full assay denominators unavailable in abstract."
+        },
+        {
+          "id": "zilurgisertib-fop-human-iron-marker",
+          "hpoIds": [
+            "HP:0011986"
+          ],
+          "endpointResultIds": [
+            "zilurgisertib-fop-progress-volume",
+            "zilurgisertib-fop-progress-incidence"
+          ],
+          "diseaseIds": [
+            "OMIM:135100"
+          ],
+          "trialRefs": [
+            {
+              "nctId": "NCT05090891",
+              "name": "PROGRESS cohort 1 / INCB00928-201"
+            }
+          ],
+          "population": "PROGRESS cohort-1 systemic laboratory safety measurements.",
+          "species": "Human",
+          "cells": [],
+          "route": "Oral zilurgisertib 100 mg/day",
+          "assay": "Serum iron, hemoglobin and transferrin saturation",
+          "timeFrame": "24-week comparison, with longer safety observations through week 100",
+          "evidenceType": "human_compartment_pharmacodynamics",
+          "direction": "limits",
+          "claim": "Iron-related mean laboratory values increased versus placebo while remaining within normal ranges; this is not a FAP-resolved functional assay.",
+          "sourceIds": [
+            "recent-skeletal-atebrioz-label"
+          ],
+          "clinicalMediation": "not_established",
+          "atlasIdentity": "not_crosswalked",
+          "studyRelationship": "Same programme systemic measurements; cellular source and clinical mediation are unestablished.",
+          "comparator": "Randomized placebo during double-blind period."
+        }
+      ],
+      "limitations": [
+        "Each endpoint retains its own population, comparator and role; treatment-level conclusions are not inherited as endpoint outcomes.",
+        "Model experiments, circulating biomarkers and outcome-cohort assays are distinguished; clinical mediation and exact atlas identity remain unestablished."
+      ]
     }
   ],
   "limitations": [
@@ -6335,6 +9049,7 @@
     "Endpoint-specific review uses accessible primary publications, abstracts, regulatory labels/reviews and registry records; it does not imply every publisher full text or subgroup was available.",
     "The initial MONARCH/ADMIRAL seizure result remains source-limited, and extension subgroup size/uncertainty remain unknown.",
     "No cell naming or ontology equality is inferred from narrative evidence.",
-    "A null clinical result opposes benefit in its measured scope; it does not by itself refute the disease cell hypothesis."
+    "A null clinical result opposes benefit in its measured scope; it does not by itself refute the disease cell hypothesis.",
+    "An unmapped clinical outcome remains inspectable by treatment and diagnosis but cannot qualify a phenotype or cell-association filter. Independent mechanism/model context does not inherit the clinical population, drug formulation or outcome assay."
   ]
 }

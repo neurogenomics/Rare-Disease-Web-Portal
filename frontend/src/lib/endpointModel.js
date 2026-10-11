@@ -10,6 +10,12 @@ export function getEndpointResults(data, assessmentId, hpoId, diseaseId = null) 
     (!diseaseId || (result.diseaseIds || []).includes(diseaseId)));
 }
 
+export function getUnmappedEndpointResults(data, assessmentId, diseaseId = null) {
+  const record = getEndpointAssessment(data, assessmentId);
+  return (record?.endpointResults || []).filter(result => result.hpoId === null && result.mapping === 'unmapped' &&
+    (!diseaseId || (result.diseaseIds || []).includes(diseaseId)));
+}
+
 export function matchesTreatmentDisease(data, assessmentId, diseaseId, hpoId = null) {
   if (!diseaseId) return true;
   const record = getEndpointAssessment(data, assessmentId);
@@ -18,7 +24,7 @@ export function matchesTreatmentDisease(data, assessmentId, diseaseId, hpoId = n
 }
 
 export function matchesTreatmentContext(data, assessmentId, phenotypes, { hpo, disease, cellHpoIds = null } = {}) {
-  if (!hpo && !disease && cellHpoIds === null) return true;
+  if (!hpo && cellHpoIds === null) return matchesTreatmentDisease(data, assessmentId, disease);
   return (phenotypes || []).some(phenotype => (!hpo || phenotype.hpoId === hpo) &&
     (cellHpoIds === null || cellHpoIds.includes(phenotype.hpoId)) &&
     matchesTreatmentDisease(data, assessmentId, disease, phenotype.hpoId));
@@ -33,18 +39,20 @@ export function getEndpointObservations(data, assessmentId, hpoId, diseaseId = n
     (!diseaseId || (observation.diseaseIds || []).includes(diseaseId)));
 }
 
-export function endpointEvidenceCounts(data) {
+export function endpointEvidenceCounts(data, additionalSources = []) {
   const records = data?.assessments || [];
   const results = records.flatMap(record => record.endpointResults || []);
+  const sources = [...new Map([...(data?.sources || []), ...additionalSources].map(source => [source.id, source])).values()];
   return {
     assessments: records.length,
     endpointResults: results.length,
     reviewedResults: results.filter(result => result.scopeReview === 'endpoint_specific').length,
     pendingResultReviews: results.filter(result => result.scopeReview !== 'endpoint_specific').length,
+    unmappedResults: results.filter(result => result.hpoId === null && result.mapping === 'unmapped').length,
     cellObservations: records.reduce((sum, record) => sum + (record.cellObservations || []).length, 0),
     assessmentsWithCellObservations: records.filter(record => record.cellObservations?.length).length,
     diseaseCrosswalks: records.reduce((sum, record) => sum + (record.diseaseIds || []).length, 0),
-    conditionReferenceSources: (data?.sources || []).filter(source => source.kind === 'condition_identifier').length,
+    conditionReferenceSources: sources.filter(source => source.kind === 'condition_identifier').length,
   };
 }
 

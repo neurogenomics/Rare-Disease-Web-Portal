@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "reviewedAt": "2026-10-11",
-  "scope": "77 bounded primary-source assessments: complete legacy 30-product and current FDA 20-product inherited gene-therapy inventories, with EU additions and representative RNA, enzyme/protein replacement, antibody bypass, hormone, chaperone, substrate-reduction, stabilizer, CFTR and tissue comparators. Trial outcomes, regional indications, variant eligibility, human engagement and cell-rescue uncertainty stay separate. Not every approved inherited-disease medicine or every indication is curated; explicit remaining gaps are recorded.",
+  "scope": "86 bounded source-attributed treatment assessments: the complete legacy 30-product and current FDA 20-product inherited gene-therapy inventories, EU additions, and selected RNA, protein/enzyme, antibody, hormone, small-molecule, cofactor and peptide treatments. Recent indication expansions and withdrawn products retain separate population, endpoint, formulation and regulatory scope. This is not every approved inherited-disease medicine or an accuracy estimate.",
   "sources": [
     {
       "id": "spinraza-label",
@@ -1534,6 +1534,515 @@
       "title": "FDA novel drug approvals 2026 — marketing approval dates",
       "url": "https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2026",
       "kind": "regulatory_inventory",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-metabolic-zycubo-label",
+      "title": "ZYCUBO FDA prescribing information (January 2026)",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/211241s000lbl.pdf",
+      "kind": "regulatory_label",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-metabolic-zycubo-review",
+      "title": "ZYCUBO NDA 211241 FDA integrated review",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/nda/2026/211241Orig1s000IntegratedR.pdf",
+      "kind": "regulatory_review",
+      "accessedAt": "2026-10-11",
+      "accessScope": "Full FDA PDF; clinical efficacy, pharmacodynamics, safety and nonclinical sections reviewed"
+    },
+    {
+      "id": "recent-metabolic-zycubo-approval",
+      "title": "ZYCUBO original FDA approval letter, signed January 12, 2026",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/appletter/2026/211241Orig1s000ltr.pdf",
+      "kind": "regulatory_record",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-metabolic-zycubo-snapshot",
+      "title": "FDA Drug Trials Snapshot: ZYCUBO",
+      "url": "https://www.fda.gov/drugs/drug-trials-snapshots/drug-trials-snapshots-zycubo",
+      "kind": "regulatory_record",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-metabolic-zycubo-announcement",
+      "title": "FDA announces first treatment for children with Menkes disease, January 12, 2026",
+      "url": "https://www.fda.gov/news-events/press-announcements/fda-approves-first-treatment-children-menkes-disease",
+      "kind": "regulatory_record",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-metabolic-menkes-trial1",
+      "title": "ClinicalTrials.gov NCT00001262: Early Copper Histidine Therapy in Menkes Disease",
+      "url": "https://clinicaltrials.gov/study/NCT00001262",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11",
+      "accessScope": "Current ClinicalTrials.gov v2 study JSON including posted outcome results accessed on 2026-10-11"
+    },
+    {
+      "id": "recent-metabolic-menkes-trial2",
+      "title": "ClinicalTrials.gov NCT00811785: Molecular Bases of Response to Copper Treatment",
+      "url": "https://clinicaltrials.gov/study/NCT00811785",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11",
+      "accessScope": "Current ClinicalTrials.gov v2 study JSON accessed; no posted results section"
+    },
+    {
+      "id": "recent-metabolic-menkes-kaler2008",
+      "title": "Kaler et al. Neonatal Diagnosis and Treatment of Menkes Disease (2008)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18256395/",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11",
+      "accessScope": "Original abstract plus indexed original Results and Figure 3 (allele-specific yeast complementation, fibroblast splicing/protein assays) reviewed; direct full-page PMC/NEJM rendering unavailable."
+    },
+    {
+      "id": "recent-metabolic-menkes-haddad2018",
+      "title": "Haddad et al. CSF-directed rAAV9-rsATP7A plus subcutaneous copper histidinate in a Menkes mouse model (2018)",
+      "url": "https://menkesfoundation.org.uk/wp-content/uploads/2020/07/Menkes-Research-paper-Sept-2018.pdf",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11",
+      "accessScope": "Original published PDF, DOI 10.1016/j.omtm.2018.07.002; Results, Figures 3–7 and Methods reviewed"
+    },
+    {
+      "id": "recent-metabolic-menkes-identity",
+      "title": "NCBI ClinVar condition identity: Menkes kinky-hair syndrome, OMIM:309400",
+      "url": "https://www.ncbi.nlm.nih.gov/clinvar/RCV005606870.1/",
+      "kind": "condition_identifier",
+      "accessedAt": "2026-10-11",
+      "accessScope": "Condition identifiers only. The reference allele is a VUS; no assertion it caused disease, was studied or predicts treatment response"
+    },
+    {
+      "id": "recent-metabolic-wellcovorin-label",
+      "title": "WELLCOVORIN FDA prescribing information, FOLR1-CFTD supplement (March 2026)",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/018342s015lbl.pdf",
+      "kind": "regulatory_label",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-metabolic-wellcovorin-review",
+      "title": "WELLCOVORIN NDA 018342/S-015 FDA multidisciplinary review, March 9, 2026",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/nda/2026/018342Orig1s015Unireview.pdf",
+      "kind": "regulatory_review",
+      "accessedAt": "2026-10-11",
+      "accessScope": "Full FDA PDF; case selection, clinical response framework, Tables 14–16 and Appendix patient data reviewed"
+    },
+    {
+      "id": "recent-metabolic-wellcovorin-approval",
+      "title": "WELLCOVORIN FOLR1-CFTD FDA supplement approval letter, signed March 9, 2026",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/appletter/2026/018342Orig1s015ltr.pdf",
+      "kind": "regulatory_record",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-metabolic-wellcovorin-history",
+      "title": "Drugs@FDA NDA 018342 action history and discontinued marketing status",
+      "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=018342",
+      "kind": "regulatory_record",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-metabolic-wellcovorin-announcement",
+      "title": "FDA announces expanded Wellcovorin use for FOLR1 cerebral folate transport deficiency, March 10, 2026",
+      "url": "https://www.fda.gov/news-events/press-announcements/fda-approves-first-treatment-patients-cerebral-folate-transport-deficiency",
+      "kind": "regulatory_record",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-metabolic-wellcovorin-withdrawal",
+      "title": "FDA Federal Register notice 2026-06911: withdrawal of NDA 018342 and all supplements, effective April 10, 2026",
+      "url": "https://www.federalregister.gov/documents/2026/04/10/2026-06911/glaxosmithkline-withdrawal-of-approval-of-a-new-drug-application-for-wellcovorin-leucovorin-calcium",
+      "kind": "regulatory_record",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-metabolic-folr1-steinfeld2009",
+      "title": "Steinfeld et al. Folate receptor alpha defect causes cerebral folate transport deficiency (2009)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19732866/",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11",
+      "accessScope": "Original abstract and indexed original Methods, Results and Figure 1 (patient alleles, fibroblast binding and receptor-transfection rescue) reviewed; direct full-page PMC rendering unavailable."
+    },
+    {
+      "id": "recent-metabolic-folr1-grapp2013",
+      "title": "Grapp et al. Choroid plexus transcytosis and exosome shuttling deliver folate into brain parenchyma (2013)",
+      "url": "https://www.nature.com/articles/ncomms3123",
+      "kind": "primary_cell_study",
+      "accessedAt": "2026-10-11",
+      "accessScope": "Original indexed Results/Discussion and PubMed abstract reviewed; direct full-page rendering unavailable"
+    },
+    {
+      "id": "recent-metabolic-folr1-potic2023",
+      "title": "Potic et al. FOLR1 hypomyelination: patient-specific clinical and MRI response to oral levofolinic acid (2023)",
+      "url": "https://link.springer.com/article/10.1186/s13023-023-02802-6",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11",
+      "accessScope": "Full original article including patient-specific Results and Figures 1–2 reviewed"
+    },
+    {
+      "id": "recent-metabolic-folr1-brunetti2021",
+      "title": "Brunetti et al. Cerebral folate transporter deficiency syndrome in three siblings (2021)",
+      "url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/ajmg.a.62345",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11",
+      "accessScope": "Original abstract reviewed; full text unavailable. Treatment-response follow-up duration cannot be extracted from abstract"
+    },
+    {
+      "id": "recent-metabolic-folr1-identity",
+      "title": "Condition identity in Potic et al.: neurodegeneration due to cerebral folate transport deficiency, OMIM:613068",
+      "url": "https://link.springer.com/article/10.1186/s13023-023-02802-6",
+      "kind": "condition_identifier",
+      "accessedAt": "2026-10-11",
+      "accessScope": "Background explicitly identifies OMIM:613068; identity discovery only, not trial eligibility"
+    },
+    {
+      "id": "recent-immune-neuro-joenja-label-2026",
+      "title": "JOENJA US prescribing information, September 2026; sections 1, 2, 8.4, 12 and 14",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/217759s006lbl.pdf",
+      "kind": "regulatory_label",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-joenja-fda-approval-record",
+      "title": "FDA orphan-drug approval records: original APDS indication 24 March 2023 and age expansion 11 September 2026",
+      "url": "https://www.accessdata.fda.gov/scripts/opdlisting/oopd/detailedIndex.cfm?cfgridkey=504315",
+      "kind": "regulatory_record",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-joenja-fda-pediatric-announcement",
+      "title": "FDA: first treatment for children aged 4–11 years with APDS, September 2026",
+      "url": "https://www.fda.gov/drugs/news-events-human-drugs/fda-approves-first-treatment-children-aged-4-11-years-apds-rare-genetic-disorder-immune-system",
+      "kind": "regulatory_record",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-leniolisib-phase3",
+      "title": "Rao et al. Blood 2023: randomized phase 3 leniolisib trial in APDS; DOI 10.1182/blood.2022018546",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10163280/",
+      "kind": "primary_trial",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-leniolisib-study2201-registry",
+      "title": "ClinicalTrials.gov NCT02435173: leniolisib Part I dose-finding and Part II randomized APDS trial; posted results",
+      "url": "https://clinicaltrials.gov/study/NCT02435173",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-leniolisib-le3301-topline",
+      "title": "Pharming original pediatric LE3301 topline report, 11 December 2024: 21 children, single-arm 12-week study",
+      "url": "https://www.pharming.com/files/pharming-announces-topline-data-pediatric-clinical-trial-leniolisib-en-11dec24.pdf",
+      "kind": "sponsor_trial_report",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-leniolisib-le3301-registry",
+      "title": "ClinicalTrials.gov NCT05438407: pediatric leniolisib LE3301, outcomes and enrollment entry; no posted results",
+      "url": "https://clinicaltrials.gov/study/NCT05438407",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-leniolisib-patient-b-cell-assay",
+      "title": "Avery et al. J Exp Med 2018: PIK3CD gain-of-function B-cell differentiation and leniolisib assay; Fig 9; DOI 10.1084/jem.20180010",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6080914/",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-aqneursa-label-2026",
+      "title": "AQNEURSA US prescribing information, September 2026; both NPC and A-T indications; sections 1, 6, 12 and 14",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0f248e55-d1bb-13f9-e063-6294a90a05ce",
+      "kind": "regulatory_label",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-aqneursa-at-fda-approval-record",
+      "title": "FDA orphan-drug approval record: levacetylleucine for A-T-associated ataxia, 18 September 2026",
+      "url": "https://www.accessdata.fda.gov/scripts/opdlisting/oopd/detailedIndex.cfm?cfgridkey=653218",
+      "kind": "regulatory_record",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-aqneursa-npc-fda-snapshot",
+      "title": "FDA Drug Trials Snapshot: AQNEURSA for NPC neurological manifestations, original approval 24 September 2024",
+      "url": "https://www.fda.gov/drugs/drug-trials-snapshots/drug-trials-snapshots-aqneursa",
+      "kind": "regulatory_record",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-levacetylleucine-at-phase3",
+      "title": "Martakis et al. Lancet Neurol 2026: randomized crossover trial in A-T, primary abstract; DOI 10.1016/S1474-4422(26)00158-4",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42309084/",
+      "kind": "primary_trial_abstract",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-levacetylleucine-at-registry",
+      "title": "ClinicalTrials.gov NCT06673056: A-T pivotal crossover trial; no posted results",
+      "url": "https://clinicaltrials.gov/study/NCT06673056",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-levacetylleucine-npc-phase3",
+      "title": "Bremova-Ertl et al. NEJM 2024: NPC crossover trial, full original publication; DOI 10.1056/NEJMoa2310151",
+      "url": "https://nnpdf.org/wp-content/uploads/2024/02/IntraBio-Bremova-Ertl-NEJM-Publication-02.01.2024.pdf",
+      "kind": "primary_trial",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-levacetylleucine-npc-registry",
+      "title": "ClinicalTrials.gov NCT05163288: NPC pivotal crossover trial; no posted results",
+      "url": "https://clinicaltrials.gov/study/NCT05163288",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-aqneursa-npc-fda-integrated-review",
+      "title": "FDA integrated review NDA 219132, September 2024: fSARA analyses and nonclinical evidence, pp 21, 51–65 and 131–138",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/nda/2024/219132Orig1s000IntegratedR.pdf",
+      "kind": "regulatory_review",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-levacetylleucine-npc-model",
+      "title": "Kaya et al. Brain Commun 2020/2021: acetyl-leucine enantiomers in Npc1-deficient mice and cells; Fig 2 and 3; DOI 10.1093/braincomms/fcaa148",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7954382/",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-apds1-condition-identity",
+      "title": "ClinVar condition identifiers and APDS1 synonym: Immunodeficiency 14A, OMIM 615513; identity only, not trial allele eligibility",
+      "url": "https://www.ncbi.nlm.nih.gov/clinvar/RCV002302063/",
+      "kind": "condition_identifier",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-apds2-condition-identity",
+      "title": "ClinVar condition identifiers: Immunodeficiency 36 / APDS2, OMIM 616005; identity only, not trial allele eligibility",
+      "url": "https://www.ncbi.nlm.nih.gov/clinvar/RCV000144065.6/",
+      "kind": "condition_identifier",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-at-condition-identity",
+      "title": "ClinVar condition identifiers: ataxia-telangiectasia, OMIM 208900; identity only, not trial allele eligibility",
+      "url": "https://www.ncbi.nlm.nih.gov/clinvar/RCV001379897/",
+      "kind": "condition_identifier",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-npc1-condition-identity",
+      "title": "ClinVar condition identifiers: Niemann-Pick disease type C1, OMIM 257220; identity only, not trial allele eligibility",
+      "url": "https://www.ncbi.nlm.nih.gov/clinvar/RCV000003101/",
+      "kind": "condition_identifier",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-npc2-condition-identity",
+      "title": "ClinVar condition identifiers: Niemann-Pick disease type C2, OMIM 607625; identity only, not trial allele eligibility",
+      "url": "https://www.ncbi.nlm.nih.gov/clinvar/RCV000009003/",
+      "kind": "condition_identifier",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-yuviwel-label",
+      "title": "FDA Yuviwel prescribing information, February 2026",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/219164Orig1s000lbl.pdf",
+      "kind": "regulatory_label",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-yuviwel-approval",
+      "title": "FDA orphan-product record: Yuviwel marketing approval 27 February 2026",
+      "url": "https://www.accessdata.fda.gov/scripts/opdlisting/oopd/detailedIndex.cfm?cfgridkey=673418",
+      "kind": "regulatory_approval",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-yuviwel-review",
+      "title": "FDA integrated review NDA 219164: efficacy, pharmacodynamics and nonclinical growth-plate studies",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/nda/2026/219164Orig1s000IntegratedR.pdf",
+      "kind": "regulatory_review",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-approach-primary",
+      "title": "Savarirayan et al.: APPROACH randomized trial, JAMA Pediatrics 2026",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12624480/",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-approach-registry",
+      "title": "NCT05598320: APPROACH protocol and posted results; accessed using CT.gov API v2",
+      "url": "https://clinicaltrials.gov/study/NCT05598320",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-accomplish-primary",
+      "title": "Savarirayan et al.: ACcomplisH dose-escalation randomized trial, eClinicalMedicine 2023",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10562841/",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-accomplish-registry",
+      "title": "NCT04085523: ACcomplisH protocol and posted results; accessed using CT.gov API v2",
+      "url": "https://clinicaltrials.gov/study/NCT04085523",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-transcon-preclinical",
+      "title": "Breinholt et al. 2019: sustained-release TransCon CNP animal pharmacology (abstract reviewed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31235532/",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-npr2-identity",
+      "title": "NCBI Genetic Testing Registry: NPR2 / natriuretic peptide receptor B gene identity",
+      "url": "https://www.ncbi.nlm.nih.gov/gtr/genes/4882/",
+      "kind": "gene_reference",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-achondroplasia-identity",
+      "title": "NCBI MedGen: Achondroplasia, FGFR3 and OMIM 100800 condition identity",
+      "url": "https://www.ncbi.nlm.nih.gov/medgen/1289",
+      "kind": "condition_identifier",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-pasatru-label",
+      "title": "FDA Pasatru prescribing information, August 2026",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/761508Orig1s000lbl.pdf",
+      "kind": "regulatory_label",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-pasatru-approval",
+      "title": "FDA approval letter BLA 761508, signed 19 August 2026",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/appletter/2026/761508Orig1s000ltr.pdf",
+      "kind": "regulatory_approval",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-pasatru-review",
+      "title": "FDA integrated review BLA 761508: OPTIMA analyses and preclinical garetosmab assays",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/nda/2026/761508Orig1s000IntegratedR.pdf",
+      "kind": "regulatory_review",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-optima-primary",
+      "title": "Papa et al.: OPTIMA randomized phase-3 trial, Lancet, 28 September 2026 (primary abstract reviewed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42805227/",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-optima-registry",
+      "title": "NCT05394116: OPTIMA protocol, including distinct count, volume and flare endpoints; API v2 reviewed",
+      "url": "https://clinicaltrials.gov/study/NCT05394116",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-lumina1-primary",
+      "title": "de Ruiter et al.: LUMINA-1 randomized phase-2 trial, Nature Medicine 2023 (full publication reviewed)",
+      "url": "https://www.nature.com/articles/s41591-023-02561-8.pdf",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-lumina1-registry",
+      "title": "NCT03188666: LUMINA-1 protocol and posted results; CT.gov API v2 reviewed",
+      "url": "https://clinicaltrials.gov/study/NCT03188666",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-lumina1-pharmacology",
+      "title": "Wang et al.: LUMINA-1 serum pharmacology and exposure-response, Journal of Clinical Pharmacology 2024",
+      "url": "https://accp1.onlinelibrary.wiley.com/doi/full/10.1002/jcph.2344",
+      "kind": "primary_publication",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-fop-fap-primary",
+      "title": "Lees-Shepard et al. 2018: activin-dependent signaling in fibro/adipogenic progenitors in a conditional Acvr1 mouse model",
+      "url": "https://www.nature.com/articles/s41467-018-02872-2",
+      "kind": "primary_cell_study",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-fop-human-ipsc-primary",
+      "title": "Hino et al. 2015: ACVR1 neofunction in patient-derived iPSC mesenchymal cells and gene-corrected controls",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4687587/",
+      "kind": "primary_cell_study",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-inhba-identity",
+      "title": "NCBI Gene: INHBA encoded beta-A subunit of activin complexes",
+      "url": "https://www.ncbi.nlm.nih.gov/gene/3624",
+      "kind": "gene_reference",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-atebrioz-label",
+      "title": "FDA Atebrioz prescribing information, September 2026",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/221198Orig1s000lbl.pdf",
+      "kind": "regulatory_label",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-atebrioz-approval",
+      "title": "FDA approval letter NDA 221198, signed 25 September 2026",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/appletter/2026/221198Orig1s000ltr.pdf",
+      "kind": "regulatory_approval",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-progress-registry",
+      "title": "NCT05090891: PROGRESS registry primary and secondary endpoints; May 2026 record accessed using API v2",
+      "url": "https://clinicaltrials.gov/study/NCT05090891",
+      "kind": "trial_registry",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-progress-endo-primary",
+      "title": "Pignolo et al.: PROGRESS interim results, ENDO 2026 ORF37-04 primary conference abstract",
+      "url": "https://endo2026.eventscribe.net/fsPopup.asp?PresentationID=1844848&mode=presInfo",
+      "kind": "primary_conference_abstract",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-progress-sponsor-results",
+      "title": "Incyte and Mirum PROGRESS results disclosure, 14 June 2026; nominal secondary analyses identified",
+      "url": "https://incytecorp.gcs-web.com/news-releases/news-release-details/mirum-pharmaceuticals-and-incyte-announce-positive-pivotal-phase",
+      "kind": "sponsor_trial_results",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-skeletal-incb00928-hepatocytes",
+      "title": "Chen et al. 2020 ASH abstract: INCB00928 ALK2 inhibition in human hepatocytes and rodent anemia models",
+      "url": "https://ashpublications.org/blood/article/136/Supplement%201/52/472793/Characterization-of-INCB00928-a-Potent-and",
+      "kind": "primary_conference_abstract",
+      "accessedAt": "2026-10-11"
+    },
+    {
+      "id": "recent-immune-neuro-levacetylleucine-at-aan-2026",
+      "title": "Patterson et al. AAN 2026 original IB1001-303 abstract: SARA, secondary ICARS and investigator CGI-I; DOI 10.1212/WNL.0000000000217924",
+      "url": "https://index.mirasmart.com/AAN2026/PDFfiles/AAN2026-006221.html",
+      "kind": "primary_conference_abstract",
       "accessedAt": "2026-10-11"
     }
   ],
@@ -9649,6 +10158,1298 @@
       ],
       "legacyTherapyIds": [],
       "variantSpecificity": "Current US label requires clinical CF plus ≥1 CFTR allele responsive by clinical/in-vitro data or producing CFTR protein; original pivotal genotypes and selected non-F508del trial remain separate."
+    },
+    {
+      "id": "copper-histidinate-menkes",
+      "therapyName": "Zycubo (copper histidinate)",
+      "gene": "ATP7A",
+      "disease": "Menkes disease",
+      "diseaseGenes": [
+        "ATP7A"
+      ],
+      "therapeuticTargets": [],
+      "modality": "Subcutaneous copper replacement / cofactor supplementation",
+      "regulatory": {
+        "status": "FDA approved for pediatric Menkes disease; not indicated for Occipital Horn Syndrome",
+        "jurisdiction": "US FDA",
+        "asOf": "2026-10-11",
+        "approvalDate": "2026-01-12",
+        "announcementDate": "2026-01-12",
+        "sourceIds": [
+          "recent-metabolic-zycubo-approval",
+          "recent-metabolic-zycubo-snapshot",
+          "recent-metabolic-zycubo-announcement",
+          "recent-metabolic-zycubo-label"
+        ]
+      },
+      "trials": [
+        {
+          "nctId": "NCT00001262",
+          "name": "NIH Trial 1 (90-CH-0149)",
+          "outcome": "mixed",
+          "summary": "Posted developmental results compare earlier versus later copper-treated patients; FDA survival efficacy pools a separately selected subset with Trial 2.",
+          "sourceIds": [
+            "recent-metabolic-menkes-trial1",
+            "recent-metabolic-zycubo-review"
+          ],
+          "registrationStatus": "COMPLETED"
+        },
+        {
+          "nctId": "NCT00811785",
+          "name": "NIH Trial 2 (09-CH-0059)",
+          "outcome": "mixed",
+          "summary": "FDA selected patients from this single-arm study contribute to pooled survival analyses with an untreated external comparator. No posted results isolate this trial’s effect. Its registered primary neurological endpoint concerns OHS/unexplained copper deficiency, not proof of Menkes neurological recovery.",
+          "sourceIds": [
+            "recent-metabolic-menkes-trial2",
+            "recent-metabolic-zycubo-review"
+          ],
+          "registrationStatus": "COMPLETED"
+        }
+      ],
+      "phenotypes": [
+        {
+          "hpoId": "HP:0002194",
+          "label": "Delayed gross motor development",
+          "endpoint": "Denver gross-motor developmental age",
+          "mapping": "direct",
+          "rationale": "Exact measured developmental domain or circulating biomarker; overall survival is stored separately with no eligible phenotype HPO mapping.",
+          "sourceIds": [
+            "recent-metabolic-menkes-trial1"
+          ]
+        },
+        {
+          "hpoId": "HP:0010862",
+          "label": "Delayed fine motor development",
+          "endpoint": "Denver fine-motor adaptive developmental age",
+          "mapping": "direct",
+          "rationale": "Exact measured developmental domain or circulating biomarker; overall survival is stored separately with no eligible phenotype HPO mapping.",
+          "sourceIds": [
+            "recent-metabolic-menkes-trial1"
+          ]
+        },
+        {
+          "hpoId": "HP:0000750",
+          "label": "Delayed speech and language development",
+          "endpoint": "Denver language developmental age",
+          "mapping": "direct",
+          "rationale": "Exact measured developmental domain or circulating biomarker; overall survival is stored separately with no eligible phenotype HPO mapping.",
+          "sourceIds": [
+            "recent-metabolic-menkes-trial1"
+          ]
+        },
+        {
+          "hpoId": "HP:0011967",
+          "label": "Decreased circulating copper concentration",
+          "endpoint": "Serum copper",
+          "mapping": "direct",
+          "rationale": "Exact measured developmental domain or circulating biomarker; overall survival is stored separately with no eligible phenotype HPO mapping.",
+          "sourceIds": [
+            "recent-metabolic-zycubo-label"
+          ]
+        },
+        {
+          "hpoId": "HP:0010837",
+          "label": "Decreased circulating ceruloplasmin concentration",
+          "endpoint": "Serum ceruloplasmin",
+          "mapping": "direct",
+          "rationale": "Exact measured developmental domain or circulating biomarker; overall survival is stored separately with no eligible phenotype HPO mapping.",
+          "sourceIds": [
+            "recent-metabolic-zycubo-label"
+          ]
+        }
+      ],
+      "cells": {
+        "diseaseRelevant": [
+          "Enterocytes",
+          "Choroid plexus epithelia",
+          "Neurons (broad disease-mechanism context)"
+        ],
+        "exposed": [],
+        "engaged": [],
+        "rescue": [],
+        "bypass": [
+          "Impaired intestinal copper absorption"
+        ],
+        "notes": "ATP7A is the etiologic transporter, not a protein target restored by the drug. Subcutaneous copper bypasses intestinal absorption. Serum correction and survival do not identify neuronal uptake or rescue; mouse gene-therapy combination data are separate."
+      },
+      "evidence": [
+        {
+          "id": "recent-metabolic-zycubo-os",
+          "direction": "supports",
+          "claim": "FDA early and late pooled external-control analyses favored survival. These outcomes have no eligible phenotype HPO mapping.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "recent-metabolic-zycubo-snapshot"
+          ]
+        },
+        {
+          "id": "recent-metabolic-zycubo-pd",
+          "direction": "supports",
+          "claim": "Serum copper and ceruloplasmin rose after copper replacement; these are circulating pharmacodynamic measures.",
+          "level": "human_biomarker",
+          "sourceIds": [
+            "recent-metabolic-zycubo-label"
+          ]
+        },
+        {
+          "id": "recent-metabolic-zycubo-development",
+          "direction": "limits",
+          "claim": "Registry developmental outcomes vary with treatment timing and remain limited in many patients; treated comparator groups cannot isolate copper efficacy.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "recent-metabolic-menkes-trial1"
+          ]
+        },
+        {
+          "id": "recent-metabolic-zycubo-genotype",
+          "direction": "limits",
+          "claim": "In a separate early-treatment cohort, only 2/12 children had normal neurodevelopment; residual ATP7A function differed. This is not the FDA 66-patient survival denominator.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "recent-metabolic-menkes-kaler2008"
+          ]
+        },
+        {
+          "id": "recent-metabolic-zycubo-mouse",
+          "direction": "limits",
+          "claim": "In severe Menkes-model mice, copper histidinate alone did not provide the rescue obtained by combining copper with CSF-directed ATP7A gene therapy.",
+          "level": "mechanistic",
+          "sourceIds": [
+            "recent-metabolic-menkes-haddad2018"
+          ]
+        },
+        {
+          "id": "recent-metabolic-zycubo-safety",
+          "direction": "limits",
+          "claim": "Copper toxicity can injure kidney, liver and hematologic tissues. Treatment-emergent seizures in this disorder are not a controlled estimate that copper causes seizures.",
+          "level": "regulatory",
+          "sourceIds": [
+            "recent-metabolic-zycubo-label",
+            "recent-metabolic-zycubo-review"
+          ]
+        }
+      ],
+      "conclusion": {
+        "status": "mixed",
+        "summary": "Survival and systemic biochemical response support copper replacement. Neurological normalization varies, and clinical benefit has not been attributed to a mapped atlas cell subtype."
+      },
+      "limitations": [
+        "Overall survival is retained as an unmapped outcome, not reassigned to motor or seizure phenotypes.",
+        "FDA selected severe-variant survival, registry development and separate published early-treatment cohorts have different denominators.",
+        "No direct clinical cell-subtype target engagement or mediation was established in reviewed sources.",
+        "Not indicated for Occipital Horn Syndrome."
+      ]
+    },
+    {
+      "id": "leucovorin-folr1-cftd",
+      "therapyName": "Leucovorin / folinic acid (historical Wellcovorin FOLR1 indication)",
+      "gene": "FOLR1",
+      "disease": "FOLR1-related cerebral folate transport deficiency",
+      "diseaseGenes": [
+        "FOLR1"
+      ],
+      "therapeuticTargets": [],
+      "modality": "Folate metabolite supplementation / transport-defect bypass",
+      "regulatory": {
+        "status": "Historical FDA FOLR1-CFTD supplement approved March 9, 2026; Wellcovorin NDA 018342 and all supplements withdrawn April 10, 2026 at GSK request because not marketed",
+        "jurisdiction": "US FDA",
+        "asOf": "2026-10-11",
+        "approvalDate": "2026-03-09",
+        "announcementDate": "2026-03-10",
+        "withdrawalDate": "2026-04-10",
+        "sourceIds": [
+          "recent-metabolic-wellcovorin-approval",
+          "recent-metabolic-wellcovorin-history",
+          "recent-metabolic-wellcovorin-announcement",
+          "recent-metabolic-wellcovorin-withdrawal"
+        ]
+      },
+      "trials": [
+        {
+          "nctId": null,
+          "name": "FDA published-case review (through 2024; no efficacy clinical trial)",
+          "outcome": "mixed",
+          "summary": "No efficacy clinical trial. FDA reviewed 46 distinct published cases across routes; oral-only subgroup and paired CSF subset are reported separately.",
+          "sourceIds": [
+            "recent-metabolic-wellcovorin-label",
+            "recent-metabolic-wellcovorin-review"
+          ]
+        },
+        {
+          "nctId": null,
+          "name": "Potic 2023 sibling case report (oral levofolinic acid)",
+          "outcome": "mixed",
+          "summary": "Uncontrolled sibling report: earlier treatment had complete clinical/MRI recovery; older sibling retained deficits despite improvement.",
+          "sourceIds": [
+            "recent-metabolic-folr1-potic2023"
+          ]
+        },
+        {
+          "nctId": null,
+          "name": "Brunetti 2021 three-sibling case report",
+          "outcome": "null",
+          "summary": "Three siblings had no sizeable overall clinical/neurophysiological improvement after prolonged illness and delayed treatment.",
+          "sourceIds": [
+            "recent-metabolic-folr1-brunetti2021"
+          ]
+        }
+      ],
+      "phenotypes": [
+        {
+          "hpoId": "HP:0012446",
+          "label": "Decreased CSF 5-methyltetrahydrofolate concentration",
+          "endpoint": "CSF 5-methyltetrahydrofolate (5-MTHF)",
+          "mapping": "direct",
+          "rationale": "Exact biochemical, MRI or clinical feature; patient-specific response is not inherited from aggregate multi-domain improvement.",
+          "sourceIds": [
+            "recent-metabolic-wellcovorin-label"
+          ]
+        },
+        {
+          "hpoId": "HP:0006808",
+          "label": "Cerebral hypomyelination",
+          "endpoint": "Serial MRI cerebral myelination",
+          "mapping": "direct",
+          "rationale": "Exact biochemical, MRI or clinical feature; patient-specific response is not inherited from aggregate multi-domain improvement.",
+          "sourceIds": [
+            "recent-metabolic-folr1-potic2023"
+          ]
+        },
+        {
+          "hpoId": "HP:0001250",
+          "label": "Seizure",
+          "endpoint": "Reported seizure frequency",
+          "mapping": "direct",
+          "rationale": "Exact biochemical, MRI or clinical feature; patient-specific response is not inherited from aggregate multi-domain improvement.",
+          "sourceIds": [
+            "recent-metabolic-folr1-potic2023"
+          ]
+        },
+        {
+          "hpoId": "HP:0002371",
+          "label": "Loss of speech",
+          "endpoint": "Recovery of expressive speech",
+          "mapping": "direct",
+          "rationale": "Exact biochemical, MRI or clinical feature; patient-specific response is not inherited from aggregate multi-domain improvement.",
+          "sourceIds": [
+            "recent-metabolic-folr1-potic2023"
+          ]
+        },
+        {
+          "hpoId": "HP:0001251",
+          "label": "Ataxia",
+          "endpoint": "Clinical ataxia examination",
+          "mapping": "direct",
+          "rationale": "Exact biochemical, MRI or clinical feature; patient-specific response is not inherited from aggregate multi-domain improvement.",
+          "sourceIds": [
+            "recent-metabolic-folr1-potic2023"
+          ]
+        }
+      ],
+      "cells": {
+        "diseaseRelevant": [
+          "Choroid plexus epithelia"
+        ],
+        "exposed": [],
+        "engaged": [],
+        "rescue": [],
+        "bypass": [
+          "Defective FOLR1-mediated cerebral folate transport (metabolite supplementation)"
+        ],
+        "notes": "FOLR1 identifies etiology; leucovorin supplies reduced folate and does not repair the mutant receptor. CSF folate correction and MRI response do not directly establish drug rescue of choroid-plexus cells, oligodendrocytes or a neuronal subtype."
+      },
+      "evidence": [
+        {
+          "id": "recent-metabolic-folr1-oral",
+          "direction": "supports",
+          "claim": "Oral-only published cases include neurological improvement, but the aggregate does not identify a common successful endpoint.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "recent-metabolic-wellcovorin-label"
+          ]
+        },
+        {
+          "id": "recent-metabolic-folr1-csf",
+          "direction": "supports",
+          "claim": "Paired CSF measurements show increased folate availability after oral treatment. This is compartmental pharmacodynamics, not a cell-resolved assay.",
+          "level": "human_biomarker",
+          "sourceIds": [
+            "recent-metabolic-wellcovorin-label"
+          ]
+        },
+        {
+          "id": "recent-metabolic-folr1-variable",
+          "direction": "limits",
+          "claim": "Patient-specific responses vary by endpoint; neurological and MRI improvement can coexist with persistent epilepsy, ataxia or impaired language.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "recent-metabolic-folr1-potic2023"
+          ]
+        },
+        {
+          "id": "recent-metabolic-folr1-nonresponse",
+          "direction": "opposes",
+          "claim": "Three severely affected late-treated siblings had no sizeable overall clinical/neurophysiological improvement.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "recent-metabolic-folr1-brunetti2021"
+          ]
+        },
+        {
+          "id": "recent-metabolic-folr1-receptor",
+          "direction": "limits",
+          "claim": "Patient-cell folate binding was rescued by receptor gene transfection. This experimental rescue is not leucovorin pharmacology.",
+          "level": "in_vitro",
+          "sourceIds": [
+            "recent-metabolic-folr1-steinfeld2009"
+          ]
+        },
+        {
+          "id": "recent-metabolic-folr1-cell",
+          "direction": "limits",
+          "claim": "Choroid-plexus receptor localization and transcytosis studies support disease mechanism, without demonstrating drug-mediated restoration in an outcome cohort.",
+          "level": "mechanistic",
+          "sourceIds": [
+            "recent-metabolic-folr1-grapp2013"
+          ]
+        },
+        {
+          "id": "recent-metabolic-folr1-status",
+          "direction": "limits",
+          "claim": "The historical FOLR1-specific supplement does not establish current Wellcovorin brand availability or approval for general autism or folate-receptor autoantibody syndromes.",
+          "level": "regulatory",
+          "sourceIds": [
+            "recent-metabolic-wellcovorin-withdrawal",
+            "recent-metabolic-wellcovorin-approval"
+          ]
+        }
+      ],
+      "conclusion": {
+        "status": "mixed",
+        "summary": "Case-based neurological and CSF responses support folate supplementation in FOLR1-CFTD, with incomplete responses and nonresponders. Direct atlas-cell rescue and clinical mediation remain unestablished; the Wellcovorin brand approval was subsequently withdrawn."
+      },
+      "limitations": [
+        "Historical indication required FOLR1-confirmed CFTD in adult or pediatric patients; not general autism or all cerebral folate deficiency etiologies.",
+        "Cases were not randomized, outcomes were heterogeneous, and repeated publications must not be counted as new patients.",
+        "Oral, intravenous and L-isomer evidence must retain formulation and route scope.",
+        "FDA label does not recommend use in MTHFS deficiency; safety observations in published FOLR1 cases are sparse.",
+        "Current generic-product labels and approval status require separate product-specific verification."
+      ]
+    },
+    {
+      "id": "leniolisib-apds-12plus",
+      "therapyName": "Leniolisib (Joenja): original age ≥12 APDS evidence",
+      "legacyTherapyId": null,
+      "gene": "PIK3CD / PIK3R1",
+      "disease": "Activated PI3Kδ syndrome (APDS), adolescent/adult trial cohort",
+      "modality": "Small-molecule selective PI3Kδ inhibitor",
+      "regulatory": {
+        "status": "Approved",
+        "jurisdiction": "US FDA",
+        "asOf": "2026-10-11",
+        "approvalDate": "2023-03-24",
+        "sourceIds": [
+          "recent-immune-neuro-joenja-fda-approval-record",
+          "recent-immune-neuro-joenja-label-2026"
+        ]
+      },
+      "trials": [
+        {
+          "nctId": "NCT02435173",
+          "name": "Study 2201 Part II randomized trial",
+          "outcome": "benefit",
+          "summary": "Both pooled co-primary endpoints met; node imaging and naïve-B analysis subsets differ. Adolescent-only node interval includes zero.",
+          "sourceIds": [
+            "recent-immune-neuro-joenja-label-2026",
+            "recent-immune-neuro-leniolisib-phase3",
+            "recent-immune-neuro-leniolisib-study2201-registry"
+          ]
+        }
+      ],
+      "phenotypes": [
+        {
+          "hpoId": "HP:0002716",
+          "label": "Lymphadenopathy",
+          "endpoint": "Index lymph-node SPD",
+          "mapping": "direct",
+          "rationale": "Imaging measures enlarged index lymph nodes; it does not measure infections or all lymphoproliferative complications.",
+          "sourceIds": [
+            "recent-immune-neuro-joenja-label-2026",
+            "recent-immune-neuro-leniolisib-phase3"
+          ]
+        },
+        {
+          "hpoId": "HP:0030372",
+          "label": "Decreased naive B cell proportion",
+          "endpoint": "Naïve B-cell proportion of total B cells",
+          "mapping": "direct",
+          "rationale": "Direct measurement of the immunophenotype; broader immune-function claims require separate clinical evidence.",
+          "sourceIds": [
+            "recent-immune-neuro-joenja-label-2026",
+            "recent-immune-neuro-leniolisib-phase3"
+          ]
+        },
+        {
+          "hpoId": "HP:0001744",
+          "label": "Splenomegaly",
+          "endpoint": "Spleen volume",
+          "mapping": "direct",
+          "rationale": "Imaging measures spleen size as a separate secondary endpoint.",
+          "sourceIds": [
+            "recent-immune-neuro-leniolisib-phase3",
+            "recent-immune-neuro-leniolisib-study2201-registry"
+          ]
+        }
+      ],
+      "cells": {
+        "diseaseRelevant": [
+          "B lymphocytes",
+          "T lymphocytes"
+        ],
+        "exposed": [
+          "Peripheral-blood B lymphocytes after oral treatment"
+        ],
+        "engaged": [
+          "CD20+ B lymphocytes: ex vivo pAkt inhibition"
+        ],
+        "rescue": [
+          "Patient-derived transitional B cells in vitro: partial antibody-secretion correction"
+        ],
+        "bypass": [],
+        "notes": "Molecular pathway engagement and disease-context B-cell function are supported. The clinical endpoints do not establish unique cellular mediation or exact atlas correspondence."
+      },
+      "evidence": [
+        {
+          "id": "leniolisib-apds-12plus-molecular",
+          "direction": "supports",
+          "claim": "PIK3CD catalytic gain of function or impaired PIK3R1 regulatory inhibition produces PI3Kδ hyperactivity; leniolisib inhibits the p110δ catalytic subunit encoded by PIK3CD.",
+          "level": "mechanistic",
+          "sourceIds": [
+            "recent-immune-neuro-joenja-label-2026",
+            "recent-immune-neuro-leniolisib-phase3"
+          ]
+        },
+        {
+          "id": "leniolisib-apds-12plus-clinical",
+          "direction": "supports",
+          "claim": "The randomized pooled comparison improved index-node size and naïve-B proportions, with a separate spleen-volume benefit.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "recent-immune-neuro-joenja-label-2026",
+            "recent-immune-neuro-leniolisib-phase3"
+          ]
+        },
+        {
+          "id": "leniolisib-apds-12plus-cell-scope",
+          "direction": "limits",
+          "claim": "B-cell target engagement and cultured antibody-secretion rescue do not prove that B cells alone mediate anatomical or broader clinical benefit.",
+          "level": "human_cell_pharmacodynamics",
+          "sourceIds": [
+            "recent-immune-neuro-joenja-label-2026",
+            "recent-immune-neuro-leniolisib-patient-b-cell-assay"
+          ]
+        },
+        {
+          "id": "leniolisib-apds-12plus-nulls",
+          "direction": "limits",
+          "claim": "The adolescent-only node interval included zero; the primary publication reports no statistically significant health-related quality-of-life changes.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "recent-immune-neuro-joenja-label-2026",
+            "recent-immune-neuro-leniolisib-phase3"
+          ]
+        }
+      ],
+      "conclusion": {
+        "status": "indirect",
+        "summary": "Supports inhibition of an etiologic signaling pathway, measured B-cell changes and pooled anatomic benefit; exact phenotype-to-atlas cell mediation remains unestablished."
+      },
+      "limitations": [
+        "The trial is small and analyses are not full intention-to-treat; denominator exclusions differ by endpoint.",
+        "Short follow-up cannot establish infection prevention, lung recovery, lymphoma prevention or survival benefit.",
+        "PIK3R1 is an etiologic regulator, not the directly inhibited catalytic target; other PIK3R1 conditions are not APDS treatment indications.",
+        "Current label also warns about embryo-fetal toxicity and postmarketing hypersensitivity/anaphylaxis; trial AE rates do not rule out rare harms."
+      ],
+      "diseaseGenes": [
+        "PIK3CD",
+        "PIK3R1"
+      ],
+      "therapeuticTargets": [
+        "PIK3CD"
+      ],
+      "legacyTherapyIds": [],
+      "geneRoleNotes": "Etiology: APDS1 activating PIK3CD variants or APDS2 PIK3R1 variants that impair regulatory inhibition. Pharmacologic target: PIK3CD-encoded p110δ; not PIK3R1 gene correction."
+    },
+    {
+      "id": "leniolisib-apds-4to11",
+      "therapyName": "Leniolisib (Joenja): age 4–11 APDS expansion",
+      "legacyTherapyId": null,
+      "gene": "PIK3CD / PIK3R1",
+      "disease": "Activated PI3Kδ syndrome (APDS), pediatric age 4–11 expansion",
+      "modality": "Small-molecule selective PI3Kδ inhibitor",
+      "regulatory": {
+        "status": "Approved",
+        "jurisdiction": "US FDA",
+        "asOf": "2026-10-11",
+        "approvalDate": "2026-09-11",
+        "sourceIds": [
+          "recent-immune-neuro-joenja-fda-approval-record",
+          "recent-immune-neuro-joenja-label-2026",
+          "recent-immune-neuro-joenja-fda-pediatric-announcement"
+        ]
+      },
+      "trials": [
+        {
+          "nctId": "NCT05438407",
+          "name": "LE3301 pediatric single-arm study",
+          "outcome": "unknown",
+          "summary": "Single-arm sponsor report: 21 children, qualitative favorable efficacy claims without numerical analyses. Eight children at current recommended ≥27 kg doses provide FDA PK/safety bridging.",
+          "sourceIds": [
+            "recent-immune-neuro-leniolisib-le3301-topline",
+            "recent-immune-neuro-leniolisib-le3301-registry",
+            "recent-immune-neuro-joenja-label-2026"
+          ]
+        }
+      ],
+      "phenotypes": [
+        {
+          "hpoId": "HP:0002716",
+          "label": "Lymphadenopathy",
+          "endpoint": "Pediatric index lymph-node change",
+          "mapping": "direct",
+          "rationale": "Source-limited pediatric imaging claim; older randomized imaging benefit is a different population.",
+          "sourceIds": [
+            "recent-immune-neuro-leniolisib-le3301-topline",
+            "recent-immune-neuro-leniolisib-le3301-registry"
+          ]
+        },
+        {
+          "hpoId": "HP:0030372",
+          "label": "Decreased naive B cell proportion",
+          "endpoint": "Pediatric naïve-B proportion change",
+          "mapping": "direct",
+          "rationale": "Source-limited immunophenotype claim; no pediatric numerical effect or primary-analysis reconciliation is available.",
+          "sourceIds": [
+            "recent-immune-neuro-leniolisib-le3301-topline",
+            "recent-immune-neuro-leniolisib-le3301-registry"
+          ]
+        }
+      ],
+      "cells": {
+        "diseaseRelevant": [
+          "B lymphocytes",
+          "T lymphocytes"
+        ],
+        "exposed": [],
+        "engaged": [],
+        "rescue": [],
+        "bypass": [],
+        "notes": "The molecular target is established from earlier mechanistic work, but the reviewed pediatric evidence does not provide a quantified cell-resolved functional rescue or clinical mediation result."
+      },
+      "evidence": [
+        {
+          "id": "leniolisib-apds-4to11-approval",
+          "direction": "supports",
+          "claim": "FDA expanded APDS treatment to patients aged ≥4 who weigh ≥27 kg on 11 September 2026. Pediatric use is supported by older controlled efficacy plus exposure and safety bridging.",
+          "level": "regulatory",
+          "sourceIds": [
+            "recent-immune-neuro-joenja-fda-approval-record",
+            "recent-immune-neuro-joenja-label-2026"
+          ]
+        },
+        {
+          "id": "leniolisib-apds-4to11-pediatric-source",
+          "direction": "limits",
+          "claim": "LE3301 sponsor claims favorable imaging and immunophenotype change in 21 children, without a numerical endpoint analysis or a controlled effect estimate.",
+          "level": "sponsor_report",
+          "sourceIds": [
+            "recent-immune-neuro-leniolisib-le3301-topline",
+            "recent-immune-neuro-leniolisib-le3301-registry"
+          ]
+        },
+        {
+          "id": "leniolisib-apds-4to11-mechanism",
+          "direction": "supports",
+          "claim": "Leniolisib inhibits PIK3CD-encoded p110δ; PIK3R1 APDS is a regulatory etiology that converges on PI3Kδ hyperactivity.",
+          "level": "mechanistic",
+          "sourceIds": [
+            "recent-immune-neuro-joenja-label-2026"
+          ]
+        }
+      ],
+      "conclusion": {
+        "status": "indirect",
+        "summary": "Pediatric approval is established; numerical pediatric phenotype outcomes remain source-limited and cannot be substituted with adolescent/adult estimates or cell-causality claims."
+      },
+      "limitations": [
+        "Current pediatric approval requires age ≥4 and weight ≥27 kg; younger/lower-weight efficacy is not established by this label.",
+        "For age 4–<12: 40 mg twice daily at 27–<38 kg, 50 mg twice daily at 38–<45 kg, and 70 mg twice daily at ≥45 kg.",
+        "Eight current-dose PK/safety participants were treated for 12–24 weeks; do not use eight as total LE3301 enrollment.",
+        "Current registry enrollment estimate (15) differs from sponsor actual enrollment (21); no results are posted.",
+        "Sponsor reports mild/moderate TEAEs and no drug-related serious AEs; this uncontrolled short cohort cannot exclude rare or long-term harm."
+      ],
+      "diseaseGenes": [
+        "PIK3CD",
+        "PIK3R1"
+      ],
+      "therapeuticTargets": [
+        "PIK3CD"
+      ],
+      "legacyTherapyIds": [],
+      "geneRoleNotes": "Same etiologic pathway and catalytic target as the older indication, but this is a separate pediatric population and dose context."
+    },
+    {
+      "id": "levacetylleucine-ataxia-telangiectasia",
+      "therapyName": "Levacetylleucine (Aqneursa): A-T ataxia indication",
+      "legacyTherapyId": null,
+      "gene": "ATM",
+      "disease": "Ataxia-telangiectasia (A-T), ataxia in patients weighing ≥15 kg",
+      "modality": "Small-molecule pharmacotherapy; distinct molecular target unknown",
+      "regulatory": {
+        "status": "Approved",
+        "jurisdiction": "US FDA",
+        "asOf": "2026-10-11",
+        "approvalDate": "2026-09-18",
+        "sourceIds": [
+          "recent-immune-neuro-aqneursa-at-fda-approval-record",
+          "recent-immune-neuro-aqneursa-label-2026"
+        ]
+      },
+      "trials": [
+        {
+          "nctId": "NCT06673056",
+          "name": "IB1001-303 A-T randomized crossover",
+          "outcome": "benefit",
+          "summary": "Separate 73-person A-T crossover trial: fSARA regulatory and original SARA published analyses both favor treatment over placebo, on different scales.",
+          "sourceIds": [
+            "recent-immune-neuro-aqneursa-label-2026",
+            "recent-immune-neuro-levacetylleucine-at-phase3",
+            "recent-immune-neuro-levacetylleucine-at-registry"
+          ]
+        }
+      ],
+      "phenotypes": [
+        {
+          "hpoId": "HP:0001251",
+          "label": "Ataxia",
+          "endpoint": "SARA / fSARA ataxia-function outcomes",
+          "mapping": "proxy",
+          "rationale": "SARA directly rates ataxia; fSARA measures a narrower functional composite. The separate result records preserve their different ranges, roles and estimates.",
+          "sourceIds": [
+            "recent-immune-neuro-aqneursa-label-2026",
+            "recent-immune-neuro-levacetylleucine-at-phase3"
+          ]
+        }
+      ],
+      "cells": {
+        "diseaseRelevant": [
+          "Cerebellar neurons (A-T disease context)"
+        ],
+        "exposed": [],
+        "engaged": [],
+        "rescue": [],
+        "bypass": [],
+        "notes": "No human pharmacodynamic study or cell-resolved target-engagement/neuronal-rescue result is provided. NPC model findings are not transferred to A-T."
+      },
+      "evidence": [
+        {
+          "id": "levacetylleucine-ataxia-telangiectasia-clinical",
+          "direction": "supports",
+          "claim": "An A-T-specific randomized crossover trial improved ataxia scores over 12 weeks.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "recent-immune-neuro-aqneursa-label-2026",
+            "recent-immune-neuro-levacetylleucine-at-phase3"
+          ]
+        },
+        {
+          "id": "levacetylleucine-ataxia-telangiectasia-target",
+          "direction": "limits",
+          "claim": "The current label states that the molecular target is unknown in NPC and A-T and that clinical pharmacodynamic studies have not been conducted.",
+          "level": "mechanistic",
+          "sourceIds": [
+            "recent-immune-neuro-aqneursa-label-2026"
+          ]
+        },
+        {
+          "id": "levacetylleucine-ataxia-telangiectasia-gene-role",
+          "direction": "limits",
+          "claim": "ATM is the etiologic disease gene; clinical improvement does not demonstrate pharmacologic targeting or correction of ATM.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "recent-immune-neuro-aqneursa-label-2026",
+            "recent-immune-neuro-levacetylleucine-at-phase3"
+          ]
+        }
+      ],
+      "conclusion": {
+        "status": "unresolved",
+        "summary": "Ataxia benefit and the A-T approval are established. The molecular target, affected human cell populations and cellular mediation remain unresolved."
+      },
+      "limitations": [
+        "A-T approval is specifically for ataxia and requires weight ≥15 kg; do not describe correction of all A-T phenotypes or prevention of malignancy/immunodeficiency.",
+        "The A-T trial is distinct from NPC; 73 actual participants supersede the stale registry estimated enrollment of 60.",
+        "In the published crossover safety set, 54 events occurred in 29 active-period patients and 75 events in 25 placebo-period patients; fewer events did not mean fewer patients with any event. No treatment-related serious AEs or deaths were reported.",
+        "Label first-period adverse-reaction tables and publication whole-crossover safety denominators differ; do not combine them.",
+        "Embryo-fetal toxicity warning is based on animal data; it is not a human trial harm estimate.",
+        "Long-term neuroprotection/disease modification is being studied in the extension, not established by the 12-week result."
+      ],
+      "diseaseGenes": [
+        "ATM"
+      ],
+      "therapeuticTargets": [],
+      "legacyTherapyIds": [],
+      "geneRoleNotes": "ATM causes A-T in the disease context; no distinct therapeutic molecular target is known. This treatment is not ATM gene replacement or allele correction."
+    },
+    {
+      "id": "levacetylleucine-npc",
+      "therapyName": "Levacetylleucine (Aqneursa): original NPC indication",
+      "legacyTherapyId": null,
+      "gene": "NPC1 / NPC2",
+      "disease": "Niemann-Pick disease type C, neurological manifestations in patients weighing ≥15 kg",
+      "modality": "Small-molecule pharmacotherapy; distinct molecular target unknown",
+      "regulatory": {
+        "status": "Approved",
+        "jurisdiction": "US FDA",
+        "asOf": "2026-10-11",
+        "approvalDate": "2024-09-24",
+        "sourceIds": [
+          "recent-immune-neuro-aqneursa-npc-fda-snapshot",
+          "recent-immune-neuro-aqneursa-label-2026"
+        ]
+      },
+      "trials": [
+        {
+          "nctId": "NCT05163288",
+          "name": "IB1001-301 NPC randomized crossover",
+          "outcome": "benefit",
+          "summary": "Separate 60-person NPC trial: positive primary SARA/fSARA comparisons coexist with null SCAFI and exploratory clinical-severity results; most participants received miglustat.",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-npc-phase3",
+            "recent-immune-neuro-aqneursa-npc-fda-integrated-review",
+            "recent-immune-neuro-aqneursa-label-2026",
+            "recent-immune-neuro-levacetylleucine-npc-registry"
+          ]
+        }
+      ],
+      "phenotypes": [
+        {
+          "hpoId": "HP:0001251",
+          "label": "Ataxia",
+          "endpoint": "SARA, fSARA, mSARA and SCAFI cerebellar-function assessments; each analysis retained separately",
+          "mapping": "proxy",
+          "rationale": "Ataxia-associated neurologic performance is measured; total-score results do not isolate the cerebellum or establish component-specific benefit.",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-npc-phase3",
+            "recent-immune-neuro-aqneursa-npc-fda-integrated-review",
+            "recent-immune-neuro-aqneursa-label-2026"
+          ]
+        }
+      ],
+      "cells": {
+        "diseaseRelevant": [
+          "Cerebellar Purkinje neurons (NPC model disease context)",
+          "Microglia (NPC model context)"
+        ],
+        "exposed": [],
+        "engaged": [],
+        "rescue": [],
+        "bypass": [],
+        "notes": "Human molecular target and pharmacodynamics remain unknown. Separate NPC1 model results show an L-only microglial response and null Purkinje survival; racemic-DL neuronal preservation is not Aqneursa evidence."
+      },
+      "evidence": [
+        {
+          "id": "levacetylleucine-npc-clinical",
+          "direction": "supports",
+          "claim": "Randomized NPC treatment improves selected neurologic-function scales over 12 weeks. Secondary and subgroup outcomes must retain their separate uncertainty.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-npc-phase3",
+            "recent-immune-neuro-aqneursa-npc-fda-integrated-review",
+            "recent-immune-neuro-aqneursa-label-2026"
+          ]
+        },
+        {
+          "id": "levacetylleucine-npc-target",
+          "direction": "limits",
+          "claim": "Current label identifies no distinct molecular target and reports no clinical pharmacodynamic studies. NPC1/NPC2 are disease genes rather than established drug targets.",
+          "level": "mechanistic",
+          "sourceIds": [
+            "recent-immune-neuro-aqneursa-label-2026"
+          ]
+        },
+        {
+          "id": "levacetylleucine-npc-cell-counterexample",
+          "direction": "limits",
+          "claim": "Purified L-enantiomer did not significantly preserve Purkinje counts in the tested NPC1 mouse model, while racemic DL did; L-only microglial density and non-neuronal lysosomal-volume findings cannot be equated to human neuronal rescue.",
+          "level": "preclinical",
+          "sourceIds": [
+            "recent-immune-neuro-levacetylleucine-npc-model"
+          ]
+        },
+        {
+          "id": "levacetylleucine-npc-model-limit",
+          "direction": "limits",
+          "claim": "FDA assesses the nonclinical data as mechanistic plausibility, without direct support for the clinical primary endpoint or an identified cellular mediator.",
+          "level": "regulatory",
+          "sourceIds": [
+            "recent-immune-neuro-aqneursa-npc-fda-integrated-review"
+          ]
+        }
+      ],
+      "conclusion": {
+        "status": "unresolved",
+        "summary": "Neurologic clinical benefit is supported; specific molecular targeting, human cellular rescue and atlas-cell mediation remain unresolved, with an explicit L-only neuronal structural null in the model literature."
+      },
+      "limitations": [
+        "NPC trial outcomes cannot be transferred to A-T or all NPC phenotypes.",
+        "Most participants used miglustat; the small no-miglustat subgroup does not independently establish monotherapy benefit, although the label does not require miglustat.",
+        "SARA/mSARA/fSARA overlap in participants but differ in domain selection and scale; they are not independent replications.",
+        "No quantitative genotype-specific treatment estimate or NPC2 participant denominator was verified; NPC2 diagnosis links do not claim observed NPC2 response.",
+        "The primary publication reports 79 adverse events in 36 active-period patients and 75 events in 30 placebo-period patients; no treatment-related serious AE. One death after planned gastrostomy was judged unrelated.",
+        "Label first-period safety tables have a different exposure window from the publication whole-crossover table; do not pool them.",
+        "The FDA nonclinical review text gives an inconsistent p=0.077 for microglia, but its figure caption and original paper give p=0.0177; retain the original figure value and disclose the discrepancy.",
+        "The trial tests short-term symptoms; later open-label/historical-control disease-progression claims were not curated as randomized evidence in this pass."
+      ],
+      "diseaseGenes": [
+        "NPC1",
+        "NPC2"
+      ],
+      "therapeuticTargets": [],
+      "legacyTherapyIds": [],
+      "geneRoleNotes": "NPC1 and NPC2 define NPC etiologies. The current label does not identify a pharmacologic molecular target; transporter uptake and general metabolic pathways do not establish NPC1/NPC2 correction."
+    },
+    {
+      "id": "yuviwel-fgfr3",
+      "therapyName": "Navepegritide (Yuviwel; TransCon CNP)",
+      "legacyTherapyId": null,
+      "legacyTherapyIds": [],
+      "gene": "FGFR3",
+      "disease": "Achondroplasia in growing children",
+      "modality": "Sustained-release CNP prodrug / NPR-B agonism",
+      "regulatory": {
+        "status": "US accelerated approval 27 February 2026: age 2+ with open epiphyses; continued approval may depend on confirmed clinical benefit",
+        "jurisdiction": "US FDA",
+        "asOf": "2026-10-11",
+        "approvalDate": "2026-02-27",
+        "announcementDate": "2026-03-04",
+        "sourceIds": [
+          "recent-skeletal-yuviwel-approval",
+          "recent-skeletal-yuviwel-label"
+        ]
+      },
+      "trials": [
+        {
+          "nctId": "NCT05598320",
+          "name": "APPROACH / ASND0036",
+          "outcome": "surrogate",
+          "summary": "Positive AGV primary; final adult height unconfirmed. Body-proportion ratio and overall physical-function analyses did not establish benefit.",
+          "sourceIds": [
+            "recent-skeletal-approach-primary",
+            "recent-skeletal-yuviwel-review",
+            "recent-skeletal-approach-registry"
+          ],
+          "registrationStatus": "COMPLETED",
+          "registeredPrimaryEndpoint": "Annualized Growth Velocity (AGV) at Week 52"
+        },
+        {
+          "nctId": "NCT04085523",
+          "name": "ACcomplisH / TCC-201",
+          "outcome": "surrogate",
+          "summary": "Dose-finding AGV benefit at 100 micrograms/kg/week versus pooled placebo; lower doses are separate cohorts.",
+          "sourceIds": [
+            "recent-skeletal-accomplish-primary",
+            "recent-skeletal-accomplish-registry"
+          ],
+          "registrationStatus": "COMPLETED",
+          "registeredPrimaryEndpoint": "Annualized Height Velocity (cm/Year) After 52 Weeks of Double-blind Treatment"
+        }
+      ],
+      "phenotypes": [
+        {
+          "hpoId": "HP:0004322",
+          "label": "Short stature",
+          "endpoint": "AGV and separately measured height Z-scores",
+          "mapping": "proxy",
+          "rationale": "Growth velocity predicts stature benefit; height Z-scores are separate direct measurements, not confirmed adult height.",
+          "sourceIds": [
+            "recent-skeletal-approach-primary",
+            "recent-skeletal-yuviwel-label"
+          ]
+        },
+        {
+          "hpoId": "HP:0003498",
+          "label": "Disproportionate short stature",
+          "endpoint": "Upper/lower body segment ratio",
+          "mapping": "proxy",
+          "rationale": "Randomized ratio comparison was nonsignificant; growth-rate benefit is not body-proportion rescue.",
+          "sourceIds": [
+            "recent-skeletal-approach-primary"
+          ]
+        },
+        {
+          "hpoId": "HP:0002970",
+          "label": "Genu varum",
+          "endpoint": "Radiographic tibiofemoral angle",
+          "mapping": "proxy",
+          "rationale": "Exploratory alignment effect does not establish correction of all bowing or reduced surgery.",
+          "sourceIds": [
+            "recent-skeletal-approach-primary"
+          ]
+        }
+      ],
+      "cells": {
+        "diseaseRelevant": [
+          "Growth-plate chondrocytes (mechanistic hypothesis and animal histology)"
+        ],
+        "exposed": [
+          "Systemic released CNP; human cell-specific exposure unmeasured"
+        ],
+        "engaged": [
+          "NPR2/NPR-B pathway; human plasma cGMP is a systemic marker"
+        ],
+        "rescue": [],
+        "bypass": [
+          "Counteracts overactive FGFR3 signaling through NPR2 rather than correcting FGFR3 variants"
+        ],
+        "notes": "Mouse growth-plate observations and human plasma pharmacodynamics are separate from clinical growth; no atlas identity or within-patient cellular mediation is established."
+      },
+      "evidence": [
+        {
+          "id": "yuviwel-fgfr3-clinical",
+          "direction": "supports",
+          "claim": "Randomized childhood growth benefit supports treatment during open-growth-plate development.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "recent-skeletal-approach-primary",
+            "recent-skeletal-accomplish-primary"
+          ]
+        },
+        {
+          "id": "yuviwel-fgfr3-function-limit",
+          "direction": "limits",
+          "claim": "FDA overall ACEM physical-function difference −4.9 (95% CI −12.6–2.9), P=0.22; SF-10 physical-health comparison age ≥5 was also null. Younger/subgroup findings do not establish overall functional benefit.",
+          "level": "regulatory",
+          "sourceIds": [
+            "recent-skeletal-yuviwel-review"
+          ]
+        },
+        {
+          "id": "yuviwel-fgfr3-cell",
+          "direction": "supports",
+          "claim": "Free CNP activates NPR-B; animal studies support growth-plate activity. The intact prodrug has minimal receptor activity.",
+          "level": "mechanistic",
+          "sourceIds": [
+            "recent-skeletal-yuviwel-review",
+            "recent-skeletal-transcon-preclinical",
+            "recent-skeletal-npr2-identity"
+          ]
+        },
+        {
+          "id": "yuviwel-fgfr3-adult-height",
+          "direction": "limits",
+          "claim": "Accelerated growth-velocity approval requires confirmatory benefit; adult height and broad complication prevention remain unresolved.",
+          "level": "regulatory",
+          "sourceIds": [
+            "recent-skeletal-yuviwel-label"
+          ]
+        }
+      ],
+      "conclusion": {
+        "status": "indirect",
+        "summary": "Clinical growth and pathway evidence support a growth-plate hypothesis; human chondrocyte mediation and final adult height remain unproven."
+      },
+      "limitations": [
+        "APPROACH active arm contained FGFR3 c.1138G>A or c.1138G>C; three rare variants occurred only in placebo. No rare-allele clinical response is inferred.",
+        "Different endpoint roles and age subgroups remain separate; trials excluded important conditions affecting growth."
+      ],
+      "diseaseGenes": [
+        "FGFR3"
+      ],
+      "therapeuticTargets": [
+        "NPR2"
+      ],
+      "geneRoleNotes": "FGFR3 is the disease gene; released CNP engages NPR2/NPR-B, a compensating pathway. Yuviwel is not FGFR3 gene replacement or inhibition.",
+      "variantSpecificity": "Genetic confirmation required in trials, but no allele-specific clinical effect estimate is available."
+    },
+    {
+      "id": "garetosmab-fop",
+      "therapyName": "Garetosmab-grts (Pasatru)",
+      "legacyTherapyId": null,
+      "legacyTherapyIds": [],
+      "gene": "ACVR1",
+      "disease": "Fibrodysplasia ossificans progressiva (FOP), adults",
+      "modality": "Activin A-neutralizing monoclonal antibody",
+      "regulatory": {
+        "status": "US approval 19 August 2026 for adults with FOP",
+        "jurisdiction": "US FDA",
+        "asOf": "2026-10-11",
+        "approvalDate": "2026-08-19",
+        "announcementDate": "2026-08-19",
+        "sourceIds": [
+          "recent-skeletal-pasatru-approval",
+          "recent-skeletal-pasatru-label"
+        ]
+      },
+      "trials": [
+        {
+          "nctId": "NCT05394116",
+          "name": "OPTIMA / R2477-FOP-2175",
+          "outcome": "mixed",
+          "summary": "Primary new-lesion counts improved at both doses; high-dose clinician flares improved, but patient-level new-lesion incidence, volume tests and patient-reported flares did not establish benefit.",
+          "sourceIds": [
+            "recent-skeletal-optima-primary",
+            "recent-skeletal-pasatru-review",
+            "recent-skeletal-optima-registry"
+          ],
+          "registrationStatus": "ACTIVE_NOT_RECRUITING",
+          "registeredPrimaryEndpoint": "Number of new HO lesions; Incidence and severity of treatment-emergent adverse events of special interest (AESIs)"
+        },
+        {
+          "nctId": "NCT03188666",
+          "name": "LUMINA-1 / R2477-FOP-1623",
+          "outcome": "mixed",
+          "summary": "Randomized PET primary and pain analysis did not establish benefit; amended open-label new-lesion comparison was favorable. Five deaths occurred in open-label periods with unresolved attribution.",
+          "sourceIds": [
+            "recent-skeletal-lumina1-primary",
+            "recent-skeletal-lumina1-registry",
+            "recent-skeletal-pasatru-review"
+          ],
+          "registrationStatus": "COMPLETED",
+          "registeredPrimaryEndpoint": "Period 1: Number of Participants With Treatment-emergent Adverse Events (TEAEs) and Serious TEAEs; Period 1: Number of Participants With TEAEs by Severity; Period 1: Time-Weighted Average (Standardized Area Under the Curve [AUC]) of the Percent Change From Baseline in Total Lesion Activity by Fluorine-18-labeled Sodium Fluoride (18^F-NaF) Positron Emission Tomography (PET) at Week 28 (AHO); Period 1: Percent Change From Baseline in the Total Volume of HO Lesions as Assessed by Computed Tomography (CT) at Week 28 (AHO); Period 2: Number of New HO Lesions as Assessed by CT at Week 56 Relative to Week 28 Scan (AHO COVID-19 mITT); Period 1: Time-weighted Average (Standardized AUC) of the Percent Change From Baseline in Total Lesion Activity Assessed by 18^F-NaF PET at Week 28 (AHOC); Period 1: Percent Change From Baseline in the Total Volume of HO Lesions as Assessed by CT at Week 28 (AHOC)"
+        }
+      ],
+      "phenotypes": [
+        {
+          "hpoId": "HP:0011986",
+          "label": "Ectopic ossification",
+          "endpoint": "New HO lesion count, patient incidence and volume, assessed separately",
+          "mapping": "direct",
+          "rationale": "The count primary was positive; incidence and volume secondary analyses were nonsignificant. Established-bone reversal is not implied.",
+          "sourceIds": [
+            "recent-skeletal-optima-primary",
+            "recent-skeletal-pasatru-review"
+          ]
+        },
+        {
+          "hpoId": "HP:0012531",
+          "label": "Pain",
+          "endpoint": "Clinical and patient-reported FOP flare-ups; separate LUMINA-1 pain rating",
+          "mapping": "proxy",
+          "rationale": "A flare is a composite; dose, reporter and direct pain-rating results differ.",
+          "sourceIds": [
+            "recent-skeletal-pasatru-review",
+            "recent-skeletal-lumina1-primary",
+            "recent-skeletal-optima-registry"
+          ]
+        }
+      ],
+      "cells": {
+        "diseaseRelevant": [
+          "Fibro/adipogenic progenitors (conditional mouse lineage evidence)",
+          "Human iPSC-derived mesenchymal stromal cells (model evidence)"
+        ],
+        "exposed": [
+          "Systemic IV antibody; clinical FAP-specific exposure not measured"
+        ],
+        "engaged": [
+          "Activin ligands; ACVR1 R206H reporter inhibition in vitro"
+        ],
+        "rescue": [],
+        "bypass": [],
+        "notes": "Ligand blockade prevents model osteogenesis without correcting ACVR1. Clinical CT and serum measurements do not identify a rescued human progenitor subtype."
+      },
+      "evidence": [
+        {
+          "id": "garetosmab-fop-count",
+          "direction": "supports",
+          "claim": "Randomized lesion-count benefit supports suppressing new ectopic bone formation in the studied adult population.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "recent-skeletal-optima-primary"
+          ]
+        },
+        {
+          "id": "garetosmab-fop-cell-model",
+          "direction": "supports",
+          "claim": "Mutant reporter and conditional FAP models support the pathway; human iMSC models support activin-induced BMP neofunction.",
+          "level": "mechanistic",
+          "sourceIds": [
+            "recent-skeletal-pasatru-review",
+            "recent-skeletal-fop-fap-primary",
+            "recent-skeletal-fop-human-ipsc-primary",
+            "recent-skeletal-inhba-identity"
+          ]
+        },
+        {
+          "id": "garetosmab-fop-cell-limit",
+          "direction": "limits",
+          "claim": "Mouse FAP osteogenic potential persisted after activin blockade; human efficacy does not establish genetic repair, native muscle restoration or cellular mediation.",
+          "level": "mechanistic",
+          "sourceIds": [
+            "recent-skeletal-fop-fap-primary",
+            "recent-skeletal-lumina1-primary"
+          ]
+        },
+        {
+          "id": "garetosmab-fop-safety",
+          "direction": "limits",
+          "claim": "Skin/soft-tissue infection and epistaxis precautions apply. Five LUMINA-1 open-label deaths cannot be dismissed as proving no treatment contribution; OPTIMA reported none.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "recent-skeletal-lumina1-primary",
+            "recent-skeletal-pasatru-label",
+            "recent-skeletal-optima-primary"
+          ]
+        }
+      ],
+      "conclusion": {
+        "status": "indirect",
+        "summary": "Human new-lesion suppression aligns with activin/mutant-ACVR1 biology, but patient FAP engagement and mediation are unmeasured; endpoints and doses show mixed results."
+      },
+      "limitations": [
+        "OPTIMA enrolled adults with CAJIS ≤19 and mostly R206H; neither pediatric efficacy nor every FOP allele is directly established.",
+        "Reporter cells, animal FAPs, human iMSCs and trial participants are distinct populations; no exact atlas crosswalk is asserted."
+      ],
+      "diseaseGenes": [
+        "ACVR1"
+      ],
+      "therapeuticTargets": [
+        "INHBA"
+      ],
+      "geneRoleNotes": "ACVR1 is the FOP disease gene; garetosmab binds activin A (INHBA-encoded beta-A homodimer), not ACVR1 itself. Activin AB/AC binding is also reported.",
+      "variantSpecificity": "Trial genetic confirmation and predominance of R206H do not establish equal response for all FOP variants."
+    },
+    {
+      "id": "zilurgisertib-fop",
+      "therapyName": "Zilurgisertib (Atebrioz; INCB000928)",
+      "legacyTherapyId": null,
+      "legacyTherapyIds": [],
+      "gene": "ACVR1",
+      "disease": "Fibrodysplasia ossificans progressiva (FOP), age 12+",
+      "modality": "Oral small-molecule ALK2 kinase inhibitor",
+      "regulatory": {
+        "status": "US approval 25 September 2026 for FOP age 12+",
+        "jurisdiction": "US FDA",
+        "asOf": "2026-10-11",
+        "approvalDate": "2026-09-25",
+        "announcementDate": "2026-09-25",
+        "sourceIds": [
+          "recent-skeletal-atebrioz-approval",
+          "recent-skeletal-atebrioz-label"
+        ]
+      },
+      "trials": [
+        {
+          "nctId": "NCT05090891",
+          "name": "PROGRESS cohort 1 / INCB00928-201",
+          "outcome": "mixed",
+          "summary": "The label reports a favorable week-24 volume result; the registered-primary new-lesion incidence test was nonsignificant. Later under-12 cohorts and open-label follow-up are not the approved randomized cohort.",
+          "sourceIds": [
+            "recent-skeletal-atebrioz-label",
+            "recent-skeletal-progress-endo-primary",
+            "recent-skeletal-progress-registry"
+          ],
+          "registrationStatus": "RECRUITING",
+          "registeredPrimaryEndpoint": "Double Blind Period: Occurrence of new heterotopic ossification (HO) lesions from baseline"
+        }
+      ],
+      "phenotypes": [
+        {
+          "hpoId": "HP:0011986",
+          "label": "Ectopic ossification",
+          "endpoint": "CT HO-volume change and separately assessed new-lesion incidence",
+          "mapping": "direct",
+          "rationale": "The FDA volume composite includes expansion of existing lesions; incidence was a distinct nonsignificant primary.",
+          "sourceIds": [
+            "recent-skeletal-atebrioz-label",
+            "recent-skeletal-progress-endo-primary",
+            "recent-skeletal-progress-registry"
+          ]
+        },
+        {
+          "hpoId": "HP:0012531",
+          "label": "Pain",
+          "endpoint": "Annualized FOP flare count",
+          "mapping": "proxy",
+          "rationale": "Conference report gives a numerical decrease without a formal CI/test; no isolated pain or functional-rescue claim.",
+          "sourceIds": [
+            "recent-skeletal-progress-endo-primary"
+          ]
+        }
+      ],
+      "cells": {
+        "diseaseRelevant": [
+          "Osteochondrogenic mesenchymal progenitors (disease-model hypothesis)"
+        ],
+        "exposed": [
+          "Systemic oral drug; cell-specific exposure not established"
+        ],
+        "engaged": [
+          "ALK2 kinase inhibition described in label; human FAP engagement unmeasured"
+        ],
+        "rescue": [],
+        "bypass": [],
+        "notes": "Disease-pathway model and hepatic ALK2 assays are background. Clinical imaging is not a direct measurement of the proposed progenitor function."
+      },
+      "evidence": [
+        {
+          "id": "zilurgisertib-fop-volume",
+          "direction": "supports",
+          "claim": "The label reports reduced HO-volume progression at 24 weeks in the studied ≥12-year cohort.",
+          "level": "regulatory",
+          "sourceIds": [
+            "recent-skeletal-atebrioz-label"
+          ]
+        },
+        {
+          "id": "zilurgisertib-fop-primary-null",
+          "direction": "limits",
+          "claim": "Registered-primary patient incidence did not meet significance (P=0.0986); favorable secondary volume cannot be described as a positive primary incidence result.",
+          "level": "human_clinical",
+          "sourceIds": [
+            "recent-skeletal-progress-endo-primary",
+            "recent-skeletal-progress-registry"
+          ]
+        },
+        {
+          "id": "zilurgisertib-fop-target",
+          "direction": "supports",
+          "claim": "Zilurgisertib inhibits wild-type and R206H-mutant ALK2. Disease models support ACVR1/activin biology, while direct drug liver assays concern hepcidin rather than HO progenitors.",
+          "level": "mechanistic",
+          "sourceIds": [
+            "recent-skeletal-atebrioz-label",
+            "recent-skeletal-fop-human-ipsc-primary",
+            "recent-skeletal-incb00928-hepatocytes"
+          ]
+        },
+        {
+          "id": "zilurgisertib-fop-safety",
+          "direction": "limits",
+          "claim": "Label contraindicates pregnancy and reports headache, arthralgia, respiratory infection, epistaxis and nausea. Long-term cell-specific benefit and risk remain unresolved.",
+          "level": "regulatory",
+          "sourceIds": [
+            "recent-skeletal-atebrioz-label"
+          ]
+        }
+      ],
+      "conclusion": {
+        "status": "indirect",
+        "summary": "A favorable structural volume result supports ALK2-directed treatment, with a null incidence primary and no demonstrated human progenitor-mediated rescue."
+      },
+      "limitations": [
+        "Approved age threshold is 12; recruiting younger registry cohorts do not establish pediatric efficacy below 12.",
+        "Genotype enrollment frequencies are not reported in the label/abstract; no exact-allele eligibility or effect is invented.",
+        "No full FDA integrated review was accessible at the tested URL; conference secondary analyses remain nominal/descriptive."
+      ],
+      "diseaseGenes": [
+        "ACVR1"
+      ],
+      "therapeuticTargets": [
+        "ACVR1"
+      ],
+      "geneRoleNotes": "ACVR1 encodes ALK2 and is both disease gene and kinase target; inhibition is not limited to the mutant allele.",
+      "variantSpecificity": "Clinical FOP diagnosis; label does not restrict to an exact ACVR1 variant. Exact genotype-response scope remains unresolved."
     }
   ],
   "coverage": {
@@ -9875,80 +11676,17 @@
           "Investigational mRNA/editing/reprogramming products"
         ],
         "neededEvidence": "Separate inventory outside inherited rare-disease examples; approval and efficacy must not be inferred."
+      },
+      {
+        "class": "Current generic leucovorin product status",
+        "examples": [
+          "Generic ANDA products after withdrawal of Wellcovorin NDA018342"
+        ],
+        "neededEvidence": "Review each product-specific ANDA and indication. The March 2026 brand supplement and April withdrawal cannot establish every generic product status."
       }
     ],
     "recentPharmacotherapyInventorySourceIds": [
       "fda-arc-rare-approvals"
-    ],
-    "recentApprovedPharmacotherapyGaps": [
-      {
-        "product": "Zycubo (copper histidinate)",
-        "indication": "Menkes disease",
-        "reason": "Cofactor replacement endpoints not yet curated",
-        "sourceIds": [
-          "fda-arc-rare-approvals",
-          "fda-novel-approvals-2026"
-        ],
-        "announcementDate": "2026-01-12",
-        "approvalDate": "2026-01-12"
-      },
-      {
-        "product": "Yuviwel (navepegritide)",
-        "indication": "Achondroplasia",
-        "reason": "Peptide pathway modulation and growth endpoints not yet curated",
-        "sourceIds": [
-          "fda-arc-rare-approvals",
-          "fda-novel-approvals-2026"
-        ],
-        "announcementDate": "2026-03-04",
-        "approvalDate": "2026-02-27",
-        "dateNotes": "Marketing approval date is February 27; the ARC news announcement was March 4. These are distinct dates."
-      },
-      {
-        "product": "Wellcovorin (leucovorin)",
-        "indication": "Cerebral folate transport deficiency",
-        "reason": "Metabolite/cofactor bypass endpoints not yet curated",
-        "sourceIds": [
-          "fda-arc-rare-approvals"
-        ],
-        "announcementDate": "2026-03-10"
-      },
-      {
-        "product": "Pasatru (garetosmab-grts)",
-        "indication": "Fibrodysplasia ossificans progressiva",
-        "reason": "Activin-pathway antibody outcomes not yet curated",
-        "sourceIds": [
-          "fda-arc-rare-approvals"
-        ],
-        "announcementDate": "2026-08-19"
-      },
-      {
-        "product": "Joenja (leniolisib), pediatric expansion",
-        "indication": "Activated PI3K delta syndrome age 4–11",
-        "reason": "Small-molecule immunologic pathway endpoints not yet curated",
-        "sourceIds": [
-          "fda-arc-rare-approvals"
-        ],
-        "announcementDate": "2026-09-11"
-      },
-      {
-        "product": "Aqneursa (levacetylleucine), indication expansion",
-        "indication": "Ataxia-telangiectasia",
-        "reason": "Disease-specific ataxia endpoints not yet curated",
-        "sourceIds": [
-          "fda-arc-rare-approvals"
-        ],
-        "announcementDate": "2026-09-18"
-      },
-      {
-        "product": "Atebrioz (zilurgisertib)",
-        "indication": "Fibrodysplasia ossificans progressiva age 12+",
-        "reason": "Kinase inhibition and ectopic-ossification endpoints not yet curated",
-        "sourceIds": [
-          "fda-arc-rare-approvals"
-        ],
-        "announcementDate": "2026-09-25"
-      }
     ],
     "reviewedComparatorFamilies": [
       {
@@ -10004,6 +11742,366 @@
           "eti-cystic-fibrosis"
         ]
       }
-    ]
+    ],
+    "reviewedRecentPharmacotherapies": [
+      {
+        "product": "Zycubo (copper histidinate)",
+        "approvalDate": "2026-01-12",
+        "announcementDate": "2026-01-12",
+        "indication": "Menkes disease in pediatric patients; not Occipital Horn Syndrome",
+        "currentRegulatoryStatus": "FDA approved",
+        "sourceIds": [
+          "recent-metabolic-zycubo-approval",
+          "recent-metabolic-zycubo-snapshot"
+        ],
+        "notes": "Overall survival retained without a phenotype-HPO assignment; neurologic development and systemic PD curated independently.",
+        "assessmentIds": [
+          "copper-histidinate-menkes"
+        ]
+      },
+      {
+        "product": "Leucovorin / folinic acid (historical Wellcovorin FOLR1 indication)",
+        "approvalDate": "2026-03-09",
+        "announcementDate": "2026-03-10",
+        "withdrawalDate": "2026-04-10",
+        "indication": "Historical supplement: cerebral folate transport deficiency in adult and pediatric patients with confirmed FOLR1 variant",
+        "currentRegulatoryStatus": "NDA018342 and all supplements withdrawn; brand marketing discontinued",
+        "sourceIds": [
+          "recent-metabolic-wellcovorin-approval",
+          "recent-metabolic-wellcovorin-history",
+          "recent-metabolic-wellcovorin-withdrawal"
+        ],
+        "notes": "Corrects inventory date/status. FDA label introduction year 1952 refers to leucovorin history; NDA018342 original tablet approval was 1983. No current generic status extrapolated.",
+        "assessmentIds": [
+          "leucovorin-folr1-cftd"
+        ]
+      },
+      {
+        "product": "Leniolisib (Joenja): age 4–11 APDS expansion",
+        "indication": "APDS age ≥4 and weight ≥27 kg",
+        "approvalDate": "2026-09-11",
+        "sourceIds": [
+          "recent-immune-neuro-joenja-fda-approval-record",
+          "recent-immune-neuro-joenja-label-2026"
+        ],
+        "notes": "Expansion date verified from FDA orphan approval record. Original approval 24 March 2023 remains a separate trial population.",
+        "assessmentIds": [
+          "leniolisib-apds-4to11",
+          "leniolisib-apds-12plus"
+        ],
+        "currentRegulatoryStatus": "Approved",
+        "announcementDate": "2026-09-11"
+      },
+      {
+        "product": "Levacetylleucine (Aqneursa): A-T ataxia indication",
+        "indication": "Ataxia in A-T, adult/pediatric patients weighing ≥15 kg",
+        "approvalDate": "2026-09-18",
+        "sourceIds": [
+          "recent-immune-neuro-aqneursa-at-fda-approval-record",
+          "recent-immune-neuro-aqneursa-label-2026"
+        ],
+        "notes": "FDA approval date differs from SPL effectiveTime 17 September; do not use SPL administrative timestamp as the approval date.",
+        "assessmentIds": [
+          "levacetylleucine-ataxia-telangiectasia"
+        ],
+        "currentRegulatoryStatus": "Approved",
+        "announcementDate": "2026-09-18"
+      },
+      {
+        "product": "Levacetylleucine (Aqneursa): original NPC indication",
+        "indication": "NPC neurological manifestations, adult/pediatric patients weighing ≥15 kg",
+        "approvalDate": "2024-09-24",
+        "sourceIds": [
+          "recent-immune-neuro-aqneursa-npc-fda-snapshot",
+          "recent-immune-neuro-aqneursa-label-2026"
+        ],
+        "notes": "Original NPC indication is distinct from September 2026 A-T expansion.",
+        "assessmentIds": [
+          "levacetylleucine-npc"
+        ],
+        "currentRegulatoryStatus": "Approved"
+      },
+      {
+        "product": "Navepegritide (Yuviwel; TransCon CNP)",
+        "activeIngredient": "navepegritide",
+        "approvalDate": "2026-02-27",
+        "sourceIds": [
+          "recent-skeletal-yuviwel-approval",
+          "recent-skeletal-yuviwel-label"
+        ],
+        "assessmentIds": [
+          "yuviwel-fgfr3"
+        ],
+        "indication": "Achondroplasia in growing children",
+        "currentRegulatoryStatus": "US accelerated approval 27 February 2026: age 2+ with open epiphyses; continued approval may depend on confirmed clinical benefit",
+        "announcementDate": "2026-03-04"
+      },
+      {
+        "product": "Garetosmab-grts (Pasatru)",
+        "activeIngredient": "garetosmab-grts",
+        "approvalDate": "2026-08-19",
+        "sourceIds": [
+          "recent-skeletal-pasatru-approval",
+          "recent-skeletal-pasatru-label"
+        ],
+        "assessmentIds": [
+          "garetosmab-fop"
+        ],
+        "indication": "Fibrodysplasia ossificans progressiva (FOP), adults",
+        "currentRegulatoryStatus": "US approval 19 August 2026 for adults with FOP",
+        "announcementDate": "2026-08-19"
+      },
+      {
+        "product": "Zilurgisertib (Atebrioz; INCB000928)",
+        "activeIngredient": "zilurgisertib",
+        "approvalDate": "2026-09-25",
+        "sourceIds": [
+          "recent-skeletal-atebrioz-approval",
+          "recent-skeletal-atebrioz-label"
+        ],
+        "assessmentIds": [
+          "zilurgisertib-fop"
+        ],
+        "indication": "Fibrodysplasia ossificans progressiva (FOP), age 12+",
+        "currentRegulatoryStatus": "US approval 25 September 2026 for FOP age 12+",
+        "announcementDate": "2026-09-25"
+      }
+    ],
+    "recentPharmacotherapyUnresolvedClaims": [
+      {
+        "product": "Zycubo",
+        "claim": "Clinical improvement was mediated by an atlas-mapped brain cell subtype",
+        "status": "not_established",
+        "reason": "No cell-resolved drug engagement or mediation measurement was identified in the human outcome cohorts.",
+        "sourceIds": [
+          "recent-metabolic-zycubo-review"
+        ]
+      },
+      {
+        "product": "Zycubo",
+        "claim": "Overall survival can be mapped to motor delay or seizures",
+        "status": "unsupported_mapping",
+        "reason": "Death in infancy (HP:0001522) and Death in childhood (HP:0003819) are clinical-course terms outside the eligible phenotypic-abnormality branch in the frozen 2026-09-01 HPO ontology. Overall survival has no eligible phenotype mapping here; survival benefit is not assigned to motor or seizure phenotypes.",
+        "sourceIds": [
+          "recent-metabolic-zycubo-snapshot"
+        ]
+      },
+      {
+        "product": "Wellcovorin",
+        "claim": "Wellcovorin is an active recent FDA-approved brand as of 2026-10-11",
+        "status": "contradicted",
+        "reason": "Federal Register withdrawal applies explicitly to NDA018342 and all amendments and supplements, effective 2026-04-10.",
+        "sourceIds": [
+          "recent-metabolic-wellcovorin-withdrawal"
+        ]
+      },
+      {
+        "product": "Leucovorin",
+        "claim": "Generic products currently carry the FOLR1 indication and are approved for it",
+        "status": "not_reviewed",
+        "reason": "Brand withdrawal does not by itself resolve generic ANDA labels or marketing status; product-specific verification is still needed.",
+        "sourceIds": [
+          "recent-metabolic-wellcovorin-withdrawal"
+        ]
+      },
+      {
+        "product": "Leucovorin",
+        "claim": "High folate exposure demonstrably rescues a specific atlas cell subtype in FOLR1-CFTD",
+        "status": "not_established",
+        "reason": "CSF biochemical response, receptor-transfected fibroblasts and rat transport models are different observations with no validated outcome-cohort atlas join.",
+        "sourceIds": [
+          "recent-metabolic-wellcovorin-label",
+          "recent-metabolic-folr1-steinfeld2009",
+          "recent-metabolic-folr1-grapp2013"
+        ]
+      },
+      {
+        "product": "Leucovorin",
+        "claim": "Complete quantitative seizure/motor response rates can be recovered from the FDA aggregate clinical count",
+        "status": "not_established",
+        "reason": "Response count spans heterogeneous domains and time points; missing domain-level data cannot be converted into successes.",
+        "sourceIds": [
+          "recent-metabolic-wellcovorin-review"
+        ]
+      },
+      {
+        "product": "Yuviwel",
+        "claim": "Final adult height, clinically important morbidity and functional benefit across all ages",
+        "status": "unconfirmed",
+        "reason": "Accelerated approval is based on growth velocity; full-cohort physical-function comparisons are null despite reported favorable subgroup findings.",
+        "sourceIds": [
+          "recent-skeletal-yuviwel-label",
+          "recent-skeletal-yuviwel-review"
+        ]
+      },
+      {
+        "product": "Pasatru",
+        "claim": "Uniform benefit across HO count, volume, patient incidence and flare measures",
+        "status": "contradicted",
+        "reason": "Successful lesion-count primary coexists with null incidence/volume secondary tests and dose/reporter differences for flare-ups.",
+        "sourceIds": [
+          "recent-skeletal-optima-primary",
+          "recent-skeletal-pasatru-review"
+        ]
+      },
+      {
+        "product": "Pasatru",
+        "claim": "Human FAP repair or mediation and established-bone reversal",
+        "status": "not_established",
+        "reason": "Conditional lineage evidence is in mice; model cells remain intrinsically osteogenic after blockade. Clinical preexisting-lesion/PET response failed the earlier primary test.",
+        "sourceIds": [
+          "recent-skeletal-fop-fap-primary",
+          "recent-skeletal-lumina1-primary"
+        ]
+      },
+      {
+        "product": "Atebrioz",
+        "claim": "PROGRESS met its registered-primary new-lesion incidence endpoint",
+        "status": "contradicted",
+        "reason": "Primary conference abstract and registry identify incidence; P=0.0986. FDA labeling instead reports a different volume endpoint.",
+        "sourceIds": [
+          "recent-skeletal-progress-endo-primary",
+          "recent-skeletal-progress-registry",
+          "recent-skeletal-atebrioz-label"
+        ]
+      },
+      {
+        "product": "Atebrioz",
+        "claim": "Drug-specific functional rescue of the proposed native human HO progenitors",
+        "status": "not_established",
+        "reason": "Label/abstract do not supply cell-resolved patient assays. Reviewed direct INCB00928 assays concern hepatic hepcidin; generic ACVR1 models did not test this product.",
+        "sourceIds": [
+          "recent-skeletal-atebrioz-label",
+          "recent-skeletal-incb00928-hepatocytes",
+          "recent-skeletal-fop-human-ipsc-primary"
+        ]
+      },
+      {
+        "product": "Atebrioz",
+        "claim": "Complete trial statistical analysis and explanation of labeling endpoint selection",
+        "status": "source_limited",
+        "reason": "FDA integrated review URL returned 404. Registry May 2026 record is still recruiting and covers additional cohorts; conference abstract is sufficient for separate primary-null evidence but not a full regulatory statistical reconstruction.",
+        "sourceIds": [
+          "recent-skeletal-atebrioz-label",
+          "recent-skeletal-progress-registry",
+          "recent-skeletal-progress-endo-primary"
+        ]
+      },
+      {
+        "product": "Atebrioz",
+        "claim": "NDA receipt date in approval letter",
+        "status": "source_discrepancy",
+        "reason": "Letter says received 26 September 2026 but is signed 25 September 2026; do not use the receipt sentence as marketing approval date.",
+        "sourceIds": [
+          "recent-skeletal-atebrioz-approval"
+        ]
+      },
+      {
+        "id": "recent-immune-neuro-issue-pediatric-quantitative",
+        "assessmentId": "leniolisib-apds-4to11",
+        "claim": "Pediatric numerical efficacy and outcome-role reconciliation",
+        "status": "unresolved",
+        "detail": "LE3301 sponsor reports 21 children and favorable mean changes without estimates/CI/assay denominators. FDA bridging subset is eight at currently approved doses. Registry has no posted results and differs on primary outcomes and estimated enrollment.",
+        "sourceIds": [
+          "recent-immune-neuro-joenja-label-2026",
+          "recent-immune-neuro-leniolisib-le3301-topline",
+          "recent-immune-neuro-leniolisib-le3301-registry"
+        ]
+      },
+      {
+        "id": "recent-immune-neuro-issue-b-cell-units",
+        "assessmentId": "leniolisib-apds-12plus",
+        "claim": "FDA announcement describes 37 percent improvement in naïve-B counts",
+        "status": "resolved_in_draft",
+        "detail": "Use +37.30 percentage points in proportion of naïve B cells among total B cells, analysis n=13; no absolute-cell-count or pediatric estimate.",
+        "sourceIds": [
+          "recent-immune-neuro-joenja-fda-pediatric-announcement",
+          "recent-immune-neuro-joenja-label-2026",
+          "recent-immune-neuro-leniolisib-phase3"
+        ]
+      },
+      {
+        "id": "recent-immune-neuro-issue-registry-enrollment",
+        "claim": "Registry estimated enrollment versus actual published cohorts",
+        "status": "resolved_in_draft",
+        "detail": "As retrieved, NCT05438407 estimates 15 vs sponsor actual 21; NCT06673056 estimates 60 vs publication actual 73; NCT05163288 estimates 53 vs publication actual 60. Estimates must not overwrite actual cohort sizes.",
+        "sourceIds": [
+          "recent-immune-neuro-leniolisib-le3301-registry",
+          "recent-immune-neuro-leniolisib-le3301-topline",
+          "recent-immune-neuro-levacetylleucine-at-registry",
+          "recent-immune-neuro-levacetylleucine-at-phase3",
+          "recent-immune-neuro-levacetylleucine-npc-registry",
+          "recent-immune-neuro-levacetylleucine-npc-phase3"
+        ]
+      },
+      {
+        "id": "recent-immune-neuro-issue-at-secondary-tables",
+        "assessmentId": "levacetylleucine-ataxia-telangiectasia",
+        "claim": "A-T supplementary secondary, subgroup and exact genotype-level analyses",
+        "status": "unresolved",
+        "detail": "The original published abstract and current FDA-approved label support exact primary analyses. AAN 2026 original conference abstract also reports ICARS CI -4.87 to -0.81 (p=0.003) and investigator CGI-I CI -0.7 to -0.01 (p=0.02), but omits estimates, endpoint-specific denominators and multiplicity details. Full publisher article/supplement not obtained in this pass; full secondary/genotype estimates are not invented. No broad quality-of-life benefit is assigned from the conference conclusion.",
+        "sourceIds": [
+          "recent-immune-neuro-levacetylleucine-at-phase3",
+          "recent-immune-neuro-aqneursa-label-2026",
+          "recent-immune-neuro-levacetylleucine-at-aan-2026"
+        ]
+      },
+      {
+        "id": "recent-immune-neuro-issue-npc2-participants",
+        "assessmentId": "levacetylleucine-npc",
+        "claim": "NPC2-specific trial enrollment or treatment response",
+        "status": "unresolved",
+        "detail": "All 60 participants had genetic NPC diagnosis, but the reviewed main paper/label/FDA analysis does not provide the participant NPC1/NPC2 genotype table; no NPC2 denominator or allele-level efficacy is assigned.",
+        "sourceIds": [
+          "recent-immune-neuro-levacetylleucine-npc-phase3",
+          "recent-immune-neuro-aqneursa-npc-fda-integrated-review",
+          "recent-immune-neuro-aqneursa-label-2026"
+        ]
+      },
+      {
+        "id": "recent-immune-neuro-issue-fsara-scale",
+        "assessmentId": "levacetylleucine-npc",
+        "claim": "Equating fSARA to original SARA or applicant mSARA",
+        "status": "resolved_in_draft",
+        "detail": "FDA rescored four functional domains (0–16); applicant US mSARA excludes sitting/stance (0–30), publication global SARA uses all eight domains (0–40). Same trial, different analyses and roles.",
+        "sourceIds": [
+          "recent-immune-neuro-levacetylleucine-npc-phase3",
+          "recent-immune-neuro-aqneursa-npc-fda-integrated-review",
+          "recent-immune-neuro-aqneursa-label-2026"
+        ]
+      },
+      {
+        "id": "recent-immune-neuro-issue-npc-model-enantiomer",
+        "assessmentId": "levacetylleucine-npc",
+        "claim": "Purkinje-neuron preservation attributed to pure levacetylleucine",
+        "status": "resolved_in_draft",
+        "detail": "Original Fig 2H: only racemic DL significantly preserves selected lobule counts. Pure L arm is nonsignificant in tested lobules and is represented separately from L-only microglial and CHO-cell observations.",
+        "sourceIds": [
+          "recent-immune-neuro-levacetylleucine-npc-model"
+        ]
+      },
+      {
+        "id": "recent-immune-neuro-issue-microglial-pvalue",
+        "assessmentId": "levacetylleucine-npc",
+        "claim": "Microglial significance discrepancy in FDA integrated-review prose",
+        "status": "source_discrepancy",
+        "detail": "Original Kaya Fig 2I and FDA Fig 19 caption report p=0.0177; FDA prose on p137 states p=0.077. Original published p=0.0177 is retained; no silent conversion to a clinical effect.",
+        "sourceIds": [
+          "recent-immune-neuro-levacetylleucine-npc-model",
+          "recent-immune-neuro-aqneursa-npc-fda-integrated-review"
+        ]
+      },
+      {
+        "id": "recent-immune-neuro-issue-longterm-npc",
+        "assessmentId": "levacetylleucine-npc",
+        "claim": "Disease modification from later NPC extension/historical comparisons",
+        "status": "not_curated_in_this_pass",
+        "detail": "Short randomized symptomatic endpoint results are reviewed here. Later open-label extension and external historical progression claims need separate study-specific curation, not a disease-modification inference from these 12-week results.",
+        "sourceIds": [
+          "recent-immune-neuro-levacetylleucine-npc-phase3"
+        ]
+      }
+    ],
+    "recentPharmacotherapyInventoryScope": "Seven selected 2026 products/expansions on the FDA ARC news page reviewed at indication/population level, plus the separate original Aqneursa NPC indication. Wellcovorin remains historical because its entire NDA was withdrawn. This selected inventory is not all inherited-disease pharmacotherapies."
   }
 }

@@ -2,10 +2,9 @@
  * Missing source coverage throws; it never becomes a biological negative.
  */
 export const SNAPSHOT_SCOPE = {
-  genePanel: 92,
   maxCellQ: 0.05,
   label: 'Published evidence snapshots',
-  interpretation: 'Gene–phenotype links are disease-context associations in the 92-gene evidence panel. Cell rows are signed atlas associations, not proof of causality; gene expression does not establish variant effect or treatment response.',
+  interpretation: 'Gene–phenotype links are disease-context associations in the explicit evidence panel. Its size and source coverage are reported in the dataset metadata. Cell rows are signed atlas associations, not proof of causality; gene expression does not establish variant effect or treatment response.',
 };
 
 export function normalizeAtlas(value) {
@@ -82,7 +81,7 @@ export function createSnapshotPortal(loadJson) {
     const ncbi = selection.replace(/^NCBIGene:/, '');
     const symbol = ids[ncbi] || Object.keys(geneHpo.genes).find(gene => gene.toLowerCase() === selection.toLowerCase());
     if (selection.startsWith('HP:')) term(selection, terms);
-    if (!selection.startsWith('HP:') && !symbol) throw new SnapshotUnavailable(`Gene ${selection} is outside the 92-gene snapshot panel.`);
+    if (!selection.startsWith('HP:') && !symbol) throw new SnapshotUnavailable(`Gene ${selection} is outside the ${Object.keys(geneHpo.genes).length}-gene snapshot panel.`);
     const rows = symbol ? (geneHpo.genes[symbol] || []) : Object.entries(geneHpo.genes).flatMap(([gene, entries]) => entries.filter(row => row.hpo_id === selection).map(row => ({ ...row, gene_symbol: gene })));
     const phenotypeIds = [...new Set(rows.filter(row => row.isPhenotypicAbnormality === true).map(row => row.hpo_id))];
     const genes = [...new Map(rows.map(row => [row.ncbi_gene_id, { id: `NCBIGene:${row.ncbi_gene_id}`, name: symbol || row.gene_symbol }])).values()];

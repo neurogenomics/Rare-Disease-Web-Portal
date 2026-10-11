@@ -2,13 +2,30 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
-  endpointEvidenceCounts, getEndpointAssessment, getEndpointObservations, getEndpointResults,
+  endpointEvidenceCounts, getEndpointAssessment, getEndpointObservations, getEndpointResults, getUnmappedEndpointResults,
   matchesTreatmentContext, matchesTreatmentDisease,
 } from '../src/lib/endpointModel.js';
 
 const data = JSON.parse(readFileSync(new URL('../src/data/evidence/endpointEvidence.json', import.meta.url)));
 const curated = JSON.parse(readFileSync(new URL('../src/data/evidence/curatedEvidence.json', import.meta.url)));
 const results = (id, hpo, disease) => getEndpointResults(data, id, hpo, disease);
+
+test('unmapped survival evidence stays discoverable by diagnosis without qualifying phenotype or cell filters', () => {
+  const survival = { id: 'survival', hpoId: null, mapping: 'unmapped', diseaseIds: ['OMIM:309400'],
+    scopeReview: 'endpoint_specific', outcome: 'benefit' };
+  const neurological = { id: 'neurology', hpoId: 'HP:0001250', mapping: 'direct', diseaseIds: ['OMIM:309400'] };
+  const fixture = { assessments: [{ assessmentId: 'cofactor', endpointResults: [survival, neurological],
+    cellObservations: [{ hpoIds: [null], endpointResultIds: ['survival'], diseaseIds: ['OMIM:309400'] }] }] };
+  assert.deepEqual(getUnmappedEndpointResults(fixture, 'cofactor', 'OMIM:309400'), [survival]);
+  assert.deepEqual(getUnmappedEndpointResults(fixture, 'cofactor', 'OMIM:123456'), []);
+  assert.deepEqual(getEndpointResults(fixture, 'cofactor', 'HP:0001250'), [neurological]);
+  assert.deepEqual(getEndpointResults(fixture, 'cofactor', null), []);
+  assert.deepEqual(getEndpointObservations(fixture, 'cofactor', null), []);
+  assert.equal(matchesTreatmentContext(fixture, 'cofactor', [], { disease: 'OMIM:309400' }), true);
+  assert.equal(matchesTreatmentContext(fixture, 'cofactor', [], { hpo: 'HP:0001250', disease: 'OMIM:309400' }), false);
+  assert.equal(matchesTreatmentContext(fixture, 'cofactor', [], { cellHpoIds: ['HP:0001250'] }), false);
+  assert.equal(endpointEvidenceCounts(fixture).unmappedResults, 1);
+});
 
 test('CEP290 early BCVA observation and randomized primary result retain study-specific scope and citations', () => {
   const [early, randomized] = results('sepofarsen-cep290', 'HP:0007663');
@@ -186,11 +203,11 @@ test('different exon-skipping products cannot inherit one another’s biopsy obs
 });
 
 test('coverage counts include unknown review scope as pending and separate identity sources', () => {
-  assert.deepEqual(endpointEvidenceCounts({ sources: [{ kind: 'condition_identifier' }, { kind: 'primary_publication' }], assessments: [
+  assert.deepEqual(endpointEvidenceCounts({ sources: [{ id: 'condition', kind: 'condition_identifier' }, { id: 'trial', kind: 'primary_publication' }], assessments: [
     { endpointResults: [{ scopeReview: 'endpoint_specific' }, { scopeReview: 'single_mapped_endpoint' }, {}], cellObservations: [{}], diseaseIds: [{}] },
     { endpointResults: [], cellObservations: [], diseaseIds: [] },
   ] }), { assessments: 2, endpointResults: 3, reviewedResults: 1, pendingResultReviews: 2,
-    cellObservations: 1, assessmentsWithCellObservations: 1, diseaseCrosswalks: 1, conditionReferenceSources: 1 });
+    unmappedResults: 0, cellObservations: 1, assessmentsWithCellObservations: 1, diseaseCrosswalks: 1, conditionReferenceSources: 1 });
   const empty = endpointEvidenceCounts(undefined);
   assert.equal(empty.reviewedResults, 0);
   assert.equal(empty.pendingResultReviews, 0);
@@ -243,7 +260,7 @@ test('unresolved initial seizure phase cannot inherit extension subgroup observa
   assert.equal(initial.scopeReview, 'source_limited');
   assert.match(extension.population, /subgroup size is not stated/);
   assert.match(extension.limits.join(' '), /no effect is assigned to every extension participant/);
-  assert.equal(endpointEvidenceCounts(data).pendingResultReviews, 1);
+  assert.equal(initial.outcome, 'unknown');
 });
 
 test('approved fitusiran regimen preserves extension rather than randomized comparator scope', () => {
@@ -280,7 +297,13 @@ test('all existing assessments and multi-HPO crosswalks have explicit result rec
       assert.ok(result.sourceIds.length > 0, result.id);
       assert.ok(result.sourceIds.every(id => sources.has(id)), result.id);
       assert.ok(result.diseaseIds.every(id => diseaseIds.has(id)), result.id);
-      assert.ok(assessment.phenotypes.some(p => p.hpoId === result.hpoId && p.mapping === result.mapping), result.id);
+      if (result.hpoId === null) {
+        assert.equal(result.mapping, 'unmapped', result.id);
+        assert.ok(result.limits.length, result.id);
+      } else {
+        assert.ok(assessment.phenotypes.some(p => p.hpoId === result.hpoId), result.id);
+        assert.ok(['direct', 'proxy', 'indirect'].includes(result.mapping), result.id);
+      }
       assert.ok(result.trialRefs.every(t => assessment.trials.some(original => original.nctId === t.nctId && original.name === t.name)), result.id);
     }
     for (const observation of record.cellObservations) {
@@ -291,4 +314,75 @@ test('all existing assessments and multi-HPO crosswalks have explicit result rec
       assert.ok(observation.studyRelationship, observation.id);
     }
   }
+});
+
+
+test('Menkes survival and heterogeneous folate responses cannot fill another phenotype endpoint', () => {
+  const survival = getUnmappedEndpointResults(data, 'copper-histidinate-menkes', 'OMIM:309400');
+  assert.equal(survival.length, 2);
+  assert.ok(survival.every(result => result.outcome === 'benefit' && result.mapping === 'unmapped'));
+  assert.ok(results('copper-histidinate-menkes', 'HP:0002194').every(result => result.outcome === 'mixed'));
+  assert.deepEqual(results('copper-histidinate-menkes', 'HP:0001250'), []);
+  const folate = getUnmappedEndpointResults(data, 'leucovorin-folr1-cftd');
+  assert.deepEqual(folate.map(result => result.outcome), ['mixed', 'null']);
+  assert.match(folate[0].population, /oral/i);
+  const brand = curated.assessments.find(assessment => assessment.id === 'leucovorin-folr1-cftd').regulatory;
+  assert.equal(brand.approvalDate, '2026-03-09');
+  assert.equal(brand.announcementDate, '2026-03-10');
+  assert.equal(brand.withdrawalDate, '2026-04-10');
+  assert.match(brand.status, /all supplements withdrawn/i);
+});
+
+test('pediatric APDS discovery keeps quantitative efficacy unknown instead of inheriting older B-cell response', () => {
+  const adult = results('leniolisib-apds-12plus', 'HP:0030372')[0];
+  assert.match(adult.summary, /37.30 percentage points/);
+  const pediatric = results('leniolisib-apds-4to11', 'HP:0030372')[0];
+  assert.equal(pediatric.outcome, 'unknown');
+  assert.equal(pediatric.scopeReview, 'source_limited');
+  assert.notEqual(pediatric.trialRefs[0].nctId, adult.trialRefs[0].nctId);
+  assert.deepEqual(getEndpointObservations(data, 'leniolisib-apds-4to11', 'HP:0030372'), []);
+});
+
+test('FOP lesion counts, incidence, volume and flare reports retain opposing results', () => {
+  const antibody = results('garetosmab-fop', 'HP:0011986');
+  assert.equal(antibody.find(result => result.id === 'garetosmab-fop-optima-count-10').outcome, 'benefit');
+  assert.equal(antibody.find(result => result.id === 'garetosmab-fop-optima-volume').outcome, 'null');
+  assert.equal(antibody.find(result => result.id === 'garetosmab-fop-lumina-primary-pet').outcome, 'null');
+  const inhibitor = results('zilurgisertib-fop', 'HP:0011986');
+  const incidence = inhibitor.find(result => result.id === 'zilurgisertib-fop-progress-incidence');
+  assert.equal(incidence.outcome, 'null');
+  assert.match(incidence.summary, /five of 30.*0.0986/);
+  const volume = inhibitor.find(result => result.id === 'zilurgisertib-fop-progress-volume');
+  assert.equal(volume.outcome, 'benefit');
+  assert.match(volume.summary, /Hodges.*Lehmann/);
+});
+
+test('NPC multidomain disability totals and purified-L cellular counterevidence cannot become ataxia cell validation', () => {
+  const totals = getUnmappedEndpointResults(data, 'levacetylleucine-npc');
+  assert.deepEqual(new Set(totals.map(result => result.id)), new Set(['levacetylleucine-npc-mdrs-secondary', 'levacetylleucine-npc-npc-css-exploratory-null']));
+  assert.ok(results('levacetylleucine-npc', 'HP:0001251').every(result => !totals.includes(result)));
+  const observations = getEndpointObservations(data, 'levacetylleucine-npc', 'HP:0001251');
+  const purified = observations.find(observation => observation.id === 'levacetylleucine-npc-model-purkinje-null');
+  const racemic = observations.find(observation => observation.id === 'levacetylleucine-npc-model-racemic-purkinje');
+  assert.match(purified.claim, /did not significantly preserve/);
+  assert.match(racemic.claim, /cannot be credited to Aqneursa/);
+  assert.equal(purified.clinicalMediation, 'not_established');
+  assert.deepEqual(getEndpointObservations(data, 'levacetylleucine-ataxia-telangiectasia', 'HP:0001251'), []);
+});
+
+test('condition source coverage counts both libraries once, including additional indication references', () => {
+  const source = { id: 'identity', kind: 'condition_identifier' };
+  assert.equal(endpointEvidenceCounts({ sources: [source] }, [source, { id: 'additional', kind: 'condition_identifier' }]).conditionReferenceSources, 2);
+  const expected = new Set([...curated.sources, ...data.sources].filter(source => source.kind === 'condition_identifier').map(source => source.id));
+  assert.equal(endpointEvidenceCounts(data, curated.sources).conditionReferenceSources, expected.size);
+});
+
+
+test('distinct measurements of one phenotype retain their individual direct and proxy crosswalks', () => {
+  const stature = results('yuviwel-fgfr3', 'HP:0004322');
+  assert.equal(stature.find(result => result.id === 'yuviwel-fgfr3-approach-agv').mapping, 'proxy');
+  assert.equal(stature.find(result => result.id === 'yuviwel-fgfr3-approach-ach-height').mapping, 'direct');
+  const pain = results('garetosmab-fop', 'HP:0012531');
+  assert.equal(pain.find(result => result.id === 'garetosmab-fop-lumina-pain').mapping, 'direct');
+  assert.equal(pain.find(result => result.id === 'garetosmab-fop-optima-clinician-flare-10').mapping, 'proxy');
 });
