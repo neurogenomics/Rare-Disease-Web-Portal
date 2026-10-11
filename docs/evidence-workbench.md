@@ -11,6 +11,12 @@ routes now use the same workbench. Phenotype, gene and exact atlas/cell selectio
 from the older explorers carry into it. URL filters support sharing; records,
 source manifests, associations and shortlist tables can be downloaded.
 
+The homepage and evidence explorer share the portal's existing logo, header,
+navigation and footer. Evidence views use the same Ant Design typography,
+breadcrumbs, cards, tabs and controls as the established explorers. Their
+evidence-specific tables and requirement ledgers remain within that shared
+interface; tab changes preserve the selected gene, phenotype and atlas context.
+
 ## Inspect an evidence chain
 
 1. Select a treatment and inspect its measured endpoint, population and time

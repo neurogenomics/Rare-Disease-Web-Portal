@@ -1,11 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { Breadcrumb, Button, Card, Layout, Tabs } from 'antd';
+import CustomHeader from '../components/utilities/Header';
+import CustomFooter from '../components/utilities/Footer';
 import TherapiesPanel from '../components/evidence/TherapiesPanel';
 import VariantsPanel from '../components/evidence/VariantsPanel';
 import ModalitiesPanel from '../components/evidence/ModalitiesPanel';
 import TrialDrawer from '../components/evidence/TrialDrawer';
-import { EntityLink, SectionLabel, StatusBadge } from '../components/evidence/EvidenceCommon';
+import { EntityLink, SectionLabel } from '../components/evidence/EvidenceCommon';
 import { number, sourceDate, useEvidenceIndex } from '../components/evidence/evidenceUtils';
 import { evidenceCoverage, getTherapyRows, downloadData } from '../lib/evidenceModel';
 import catalog from '../data/evidence/legacyCatalog.json';
@@ -111,20 +114,14 @@ export default function EvidenceWorkbench({ initialTab = 'therapies' }) {
     Object.entries(updates).forEach(([key, value]) => value == null || value === '' ? next.delete(key) : next.set(key, value));
     return next;
   }, { replace });
-  useEffect(() => { document.title = `${tabs.find((item) => item.id === tab)?.label || 'Evidence'} · Rare Disease Atlas`; }, [tab]);
+  useEffect(() => { document.title = `${tabs.find((item) => item.id === tab)?.label || 'Evidence'} · Rare Disease Celltyping Portal`; }, [tab]);
   useEffect(() => { setCopyStatus(''); }, [params]);
   const activeChips = [['gene', filters.gene], ['hpo', filters.hpo && `${hpoTerms.terms[filters.hpo]?.label || 'Phenotype'} · ${filters.hpo}`], ['cell', filters.cell && `Cell: ${filters.cell.replaceAll('_', ' ')}`], ['atlas', filters.atlas && `Atlas: ${{ DescartesHuman: 'Descartes Human', HumanCellLandscape: 'Human Cell Landscape' }[filters.atlas] || filters.atlas}`], ['search', filters.search]].filter(([, value]) => value);
   const copyLink = async () => {
     try { await navigator.clipboard.writeText(window.location.href); setCopyStatus('Link copied'); }
     catch { setCopyStatus('Copy the address from your browser'); }
   };
-  return <div className="ev-workbench">
-    <a className="ev-skip-link" href={`${window.location.pathname}${window.location.search}#ev-workspace`} onClick={(event) => { event.preventDefault(); const workspace = document.getElementById('ev-workspace'); workspace?.focus({ preventScroll: true }); workspace?.scrollIntoView({ block: 'start' }); }}>Skip to evidence</a>
-    <header className="ev-site-header"><Link className="ev-brand" to="/">RD<span>Rare Disease<br />Atlas</span></Link><nav aria-label="Portal navigation"><Link to="/phenotype">Phenotypes</Link><Link to="/gene-browser">Genes</Link><Link to="/celltype">Cell types</Link><Link className="is-active" to="/evidence">Evidence explorer</Link></nav><Link className="ev-back-link" to="/">← Atlas home</Link></header>
-    <main className="ev-main">
-      <section className="ev-hero"><div><span className="ev-eyebrow">The therapeutic evidence workbench</span><h1>From a biological question<br />to its <em>supporting evidence.</em></h1><p>Follow the chain between a phenotype, its cells and genes, a specific variant, and the approaches tested in people. Inspect the observations behind each connection.</p></div><div className="ev-hero-aside"><span className="ev-aside-label">Evidence, with its limits</span><div><b>{number(coverage.assessments)}</b><span>reviewed treatment cases</span></div><div><b>{number(coverage.genes)}</b><span>genes with ClinVar snapshots</span></div><button className="ev-text-button" onClick={() => updateFilters({ tab: 'methods' })}>See coverage & source dates →</button></div></section>
-      <div className="ev-workspace-nav"><nav aria-label="Evidence views" className="ev-tabs">{tabs.map((item) => <button key={item.id} className={tab === item.id ? 'is-active' : ''} aria-current={tab === item.id ? 'page' : undefined} onClick={() => updateFilters({ tab: item.id })}><span>{item.step}</span>{item.label}</button>)}</nav><button className="ev-share-button" onClick={copyLink} aria-label="Copy a link to this evidence view">Share view <span aria-hidden="true">↗</span></button></div>
-      {copyStatus && <p className="ev-share-status" role="status">{copyStatus}</p>}
+  const content = <>
       {tab !== 'methods' && <div className="ev-global-filters"><label className="ev-search-label" htmlFor="ev-search">Search this view<div><span aria-hidden="true">⌕</span><input type="search" id="ev-search" placeholder={tab === 'variants' ? 'HGVS, condition or consequence…' : 'Therapy, disease, gene or phenotype…'} value={filters.search || ''} onChange={(event) => updateFilters({ search: event.target.value, therapy: null, variant: null, candidate: null }, true)} /></div></label><label className="ev-gene-filter" htmlFor="ev-gene-filter">Gene<select id="ev-gene-filter" value={filters.gene || ''} onChange={(event) => updateFilters({ gene: event.target.value, therapy: null, variant: null, candidate: null })}><option value="">{tab === 'variants' ? 'Default: SCN1A' : 'All panel genes'}</option>{geneList.map((gene) => <option key={gene}>{gene}</option>)}{filters.gene && !geneList.includes(filters.gene) && <option>{filters.gene}</option>}</select></label><PhenotypePicker hpo={filters.hpo} hpoTerms={hpoTerms} onSelect={(hpo) => updateFilters({ hpo, candidate: null })} />{activeChips.length > 0 && <button className="ev-text-button ev-clear-all" onClick={() => updateFilters({ search: null, gene: null, hpo: null, cell: null, atlas: null, therapy: null, variant: null, candidate: null, evidence: null, vclass: null, consequence: null, location: null, stars: null, readiness: null, mechanism: null, severity: null })}>Clear filters</button>}</div>}
       {tab !== 'methods' && activeChips.length > 0 && <div className="ev-active-filters" aria-label="Active filters">{activeChips.map(([key, value]) => <button key={key} onClick={() => updateFilters({ [key]: null, ...(['cell', 'atlas'].includes(key) ? { cell: null, atlas: null, therapy: null } : {}), candidate: null, variant: null })}>{value}<span aria-hidden="true">×</span><span className="ev-sr-only">Remove {key} filter</span></button>)}</div>}
       {filters.cell && !indicesLoading && !cellSourceUnavailable && <aside className="ev-notice ev-cell-context" aria-label="Exact atlas cell context"><strong>Exact atlas cell context:</strong> <span className="ev-mono">{filters.cell}</span> · {filters.atlas || 'Atlas not supplied'}.{cellRecord ? <><p>{number(cellHpoIds.length)} positively associated phenotypes in this atlas source snapshot (positive estimate; source q &lt; {cellState.data?.metadata?.qThreshold ?? 0.05}). Treatment and modality lists include only these phenotypes; a positive association does not establish therapeutic targeting, delivery, cellular causality or treatment benefit. Negative associations are retained separately and do not qualify this filter.</p>{tab === 'variants' && <p>The ClinVar table remains gene-scoped. This cell context does not assign variants to cell types.</p>}</> : <p>No exact cell label matches in the stated atlas source. No broader lineage or naming match is inferred. Clear the cell context to explore other evidence.</p>}<button className="ev-text-button" onClick={() => downloadData('atlas-cell-phenotype-context.json', { atlas: filters.atlas, cell: filters.cell, associations: cellRecord || null, provenance: cellState.data?.metadata })}>Download exact associations & provenance ↓</button></aside>}
@@ -136,8 +133,19 @@ export default function EvidenceWorkbench({ initialTab = 'therapies' }) {
         {tab === 'modalities' && !indicesLoading && !cellSourceUnavailable && <ModalitiesPanel filters={filters} updateFilters={updateFilters} genePhenotypes={genePhenotypes} severity={severity} predictions={predictions} contexts={contexts} variantIndex={variantIndex} atlasIndex={atlasIndex} cellHpoIds={cellHpoIds} />}
         {tab === 'methods' && !indicesLoading && <MethodsPanel coverage={coverage} onTrial={setNctId} atlasIndex={atlasIndex} genePhenotypes={genePhenotypes} geneExpression={geneExpression} hpoTerms={hpoTerms} trialIndex={trialIndex} dosageEvidence={dosageEvidence} />}
       </div>
-      <footer className="ev-footer"><span>Rare Disease Atlas · research evidence explorer</span><div><StatusBadge status="unknown">Uncertainty stays visible</StatusBadge><button className="ev-text-button" onClick={() => updateFilters({ tab: 'methods' })}>Methods & source coverage →</button></div><p>Research contexts and requirement assessments do not establish individual treatment suitability. Source dates, experimental scope and missing evidence belong to every conclusion.</p></footer>
-    </main>
+      <aside className="ev-footer" aria-label="Evidence interpretation limits"><strong>Research evidence and interpretation</strong><button className="ev-text-button" onClick={() => updateFilters({ tab: 'methods' })}>Methods & source coverage →</button><p>Research contexts and requirement assessments do not establish individual treatment suitability. Source dates, experimental scope and missing evidence belong to every conclusion.</p></aside>
+    </>;
+  const navigationKey = { therapies: 'approved-therapies', variants: 'variants', modalities: 'gene-therapy-targets', methods: 'methods' }[tab];
+  return <Layout className="ev-workbench">
+    <a className="ev-skip-link" href={`${window.location.pathname}${window.location.search}#ev-workspace`} onClick={(event) => { event.preventDefault(); const workspace = document.getElementById('ev-workspace'); workspace?.focus({ preventScroll: true }); workspace?.scrollIntoView({ block: 'start' }); }}>Skip to evidence</a>
+    <CustomHeader activePageKey={navigationKey} />
+    <Layout.Content className="ev-main">
+      <Breadcrumb className="ev-breadcrumb" items={[{ title: <Link to="/">Home</Link> }, { title: 'Evidence explorer' }]} />
+      <Card className="ev-intro-card"><section className="ev-hero"><div><h1>Evidence explorer</h1><p>Follow the chain between a phenotype, its cells and genes, a specific variant, and the approaches tested in people. Inspect the observations behind each connection.</p></div><div className="ev-hero-aside"><span className="ev-aside-label">Source coverage</span><div><b>{number(coverage.assessments)}</b><span>reviewed treatment cases</span></div><div><b>{number(coverage.genes)}</b><span>genes with ClinVar snapshots</span></div><button className="ev-text-button" onClick={() => updateFilters({ tab: 'methods' })}>See coverage & source dates →</button></div></section></Card>
+      {copyStatus && <p className="ev-share-status" role="status">{copyStatus}</p>}
+      <Tabs className="ev-portal-tabs" activeKey={tab} onChange={(nextTab) => updateFilters({ tab: nextTab })} tabBarExtraContent={<Button onClick={copyLink} aria-label="Copy a link to this evidence view">Share view</Button>} items={tabs.map((item) => ({ key: item.id, label: item.label, children: item.id === tab ? content : null }))} />
+    </Layout.Content>
+    <CustomFooter />
     <TrialDrawer nctId={nctId} onClose={() => setNctId(null)} />
-  </div>;
+  </Layout>;
 }

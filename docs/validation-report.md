@@ -2,7 +2,18 @@
 
 Validated 2026-10-11. The final offline audit of 9,997 JSON files reports **zero schema, count, reference, source-field or archive/public consistency errors**. All 138 regression tests and the production build pass. There is one unresolved disease-alias warning. These checks establish conservative calculations and traceability; passing them does not validate causal cell types, a clinical treatment decision or a treatment-success probability.
 
-The final prebuild publisher passed, and Vite completed the production build in 15.89 seconds after the evidence-ledger and staging missingness changes. The evidence-workbench executable is 654.26 kB, or 155.14 kB gzip; the main executable is 176.57 kB, or 58.50 kB gzip. Large evidence datasets are published as separately fetched data. Existing build warnings concern stale Browserslist data, `lottie.js` use of `eval` and chunks larger than 500 kB. The completed desktop/mobile and keyboard workbench review found no material scientific-limit mismatch with this report. A further desktop browser check verified the gene browser's unavailable-API warning, disabled unsourced percentile filter and route to the snapshot-backed workbench.
+The final prebuild publisher passed, and Vite completed the production build in 19.98 seconds after the shared-interface integration. The evidence-workbench executable is 653.71 kB, or 155.11 kB gzip; the main executable is 280.59 kB, or 87.37 kB gzip. Large evidence datasets are published as separately fetched data. Existing build warnings concern stale Browserslist data, `lottie.js` use of `eval` and chunks larger than 500 kB. The completed desktop/mobile and keyboard workbench review found no material scientific-limit mismatch with this report. A further desktop browser check verified the gene browser's unavailable-API warning, disabled unsourced percentile filter and route to the snapshot-backed workbench.
+
+The homepage and evidence routes now reuse the established portal logo, header,
+navigation and footer. The explorer uses Ant Design Layout, Breadcrumb, Card,
+Tabs and Button components, with system typography and blue/gray styling.
+Browser checks at 1280px and 390px verified the homepage and evidence layout,
+the homepage-to-variant route, gene preservation across tab changes, and trial
+drawer opening and Escape dismissal. The original phenotype explorer retains
+the same shared identity and navigation. The narrow evidence page has no page
+overflow; mobile search controls use 16px text and a 44px height. CSS selectors
+are isolated from the shared header/footer. Scoped JSX lint and all 62 frontend
+regressions pass after integration; no source data or calculation engine changed.
 
 ## Reproducible checks
 
