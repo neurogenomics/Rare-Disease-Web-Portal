@@ -82,13 +82,14 @@ class TestGeneTFEndpoint:
         assert data["is_tf"] is True
         assert "dbd" in data
 
-    def test_get_tf_non_tf(self, client):
-        """Non-TF gene should return is_tf: False."""
+    def test_get_tf_unassessed(self, client):
+        """Missing TF enrichment should return unknown, not a negative."""
         response = client.get("/api/gene/LRRK2/tf")
         assert response.status_code == 200
 
         data = response.json()
-        assert data["is_tf"] is False
+        assert data["is_tf"] is None
+        assert data["evidence_status"] == "unknown"
 
     def test_get_tf_not_found(self, client):
         """Unknown gene should return 404."""

@@ -1,8 +1,8 @@
 # Evidence validation report
 
-Validated 2026-10-11. The final offline audit of 9,997 JSON files reports **zero schema, count, reference, source-field or archive/public consistency errors**. All 123 regression tests and the production build pass. There is one unresolved disease-alias warning. These checks establish conservative calculations and traceability; passing them does not validate causal cell types, a clinical treatment decision or a treatment-success probability.
+Validated 2026-10-11. The final offline audit of 9,997 JSON files reports **zero schema, count, reference, source-field or archive/public consistency errors**. All 138 regression tests and the production build pass. There is one unresolved disease-alias warning. These checks establish conservative calculations and traceability; passing them does not validate causal cell types, a clinical treatment decision or a treatment-success probability.
 
-The final prebuild publisher passed, and Vite completed the production build in 12.82 seconds after the functional-sufficiency, maturity-ledger, comparison and mechanism-scope changes. The evidence-workbench executable is 654.26 kB, or 155.14 kB gzip; the main executable is 176.57 kB, or 58.49 kB gzip. Large evidence datasets are published as separately fetched data. Existing build warnings concern stale Browserslist data, `lottie.js` use of `eval` and chunks larger than 500 kB. The completed desktop/mobile and keyboard interface review found no material scientific-limit mismatch with this report.
+The final prebuild publisher passed, and Vite completed the production build in 15.89 seconds after the evidence-ledger and staging missingness changes. The evidence-workbench executable is 654.26 kB, or 155.14 kB gzip; the main executable is 176.57 kB, or 58.50 kB gzip. Large evidence datasets are published as separately fetched data. Existing build warnings concern stale Browserslist data, `lottie.js` use of `eval` and chunks larger than 500 kB. The completed desktop/mobile and keyboard workbench review found no material scientific-limit mismatch with this report. A further desktop browser check verified the gene browser's unavailable-API warning, disabled unsourced percentile filter and route to the snapshot-backed workbench.
 
 ## Reproducible checks
 
@@ -10,7 +10,7 @@ Run from the repository root:
 
 ```sh
 python3 -m unittest discover -s scripts/tests -p 'test_*.py' -q
-backend/.venv/bin/python -m pytest backend/tests/test_candidate_evidence.py -q
+backend/.venv/bin/python -m pytest backend/tests/test_candidate_evidence.py backend/tests/test_annotation_unknowns.py -q
 node --test frontend/tests/*.test.mjs scripts/tests/snapshotBundles.test.mjs
 python3 scripts/tests/audit_snapshots.py
 npm --prefix frontend run build
@@ -22,12 +22,30 @@ The corpus audit requires `jsonschema` and the frozen local HPO, ClinGen and API
 | Check | Result |
 | --- | --- |
 | Import, dosage, ontology, registry-refresh and reverse-cell fixtures | 22 passed |
-| Backend candidate engine | 30 passed |
-| Frontend evidence and modality engines | 57 passed |
+| Backend candidate engine and annotation missingness | 40 passed |
+| Frontend evidence, modality and annotation engines | 62 passed |
 | Snapshot publication and restoration | 14 passed |
 | Final normalized corpus and archive audit | Zero errors; one disease-alias warning |
 | Prebuild publication and production build | Passed |
 | Diff whitespace hygiene | Passed |
+
+The 15 added annotation regressions distinguish an unassessed reference from a
+source-backed TF or reagent assessment, restrict negative filters to declared
+source coverage, and keep absent reference corpora separate from zero filter
+matches. HPO counts are null until queried. Empty, invalid and failed specificity
+samples never manufacture thresholds; valid zeros and tiny values retain their
+precision. The percentile response declares its atlas, cell scope, sample size
+and empirical sampling method; the interface labels it as an estimate and treats
+legacy values without provenance as unverified. Retrieval failures remain
+retryable. These fixtures use offline collections, not fabricated production
+annotations.
+
+Manual configuration checks confirmed environment overrides for a separate
+API/database and exact frontend origins. The actual FastAPI CORS middleware
+accepts `http://127.0.0.1:5180` and rejects an unlisted origin without querying the
+database. Scoped lint passes for the changed gene-browser, display helper and
+frontend API configuration. Neither the checks nor the local preview alter the
+Imperial services or populate an annotation database.
 
 Streaming-array fixtures exercise one-byte and other small chunks, nested strings and Unicode, incomplete data, missing separators and trailing commas. Atlas import fixtures preserve signed estimates, zero and very small q-values, missingness and exact expression specificity; they distinguish all-tested panel exports from significant-only exports. ClinGen fixtures keep score 0, score 30, score 40 and unscored assertions distinct, preserve source identifiers and reject duplicate gene records.
 

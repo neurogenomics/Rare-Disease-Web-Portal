@@ -10,15 +10,15 @@ import {
     Spin,
     Button,
     Card,
+    Alert,
     Slider,
     Select,
-    Switch,
     Tooltip,
     Tag,
     Radio,
     Checkbox,
 } from "antd";
-import { SearchOutlined, ExpandMore } from "@mui/icons-material";
+import { SearchOutlined } from "@mui/icons-material";
 import { BASE_API_URL } from "../../config.js";
 import ExpressionSpecificityInfo from "../components/info/ExpressionSpecificityInfo.jsx";
 import DownloadButton from "../components/utilities/Download.jsx";
@@ -26,6 +26,7 @@ import formatText from "../scripts/formatText.js";
 import PageIntro from "../components/PageIntro.jsx";
 import { urlSetter } from "../scripts/urlHandlers.js";
 import ShareButton from "../components/utilities/ShareButton.jsx";
+import { getTfDisplay, readBrowserPercentiles, readGeneBrowserResponse } from "../lib/geneAnnotationDisplay.js";
 
 const { Content, Sider } = Layout;
 
@@ -33,6 +34,10 @@ export default function GeneBrowserPage() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [optionsLoading, setOptionsLoading] = useState(true);
+    const [optionsError, setOptionsError] = useState(null);
+    const [browseError, setBrowseError] = useState(null);
+    const [hasSearched, setHasSearched] = useState(false);
+    const [reloadCount, setReloadCount] = useState(0);
     const [filterOptions, setFilterOptions] = useState({
         diseases: [],
         dbd_types: [],
@@ -75,80 +80,96 @@ export default function GeneBrowserPage() {
         db_type: "DescartesHuman",
         cell_types: [],
         specificity_percentile: 10,  // Default: Top 10%
-        min_specificity: 0.02,       // Will be computed from percentile
+        min_specificity: null,
     });
 
     // Percentile thresholds (fetched from backend)
-    const [percentileThresholds, setPercentileThresholds] = useState({
-        1: 0.14, 5: 0.05, 10: 0.02, 25: 0.01, 50: 0.001
-    });
+    const [percentileEvidence, setPercentileEvidence] = useState({status: "loading", thresholds: {}});
+    const currentAtlas = useRef(filterValues.db_type);
+    const browseRequestId = useRef(0);
+
+    useEffect(() => {
+        currentAtlas.current = filterValues.db_type;
+        browseRequestId.current += 1;
+        setData([]);
+        setHasSearched(false);
+        setBrowseError(null);
+        setLoading(false);
+        setHpoData({});
+        setHpoLoading({});
+        setExpandedRowKeys([]);
+    }, [filterValues.db_type]);
 
     // Fetch filter options on mount
     useEffect(() => {
-        fetchFilterOptions();
-    }, [filterValues.db_type]);
-
-    // Fetch percentile thresholds when db_type or cell_types change
-    useEffect(() => {
-        const fetchPercentiles = async () => {
+        let cancelled = false;
+        const fetchFilterOptions = async () => {
+            setOptionsLoading(true);
+            setOptionsError(null);
             try {
-                // Use first cell type if selected, otherwise global
-                const cellType = filterValues.cell_types.length > 0
-                    ? filterValues.cell_types[0]
-                    : "";
-                const url = `${BASE_API_URL}/api/genes/browse/percentiles?db_type=${filterValues.db_type}${cellType ? `&cell_type=${cellType}` : ""}`;
-                const response = await axios.get(url);
-                const thresholds = response.data;
-                setPercentileThresholds(thresholds);
-                // Update min_specificity based on current percentile selection
-                // API returns string keys, convert to string for lookup
-                const currentPercentile = String(filterValues.specificity_percentile);
-                const newThreshold = thresholds[currentPercentile] || 0.02;
-                setFilterValues((prev) => ({
-                    ...prev,
-                    min_specificity: newThreshold,
-                }));
-            } catch (error) {
-                console.error("Error fetching percentile thresholds:", error);
-            }
-        };
-        fetchPercentiles();
-    }, [filterValues.db_type, filterValues.cell_types]);
-
-    // Fetch when pagination changes (but not on initial mount)
-    useEffect(() => {
-        if (data.length > 0) {
-            handleSubmit();
-        }
-    }, [tableParams.pagination.current, tableParams.pagination.pageSize]);
-
-    const fetchFilterOptions = async () => {
-        setOptionsLoading(true);
-        try {
-            const response = await axios.get(
-                `${BASE_API_URL}/api/genes/browse/options?db_type=${filterValues.db_type}`
-            );
-            const options = response.data || { diseases: [], dbd_types: [], cell_types: [] };
-            setFilterOptions(options);
-
-            // Set default cell type if available and none selected
-            if (options.cell_types && options.cell_types.length > 0) {
-                const defaultCell = options.cell_types.find((ct) =>
-                    ct.toLowerCase().includes("microglia")
-                ) || options.cell_types[0];
+                const response = await axios.get(
+                    `${BASE_API_URL}/api/genes/browse/options?db_type=${filterValues.db_type}`
+                );
+                if (cancelled) return;
+                const options = response.data;
+                if (!options || !["diseases", "dbd_types", "cell_types"].every(key => Array.isArray(options[key]))
+                    || (options.evidence_status && options.evidence_status !== "available")) {
+                    throw new Error("Filter options are unavailable.");
+                }
+                setFilterOptions(options);
+                const defaultCell = options.cell_types.find((ct) => ct.toLowerCase().includes("microglia"))
+                    || options.cell_types[0];
                 if (defaultCell) {
                     setFilterValues((prev) => ({
                         ...prev,
                         cell_types: prev.cell_types.length === 0 ? [defaultCell] : prev.cell_types,
                     }));
                 }
+            } catch (error) {
+                if (cancelled) return;
+                console.error("Error fetching filter options:", error);
+                setFilterOptions({diseases: [], dbd_types: [], cell_types: []});
+                setOptionsError("Gene annotation filter options could not be loaded.");
+            } finally {
+                if (!cancelled) setOptionsLoading(false);
             }
-        } catch (error) {
-            console.error("Error fetching filter options:", error);
-        } finally {
-            setOptionsLoading(false);
-        }
-    };
+        };
+        fetchFilterOptions();
+        return () => { cancelled = true; };
+    }, [filterValues.db_type, reloadCount]);
+
+    // Fetch percentile thresholds when db_type or cell_types change
+    useEffect(() => {
+        let cancelled = false;
+        const fetchPercentiles = async () => {
+            setPercentileEvidence({status: "loading", thresholds: {}});
+            setFilterValues(prev => ({...prev, min_specificity: null}));
+            try {
+                // Use first cell type if selected, otherwise global
+                const cellType = filterValues.cell_types.length > 0
+                    ? filterValues.cell_types[0]
+                    : "";
+                const url = `${BASE_API_URL}/api/genes/browse/percentiles?db_type=${filterValues.db_type}${cellType ? `&cell_type=${encodeURIComponent(cellType)}` : ""}`;
+                const response = await axios.get(url);
+                if (cancelled) return;
+                const evidence = readBrowserPercentiles(response.data, filterValues.db_type, cellType);
+                setPercentileEvidence(evidence);
+                setFilterValues((prev) => ({
+                    ...prev,
+                    min_specificity: evidence.thresholds[String(prev.specificity_percentile)] ?? null,
+                }));
+            } catch (error) {
+                if (cancelled) return;
+                console.error("Error fetching percentile thresholds:", error);
+                setPercentileEvidence({
+                    status: "source_unavailable", thresholds: {},
+                    reason: "Expression-specificity percentile data could not be loaded.",
+                });
+            }
+        };
+        fetchPercentiles();
+        return () => { cancelled = true; };
+    }, [filterValues.db_type, filterValues.cell_types, reloadCount]);
 
     const handleTableChange = (pagination, filters, sorter) => {
         setTableParams({
@@ -157,23 +178,32 @@ export default function GeneBrowserPage() {
             sortOrder: Array.isArray(sorter) ? undefined : sorter.order,
             sortField: Array.isArray(sorter) ? undefined : sorter.field,
         });
+        handleSubmit(pagination);
     };
 
     const handleFilterChange = (name, value) => {
         setFilterValues((prev) => ({
             ...prev,
             [name]: value,
+            ...(name === "db_type" ? {cell_types: [], min_specificity: null} : {}),
+            ...(name === "cell_types" ? {min_specificity: null} : {}),
         }));
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (pagination = tableParams.pagination) => {
+        if (typeof filterValues.min_specificity !== "number") {
+            setBrowseError("Load expression-specificity thresholds before browsing genes.");
+            return;
+        }
         setLoading(true);
+        setBrowseError(null);
+        const requestId = ++browseRequestId.current;
 
         const params = new URLSearchParams({
             db_type: filterValues.db_type,
             min_specificity: filterValues.min_specificity,
-            pageSize: tableParams.pagination.pageSize,
-            current: tableParams.pagination.current,
+            pageSize: pagination.pageSize,
+            current: pagination.current,
         });
 
         if (filterValues.disease) {
@@ -202,17 +232,21 @@ export default function GeneBrowserPage() {
 
         try {
             const response = await axios.get(url);
-            const results = (response.data.genes || []).map((item, index) => ({
+            if (requestId !== browseRequestId.current) return;
+            const result = readGeneBrowserResponse(response.data);
+            if (!result) throw new Error("Gene browser returned no usable annotation response.");
+            const results = result.genes.map((item, index) => ({
                 ...item,
                 key: item.gene_symbol || index,
             }));
 
             setData(results);
+            setHasSearched(true);
             setTableParams((prev) => ({
                 ...prev,
                 pagination: {
                     ...prev.pagination,
-                    total: response.data.total || 0,
+                    total: result.total,
                 },
             }));
 
@@ -224,9 +258,13 @@ export default function GeneBrowserPage() {
                 db_type: filterValues.db_type,
             });
         } catch (error) {
+            if (requestId !== browseRequestId.current) return;
             console.error("Error fetching data:", error);
+            setData([]);
+            setHasSearched(false);
+            setBrowseError("Gene annotation results could not be loaded. This does not establish that no genes match the filters.");
         } finally {
-            setLoading(false);
+            if (requestId === browseRequestId.current) setLoading(false);
         }
     };
 
@@ -234,17 +272,20 @@ export default function GeneBrowserPage() {
         if (hpoData[geneSymbol] || hpoLoading[geneSymbol]) return;
 
         setHpoLoading((prev) => ({ ...prev, [geneSymbol]: true }));
+        const requestAtlas = filterValues.db_type;
 
         try {
             const response = await axios.get(
-                `${BASE_API_URL}/api/gene/${geneSymbol}/hpo?db_type=${filterValues.db_type}`
+                `${BASE_API_URL}/api/gene/${geneSymbol}/hpo?db_type=${requestAtlas}`
             );
+            if (requestAtlas !== currentAtlas.current) return;
             setHpoData((prev) => ({ ...prev, [geneSymbol]: response.data }));
         } catch (error) {
+            if (requestAtlas !== currentAtlas.current) return;
             console.error(`Error fetching HPO data for ${geneSymbol}:`, error);
-            setHpoData((prev) => ({ ...prev, [geneSymbol]: { phenotypes: [] } }));
+            setHpoData((prev) => ({ ...prev, [geneSymbol]: { evidence_status: "source_unavailable" } }));
         } finally {
-            setHpoLoading((prev) => ({ ...prev, [geneSymbol]: false }));
+            if (requestAtlas === currentAtlas.current) setHpoLoading((prev) => ({ ...prev, [geneSymbol]: false }));
         }
     };
 
@@ -299,15 +340,16 @@ export default function GeneBrowserPage() {
             title: "TF",
             dataIndex: "is_tf",
             key: "is_tf",
-            width: 60,
+            width: 130,
             sorter: true,
-            render: (isTf, record) => (
-                isTf ? (
-                    <Tooltip title={record.tf_metadata?.dbd || "Transcription Factor"}>
-                        <Tag color="purple">TF</Tag>
+            render: (_, record) => {
+                const tf = getTfDisplay(record);
+                return (
+                    <Tooltip title={tf.reason}>
+                        <Tag color={tf.value === true ? "purple" : "default"}>{tf.label}</Tag>
                     </Tooltip>
-                ) : null
-            ),
+                );
+            },
         },
         {
             title: "AD Score",
@@ -380,6 +422,7 @@ export default function GeneBrowserPage() {
         const isLoading = hpoLoading[record.gene_symbol];
         const ad = record.disease_associations?.alzheimers;
         const pd = record.disease_associations?.parkinsons;
+        const tf = getTfDisplay(record);
 
         return (
             <div className="p-4 bg-gray-50">
@@ -387,14 +430,15 @@ export default function GeneBrowserPage() {
                     {/* TF Metadata */}
                     <div>
                         <h4 className="font-semibold mb-2">Transcription Factor</h4>
-                        {record.is_tf && record.tf_metadata ? (
+                        <p><strong>Status:</strong> {tf.label}</p>
+                        <p className="text-gray-600">{tf.reason}</p>
+                        {tf.sourceVersion && <p><strong>Source record version:</strong> {tf.sourceVersion}</p>}
+                        {tf.value === true && record.tf_metadata && (
                             <>
                                 <p><strong>DBD:</strong> {record.tf_metadata.dbd || "Unknown"}</p>
                                 <p><strong>Assessment:</strong> {record.tf_metadata.assessment || "Unknown"}</p>
                                 <p><strong>Binding Mode:</strong> {record.tf_metadata.binding_mode || "Unknown"}</p>
                             </>
-                        ) : (
-                            <p className="text-gray-500">Not a transcription factor</p>
                         )}
                     </div>
 
@@ -403,7 +447,7 @@ export default function GeneBrowserPage() {
                         <h4 className="font-semibold mb-2">Disease Evidence</h4>
                         <div className="space-y-2">
                             <div>
-                                <strong>Alzheimer's:</strong>{" "}
+                                <strong>Alzheimer&apos;s:</strong>{" "}
                                 {ad ? (
                                     <span>
                                         Score: {ad.overall_score?.toFixed(2) || "—"}
@@ -411,11 +455,11 @@ export default function GeneBrowserPage() {
                                         {ad.has_rare && <Tag color="green" className="ml-1">Rare</Tag>}
                                     </span>
                                 ) : (
-                                    <span className="text-gray-500">No association</span>
+                                    <span className="text-gray-500">Association not available in this record</span>
                                 )}
                             </div>
                             <div>
-                                <strong>Parkinson's:</strong>{" "}
+                                <strong>Parkinson&apos;s:</strong>{" "}
                                 {pd ? (
                                     <span>
                                         Score: {pd.overall_score?.toFixed(2) || "—"}
@@ -423,7 +467,7 @@ export default function GeneBrowserPage() {
                                         {pd.has_rare && <Tag color="green" className="ml-1">Rare</Tag>}
                                     </span>
                                 ) : (
-                                    <span className="text-gray-500">No association</span>
+                                    <span className="text-gray-500">Association not available in this record</span>
                                 )}
                             </div>
                         </div>
@@ -432,13 +476,12 @@ export default function GeneBrowserPage() {
                     {/* HPO Phenotypes */}
                     <div>
                         <h4 className="font-semibold mb-2">
-                            Associated HPO Phenotypes
-                            <Tooltip title="Phenotypes linked via cell type specificity">
-                                <span className="text-gray-400 text-xs ml-1">(via cell types)</span>
-                            </Tooltip>
+                            Source-associated HPO Phenotypes
                         </h4>
                         {isLoading ? (
                             <Spin size="small" />
+                        ) : hpo?.evidence_status === "source_unavailable" ? (
+                            <p className="text-gray-500">HPO source unavailable; phenotype associations are unknown.</p>
                         ) : hpo?.phenotypes?.length > 0 ? (
                             <div className="max-h-32 overflow-y-auto">
                                 {hpo.phenotypes.slice(0, 10).map((p, i) => (
@@ -463,7 +506,7 @@ export default function GeneBrowserPage() {
                                 )}
                             </div>
                         ) : (
-                            <p className="text-gray-500">No phenotypes found</p>
+                            <p className="text-gray-500">No phenotype rows returned in this source response.</p>
                         )}
                     </div>
                 </div>
@@ -558,14 +601,18 @@ export default function GeneBrowserPage() {
                                     <label className="font-medium mr-3">Transcription Factors</label>
                                     <div className="mt-2">
                                         <Radio.Group
+                                            className="flex flex-col gap-1"
                                             value={filterValues.is_tf}
                                             onChange={(e) => handleFilterChange("is_tf", e.target.value)}
                                         >
-                                            <Radio.Button value={null}>All</Radio.Button>
-                                            <Radio.Button value={true}>TFs Only</Radio.Button>
-                                            <Radio.Button value={false}>Non-TFs</Radio.Button>
+                                            <Radio value={null}>All states</Radio>
+                                            <Radio value={true}>Assessed TFs</Radio>
+                                            <Radio value={false}>Assessed non-TFs</Radio>
                                         </Radio.Group>
                                     </div>
+                                    <p className="text-xs text-gray-500 mt-1">
+                                        Unassessed records appear under All states; missing TF annotations are unknown.
+                                    </p>
                                 </div>
 
                                 {/* DBD Type Filter (only when TFs selected) */}
@@ -622,8 +669,8 @@ export default function GeneBrowserPage() {
                                 {/* Specificity Percentile Slider */}
                                 <div className="mx-5 mb-4 text-left">
                                     <label className="font-medium">
-                                        Show Top % Most Specific
-                                        <Tooltip title="Filter to genes in the top X% of expression specificity. Lower percentages = more specific genes only.">
+                                        Estimated Top % by Specificity
+                                        <Tooltip title="Estimate an upper-tail threshold from sampled expression-specificity rows for the selected atlas and first selected cell type, when filtered. Lower percentages select higher specificity. These sampled rows do not establish an exact global gene rank.">
                                             <span className="text-gray-400 text-xs ml-1 cursor-help">ⓘ</span>
                                         </Tooltip>
                                     </label>
@@ -631,9 +678,9 @@ export default function GeneBrowserPage() {
                                         min={1}
                                         max={50}
                                         value={filterValues.specificity_percentile}
+                                        disabled={filterValues.min_specificity === null}
                                         onChange={(value) => {
-                                            // API returns string keys, convert to string for lookup
-                                            const newThreshold = percentileThresholds[String(value)] || 0.02;
+                                            const newThreshold = percentileEvidence.thresholds[String(value)] ?? null;
                                             setFilterValues((prev) => ({
                                                 ...prev,
                                                 specificity_percentile: value,
@@ -651,8 +698,18 @@ export default function GeneBrowserPage() {
                                         included={false}
                                     />
                                     <p className="text-xs text-gray-500 mt-1">
-                                        Threshold: ≥ {filterValues.min_specificity?.toFixed(4) || "—"}
+                                        {percentileEvidence.status === "loading" ? "Loading percentile source…"
+                                            : filterValues.min_specificity === null ? "Percentile threshold unavailable"
+                                            : `API-reported threshold: ≥ ${filterValues.min_specificity.toString()}`}
                                     </p>
+                                    {percentileEvidence.status === "available" && (
+                                        <p className="text-xs text-gray-500 mt-1">
+                                            Estimated from {percentileEvidence.sampleCount.toLocaleString()} sampled expression rows; percentages do not give an exact global gene rank.
+                                        </p>
+                                    )}
+                                    {percentileEvidence.status === "provenance_unverified" && (
+                                        <p className="text-xs text-amber-700 mt-1">{percentileEvidence.reason}</p>
+                                    )}
                                 </div>
                             </div>
 
@@ -668,7 +725,8 @@ export default function GeneBrowserPage() {
                                     }}
                                     type="submit"
                                     block
-                                    onClick={handleSubmit}
+                                    onClick={() => handleSubmit()}
+                                    disabled={filterValues.min_specificity === null || loading}
                                     ref={tourRefSubmit}
                                 >
                                     <p className="font-semibold">Browse Genes</p>
@@ -700,15 +758,33 @@ export default function GeneBrowserPage() {
                                 and cell type expression specificity. This tool combines data from:
                             </p>
                             <ul className="list-disc ml-6 mt-2">
-                                <li><strong>OpenTargets:</strong> Alzheimer's and Parkinson's disease associations with common/rare variant evidence</li>
+                                <li><strong>OpenTargets:</strong> Alzheimer&apos;s and Parkinson&apos;s disease associations with common/rare variant evidence</li>
                                 <li><strong>Lambert et al. 2018:</strong> Human transcription factor census</li>
                                 <li><strong>Cell atlases:</strong> Expression specificity across human cell types</li>
                             </ul>
                             <p className="mt-2 text-gray-600">
                                 Click any row to expand and see detailed TF metadata, disease evidence breakdown,
-                                and associated HPO phenotypes via cell type pathway.
+                                and source-associated HPO phenotypes. Cell enrichment adds predictions; it does not establish causality.
                             </p>
                         </Card>
+
+                        {(optionsError || browseError || percentileEvidence.status === "source_unavailable") && (
+                            <Alert
+                                className="mb-4"
+                                type="error"
+                                showIcon
+                                message="Gene browser API/source unavailable"
+                                description={(
+                                    <>
+                                        {optionsError && <p>{optionsError}</p>}
+                                        {percentileEvidence.status === "source_unavailable" && <p>{percentileEvidence.reason}</p>}
+                                        {browseError && <p>{browseError}</p>}
+                                        <p>Gene browsing needs the annotation API. The <a href="/evidence">evidence workbench</a> uses published snapshots.</p>
+                                    </>
+                                )}
+                                action={<Button onClick={() => { setBrowseError(null); setReloadCount(count => count + 1); }}>Retry sources</Button>}
+                            />
+                        )}
 
                         {data.length > 0 ? (
                             <div
@@ -754,9 +830,20 @@ export default function GeneBrowserPage() {
                                     />
                                 </Spin>
                             </div>
+                        ) : hasSearched ? (
+                            <Alert
+                                type="info"
+                                showIcon
+                                message="The API returned no matching annotation records"
+                                description="This result applies to the selected filters and available records; it does not establish gene absence or complete source coverage."
+                            />
                         ) : (
                             <PageIntro
-                                description="Browse genes by disease association, TF status, and cell type specificity. Use the filters on the left to narrow your search, then click 'Browse Genes' to see results."
+                                description={optionsError || browseError || percentileEvidence.status === "source_unavailable"
+                                    ? "Gene browsing needs available annotation and percentile sources. Use Retry sources above to check their availability."
+                                    : filterValues.min_specificity === null
+                                        ? "Loading annotation and percentile sources. Browsing becomes available when the percentile source has loaded."
+                                        : "Browse genes by disease association, TF status, and cell type specificity. Use the filters on the left to narrow your search, then click 'Browse Genes' to see results."}
                                 tourSteps={tourSteps}
                             />
                         )}

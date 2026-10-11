@@ -53,7 +53,7 @@ limits are documented in [statistical-audit.md](statistical-audit.md) and
 [evidence-workbench.md](evidence-workbench.md). Preclinical evidence,
 measurability, precedent and comparative value remain nonblocking modifiers.
 
-The production build and 123 targeted tests pass. Desktop and 390px mobile
+The production build and 138 targeted tests pass. Desktop and 390px mobile
 reviews exercised exact cell/atlas filters, endpoint/trial details, variant
 coordinates and functional evidence, modality requirements and keyboard
 navigation, all-family comparisons and separate nonblocking maturity ledgers.

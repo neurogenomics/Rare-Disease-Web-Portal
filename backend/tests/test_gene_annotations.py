@@ -48,10 +48,11 @@ class TestGetTFStatus:
         assert "dbd" in result
         assert result["dbd"] == "AP-2"
 
-    def test_get_tf_status_non_tf(self):
-        """Non-TF gene should return None."""
+    def test_get_tf_status_unassessed(self):
+        """A reference gene not assessed by the TF import stays unknown."""
         result = get_tf_status("LRRK2")
-        assert result is None
+        assert result["is_tf"] is None
+        assert result["evidence_status"] == "unknown"
 
     def test_get_tf_status_unknown_gene(self):
         """Unknown gene should return None."""
@@ -94,8 +95,8 @@ class TestGetTFStatusBatch:
         assert result["TFAP2A"]["is_tf"] is True
         assert result["PAX6"] is not None
 
-        # LRRK2 is not a TF
-        assert result["LRRK2"] is None
+        # Absence from positive TF annotations does not establish a negative.
+        assert result["LRRK2"]["is_tf"] is None
 
     def test_get_tf_status_batch_empty(self):
         """Empty input should return empty dict."""
@@ -117,14 +118,14 @@ class TestIsTF:
         assert is_tf("TFAP2A") is True
         assert is_tf("PAX6") is True
 
-    def test_is_tf_non_tf(self):
-        """Non-TF gene should return False."""
-        assert is_tf("LRRK2") is False
-        assert is_tf("APOE") is False
+    def test_is_tf_unassessed(self):
+        """Reference-only TF status is unknown."""
+        assert is_tf("LRRK2") is None
+        assert is_tf("APOE") is None
 
     def test_is_tf_unknown(self):
-        """Unknown gene should return False."""
-        assert is_tf("NOTAREALGENE") is False
+        """Missing reference status should remain unknown."""
+        assert is_tf("NOTAREALGENE") is None
 
 
 class TestTFListFunctions:
@@ -319,9 +320,10 @@ class TestAntibodyValidation:
         assert "assays_validated" in result
 
     def test_get_antibody_status_no_data(self):
-        """Gene without PCRP data should return None."""
+        """Gene without PCRP data should return an unknown assessment."""
         result = get_antibody_status("LRRK2", source="pcrp")
-        assert result is None
+        assert result["has_validated_antibody"] is None
+        assert result["evidence_status"] == "unknown"
 
 
 # ============================================================

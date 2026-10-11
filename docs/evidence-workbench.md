@@ -109,8 +109,34 @@ unavailable evidence rather than biological absence.
 ```sh
 cd frontend
 npm ci
-npm run dev
+npm run dev -- --host 127.0.0.1 --port 5180 --strictPort
 ```
+
+The release is reviewed locally or in a Vercel **preview** before any Imperial
+production deployment. The January/February development workflow used port
+5175; the isolated evidence worktree uses 5180 to preserve other checkouts.
+No Imperial SSH login is needed to inspect the workbench snapshots.
+
+`VITE_API_BASE_URL` selects the API for a development or preview build. Its
+defaults are `http://127.0.0.1:8001` in development and the existing public API
+in a build. To select a matching local API explicitly:
+
+```sh
+VITE_API_BASE_URL=http://127.0.0.1:8001 npm run dev -- --host 127.0.0.1 --port 5180 --strictPort
+```
+
+The unchanged public API did not allow the port-5180 origin in the 11 October
+CORS probe; a URL override alone does not make that service a working preview
+backend. New gene-annotation and candidate API routes require a matching
+development backend and the real source database; selecting the old public API
+does not create these routes. Missing data or an unavailable service is not a negative
+biological result. Do not run the destructive gene-reference seed or sample
+antibody imports to make a preview appear populated.
+
+The backend accepts `PORTAL_HOST`, `PORTAL_PORT`, `PORTAL_MONGODB_URI` and a
+comma-separated `PORTAL_CORS_ORIGINS`. Defaults bind to loopback and allow
+`localhost`/`127.0.0.1` at ports 5173, 5174, 5175 and 5180. A remote staging API
+needs its own exact preview origins and database configuration.
 
 `predev` and `prebuild` restore the checksummed, lossless normalized snapshot
 bundles from `data/evidence/published/` and publish eight lazily fetched datasets.
@@ -148,14 +174,19 @@ SQLite is a local, atomic, checksummed rebuild cache, not an additional truth se
 ```sh
 python3 -m unittest discover -s scripts/tests -p 'test_*.py'
 node --test scripts/tests/snapshotBundles.test.mjs
-backend/.venv/bin/python -m pytest backend/tests/test_candidate_evidence.py -q
+backend/.venv/bin/python -m pytest backend/tests/test_candidate_evidence.py backend/tests/test_annotation_unknowns.py -q
 node --test frontend/tests/*.test.mjs
 python3 scripts/tests/audit_snapshots.py
 cd frontend
 npm run build
 ```
 
-## Deployment and unfinished scientific work
+## Preview, deployment and unfinished scientific work
+
+Use a separate Vercel preview project or an existing confirmed staging target;
+do not promote a preview with `--prod` or change the Imperial services during
+local review. No Vercel project is linked to this checkout; the local command
+above provides the review route without cloud deployment credentials.
 
 The build output includes `/data/evidence/` with all normalized snapshots. Serve
 these files at that path, preserve SPA route fallback, and use HTTP compression

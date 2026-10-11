@@ -43,7 +43,11 @@ class DiseaseAssociation(BaseModel):
 
 class AntibodyValidation(BaseModel):
     """Antibody validation status from PCRP or other sources."""
-    has_validated_antibody: bool = False
+    has_validated_antibody: Optional[bool] = None
+    evidence_status: str = "unknown"
+    source: Optional[str] = None
+    source_version: Optional[str] = None
+    reason: Optional[str] = None
     best_antibody: Optional[str] = None
     validation_score: Optional[str] = None
     assays_validated: List[str] = Field(default_factory=list)
@@ -68,7 +72,9 @@ class GeneAnnotation(BaseModel):
     aliases: List[str] = Field(default_factory=list, description="Gene symbol aliases")
 
     # TF status
-    is_tf: bool = Field(False, description="Is this gene a transcription factor")
+    is_tf: Optional[bool] = Field(None, description="Source-assessed TF status; None means unknown")
+    tf_evidence_status: str = "unknown"
+    tf_status: Optional[Dict[str, Any]] = None
     tf_metadata: Optional[TFMetadata] = None
 
     # Disease associations
@@ -89,9 +95,10 @@ class GeneAnnotationSummary(BaseModel):
     """Summary view of gene annotation for list endpoints."""
     gene_symbol: str
     ensembl_id: Optional[str] = None
-    is_tf: bool = False
+    is_tf: Optional[bool] = None
+    tf_evidence_status: str = "unknown"
     has_disease_association: bool = False
-    has_antibody_validation: bool = False
+    has_antibody_validation: Optional[bool] = None
 
 
 class CellSpecificity(BaseModel):

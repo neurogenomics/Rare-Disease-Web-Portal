@@ -44,6 +44,66 @@ def get_db():
     return db
 
 
+def _source_version(document: Dict[str, Any], source: str) -> Optional[str]:
+    versions = document.get("data_versions") or {}
+    value = versions.get(source) if isinstance(versions, dict) else None
+    return value.strip() if isinstance(value, str) and value.strip() else None
+
+
+def _tf_coverage_query() -> Dict[str, Any]:
+    return {"$type": "string", "$regex": r"\S"}
+
+
+def _tf_assessment(document: Dict[str, Any]) -> Dict[str, Any]:
+    """A seed default is not a negative assessment of transcription-factor status."""
+    version = _source_version(document, "lambert_tf")
+    assertion = document.get("is_tf")
+    assessed = type(assertion) is bool and version is not None
+    status = assertion if assessed else None
+    metadata = document.get("tf_metadata") or {}
+    if not isinstance(metadata, dict):
+        metadata = {}
+    return {
+        "is_tf": status,
+        "evidence_status": "assessed_positive" if status is True else "assessed_negative" if status is False else "unknown",
+        "source_version": version,
+        "reason": "Transcription-factor assessment recorded in the declared Lambert source."
+                  if assessed else "No sourced transcription-factor assessment is recorded; missing enrichment is unknown.",
+        **{key: metadata.get(key) if status is True else None
+           for key in ["dbd", "assessment", "binding_mode", "motif_status"]},
+    }
+
+
+def _antibody_assessment(document: Dict[str, Any], source: str) -> Dict[str, Any]:
+    records = document.get("antibody_validation") or {}
+    record = records.get(source) if isinstance(records, dict) else None
+    record = record if isinstance(record, dict) else {}
+    version = _source_version(document, source)
+    assertion = record.get("has_validated_antibody")
+    assessed = type(assertion) is bool and version is not None
+    if not assessed:
+        return {"has_validated_antibody": None, "evidence_status": "unknown",
+                "source": source, "source_version": version,
+                "reason": "No sourced reagent-validation assessment is recorded for this source."}
+    return {**record, "has_validated_antibody": assertion,
+            "evidence_status": "assessed_positive" if assertion else "assessed_negative",
+            "source": source, "source_version": version,
+            "reason": "A validated reagent is recorded in this declared source." if assertion
+                      else "No validated reagent is recorded in this declared source; this is not a global absence claim."}
+
+
+def _normalize_gene(document: Dict[str, Any]) -> Dict[str, Any]:
+    result = dict(document)
+    assessment = _tf_assessment(document)
+    result.update(is_tf=assessment["is_tf"], tf_evidence_status=assessment["evidence_status"], tf_status=assessment)
+    if assessment["is_tf"] is not True:
+        result["tf_metadata"] = None
+    records = document.get("antibody_validation")
+    result["antibody_validation"] = ({source: _antibody_assessment(document, source) for source in records}
+                                      if isinstance(records, dict) and records else None)
+    return result
+
+
 # ============================================================
 # Transcription Factor Functions (Sprint 1)
 # ============================================================
@@ -56,8 +116,8 @@ def get_tf_status(gene_symbol: str) -> Optional[Dict[str, Any]]:
         gene_symbol: HGNC gene symbol (case-insensitive)
 
     Returns:
-        Dict with TF metadata if gene is a TF, None if not a TF.
-        Returns None if gene not found.
+        A source-scoped positive, negative or unknown assessment.
+        Returns None only if the gene reference itself is not found.
 
         Example return value:
         {
@@ -76,17 +136,7 @@ def get_tf_status(gene_symbol: str) -> Optional[Dict[str, Any]]:
     if doc is None:
         return None
 
-    if not doc.get("is_tf", False):
-        return None
-
-    tf_meta = doc.get("tf_metadata", {}) or {}
-    return {
-        "is_tf": True,
-        "dbd": tf_meta.get("dbd"),
-        "assessment": tf_meta.get("assessment"),
-        "binding_mode": tf_meta.get("binding_mode"),
-        "motif_status": tf_meta.get("motif_status"),
-    }
+    return _tf_assessment(doc)
 
 
 def get_tf_status_batch(gene_symbols: List[str]) -> Dict[str, Optional[Dict[str, Any]]]:
@@ -97,12 +147,12 @@ def get_tf_status_batch(gene_symbols: List[str]) -> Dict[str, Optional[Dict[str,
         gene_symbols: List of HGNC gene symbols (case-insensitive)
 
     Returns:
-        Dict mapping gene symbols to their TF status (None if not a TF).
+        Dict mapping requested symbols to assessments (None only for absent references).
 
         Example:
         {
             "TFAP2A": {"is_tf": True, "dbd": "bHLH", ...},
-            "LRRK2": None,
+            "LRRK2": {"is_tf": None, "evidence_status": "unknown", ...},
             "PAX6": {"is_tf": True, "dbd": "Paired box", ...}
         }
     """
@@ -116,24 +166,11 @@ def get_tf_status_batch(gene_symbols: List[str]) -> Dict[str, Optional[Dict[str,
     )
 
     # Build result dict
-    results = {symbol: None for symbol in gene_symbols}
-
-    for doc in cursor:
-        symbol = doc["gene_symbol"]
-        if doc.get("is_tf", False):
-            tf_meta = doc.get("tf_metadata", {}) or {}
-            results[symbol] = {
-                "is_tf": True,
-                "dbd": tf_meta.get("dbd"),
-                "assessment": tf_meta.get("assessment"),
-                "binding_mode": tf_meta.get("binding_mode"),
-                "motif_status": tf_meta.get("motif_status"),
-            }
-
-    return results
+    found = {doc["gene_symbol"].casefold(): _tf_assessment(doc) for doc in cursor}
+    return {symbol: found.get(symbol.casefold()) for symbol in gene_symbols}
 
 
-def is_tf(gene_symbol: str) -> bool:
+def is_tf(gene_symbol: str) -> Optional[bool]:
     """
     Quick check if a gene is a transcription factor.
 
@@ -141,14 +178,10 @@ def is_tf(gene_symbol: str) -> bool:
         gene_symbol: HGNC gene symbol (case-insensitive)
 
     Returns:
-        True if gene is a TF, False otherwise.
+        A sourced boolean, or None when status is unassessed/unavailable.
     """
-    doc = gene_annotations.find_one(
-        {"gene_symbol": gene_symbol, "is_tf": True},
-        projection={"_id": 1},
-        collation=CASE_INSENSITIVE_COLLATION
-    )
-    return doc is not None
+    assessment = get_tf_status(gene_symbol)
+    return assessment["is_tf"] if assessment else None
 
 
 def get_all_tfs(limit: int = None) -> List[Dict[str, Any]]:
@@ -161,12 +194,12 @@ def get_all_tfs(limit: int = None) -> List[Dict[str, Any]]:
     Returns:
         List of TF records with gene_symbol and tf_metadata.
     """
-    query = {"is_tf": True}
+    query = {"is_tf": True, "data_versions.lambert_tf": _tf_coverage_query()}
     projection = {
         "_id": 0,
         "gene_symbol": 1,
         "ensembl_id": 1,
-        "tf_metadata": 1
+        "tf_metadata": 1, "is_tf": 1, "data_versions": 1,
     }
 
     cursor = gene_annotations.find(query, projection)
@@ -174,12 +207,12 @@ def get_all_tfs(limit: int = None) -> List[Dict[str, Any]]:
     if limit:
         cursor = cursor.limit(limit)
 
-    return list(cursor)
+    return [_normalize_gene(document) for document in cursor]
 
 
 def count_tfs() -> int:
     """Return the total number of TFs in the database."""
-    return gene_annotations.count_documents({"is_tf": True})
+    return gene_annotations.count_documents({"is_tf": True, "data_versions.lambert_tf": _tf_coverage_query()})
 
 
 # ============================================================
@@ -202,6 +235,7 @@ def get_gene(gene_symbol: str) -> Optional[Dict[str, Any]]:
     )
 
     if doc:
+        doc = _normalize_gene(doc)
         doc["_id"] = str(doc["_id"])
 
     return doc
@@ -220,6 +254,7 @@ def get_gene_by_ensembl(ensembl_id: str) -> Optional[Dict[str, Any]]:
     doc = gene_annotations.find_one({"ensembl_id": ensembl_id})
 
     if doc:
+        doc = _normalize_gene(doc)
         doc["_id"] = str(doc["_id"])
 
     return doc
@@ -241,6 +276,7 @@ def get_gene_by_alias(alias: str) -> Optional[Dict[str, Any]]:
     )
 
     if doc:
+        doc = _normalize_gene(doc)
         doc["_id"] = str(doc["_id"])
 
     return doc
@@ -273,11 +309,11 @@ def search_genes(query: str, limit: int = 20) -> List[Dict[str, Any]]:
             "ensembl_id": 1,
             "name": 1,
             "is_tf": 1,
-            "aliases": 1
+            "aliases": 1, "tf_metadata": 1, "data_versions": 1,
         }
     ).limit(limit)
 
-    return list(cursor)
+    return [_normalize_gene(document) for document in cursor]
 
 
 # ============================================================
@@ -358,7 +394,7 @@ def get_genes_by_disease(
         "_id": 0,
         "gene_symbol": 1,
         "ensembl_id": 1,
-        "is_tf": 1,
+        "is_tf": 1, "data_versions": 1,
         f"disease_associations.{disease}": 1
     }
 
@@ -382,7 +418,8 @@ def get_genes_by_disease(
         results.append({
             "gene_symbol": doc["gene_symbol"],
             "ensembl_id": doc.get("ensembl_id"),
-            "is_tf": doc.get("is_tf", False),
+            "is_tf": _tf_assessment(doc)["is_tf"],
+            "tf_evidence_status": _tf_assessment(doc)["evidence_status"],
             "overall_score": assoc.get("overall_score"),
             "evidence": assoc.get("evidence", {})
         })
@@ -406,11 +443,7 @@ SPECIFICITY_CONFIG = {
 }
 
 
-from functools import lru_cache
-
-
-@lru_cache(maxsize=100)
-def get_specificity_percentiles(db_type: str, cell_type: str = None) -> Dict[int, float]:
+def get_specificity_percentiles(db_type: str, cell_type: str = None) -> Dict[str, Any]:
     """
     Get specificity thresholds for percentiles.
 
@@ -423,9 +456,15 @@ def get_specificity_percentiles(db_type: str, cell_type: str = None) -> Dict[int
         cell_type: Optional cell type to scope percentiles (if None, uses global distribution)
 
     Returns:
-        Dict mapping percentile (1, 5, 10, 25, 50) to threshold value.
-        E.g., {1: 0.14, 5: 0.05, 10: 0.02, 25: 0.01, 50: 0.001}
+        Sampled empirical thresholds with availability and sample size.
+        Missing data and retrieval failures never manufacture thresholds.
     """
+    def unavailable(reason):
+        return {"thresholds": {}, "evidence_status": "source_unavailable", "sample_count": 0,
+                "atlas": db_type, "cell_type": cell_type, "reason": reason}
+
+    if db_type not in ATLAS_NAMES:
+        return unavailable("No percentile source is configured for this atlas.")
     collection = celltype_gene_descartes if db_type == "DescartesHuman" else celltype_gene_hcl
 
     # Build match stage
@@ -443,14 +482,14 @@ def get_specificity_percentiles(db_type: str, cell_type: str = None) -> Dict[int
     try:
         result = list(collection.aggregate(pipeline))
         if not result or not result[0].get("values"):
-            # Fallback defaults based on data analysis
-            return {1: 0.14, 5: 0.05, 10: 0.02, 25: 0.01, 50: 0.001}
+            return unavailable("No expression-specificity sample is available for this selection.")
 
-        values = sorted([v for v in result[0]["values"] if v is not None])
+        values = sorted(value for raw in result[0]["values"]
+                        if (value := finite_number(raw, 0, 1)) is not None)
         n = len(values)
 
         if n == 0:
-            return {1: 0.14, 5: 0.05, 10: 0.02, 25: 0.01, 50: 0.001}
+            return unavailable("No valid expression-specificity measurements are available in the sample.")
 
         # "Top X%" means the threshold at the (100-X)th percentile
         # E.g., "Top 10%" means we want genes above the 90th percentile
@@ -458,14 +497,16 @@ def get_specificity_percentiles(db_type: str, cell_type: str = None) -> Dict[int
         for p in [1, 5, 10, 25, 50]:
             idx = int(n * (100 - p) / 100)
             idx = min(idx, n - 1)  # Clamp to valid index
-            percentiles[p] = round(values[idx], 6)
+            percentiles[p] = values[idx]
 
-        return percentiles
+        return {"thresholds": percentiles, "evidence_status": "available", "sample_count": n,
+                "atlas": db_type, "cell_type": cell_type, "method": "sampled_empirical_quantiles",
+                "sample_limit": 50000}
 
     except Exception as e:
-        # Log and return fallback
+        # Preserve missingness; a later request can retry a failed source query.
         print(f"Error computing percentiles: {e}")
-        return {1: 0.14, 5: 0.05, 10: 0.02, 25: 0.01, 50: 0.001}
+        return unavailable("Expression-specificity source retrieval failed.")
 
 
 def get_cell_specificity(
@@ -590,7 +631,8 @@ def get_antibody_status(
         source: Validation source ("pcrp" currently supported)
 
     Returns:
-        Antibody validation info, or None if not available.
+        A declared-source reagent-validation assessment. Missing enrichment is
+        unknown; a negative is not a claim that no reagent exists anywhere.
 
         Example:
         {
@@ -602,18 +644,11 @@ def get_antibody_status(
     """
     doc = gene_annotations.find_one(
         {"gene_symbol": gene_symbol},
-        projection={"antibody_validation": 1},
+        projection={"antibody_validation": 1, "data_versions": 1},
         collation=CASE_INSENSITIVE_COLLATION
     )
 
-    if doc is None:
-        return None
-
-    validation = doc.get("antibody_validation")
-    if validation is None:
-        return None
-
-    return validation.get(source)
+    return _antibody_assessment(doc or {}, source)
 
 
 # ============================================================
@@ -628,7 +663,8 @@ def get_collection_stats() -> Dict[str, Any]:
         Dict with collection statistics.
     """
     total = gene_annotations.count_documents({})
-    tfs = gene_annotations.count_documents({"is_tf": True})
+    tfs = count_tfs()
+    tf_negatives = gene_annotations.count_documents({"is_tf": False, "data_versions.lambert_tf": _tf_coverage_query()})
     with_disease = gene_annotations.count_documents({
         "disease_associations": {"$ne": None}
     })
@@ -643,6 +679,8 @@ def get_collection_stats() -> Dict[str, Any]:
     return {
         "total_genes": total,
         "total_tfs": tfs,
+        "tf_assessed_negative": tf_negatives,
+        "tf_unknown": max(0, total - tfs - tf_negatives),
         "genes_with_disease_associations": with_disease,
         "genes_with_antibody_validation": with_antibody,
         "data_versions": versions
@@ -689,6 +727,11 @@ def browse_genes(
     Returns:
         Dict with genes list, total count, and pagination info.
     """
+    # An absent reference corpus is not a successful biological no-match result.
+    if gene_annotations.estimated_document_count() == 0:
+        return {"genes": [], "total": 0, "page": page, "page_size": page_size,
+                "evidence_status": "source_unavailable", "reason": "The gene reference annotation corpus is unavailable."}
+
     # Build query
     query = {}
 
@@ -720,7 +763,8 @@ def browse_genes(
                 "genes": [],
                 "total": 0,
                 "page": page,
-                "page_size": page_size
+                "page_size": page_size,
+                "evidence_status": "available",
             }
 
         # Add gene filter to main query
@@ -766,13 +810,15 @@ def browse_genes(
     # TF filter
     if is_tf is True:
         query["is_tf"] = True
+        query["data_versions.lambert_tf"] = _tf_coverage_query()
     elif is_tf is False:
-        query["$or"] = query.get("$or", [{"is_tf": False}, {"is_tf": {"$exists": False}}])
-        query["is_tf"] = {"$ne": True}
+        query["is_tf"] = False
+        query["data_versions.lambert_tf"] = _tf_coverage_query()
 
     # DBD type filter
     if dbd_type:
         query["tf_metadata.dbd"] = dbd_type
+        query["data_versions.lambert_tf"] = _tf_coverage_query()
 
     # Get total count before pagination
     total = gene_annotations.count_documents(query) if query else gene_annotations.estimated_document_count()
@@ -803,6 +849,7 @@ def browse_genes(
             "ensembl_id": 1,
             "is_tf": 1,
             "tf_metadata": 1,
+            "data_versions": 1,
             "disease_associations": 1
         }
     ).sort(sort_field, sort_direction).skip(skip).limit(page_size)
@@ -828,15 +875,18 @@ def browse_genes(
                 else:
                     disease_assoc[d] = None
 
+        tf_assessment = _tf_assessment(doc)
         genes.append({
             "gene_symbol": doc["gene_symbol"],
             "name": doc.get("name"),
             "ensembl_id": doc.get("ensembl_id"),
-            "is_tf": doc.get("is_tf", False),
-            "tf_metadata": doc.get("tf_metadata") if doc.get("is_tf") else None,
+            "is_tf": tf_assessment["is_tf"],
+            "tf_evidence_status": tf_assessment["evidence_status"],
+            "tf_status": tf_assessment,
+            "tf_metadata": doc.get("tf_metadata") if tf_assessment["is_tf"] is True else None,
             "disease_associations": disease_assoc,
             "top_cell_types": [],  # Will be filled below
-            "hpo_count": 0  # Placeholder - computed lazily on expand
+            "hpo_count": None  # No HPO query has been performed for this row.
         })
 
     # Add cell type specificity for each gene
@@ -868,7 +918,8 @@ def browse_genes(
         "genes": genes,
         "total": total,
         "page": page,
-        "page_size": page_size
+        "page_size": page_size,
+        "evidence_status": "available",
     }
 
 
@@ -882,8 +933,12 @@ def get_browse_options(db_type: str = "DescartesHuman") -> Dict[str, Any]:
     Returns:
         Dict with lists of available filter values.
     """
+    if gene_annotations.estimated_document_count() == 0:
+        return {"diseases": [], "dbd_types": [], "cell_types": [], "evidence_status": "source_unavailable",
+                "reason": "The gene reference annotation corpus is unavailable."}
+
     # Get distinct DBD types
-    dbd_types = gene_annotations.distinct("tf_metadata.dbd", {"is_tf": True})
+    dbd_types = gene_annotations.distinct("tf_metadata.dbd", {"is_tf": True, "data_versions.lambert_tf": _tf_coverage_query()})
     dbd_types = [d for d in dbd_types if d]  # Remove None values
 
     # Get distinct cell types
@@ -893,7 +948,8 @@ def get_browse_options(db_type: str = "DescartesHuman") -> Dict[str, Any]:
     return {
         "diseases": ["alzheimers", "parkinsons"],
         "dbd_types": sorted(dbd_types),
-        "cell_types": sorted(cell_types)
+        "cell_types": sorted(cell_types),
+        "evidence_status": "available",
     }
 
 
