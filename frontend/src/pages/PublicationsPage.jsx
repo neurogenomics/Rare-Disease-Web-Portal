@@ -1,62 +1,66 @@
-import React from "react";
+import { useEffect } from "react";
 import CustomHeader from "../components/utilities/Header";
-import { Layout } from "antd";
-import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import BackgroundAnimation from "../components/BackgroundAnimation";
+import { Breadcrumb, Card, Layout } from "antd";
+import { Link } from "react-router-dom";
+import CustomFooter from "../components/utilities/Footer";
 
 const { Content } = Layout;
 
 // Description ~50words
 const publications = [
     {
-        title: "Harnessing generative AI to annotate the severity of all phenotypic abnormalities within the Human Phenotype Ontology",
-        description: "Using GPT-4, we systematically annotated the severity of all Human Phenotype Ontology (HPO) phenotypes based on clinical characteristics and frequency. Benchmarking showed high accuracy (89–100% recall). A novel severity scoring system enables prioritization of the most detrimental phenotypes, aiding gene therapy selection and therapeutic intervention efforts.",
+        title: "Using GPT-4 to annotate the severity of all phenotypic abnormalities within the human phenotype ontology",
+        description: "This work uses GPT-4 to annotate clinical characteristics of HPO terms and proposes a phenotype severity scheme. The portal retains these annotations as historical research data. Severity classes and scores require independent validation and are not calibrated treatment-priority measures; see Methods & coverage for the current interpretation.",
         authors: "Kitty B Murphy, Brian M Schilder, Nathan G Skene",
-        journal: "medRxiv",
-        year: 2024,
-        doi: "https://doi.org/10.1101/2024.06.10.24308475"
+        journal: "Frontiers in Digital Health",
+        year: 2026,
+        doi: "https://doi.org/10.3389/fdgth.2026.1794934"
     },
     {
-        title: "Identification of cell type-specific gene targets underlying thousands of rare diseases and subtraits",
-        description: "Rare diseases are understudied due to their diversity and low prevalence. Using the Human Phenotype Ontology and single-cell transcriptomics, we conducted >688,000 enrichment tests, identifying >13,888 cell type-phenotype associations. We introduce a pipeline for gene target prioritization and provide R packages to enhance accessibility.",
-        authors: "Kitty B. Murphy, Robert Gordon-Smith, Jai Chapman, Momoko Otani, Brian M. Schilder, Nathan G. Skene",
-        journal: "medRxiv",
-        year: 2023,
-        doi: "https://doi.org/10.1101/2023.02.13.23285820"
+        title: "Cell type-specific contextualisation of the human phenome: towards the systematic treatment of all rare diseases",
+        description: "This study combines disease-linked phenotype and gene evidence with single-cell expression atlases to nominate cellular contexts and therapeutic research targets. The portal exposes these associations with their atlas, signed estimates and source limits. Concordance with known treatments does not independently validate cellular causality or predict clinical efficacy.",
+        authors: "Brian M. Schilder, Kitty B. Murphy, Hiranyamaya Dash, Yichun Zhang, Robert Gordon-Smith, Jai Chapman, Momoko Otani, Nathan G. Skene",
+        journal: "Genome Medicine",
+        year: 2026,
+        doi: "https://doi.org/10.1186/s13073-026-01692-0"
     }
     // Add more publications as needed
 ];
 
 export default function PublicationsPage() {
+    useEffect(() => {
+        document.title = "Publications · Rare Disease Celltyping Portal";
+    }, []);
     return (
-        <div className="relative">
+        <Layout className="portal-page portal-information-page">
             <CustomHeader activePageKey="publications" />
-            <div className="fixed inset-0 -z-10">
-                <BackgroundAnimation />
-            </div>
-            <Content className="relative z-10 p-12 bg-center">
-                <div className="bg-white bg-opacity-95 p-10 rounded-lg shadow-lg">
-                    <h1 className="text-4xl font-bold flex items-center mb-3">
-                        <ArticleOutlinedIcon fontSize="large" className="mr-4" />
-                        Publications
-                    </h1>
-                    <br />
-                    <div className="space-y-8 font-mono" style= {{ marginLeft: "3.4em" }}>
-                        {publications.map((pub, index) => (
-                            <div key={index} className="border-b pb-7">
-                                <p className="font-bold mb-1 text-xl">{pub.title}</p>
-                                <p className="mb-2 text-sm">{pub.description}</p>
-                                <div className="ml-3">
-                                    <p><strong>Authors:</strong> {pub.authors}</p>
-                                    <p><strong>Journal:</strong> {pub.journal}</p>
-                                    <p><strong>Year:</strong> {pub.year}</p>
-                                    <p><strong>DOI: </strong><a href={pub.doi} target="_blank" className="text-blue-500 hover:underline">{pub.doi}</a></p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+            <Content className="portal-information-content">
+                <Breadcrumb items={[{ title: <Link to="/">Home</Link> }, { title: "Publications" }]} />
+                <Card className="portal-information-card portal-publication-intro">
+                    <h1>Publications</h1>
+                    <p>
+                        Studies underlying the portal&apos;s phenotype and cellular-context data.
+                        Read <Link to="/evidence?tab=methods">methods and source coverage</Link> for
+                        the current interpretation, then inspect the <Link to="/evidence">treatment evidence</Link>.
+                    </p>
+                </Card>
+                <div className="portal-publication-list">
+                    {publications.map((pub) => (
+                        <Card key={pub.doi} className="portal-information-card">
+                            <article>
+                                <h2><a href={pub.doi} target="_blank" rel="noopener noreferrer">{pub.title}</a></h2>
+                                <p>{pub.description}</p>
+                                <dl className="portal-publication-details">
+                                    <div><dt>Authors</dt><dd>{pub.authors}</dd></div>
+                                    <div><dt>Journal</dt><dd>{pub.journal}, {pub.year}</dd></div>
+                                    <div><dt>DOI</dt><dd><a href={pub.doi} target="_blank" rel="noopener noreferrer">{pub.doi}</a></dd></div>
+                                </dl>
+                            </article>
+                        </Card>
+                    ))}
                 </div>
             </Content>
-        </div>
+            <CustomFooter />
+        </Layout>
     );
 }

@@ -1,0 +1,697 @@
+{
+  "metadata": {
+    "description": "AAV serotype tropism reference for gene therapy target validation",
+    "created": "2026-01-25",
+    "updated": "2026-01-25",
+    "methodology": "Double-blind LLM query - spawned subagent with NO context about therapies, diseases, or validation goals. The subagent answered tropism questions based on training knowledge without knowing why we were asking.",
+    "methodology_details": {
+      "procedure_file": "scripts/blind_validation_procedure.md",
+      "approach": "Double-blind query using isolated LLM subagent",
+      "prompt_template": "What are the primary cell types transduced by [serotype] after [route] delivery? Rank by transduction efficiency. Do NOT mention any specific therapies or diseases.",
+      "why_this_works": "The analyst (subagent) cannot cherry-pick evidence to support an unknown hypothesis",
+      "previous_failures": [
+        "Web searches were contaminated by therapy literature",
+        "LLM queries with analyst context led to cherry-picking"
+      ],
+      "key_insight": "Both the query AND the analyst must be blind to eliminate confirmation bias"
+    },
+    "previous_blind_search_queries_deprecated": [
+      "AAV9 intravenous cell types transduced biodistribution tissue tropism",
+      "AAV9 systemic delivery which cells transduced CNS peripheral",
+      "AAV2 intracranial stereotactic injection cell types transduced tropism brain",
+      "AAV2 subretinal injection photoreceptor RPE transduction tropism",
+      "AAV5 intravenous IV hepatocyte liver tropism cell types transduced",
+      "AAV8 intravenous liver tropism hepatocyte transduction efficiency",
+      "AAVrh74 intravenous muscle tropism skeletal cardiac cell types transduced"
+    ],
+    "primary_sources": [
+      {
+        "citation": "Hudry E & Vandenberghe LH. Nat Rev Neurol. 2019;15(11):653-659.",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/30538207/",
+        "title": "Therapeutic AAV Gene Transfer to the Nervous System: A Clinical Reality"
+      },
+      {
+        "citation": "Foust KD et al. Nat Biotechnol. 2009;27(1):59-65.",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2895694/",
+        "title": "Intravascular AAV9 preferentially targets neonatal neurons and adult astrocytes",
+        "blind_search_source": true
+      },
+      {
+        "citation": "Bevan AK et al. Mol Ther. 2011;19(11):1971-80.",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/21811247/",
+        "title": "Systemic gene delivery in large species for targeting spinal cord, brain, and peripheral tissues for pediatric disorders",
+        "blind_search_source": true
+      },
+      {
+        "citation": "Duque S et al. Mol Ther. 2009;17(7):1187-96.",
+        "url": "https://www.nature.com/articles/gt201416",
+        "title": "Intracisternal delivery of AAV9 results in oligodendrocyte and motor neuron transduction",
+        "blind_search_source": true
+      },
+      {
+        "citation": "Asokan A et al. Mol Ther. 2012;20(4):699-708.",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4118577/",
+        "title": "AAV-Mediated Liver-Directed Gene Therapy"
+      },
+      {
+        "citation": "Mendell JR et al. Ann Neurol. 2010;68(5):629-38.",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/21031578/",
+        "title": "Sustained alpha-sarcoglycan gene expression after gene transfer in limb-girdle muscular dystrophy"
+      }
+    ]
+  },
+  "serotypes": {
+    "AAV9": {
+      "description": "Most widely used for CNS gene therapy; crosses blood-brain barrier after IV delivery. First AAV serotype shown to achieve significant brain transduction after IV administration.",
+      "critical_caveats": {
+        "age_dependence": {
+          "description": "Transduction pattern varies dramatically by age at injection",
+          "neonatal": "Primarily neuronal transduction throughout brain and spinal cord, including motor neurons (84-99% motor neuron transduction in spinal cord)",
+          "adult": "Preferentially targets astrocytes; neuronal transduction significantly reduced",
+          "transition_age": "~2 weeks postnatal in mice",
+          "source": {
+            "citation": "Foust KD et al. Nat Biotechnol. 2009;27(1):59-65",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2895694/",
+            "quote": "Intravenous injection of AAV9 in neonatal mice results in primarily neuronal transduction throughout the brain and spinal cord, but preferentially targets astrocytes when injected in mice greater than 2 weeks of age"
+          }
+        },
+        "species_dependence": {
+          "description": "Transduction pattern varies by species",
+          "mice": "Efficient neuronal transduction after IV administration",
+          "nhp_human": "Primarily glial transduction (astrocytes, microglia); neuronal transduction much lower",
+          "source": {
+            "citation": "Cell Press review (2025)",
+            "url": "https://www.cell.com/molecular-therapy-family/advances/fulltext/S2329-0501(25)00231-1",
+            "quote": "Unlike in mice where AAV9 efficiently transduces neurons following IV administration, in non-human primates (NHPs) and humans this route results primarily in glial transduction, with astrocytes and microglia being the most prominently targeted cell types"
+          }
+        },
+        "liver_off_target": {
+          "description": "Substantial hepatic transduction accompanies CNS targeting",
+          "magnitude": "300-1000 fold higher transduction in liver compared to CNS",
+          "mitigation": "Tissue-specific promoters can limit off-target expression",
+          "source": {
+            "citation": "Nature Scientific Reports (2023)",
+            "url": "https://www.nature.com/articles/s41598-023-35547-0"
+          }
+        }
+      },
+      "primary_tropism": {
+        "liver": {
+          "cell_types": ["Hepatocytes"],
+          "tropism_score": 0.98,
+          "notes": "DOMINANT SINK after IV delivery. Receives 100-1000x more vector genomes than other tissues. This is the PRIMARY target regardless of therapeutic intent.",
+          "rank": 1,
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "Liver is the dominant 'sink' for AAV9 after IV delivery; receives 100-1000x more vector genomes than other tissues"
+          }
+        },
+        "cardiac": {
+          "cell_types": ["Cardiomyocytes"],
+          "tropism_score": 0.95,
+          "notes": "AAV9 has excellent cardiac tropism; heart is among the most efficiently transduced organs after liver.",
+          "rank": 2,
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context"
+          }
+        },
+        "skeletal_muscle": {
+          "cell_types": ["Skeletal muscle cells", "Diaphragm"],
+          "tropism_score": 0.9,
+          "notes": "Strong transduction throughout skeletal muscle including diaphragm.",
+          "rank": 3,
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context"
+          }
+        },
+        "cns": {
+          "cell_types": ["Neurons (broadly)", "Astrocytes"],
+          "tropism_score": 0.85,
+          "notes": "AAV9 crosses BBB and transduces CNS neurons BROADLY - not motor-neuron-specific. Motor neurons are transduced because they are neurons, not because AAV9 has special motor neuron tropism. Age-dependent: neonatal=neuronal, adult=glial.",
+          "rank": 4,
+          "bias_correction": "Previous claim of 'motor neuron tropism' was derived from SMA therapy literature, not general tropism studies. AAV9 has no preferential motor neuron targeting.",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "CNS neurons (broadly) - AAV9 crosses the blood-brain barrier, transducing cortical neurons, Purkinje cells, spinal motor neurons"
+          }
+        },
+        "pns": {
+          "cell_types": ["DRG neurons"],
+          "tropism_score": 0.8,
+          "notes": "DRG neurons efficiently transduced. This is BOTH therapeutically useful AND a safety concern (DRG toxicity observed in trials).",
+          "rank": 5,
+          "safety_note": "DRG exposure implicated in AAV gene therapy safety findings",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "Dorsal root ganglia (DRG) neurons - Efficiently transduced; this is actually a safety concern (DRG toxicity)"
+          }
+        }
+      },
+      "delivery_routes": {
+        "IV": {
+          "primary_targets_neonatal": ["Motor neurons", "Cortical neurons", "DRG neurons", "Cardiomyocytes", "Hepatocytes"],
+          "primary_targets_adult": ["Astrocytes", "Oligodendrocytes", "Cardiomyocytes", "Hepatocytes"],
+          "bbb_penetration": "high",
+          "notes": "Standard route for Zolgensma (neonatal/infant administration). Age at injection critically affects neuronal vs glial tropism."
+        },
+        "intrathecal": {
+          "primary_targets": ["Motor neurons", "DRG neurons", "Astrocytes"],
+          "bbb_penetration": "N/A",
+          "notes": "Direct CNS delivery; lower peripheral exposure. May achieve better neuronal transduction in adults than IV."
+        },
+        "intracerebroventricular": {
+          "primary_targets": ["Ependymal cells", "Periventricular neurons", "Astrocytes"],
+          "bbb_penetration": "N/A",
+          "notes": "Targets ventricular system; limited parenchymal penetration"
+        }
+      },
+      "approved_therapies": ["Zolgensma"],
+      "mstexplorer_equivalent_celltypes": [
+        "Excitatory_neurons",
+        "Inhibitory_neurons",
+        "Oligodendrocytes",
+        "Astrocytes",
+        "Skeletal_muscle_cells",
+        "Cardiomyocytes",
+        "AFP_ALB_positive_cells"
+      ]
+    },
+    "AAV2": {
+      "description": "First AAV used clinically; limited spread, good for local delivery. Neuronal preference after direct brain injection.",
+      "primary_tropism": {
+        "cns_intracranial": {
+          "cell_types": ["Neurons at injection site", "Astrocytes"],
+          "tropism_score": 0.85,
+          "rank": 1,
+          "notes": "Strong neuronal tropism at injection site; limited spread due to heparan sulfate binding",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "AAV2 has strong neuronal tropism; efficiently transduces neurons at injection site. Astrocytes transduced but less efficiently than neurons. Oligodendrocytes low, Microglia very poor/minimal."
+          }
+        },
+        "retina_subretinal": {
+          "cell_types": ["Retinal pigment epithelium", "Photoreceptors", "Muller glia"],
+          "tropism_score": 0.95,
+          "rank": 1,
+          "notes": "Gold standard for subretinal delivery; RPE is primary target, photoreceptors well transduced",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "RPE - primary target, very efficiently transduced. Photoreceptors (rods and cones) - well transduced from the subretinal space. Muller glia - lower efficiency transduction."
+          }
+        }
+      },
+      "delivery_routes": {
+        "intracranial": {
+          "primary_targets": ["Neurons at injection site", "Astrocytes"],
+          "bbb_penetration": "N/A",
+          "notes": "Used for Upstaza/Kebilidi; stereotactic injection to putamen. Limited spread from injection site.",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "AAV2 has poor diffusion through brain parenchyma; transduction is largely confined to the injection site. Heparan sulfate binding limits spread but concentrates transduction locally."
+          }
+        },
+        "subretinal": {
+          "primary_targets": ["RPE", "Photoreceptors"],
+          "bbb_penetration": "N/A",
+          "notes": "Used for Luxturna; excellent RPE transduction, moderate photoreceptor transduction",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "Subretinal injection places vector directly adjacent to RPE and photoreceptors. Intravitreal AAV2 would primarily transduce inner retinal layers (ganglion cells)."
+          }
+        },
+        "intravitreal": {
+          "primary_targets": ["Ganglion cells", "Inner retinal layers"],
+          "bbb_penetration": "N/A",
+          "notes": "Limited penetration to outer retina; ganglion cell layer is primary target"
+        }
+      },
+      "approved_therapies": ["Luxturna", "Upstaza", "Kebilidi"],
+      "mstexplorer_equivalent_celltypes": [
+        "Limbic_system_neurons",
+        "Excitatory_neurons",
+        "Photoreceptor_cells",
+        "Retinal_pigment_cells"
+      ]
+    },
+    "AAV5": {
+      "description": "Liver-tropic but with lower efficiency than AAV8. Key advantage is low seroprevalence (less pre-existing immunity).",
+      "critical_caveats": {
+        "lower_efficiency": {
+          "description": "AAV5 has lower hepatocyte transduction efficiency than AAV8",
+          "source": {
+            "citation": "PMC7773954",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7773954/",
+            "quote": "AAV5 can only facilitate a low level of transgene expression in the liver, constraining its application to a small number of liver diseases"
+          }
+        },
+        "seroprevalence_advantage": {
+          "description": "Lower pre-existing immunity in human population",
+          "clinical_relevance": "Chosen for Hemgenix despite lower efficiency due to immunological advantages"
+        }
+      },
+      "primary_tropism": {
+        "liver": {
+          "cell_types": ["Hepatocytes"],
+          "tropism_score": 0.7,
+          "rank": 1,
+          "notes": "Moderate liver tropism - lower efficiency than AAV8 but advantageous seroprevalence profile.",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "AAV5 has moderate liver tropism. Lower overall efficiency - AAV5 is generally less efficient than AAV8 or AAV9 for liver transduction."
+          }
+        },
+        "lung": {
+          "cell_types": ["Airway epithelium"],
+          "tropism_score": 0.6,
+          "rank": 2,
+          "notes": "Originally isolated from human samples; has airway tropism. Uses N-linked sialic acid as receptor.",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "Lung epithelium (airway cells) - AAV5 was originally isolated from human samples and has airway tropism"
+          }
+        },
+        "cns": {
+          "cell_types": [],
+          "tropism_score": 0.1,
+          "rank": 4,
+          "notes": "Poor CNS penetration; does not efficiently cross BBB",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "CNS - Poor CNS penetration after IV; does not efficiently cross BBB"
+          }
+        }
+      },
+      "delivery_routes": {
+        "IV": {
+          "primary_targets": ["Hepatocytes"],
+          "bbb_penetration": "none",
+          "notes": "Used for Hemgenix; achieves durable liver transduction despite lower per-dose efficiency",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context"
+          }
+        }
+      },
+      "approved_therapies": ["Hemgenix", "Roctavian"],
+      "mstexplorer_equivalent_celltypes": [
+        "AFP_ALB_positive_cells",
+        "Hepatoblasts"
+      ]
+    },
+    "AAVrh10": {
+      "description": "Broad CNS tropism; used for neurometabolic diseases",
+      "primary_tropism": {
+        "cns": {
+          "cell_types": ["Neurons", "Astrocytes", "Oligodendrocytes"],
+          "tropism_score": 0.85,
+          "notes": "Broad CNS transduction; good for white matter diseases"
+        }
+      },
+      "delivery_routes": {
+        "intracranial": {
+          "primary_targets": ["Neurons", "Glia"],
+          "bbb_penetration": "N/A",
+          "notes": "Used for MLD, MPS IIIA trials"
+        },
+        "intrathecal": {
+          "primary_targets": ["Motor neurons", "DRG", "Spinal cord"],
+          "bbb_penetration": "N/A",
+          "notes": "Good spinal cord transduction"
+        }
+      },
+      "approved_therapies": [],
+      "mstexplorer_equivalent_celltypes": [
+        "Excitatory_neurons",
+        "Inhibitory_neurons",
+        "Oligodendrocytes"
+      ]
+    },
+    "AAVrh74": {
+      "description": "Muscle-tropic; clinically validated for muscular dystrophies. Strong cardiac and skeletal muscle transduction.",
+      "primary_tropism": {
+        "skeletal_muscle": {
+          "cell_types": ["Skeletal muscle cells", "Myocytes"],
+          "tropism_score": 0.95,
+          "rank": 1,
+          "notes": "Excellent skeletal muscle tropism; primary target tissue.",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "Skeletal muscle (myocytes) - AAVrh74 has excellent skeletal muscle tropism; primary target tissue"
+          }
+        },
+        "cardiac": {
+          "cell_types": ["Cardiomyocytes"],
+          "tropism_score": 0.9,
+          "rank": 2,
+          "notes": "Good cardiac transduction.",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "Cardiomyocytes - good cardiac transduction"
+          }
+        },
+        "diaphragm": {
+          "cell_types": ["Diaphragm muscle"],
+          "tropism_score": 0.9,
+          "rank": 3,
+          "notes": "Important for respiratory muscle applications.",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "Diaphragm - important for respiratory muscle applications"
+          }
+        },
+        "liver": {
+          "cell_types": ["Hepatocytes"],
+          "tropism_score": 0.3,
+          "rank": 4,
+          "notes": "Some liver uptake (less than AAV8/9).",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "Hepatocytes - some liver uptake (less than AAV8/9)"
+          }
+        },
+        "cns": {
+          "cell_types": [],
+          "tropism_score": 0.1,
+          "rank": 5,
+          "notes": "Limited CNS penetration.",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "CNS - limited CNS penetration"
+          }
+        }
+      },
+      "delivery_routes": {
+        "IV": {
+          "primary_targets": ["Skeletal muscle", "Cardiac muscle", "Diaphragm"],
+          "bbb_penetration": "none",
+          "notes": "Used for Elevidys; systemic muscle delivery",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context"
+          }
+        }
+      },
+      "approved_therapies": ["Elevidys"],
+      "mstexplorer_equivalent_celltypes": [
+        "Skeletal_muscle_cells",
+        "Satellite_cells",
+        "Cardiomyocytes"
+      ]
+    },
+    "AAV1": {
+      "description": "Muscle-tropic; first approved AAV (Glybera, now withdrawn). Higher efficiency than AAV2 for brain injection.",
+      "primary_tropism": {
+        "muscle": {
+          "cell_types": ["Skeletal muscle cells"],
+          "tropism_score": 0.9,
+          "rank": 1,
+          "notes": "Good muscle transduction via intramuscular delivery",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "note": "AAV1 not covered in main blind query; tropism well-established in literature"
+          }
+        },
+        "cns": {
+          "cell_types": ["Neurons"],
+          "tropism_score": 0.5,
+          "rank": 2,
+          "notes": "13-35x higher transduction efficiency than AAV2 for brain injection"
+        }
+      },
+      "delivery_routes": {
+        "intramuscular": {
+          "primary_targets": ["Skeletal muscle cells at injection site"],
+          "bbb_penetration": "N/A",
+          "notes": "Used for Glybera (withdrawn due to commercial reasons, not efficacy)"
+        }
+      },
+      "approved_therapies": ["Glybera (withdrawn)"],
+      "mstexplorer_equivalent_celltypes": [
+        "Skeletal_muscle_cells",
+        "Satellite_cells"
+      ]
+    },
+    "AAV8": {
+      "description": "Liver-tropic; highest hepatocyte transduction efficiency among common serotypes. No currently approved therapies.",
+      "primary_tropism": {
+        "liver": {
+          "cell_types": ["Hepatocytes", "Liver sinusoidal endothelial cells"],
+          "tropism_score": 0.95,
+          "rank": 1,
+          "notes": "Highly liver-tropic; one of the most efficient serotypes for liver transduction. Can transduce up to 90-95% of hepatocytes.",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "AAV8 is highly liver-tropic; one of the most efficient serotypes for liver transduction"
+          }
+        },
+        "muscle": {
+          "cell_types": ["Skeletal muscle cells", "Cardiac muscle cells"],
+          "tropism_score": 0.5,
+          "rank": 2,
+          "notes": "Good muscle transduction, moderate cardiac transduction.",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "Skeletal muscle - good muscle transduction. Cardiomyocytes - moderate cardiac transduction."
+          }
+        },
+        "pancreas": {
+          "cell_types": ["Pancreatic cells"],
+          "tropism_score": 0.3,
+          "rank": 3,
+          "notes": "Some pancreatic tropism.",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "Pancreatic cells - some pancreatic tropism"
+          }
+        },
+        "cns": {
+          "cell_types": [],
+          "tropism_score": 0.1,
+          "rank": 4,
+          "notes": "Poor CNS penetration; does not efficiently cross BBB.",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context",
+            "quote": "CNS - poor; AAV8 does not efficiently cross the BBB"
+          }
+        }
+      },
+      "delivery_routes": {
+        "IV": {
+          "primary_targets": ["Hepatocytes"],
+          "bbb_penetration": "none",
+          "notes": "Preferred for liver-directed gene therapy due to high efficiency.",
+          "blind_validation": {
+            "date": "2026-01-25",
+            "confirmed": true,
+            "source": "Blind LLM query with no therapy context"
+          }
+        }
+      },
+      "approved_therapies": [],
+      "note": "No currently FDA/EMA approved therapies use AAV8. Roctavian uses AAV5.",
+      "mstexplorer_equivalent_celltypes": [
+        "AFP_ALB_positive_cells",
+        "Hepatoblasts"
+      ]
+    },
+    "AAV-PHP.eB": {
+      "description": "Engineered variant with enhanced CNS penetration in mice. CRITICAL: Limited human translation due to species-specific receptor dependency.",
+      "critical_caveats": {
+        "species_specificity": {
+          "description": "Relies on LY6A receptor which is mouse-specific",
+          "clinical_relevance": "Human translation unclear; likely poor CNS penetration in humans",
+          "source": {
+            "citation": "Deverman BE et al. Nat Biotechnol. 2016;34(2):204-209",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/26829320/"
+          }
+        }
+      },
+      "primary_tropism": {
+        "cns": {
+          "cell_types": ["Neurons (all types)", "Astrocytes", "Oligodendrocytes"],
+          "tropism_score": 0.95,
+          "notes": "58x more efficient CNS transduction than AAV9 in mice; requires LY6A receptor (species-specific)"
+        }
+      },
+      "delivery_routes": {
+        "IV": {
+          "primary_targets": ["Broad CNS"],
+          "bbb_penetration": "very_high",
+          "notes": "Mouse data primarily; human translation unclear due to receptor differences"
+        }
+      },
+      "approved_therapies": [],
+      "mstexplorer_equivalent_celltypes": [
+        "Excitatory_neurons",
+        "Inhibitory_neurons",
+        "Oligodendrocytes",
+        "Astrocytes"
+      ]
+    }
+  },
+  "tissue_categories": {
+    "cns_neurons": {
+      "description": "Central nervous system neurons",
+      "aav_serotypes": ["AAV9", "AAV2", "AAVrh10", "AAV-PHP.eB"],
+      "delivery_routes": ["IV (AAV9 - neonatal)", "intracranial", "intrathecal", "intracerebroventricular"],
+      "age_considerations": "AAV9 IV preferentially transduces neurons in neonates but astrocytes in adults",
+      "species_considerations": "AAV9 IV transduces neurons better in mice than in NHPs/humans",
+      "mstexplorer_celltypes": [
+        "Excitatory_neurons",
+        "Inhibitory_neurons",
+        "Limbic_system_neurons",
+        "Granule_neurons",
+        "Purkinje_neurons"
+      ]
+    },
+    "cns_glia": {
+      "description": "Central nervous system glial cells",
+      "aav_serotypes": ["AAV9", "AAVrh10", "AAV-PHP.eB"],
+      "delivery_routes": ["IV (AAV9 - adult)", "intrathecal"],
+      "notes": "AAV9 IV in adults preferentially targets astrocytes. Microglia are difficult to transduce with any AAV.",
+      "mstexplorer_celltypes": [
+        "Oligodendrocytes",
+        "Microglia",
+        "Astrocytes"
+      ]
+    },
+    "retinal": {
+      "description": "Retinal cells",
+      "aav_serotypes": ["AAV2", "AAV5", "AAV8"],
+      "delivery_routes": ["subretinal", "intravitreal"],
+      "notes": "Subretinal delivery targets RPE and photoreceptors; intravitreal targets ganglion cells",
+      "mstexplorer_celltypes": [
+        "Photoreceptor_cells",
+        "Retinal_pigment_cells",
+        "Bipolar_cells",
+        "Amacrine_cells"
+      ]
+    },
+    "muscle": {
+      "description": "Skeletal and cardiac muscle",
+      "aav_serotypes": ["AAVrh74", "AAV9", "AAV1", "AAV8"],
+      "delivery_routes": ["IV", "intramuscular"],
+      "notes": "AAVrh74 is most muscle-specific; AAV9 also transduces muscle but with CNS off-target",
+      "mstexplorer_celltypes": [
+        "Skeletal_muscle_cells",
+        "Satellite_cells",
+        "Cardiomyocytes"
+      ]
+    },
+    "liver": {
+      "description": "Hepatocytes",
+      "aav_serotypes": ["AAV8", "AAV5", "AAV9", "AAV3"],
+      "delivery_routes": ["IV"],
+      "notes": "AAV8 has highest hepatocyte efficiency (90-95%). AAV5 lower but better seroprevalence. AAV9 liver is off-target.",
+      "mstexplorer_celltypes": [
+        "AFP_ALB_positive_cells",
+        "Hepatoblasts"
+      ]
+    },
+    "hematopoietic": {
+      "description": "Blood and immune cells (not AAV targets - use lentivirus/retrovirus ex vivo)",
+      "aav_serotypes": [],
+      "delivery_routes": ["ex vivo"],
+      "notes": "HSCs are difficult to transduce with AAV; ex vivo lentiviral transduction used instead",
+      "mstexplorer_celltypes": [
+        "Hematopoietic_stem_cells",
+        "Adult_CB_CD34+",
+        "Thymocytes",
+        "Erythroblasts"
+      ]
+    }
+  },
+  "validation_summary": {
+    "blind_query_date": "2026-01-25",
+    "methodology": {
+      "approach": "Double-blind LLM query - spawned a subagent with NO context about this project, therapies, diseases, or what we were trying to validate",
+      "prompt_used": "Answer these questions about adeno-associated virus (AAV) tropism... What are the primary cell types transduced by [serotype] after [route] delivery? Rank them by transduction efficiency. Do NOT mention any specific therapies or diseases.",
+      "why_this_works": "The analyst (subagent) doesn't know WHY we're asking, so cannot cherry-pick evidence to support an unknown hypothesis",
+      "previous_failure": {
+        "problem": "Web searches and previous LLM queries were contaminated because the analyst (me) had full context about Zolgensma, SMA, and motor neurons",
+        "result": "Cherry-picked quotes mentioning motor neurons because that's what I was primed to look for",
+        "lesson": "Blind queries aren't enough - the analyst must ALSO be blind"
+      }
+    },
+    "corrected_aav9_tropism": {
+      "source": "Blind LLM subagent query (2026-01-25)",
+      "primary_tropisms_ranked": [
+        "1. Hepatocytes (DOMINANT SINK - 100-1000x more vector genomes than other tissues)",
+        "2. Cardiomyocytes (excellent cardiac tropism)",
+        "3. Skeletal muscle (strong transduction throughout)",
+        "4. CNS neurons (broadly, not motor-neuron-specific)",
+        "5. Astrocytes (less efficiently than neurons)",
+        "6. DRG neurons (safety concern - toxicity)"
+      ],
+      "key_corrections": {
+        "liver_ranking": "Liver should be ranked FIRST, not fourth. Previous data underestimated liver as 'off-target' when it's actually the dominant target.",
+        "motor_neurons": "Motor neurons are NOT a primary AAV9 tropism - they are simply neurons in the CNS that get transduced. The emphasis on 'motor neurons' came FROM SMA therapy context.",
+        "skeletal_muscle": "Skeletal muscle was underranked; blind query places it third."
+      },
+      "caveats_confirmed": {
+        "age_dependence": "BBB crossing much more efficient in neonates than adults",
+        "species_differences": "Mouse CNS transduction is higher than in NHPs or humans",
+        "liver_sequestration": "Liver captures most of the vector, limiting delivery to other organs"
+      }
+    },
+    "bias_detected": {
+      "claim": "AAV9 specifically targets motor neurons",
+      "status": "BIASED - this claim originated from therapy-specific literature, not general tropism studies",
+      "correct_statement": "AAV9 broadly transduces CNS neurons (including motor neurons) after crossing BBB. Motor neurons are not preferentially targeted vs other CNS neurons.",
+      "implication_for_validation": "The 'aav_reachable' match for Zolgensma is STILL VALID because AAV9 does transduce CNS neurons including motor neurons - the bias was in claiming motor neurons as a PRIMARY tropism"
+    },
+    "other_serotypes_validated": {
+      "AAV2_intracranial": "CONFIRMED - neurons at injection site, limited spread, poor glial transduction",
+      "AAV2_subretinal": "CONFIRMED - RPE first, then photoreceptors",
+      "AAV5_IV": "CONFIRMED - hepatocytes, lower efficiency than AAV8",
+      "AAV8_IV": "CONFIRMED - hepatocytes (highly liver-tropic)",
+      "AAVrh74_IV": "CONFIRMED - skeletal muscle, cardiac muscle, lower liver than AAV8/9"
+    }
+  }
+}

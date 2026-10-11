@@ -1,0 +1,10 @@
+{
+  "source": "Human Phenotype Ontology phenotype_to_genes export",
+  "source_url": "https://purl.obolibrary.org/obo/hp/hpoa/phenotype_to_genes.txt",
+  "source_last_modified": "Wed, 02 Sep 2026 21:12:38 GMT",
+  "retrieved_at": "2026-10-11T00:31:14.166846+00:00",
+  "sha256": "7b7a0f71b7c6d2bdfff3d6f075c567c56d668495a4fd80f0bc35f690a221d00b",
+  "source_bytes": 67246520,
+  "association_kind": "disease_context_gene_phenotype_association",
+  "scope": "A gene and phenotype linked through an annotated disease; not variant-specific causality, inheritance, mechanism or cell-type causality."
+}

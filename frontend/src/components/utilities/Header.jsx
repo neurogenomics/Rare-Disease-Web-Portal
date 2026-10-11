@@ -1,132 +1,34 @@
-import React, { useState } from "react";
-import { ConfigProvider, Layout, Menu } from "antd";
-import { useNavigate } from "react-router-dom";
+/* eslint-disable react/prop-types */
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import MainLogo from "./MainLogo";
-
-const { Header } = Layout;
-
-const items = [
-    {
-        key: "home",
-        label: "Home",
-        path: "/"
-    },
-    {
-        key: "search",
-        label: "Search",
-        children: [
-            {
-                key: "phenotype",
-                label: "By Phenotype",
-                path: "/phenotype"
-            },
-            {
-                key: "celltype",
-                label: "By Cell Type",
-                path: "/celltype"
-            },
-            {
-                key: "gene",
-                label: "By Gene",
-                path: "/gene"
-            },
-            {
-                key: "severity",
-                label: "By Severity",
-                path: "/severity"
-            },
-        ],
-    },
-    {
-        key: "publications",
-        label: "Publications",
-        path: "/publications"
-    },
-    {
-        key: "about",
-        label: "About",
-        path: "/about"
-    },
+import '../../styles/portal-nav.css';
+const groups = [
+  {label:'Explore biology',items:[['phenotype','Phenotypes','/phenotype'],['celltype','Cell types','/celltype'],['gene','Genes','/gene'],['severity','Severity','/severity'],['gene-browser','Gene browser','/gene-browser']]},
+  {label:'Evidence',items:[['approved-therapies','Treatment evidence','/evidence'],['variants','Genes & variants','/evidence?tab=variants'],['gene-therapy-targets','Modality requirements','/evidence?tab=modalities'],['methods','Methods & coverage','/evidence?tab=methods']]},
 ];
-
-const CustomHeader = ({ activePageKey }) => {
-    const [selectedKey, setSelectedKey] = useState(activePageKey);
-    const navigate = useNavigate();
-
-    const handleMenuClick = (e) => {
-        setSelectedKey(e.key);
-        const item = findMenuItemByKey(items, e.key);
-        console.log(item);
-        if (item && item.path) {
-            navigate(item.path);
-        }
-    }
-
-    const findMenuItemByKey = (menuItems, key) => {
-        for (const item of menuItems) {
-            if (item.key === key) {
-                return item;
-            }
-            if (item.children) {
-                const childItem = findMenuItemByKey(item.children, key);
-                if (childItem) {
-                    return childItem;
-                }
-            }
-        }
-        return null;
-    };
-
-    return (
-        <ConfigProvider
-            theme={{
-                components: {
-                    Menu: {
-                        darkItemColor: "#000",
-                        darkItemSelectedBg: "#8b5cf6",
-                        darkSubMenuItemBg: "#fff",
-                        darkPopupBg: "#fff",
-                        subMenuItemBg: "#fff",
-                        subMenuItemSelectedColor: "#fff",
-                        darkItemHoverColor: "#8b5cf6",
-                    },
-                    Layout: {
-                        headerHeight: "3.2em",
-                    },
-                },
-            }}
-        >
-            <Header
-                style={{
-                    background: "#fff",
-                    padding: 0,
-                    top: 0,
-                    width: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    zIndex: 10,
-                }}
-                theme="light"
-            >
-                <MainLogo />
-                <Menu
-                    theme="dark"
-                    mode="horizontal"
-                    selectedKeys={[selectedKey]}
-                    items={items}
-                    className="header-menu"
-                    onClick={handleMenuClick}
-                    style={{
-                        position: "absolute",
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        background: "#fff",
-                    }}
-                    disabledOverflow={true}
-                />
-            </Header>
-        </ConfigProvider>
-    );
-};
-
-export default CustomHeader;
+export default function CustomHeader({activePageKey}) {
+  const [open,setOpen]=useState(false);
+  const location = useLocation();
+  const navigationRef = useRef(null);
+  const menuRef = useRef(null);
+  useEffect(() => {
+    setOpen(false);
+    navigationRef.current?.querySelectorAll('details[open]').forEach(group => { group.open = false; });
+  }, [location.pathname, location.search]);
+  const closeNavigation = event => {
+    if (event.key !== 'Escape') return;
+    const summary = event.target.closest('details')?.querySelector('summary');
+    navigationRef.current?.querySelectorAll('details[open]').forEach(group => { group.open = false; });
+    setOpen(false);
+    (open ? menuRef.current : summary)?.focus();
+  };
+  return <header className="rd-header"><Link to="/" className="rd-logo-link" aria-label="Rare disease portal home"><MainLogo /></Link>
+    <button ref={menuRef} type="button" className="rd-menu-toggle" aria-label="Toggle site navigation" aria-expanded={open} aria-controls="rd-navigation" onClick={()=>setOpen(!open)} onKeyDown={closeNavigation}>Menu {open?'−':'+'}</button>
+    <nav ref={navigationRef} id="rd-navigation" className={'rd-navigation'+(open?' is-open':'')} aria-label="Main navigation" onKeyDown={closeNavigation}>
+      <Link to="/" aria-current={activePageKey==='home'?'page':undefined} onClick={()=>setOpen(false)}>Home</Link>
+      {groups.map(group=><details className="rd-nav-group" data-active={group.items.some(([key]) => key === activePageKey) || undefined} key={group.label}><summary>{group.label}</summary><div>{group.items.map(([key,label,path])=><Link to={path} key={key} aria-current={activePageKey===key?'page':undefined} onClick={()=>setOpen(false)}>{label}</Link>)}</div></details>)}
+      <Link to="/publications" aria-current={activePageKey==='publications'?'page':undefined}>Publications</Link><Link to="/about" aria-current={activePageKey==='about'?'page':undefined}>About</Link>
+    </nav>
+  </header>;
+}

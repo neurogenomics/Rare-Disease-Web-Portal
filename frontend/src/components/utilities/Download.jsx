@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Button } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import html2canvas from "html2canvas";
@@ -7,7 +8,7 @@ export default function DownloadButton({ elementId }) {
     // downloads it as a PNG. Make sure the wrap the element with a div with
     // id="given-id"
     const download = () => {
-        const element = document.querySelector("#severity-network");
+        const element = document.getElementById(elementId);
         if (!element) {
             console.error(`Element with supplied ID not found for download`);
             return;
@@ -16,7 +17,7 @@ export default function DownloadButton({ elementId }) {
         html2canvas(element).then((canvas) => {
             const imgData = canvas.toDataURL("image/png");
             const link = document.createElement("a");
-            link.download = "SeverityNetwork.png";
+            link.download = `${elementId}.png`;
             link.href = imgData;
             link.click();
         });
@@ -24,9 +25,8 @@ export default function DownloadButton({ elementId }) {
 
     return (
         <Button
-            style={{ width: 50 }}
-            color="purple"
-            variant="solid"
+            type="default"
+            aria-label="Download figure as PNG"
             icon={<DownloadOutlined />}
             size="small"
             onClick={download}

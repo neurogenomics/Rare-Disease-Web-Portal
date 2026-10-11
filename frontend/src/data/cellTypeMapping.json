@@ -1,0 +1,160 @@
+[
+  {
+    "fda_description": "motor neurons",
+    "cell_ontology_id": "CL:0000100",
+    "cell_ontology_label": "motor neuron",
+    "mstexplorer_celltype": "Excitatory_neurons",
+    "tissue_category": "cns_neurons",
+    "notes": "Motor neurons are a subtype of excitatory neurons; MSTExplorer doesn't have a specific motor neuron category"
+  },
+  {
+    "fda_description": "motor neurons in the spinal cord",
+    "cell_ontology_id": "CL:0000100",
+    "cell_ontology_label": "motor neuron",
+    "mstexplorer_celltype": "Excitatory_neurons",
+    "tissue_category": "cns_neurons"
+  },
+  {
+    "fda_description": "dopaminergic neurons",
+    "cell_ontology_id": "CL:0000700",
+    "cell_ontology_label": "dopaminergic neuron",
+    "mstexplorer_celltype": "Limbic_system_neurons",
+    "tissue_category": "cns_neurons",
+    "notes": "Dopaminergic neurons of substantia nigra/VTA map to limbic system in MSTExplorer"
+  },
+  {
+    "fda_description": "dopaminergic neurons (putamen)",
+    "cell_ontology_id": "CL:0000700",
+    "cell_ontology_label": "dopaminergic neuron",
+    "mstexplorer_celltype": "Limbic_system_neurons",
+    "tissue_category": "cns_neurons"
+  },
+  {
+    "fda_description": "retinal pigment epithelium",
+    "cell_ontology_id": "CL:0002586",
+    "cell_ontology_label": "retinal pigment epithelial cell",
+    "mstexplorer_celltype": "Retinal_pigment_cells",
+    "tissue_category": "retinal"
+  },
+  {
+    "fda_description": "rpe and photoreceptors",
+    "cell_ontology_id": "CL:0000210",
+    "cell_ontology_label": "photoreceptor cell",
+    "mstexplorer_celltype": "Photoreceptor_cells,Retinal_pigment_cells",
+    "tissue_category": "retinal"
+  },
+  {
+    "fda_description": "photoreceptors",
+    "cell_ontology_id": "CL:0000210",
+    "cell_ontology_label": "photoreceptor cell",
+    "mstexplorer_celltype": "Photoreceptor_cells",
+    "tissue_category": "retinal"
+  },
+  {
+    "fda_description": "retinal cells",
+    "cell_ontology_id": "CL:0009000",
+    "cell_ontology_label": "retinal cell",
+    "mstexplorer_celltype": "Photoreceptor_cells,Retinal_pigment_cells,Bipolar_cells",
+    "tissue_category": "retinal"
+  },
+  {
+    "fda_description": "hematopoietic stem cells",
+    "cell_ontology_id": "CL:0000037",
+    "cell_ontology_label": "hematopoietic stem cell",
+    "mstexplorer_celltype": "Hematopoietic_stem_cells,Adult_CB_CD34+",
+    "tissue_category": "hematopoietic"
+  },
+  {
+    "fda_description": "hematopoietic stem cells (cd34+)",
+    "cell_ontology_id": "CL:0001059",
+    "cell_ontology_label": "CD34-positive hematopoietic stem cell",
+    "mstexplorer_celltype": "Hematopoietic_stem_cells,Adult_CB_CD34+",
+    "tissue_category": "hematopoietic"
+  },
+  {
+    "fda_description": "erythroid progenitors",
+    "cell_ontology_id": "CL:0000764",
+    "cell_ontology_label": "erythroid progenitor cell",
+    "mstexplorer_celltype": "Erythroblasts,Adult_erythroid_cell",
+    "tissue_category": "hematopoietic"
+  },
+  {
+    "fda_description": "t cells",
+    "cell_ontology_id": "CL:0000084",
+    "cell_ontology_label": "T cell",
+    "mstexplorer_celltype": "Thymocytes,Adult_T_cell",
+    "tissue_category": "hematopoietic"
+  },
+  {
+    "fda_description": "patient t cells",
+    "cell_ontology_id": "CL:0000084",
+    "cell_ontology_label": "T cell",
+    "mstexplorer_celltype": "Thymocytes,Adult_T_cell",
+    "tissue_category": "hematopoietic"
+  },
+  {
+    "fda_description": "hepatocytes",
+    "cell_ontology_id": "CL:0000182",
+    "cell_ontology_label": "hepatocyte",
+    "mstexplorer_celltype": "AFP_ALB_positive_cells,Hepatoblasts",
+    "tissue_category": "liver",
+    "notes": "MSTExplorer uses AFP_ALB_positive_cells as hepatocyte proxy"
+  },
+  {
+    "fda_description": "skeletal muscle",
+    "cell_ontology_id": "CL:0000188",
+    "cell_ontology_label": "skeletal muscle cell",
+    "mstexplorer_celltype": "Skeletal_muscle_cells,Satellite_cells",
+    "tissue_category": "muscle"
+  },
+  {
+    "fda_description": "skeletal muscle cells",
+    "cell_ontology_id": "CL:0000188",
+    "cell_ontology_label": "skeletal muscle cell",
+    "mstexplorer_celltype": "Skeletal_muscle_cells,Satellite_cells",
+    "tissue_category": "muscle"
+  },
+  {
+    "fda_description": "oligodendrocytes",
+    "cell_ontology_id": "CL:0000128",
+    "cell_ontology_label": "oligodendrocyte",
+    "mstexplorer_celltype": "Oligodendrocytes,Adult_oligodendrocyte",
+    "tissue_category": "cns_glia"
+  },
+  {
+    "fda_description": "microglia",
+    "cell_ontology_id": "CL:0000129",
+    "cell_ontology_label": "microglial cell",
+    "mstexplorer_celltype": "Microglia",
+    "tissue_category": "cns_glia"
+  },
+  {
+    "fda_description": "keratinocytes",
+    "cell_ontology_id": "CL:0000312",
+    "cell_ontology_label": "keratinocyte",
+    "mstexplorer_celltype": "no_match",
+    "tissue_category": "skin",
+    "notes": "No direct keratinocyte representation in MSTExplorer"
+  },
+  {
+    "fda_description": "keratinocytes (autologous corrected)",
+    "cell_ontology_id": "CL:0000312",
+    "cell_ontology_label": "keratinocyte",
+    "mstexplorer_celltype": "no_match",
+    "tissue_category": "skin"
+  },
+  {
+    "fda_description": "bladder urothelium",
+    "cell_ontology_id": "CL:1001428",
+    "cell_ontology_label": "bladder urothelial cell",
+    "mstexplorer_celltype": "no_match",
+    "tissue_category": "other"
+  },
+  {
+    "fda_description": "tumor cells (melanoma)",
+    "cell_ontology_id": "CL:0000148",
+    "cell_ontology_label": "melanocyte",
+    "mstexplorer_celltype": "no_match",
+    "tissue_category": "other"
+  }
+]

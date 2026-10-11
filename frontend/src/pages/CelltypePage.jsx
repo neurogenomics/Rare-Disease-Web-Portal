@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import { portalFetch, portalGet } from "../lib/portalAPI.js";
+import SnapshotScopeNotice from "../components/SnapshotScopeNotice.jsx";
+import EvidenceEntry from "../components/EvidenceEntry.jsx";
+import { useEffect, useRef, useState } from "react";
 import PhenotypeTree from "../components/CellTree.jsx";
 import CustomHeader from "../components/utilities/Header.jsx";
 import CustomFooter from "../components/utilities/Footer.jsx";
-import axios from "axios";
 import {
     Breadcrumb,
     Layout,
@@ -20,7 +22,7 @@ import {
     Alert
 } from "antd";
 import { Column } from "@ant-design/plots";
-import { DownloadOutlined, SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
 import { BASE_API_URL } from "../../config.js";
 import { SettingsOutlined } from "@mui/icons-material";
 import NotFound from "../components/utilities/Texts.jsx";
@@ -37,10 +39,16 @@ import PageIntro from "../components/PageIntro.jsx";
 import { urlParser, urlSetter } from "../scripts/urlHandlers.js";
 import ShareButton from "../components/utilities/ShareButton.jsx";
 import PhenotypeNetwork from "../components/PhenotypeNetwork.jsx";
-import { createRoot } from "react-dom";
+import { createRoot } from "react-dom/client";
+import { Link } from "react-router-dom";
+import { legacyExplorerHref } from "../lib/legacyExplorerLink.js";
+import { formatQ } from "../lib/evidenceModel.js";
+import DownloadButton from "../components/utilities/Download.jsx";
 
-const suitsDta =
-    '[{"source":"Microsoft","target":"Amazon","type":"1"},{"source":"Microsoft","target":"HTC","type":"licensing"},{"source":"Samsung","target":"Apple","type":"suit"},{"source":"Motorola","target":"Apple","type":"suit"},{"source":"Nokia","target":"Apple","type":"resolved"},{"source":"HTC","target":"Apple","type":"suit"},{"source":"Kodak","target":"Apple","type":"suit"},{"source":"Microsoft","target":"Barnes & Noble","type":"suit"},{"source":"Microsoft","target":"Foxconn","type":"suit"},{"source":"Oracle","target":"Google","type":"suit"},{"source":"Apple","target":"HTC","type":"suit"},{"source":"Microsoft","target":"Inventec","type":"suit"},{"source":"Samsung","target":"Kodak","type":"resolved"},{"source":"LG","target":"Kodak","type":"resolved"},{"source":"RIM","target":"Kodak","type":"suit"},{"source":"Sony","target":"LG","type":"suit"},{"source":"Kodak","target":"LG","type":"resolved"},{"source":"Apple","target":"Nokia","type":"resolved"},{"source":"Qualcomm","target":"Nokia","type":"resolved"},{"source":"Apple","target":"Motorola","type":"suit"},{"source":"Microsoft","target":"Motorola","type":"suit"},{"source":"Motorola","target":"Microsoft","type":"suit"},{"source":"Huawei","target":"ZTE","type":"suit"},{"source":"Ericsson","target":"ZTE","type":"suit"},{"source":"Kodak","target":"Samsung","type":"resolved"},{"source":"Apple","target":"Samsung","type":"suit"},{"source":"Kodak","target":"RIM","type":"suit"},{"source":"Nokia","target":"Qualcomm","type":"suit"}]';
+function displaySourceNumber(value, decimalPoints) {
+    return value == null || value === "" || !Number.isFinite(Number(value))
+        ? "Not available" : Number(value).toPrecision(Math.max(3, decimalPoints));
+}
 
 const DemoColumn = (data) => {
     const chartRef = useRef();
@@ -104,8 +112,8 @@ const DemoColumn = (data) => {
                                 );
                             })}
                             <div className="italic">
-                                A higher value indicates that the gene likely
-                                plays a more important role in the cell type.
+                                Higher values indicate greater relative expression
+                                specificity in this atlas, not functional importance.
                             </div>
                         </div>
                     );
@@ -116,16 +124,29 @@ const DemoColumn = (data) => {
     return <Column {...config} ref={chartRef} />;
 };
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 
 export default function CelltypePage() {
+    useEffect(() => {
+        document.title = "Cell types · Rare Disease Celltyping Portal";
+    }, []);
     // Set states
     const [data, setData] = useState([]);
     const [data1, setData1] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [phenotypeError, setPhenotypeError] = useState(false);
+    const [geneError, setGeneError] = useState(false);
+    const [networkError, setNetworkError] = useState(false);
     const [decimalPoints, setDecimalPoints] = useState(3);
 
     const networkDivRef = useRef();
+    const networkRootRef = useRef(null);
+    const requestRevision = useRef(0);
+    useEffect(() => () => {
+        ++requestRevision.current;
+        networkRootRef.current?.unmount();
+        networkRootRef.current = null;
+    }, []);
 
     // Tour
     const tourRefAtlas = useRef(null);
@@ -167,12 +188,25 @@ export default function CelltypePage() {
         celltype_name: jump || "",
     });
     const [activeCellType, setActiveCellType] = useState("");
+    const [activeAtlas, setActiveAtlas] = useState(db_type || "DescartesHuman");
 
     useEffect(() => {
-        if (jump) handleSubmit();
+        // Hydration reads the current source selection and never writes history.
+        // A delayed former mount must not restore a cleared cell into a new atlas.
+        const current = urlParser("celltype");
+        if (current.jump && current.jump === jump && current.db_type === db_type) {
+            handleSubmit(null, {
+                ...sliderValues,
+                celltype_name: current.jump,
+                db_type: current.db_type || "DescartesHuman",
+                q: current.q_value || "0.05",
+            }, false);
+        }
+        // URL hydration runs on the router-keyed mount; filters submit explicitly.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const expandedRowRender = (record, index, indent, expanded) => {
+    const expandedRowRender = (record) => {
         const columns = [
             {
                 title: "Target",
@@ -192,42 +226,42 @@ export default function CelltypePage() {
             Target: "database",
         });
         data1.push({
-            Value: parseFloat(record.estimate).toFixed(decimalPoints),
+            Value: displaySourceNumber(record.estimate, decimalPoints),
             Target: "estimate",
         });
 
         data1.push({
-            Value: parseFloat(record.std_error).toFixed(decimalPoints),
+            Value: displaySourceNumber(record.std_error, decimalPoints),
             Target: "std_error",
         });
         data1.push({
-            Value: parseFloat(record.statistic).toFixed(decimalPoints),
+            Value: displaySourceNumber(record.statistic, decimalPoints),
             Target: "statistic",
         });
         data1.push({
-            Value: parseFloat(record.q).toFixed(decimalPoints),
+            Value: formatQ(record.q == null ? null : Number(record.q)),
             Target: "q",
         });
         data1.push({
-            Value: parseFloat(record.fold_change).toFixed(decimalPoints),
+            Value: displaySourceNumber(record.fold_change, decimalPoints),
             Target: "fold_change",
         });
 
         data1.push({
-            Value: parseFloat(record.p).toFixed(decimalPoints),
+            Value: formatQ(record.p == null ? null : Number(record.p)),
             Target: "p",
         });
         data1.push({
-            Value: parseFloat(record.model_estimate).toFixed(decimalPoints),
+            Value: displaySourceNumber(record.model_estimate, decimalPoints),
             Target: "model_estimate",
         });
         data1.push({
-            Value: parseFloat(record.model_statistic).toFixed(decimalPoints),
+            Value: displaySourceNumber(record.model_statistic, decimalPoints),
             Target: "model_statistic",
         });
 
         return (
-            <Table columns={columns} dataSource={data1} pagination={false} />
+            <Table columns={columns} dataSource={data1} pagination={false} rowKey="Target" />
         );
     };
     const columns = [
@@ -240,13 +274,12 @@ export default function CelltypePage() {
                 b.hpo_id.substring("HP:".length),
             render: (text, record) => {
                 return (
-                    <a
+                    <Link
                         style={{ textDecoration: "underline" }}
-                        target={"_blank"}
-                        href={`/phenotype?jump=${text}&db_type=${record.celltype_database}`}
+                        to={legacyExplorerHref("phenotype", text, { atlas: record.celltype_database })}
                     >
                         {text}
-                    </a>
+                    </Link>
                 );
             },
         },
@@ -258,6 +291,19 @@ export default function CelltypePage() {
             render: (text) => {
                 return text || <NotFound />;
             },
+        },
+        {
+            title: "Direction",
+            dataIndex: "direction",
+            key: "direction",
+            render: (text) => text || "Not recorded",
+        },
+        {
+            title: "Signed estimate",
+            dataIndex: "estimate",
+            key: "estimate",
+            sorter: (a, b) => a.estimate - b.estimate,
+            render: (value) => displaySourceNumber(value, decimalPoints),
         },
         {
             title: (
@@ -302,7 +348,7 @@ export default function CelltypePage() {
             key: "q",
             sorter: (a, b) => a.q - b.q,
             render: (text) => {
-                return parseFloat(text).toFixed(decimalPoints);
+                return formatQ(text == null ? null : Number(text));
             },
         },
     ];
@@ -314,6 +360,10 @@ export default function CelltypePage() {
             key: "gene",
             width: "30%",
             sorter: (a, b) => a.gene.localeCompare(b.gene),
+            render: (text) => {
+                const destination = legacyExplorerHref("gene", text, { atlas: activeAtlas, cell: activeCellType });
+                return destination ? <Link to={destination}>{text}</Link> : text;
+            },
         },
 
         {
@@ -327,7 +377,7 @@ export default function CelltypePage() {
             sorter: (a, b) =>
                 a.expression_specificity - b.expression_specificity,
             render: (text) => {
-                return parseFloat(text).toFixed(decimalPoints);
+                return displaySourceNumber(text, decimalPoints);
             },
         },
     ];
@@ -341,17 +391,29 @@ export default function CelltypePage() {
     const handleDecimalChange = (decimalPoints) => {
         setDecimalPoints(decimalPoints);
     };
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event, submitted = sliderValues, writeSelection = true) => {
+        event?.preventDefault();
+        const revision = ++requestRevision.current;
+        const submittedAtlas = submitted.db_type;
+        const submittedCell = submitted.celltype_name;
         setLoading(true);
-        urlSetter({
-            jump: sliderValues.celltype_name,
-            db_type: sliderValues.db_type,
-            q_value: sliderValues.q,
-        });
-        const queryParams = new URLSearchParams(sliderValues).toString();
+        setPhenotypeError(false);
+        setGeneError(false);
+        setNetworkError(false);
+        setData([]);
+        setData1([]);
+        setActiveAtlas(submittedAtlas);
+        setActiveCellType(submittedCell);
+        if (writeSelection && urlSetter({
+            jump: submittedCell,
+            db_type: submittedAtlas,
+            q_value: submitted.q,
+        })) return; // The keyed destination mount owns the new source request.
+        const queryParams = new URLSearchParams(submitted).toString();
         const url = `${BASE_API_URL}/api/cell?${queryParams}`;
         try {
-            const response = await axios.get(url);
+            const response = await portalGet(url);
+            if (revision !== requestRevision.current) return;
 
             // Fetch definitions for each item
             const dataWithDefinitions = await Promise.all(
@@ -362,6 +424,7 @@ export default function CelltypePage() {
                     };
                 })
             );
+            if (revision !== requestRevision.current) return;
             setLoading(false);
             setData(dataWithDefinitions);
             let node = [];
@@ -373,9 +436,10 @@ export default function CelltypePage() {
                 });
             }
 
-            fetch(`${BASE_API_URL}/api/hpjFiltered?${queryParams}`)
-                .then((res) => res.json())
+            portalFetch(`${BASE_API_URL}/api/hpjFiltered?${queryParams}`)
+                .then((res) => { if (!res.ok) throw new Error('Network source unavailable'); return res.json(); })
                 .then((results) => {
+                    if (revision !== requestRevision.current) return;
                     node = node.filter(function (v) {
                         return v.name !== undefined;
                     })
@@ -391,79 +455,60 @@ export default function CelltypePage() {
                         "nodes": node,
                         "links": results
                     }
-                    createRoot(document.getElementById("network")).render(
-                        <PhenotypeNetwork elementRef={networkDivRef} data={data} height={400} />
-                    )
-                });
+                    if (networkDivRef.current) {
+                        networkRootRef.current ||= createRoot(networkDivRef.current);
+                        networkRootRef.current.render(
+                            <PhenotypeNetwork elementRef={networkDivRef} data={data} height={400} context={{ atlas: submittedAtlas, cell: submittedCell }} />
+                        );
+                    }
+                }).catch(() => { if (revision === requestRevision.current) setNetworkError(true); });
         } catch (error) {
+            if (revision !== requestRevision.current) return;
             console.error("Error fetching data:", error);
+            setPhenotypeError(true);
+            setLoading(false);
         }
 
-        fetch(
-            `${BASE_API_URL}/gene1/${sliderValues.celltype_name}/${sliderValues.db_type}`
+        portalFetch(
+            `${BASE_API_URL}/gene1/${submittedCell}/${submittedAtlas}`
         )
-            .then((res) => res.json())
+            .then((res) => { if (!res.ok) throw new Error('Gene source unavailable'); return res.json(); })
             .then((results) => {
-                results = results.filter(
-                    (item) => item.expression_specificity > 0.00001
-                ); // Filter out genes with practically no specificity
+                if (revision !== requestRevision.current) return;
                 results.sort((a, b) => {
                     return b.expression_specificity - a.expression_specificity;
                 });
                 setData1(results);
                 setLoading(false);
-            });
-        setActiveCellType(sliderValues.celltype_name);
+            }).catch(() => { if (revision === requestRevision.current) { setGeneError(true); setLoading(false); } });
     };
 
-    const onload = async (event) => {
-        setLoading(true);
-        const queryParams = new URLSearchParams(event).toString();
-        const url = `${BASE_API_URL}/api/cell?${queryParams}`;
-        try {
-            const response = await axios.get(url);
-
-            // Fetch definitions for each item
-            const dataWithDefinitions = await Promise.all(
-                response.data.map(async (item) => {
-                    return {
-                        ...item,
-                        key: item.id,
-                    };
-                })
-            );
-            setLoading(false);
-            setData(dataWithDefinitions);
-            let node = [];
-            for (let i = 0; i < dataWithDefinitions.length; i++) {
-                node.push({
-                    id: dataWithDefinitions[i].hpo_id,
-                    name: dataWithDefinitions[i].hpo_name,
-                    type: dataWithDefinitions[i].severity_class,
-                });
-            }
-
-            fetch(`${BASE_API_URL}/api/hpj`)
-                .then((res) => res.json())
-                .then((results) => {
-                    NetWork(results, node);
-                });
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
-
-    const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
     const [size, setSize] = useState(db_type || "DescartesHuman");
     const handleSizeChange = (e) => {
+        // Rows belong to the submitted atlas. Changing a pending atlas must
+        // not relabel cached rows or allow a late former request to restore them.
+        ++requestRevision.current;
+        networkRootRef.current?.unmount();
+        networkRootRef.current = null;
+        setData([]);
+        setData1([]);
+        setActiveCellType("");
+        setLoading(false);
+        setPhenotypeError(false);
+        setGeneError(false);
+        setNetworkError(false);
         setSize(e.target.value);
         setSliderValues((prevValues) => ({
             ...prevValues,
             db_type: e.target.value,
+            celltype_name: "",
         }));
+        // The current URL, evidence bridge and browser history must describe
+        // the newly selected atlas, without the former atlas's cell identity.
+        urlSetter({ db_type: e.target.value, jump: null });
     };
     const getData = (data, info) => {
         setSliderValues((prevValues) => ({
@@ -471,42 +516,11 @@ export default function CelltypePage() {
             celltype_name: info.node.key,
         }));
     };
-    const downloadGenePlot = () => {
-        var canvas = document.getElementsById("network")[0];
-        let svg0 = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "svg"
-        );
-        svg0.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-        svg0.setAttribute("version", "1.1");
-        svg0.setAttribute("height", "880");
-        svg0.setAttribute("width", "1920");
-        let img3 = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "image"
-        );
-        img3.href.baseVal = canvas.toDataURL("image/png");
-        img3.setAttribute("height", "880");
-        svg0.appendChild(img3);
-        let h = svg0.outerHTML;
-        let data =
-            "data:image/svg+xml;base64," +
-            window.btoa(unescape(encodeURIComponent(h)));
-        const elink = document.createElement("a");
-        elink.download = "Cell Associations";
-        elink.style.display = "none";
-        elink.href = data;
-        document.body.appendChild(elink);
-        elink.click();
-        URL.revokeObjectURL(elink.href);
-        document.body.removeChild(elink);
-    };
-
-
     // Advanced Settings
     const genExtra = () => <SettingsOutlined />; // Settings icon
     const advancedSettingsChildren = [
         <InputNumber
+            key="decimal-points"
             min={1}
             max={10}
             defaultValue={decimalPoints}
@@ -544,54 +558,45 @@ export default function CelltypePage() {
     return (
         <>
             <CustomHeader activePageKey="celltype" />
-            <Layout
-                style={{
-                    minHeight: "100vh",
-                    backgroundColor: "#0F172AFF",
-                }}
-            >
-                <Sider
-                    style={{ background: "#0F172AFF", margin: 20 }}
-                    width={400}
-                    collapsed={collapsed}
-                    onCollapse={(value) => setCollapsed(value)}
-                >
+            <Layout className="portal-page portal-explorer">
+                <aside className="portal-sidebar" aria-label="Search and filters">
                     <form onSubmit={handleSubmit}>
                         <div ref={tourRefAtlas} className="mb-4">
-                            <h1
+                            <h2
                                 style={{
                                     fontSize: "1.1em",
                                     fontWeight: "bold",
-                                    color: "#FFFFFF",
+                                    color: "#262626",
                                 }}
                             >
                                 Cell Atlases <CellAtlasInfo />
-                            </h1>
+                            </h2>
                             <hr style={{ marginBottom: 7, border: "none" }} />
                             <ConfigProvider
                                 theme={{
                                     components: {
                                         Radio: {
-                                            buttonSolidCheckedBg: "#7944f2",
+                                            buttonSolidCheckedBg: "#1677ff",
                                             buttonSolidCheckedHoverBg:
-                                                "#8a5cf2",
+                                                "#4096ff",
                                         },
                                     },
                                 }}
                             >
                                 <Radio.Group
+                                    className="portal-atlas-options"
                                     buttonStyle="solid"
                                     value={size}
                                     onChange={handleSizeChange}
                                 >
                                     <Radio.Button
-                                        style={{ width: 200 }}
+                                        className="portal-atlas-option"
                                         value="DescartesHuman"
                                     >
                                         <CellAtlasSelectionInfo atlasName="DescartesHuman" />
                                     </Radio.Button>
                                     <Radio.Button
-                                        style={{ width: 200 }}
+                                        className="portal-atlas-option"
                                         value="HumanCellLandscape"
                                     >
                                         <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
@@ -604,7 +609,7 @@ export default function CelltypePage() {
                             db_type={size}
                             tourRefs={[tourRefSearch, tourRefSelect]}
                         />
-                        <center>
+                        <div className="portal-filter-form">
                             <div style={{ textAlign: "left" }}>
                                 <hr
                                     style={{ marginBottom: 10, border: "none" }}
@@ -645,30 +650,20 @@ export default function CelltypePage() {
                                     style={{
                                         marginTop: 20,
                                         marginBottom: 20,
-                                        backgroundColor: "#c8bbec",
                                     }}
-                                    type="submit"
+                                    type="primary"
+                                    htmlType="submit"
                                     block
-                                    onClick={(event) => {
-                                        handleSubmit(event);
-                                    }}
                                     ref={tourRefSubmit}
                                 >
                                     <p className="font-semibold">Search</p>
                                 </Button>
                             </div>
-                        </center>
+                        </div>
                     </form>
-                </Sider>
-                <Layout>
-                    <Content
-                        style={{
-                            margin: "0 16px",
-                            height: "200px",
-                            overflow: "auto",
-                            minWidth: "50rem",
-                        }}
-                    >
+                </aside>
+                <Layout className="portal-content-layout">
+                    <Content className="portal-content">
                         <Breadcrumb
                             style={{
                                 margin: "16px 0",
@@ -679,25 +674,26 @@ export default function CelltypePage() {
                                 Search by Cell Type
                             </Breadcrumb.Item>
                         </Breadcrumb>
+                        <EvidenceEntry />
+                        <SnapshotScopeNotice />
                         <Card
                             style={{
                                 width: "100%",
                             }}
                         >
+                            <h1>Cell types</h1>
                             <p>
-                                Each cell type has been mapped to specific
-                                phenotypes and genes, providing insight into the
-                                cellular mechanisms underlying rare diseases.
-                                This page allows users to search for any cell
-                                type and view its associations with phenotypes
-                                and genes. The strength of these relationships
-                                is displayed using visualizations like bar
-                                charts and network graphs.{" "}
+                                Select an exact cell label and atlas to inspect signed phenotype
+                                associations and gene expression specificity. Positive and negative
+                                estimates remain separate evidence; neither establishes cellular
+                                causality. Gene expression does not show that a pathogenic variant
+                                acts in that cell or that a treatment reaches or rescues it.
                             </p>
                         </Card>
                         <br />
                         {activeCellType != "" ? (
                             <div
+                                className="portal-results"
                                 style={{
                                     padding: 22,
                                     minHeight: 360,
@@ -705,19 +701,22 @@ export default function CelltypePage() {
                                     borderRadius: borderRadiusLG,
                                 }}
                             >
-                                <div className="flex flex-row items-center justify-between">
+                                <div className="portal-panel-heading">
                                 <h2
                                     style={{
                                         fontSize: 22,
                                         fontWeight: "bold",
-                                        color: "#6357d3",
+                                        color: "#262626",
                                     }}
                                 >
                                     {formatText(activeCellType)}
                                 </h2>
                                 <ShareButton />
                                 </div>
+                                <p>Source cell label: <code>{activeCellType}</code> · Atlas: <code>{activeAtlas}</code></p>
                                 <br />
+                                {(phenotypeError || geneError) && <Alert type="warning" showIcon role="alert" message="Source request failed; association results are unknown." description={`${phenotypeError ? 'Phenotype associations could not be retrieved. ' : ''}${geneError ? 'Gene expression associations could not be retrieved. ' : ''}A failed request does not establish absence of an association. Retry Search or follow the static evidence snapshots.`} />}
+                                {networkError && <Alert type="info" showIcon message="The network source could not be retrieved; the relationship graph is unavailable." />}
                                 <Tabs
                                     type="card"
                                     items={new Array(2)
@@ -734,8 +733,9 @@ export default function CelltypePage() {
                                                             spinning={loading}
                                                         >
                                                             <br />
-                                                            <div id="network" ref={networkDivRef} className="mb-3 -mt-3 border rounded-lg" />
+                                                            <div id="network" ref={networkDivRef} style={{ display: phenotypeError || networkError ? 'none' : undefined }} className="mb-3 -mt-3 border rounded-lg" />
                                                             <Table
+                                                                locale={{ emptyText: phenotypeError ? 'Source unavailable; phenotype associations remain unknown.' : undefined }}
                                                                 columns={
                                                                     columns
                                                                 }
@@ -767,7 +767,7 @@ export default function CelltypePage() {
                                                             spinning={loading}
                                                         >
 
-                                                            {data1?.length > 40 && (
+                                                            {data1?.length > 50 && (
                 <Alert
                     type="info"
                     showIcon
@@ -783,34 +783,17 @@ export default function CelltypePage() {
                     className=" my-3"
                 />
             )}
-                                                                        <Button
-                                                                style={{
-                                                                    float: "right",
-                                                                    width: 50,
-                                                                }}
-                                                                type="primary"
-                                                                icon={
-                                                                    <DownloadOutlined />
-                                                                }
-                                                                size="small"
-                                                                onClick={
-                                                                    downloadGenePlot
-                                                                }
-                                                                className="z-10"
-                                                            />
-                                                            <DemoColumn
-                                                                data={data1.slice(0, 50)}
-                                                                decimalPoints={
-                                                                    decimalPoints
-                                                                }
-                                                            />
+                                                            {!geneError && data1.length > 0 && <div className="portal-result-download"><DownloadButton elementId="cell-gene-plot" /></div>}
+                                                            {!geneError && <div id="cell-gene-plot"><DemoColumn data={data1.slice(0, 50)} decimalPoints={decimalPoints} /></div>}
                                                             <Table
+                                                                locale={{ emptyText: geneError ? 'Source unavailable; gene associations remain unknown.' : undefined }}
                                                                 columns={
                                                                     columns1
                                                                 }
                                                                 dataSource={
                                                                     data1
                                                                 }
+                                                                rowKey="gene"
                                                                 size="small"
                                                                 showSorterTooltip={
                                                                     true

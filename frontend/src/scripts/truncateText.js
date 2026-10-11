@@ -3,4 +3,4 @@ export default function truncateText(label, maxLength) {
         return label.substring(0, maxLength) + "...";
     }
     return label;
-};
+}

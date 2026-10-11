@@ -374,3 +374,26 @@ TODOs.md
 ###### CUSTOM ##################################################################
 launch_*.sh
 .vite
+# Large data files (>100MB, GitHub limit)
+data/celltype_gene_DescartesHuman.json
+data/celltype_gene_HumanCellLandscape.json
+data/hpo_celltype_DescartesHuman.json
+data/hpo_celltype_HumanCellLandscape.json
+
+# Reproducible evidence cache; normalized snapshots and manifests are tracked.
+data/evidence/raw/
+data/evidence/*.log
+backend/data/*.sqlite*
+backend/data/*.tmp
+frontend/test-results/
+frontend/playwright-report/
+frontend/public/data/evidence/
+data/evidence/published/*.tmp
+data/evidence/audit/*/
+
+# Internal requirement recovery contains private meeting paths, never publish.
+docs/research-recovery.md
+
+# The Python template's lib/ rule must not hide the frontend evidence engines.
+!frontend/src/lib/
+!frontend/src/lib/*.js

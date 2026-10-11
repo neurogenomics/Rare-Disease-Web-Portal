@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import { Alert, Tour, Button, Tooltip } from "antd";
 import {
     InfoOutlined,
@@ -11,7 +12,6 @@ import SeverityTierHover from "./info/SeverityTierHover";
 
 export default function PageIntro({ description, tourSteps = [] }) {
     const [tourOpen, setTourOpen] = useState(false);
-    const [tourStepsState, setTourSteps] = useState(tourSteps);
 
     const stepDescriptions = [
         {
@@ -25,7 +25,7 @@ export default function PageIntro({ description, tourSteps = [] }) {
                         diseases, and phenotypes.
                     </div>
                     <div className="italic">
-                        Not sure? Start with Descartes Human to find all the
+                        Start with Descartes Human to inspect stored
                         associations with expression data from human fetal
                         cells. Hover over each option for more information.
                     </div>
@@ -127,8 +127,9 @@ export default function PageIntro({ description, tourSteps = [] }) {
                 <>
                     <div className="mb-2">
                         Enter the maximum q-value to filter the results by
-                        statistical significance. A lower q-value (closer to 0)
-                        indicates a stronger and more reliable association.
+                        the source&apos;s statistical threshold. A lower q-value
+                        does not establish a larger effect, causal cell type or
+                        therapeutic benefit.
                     </div>
                     <div>
                         We recommend starting with a q-value of 0.05 and then
@@ -200,8 +201,7 @@ export default function PageIntro({ description, tourSteps = [] }) {
         },
     ];
 
-    useEffect(() => {
-        const updatedTourSteps = tourSteps.map((step) => {
+    const tourStepsState = tourSteps.map((step) => {
             const matchingDescription = stepDescriptions.find(
                 (desc) => desc.key === step.key
             );
@@ -210,8 +210,6 @@ export default function PageIntro({ description, tourSteps = [] }) {
             }
             return step;
         });
-        setTourSteps(updatedTourSteps);
-    }, [tourSteps]);
 
     const HelpfulIcon = () => (
         <>
@@ -223,10 +221,10 @@ export default function PageIntro({ description, tourSteps = [] }) {
 
     const completeDescription = (
         <>
-            <div className="ml-11 mt-3">
-                <div className="ml-1 ">{description}</div>
-                <div className="mt-5 rounded-xl bg-blue-500 bg-opacity-5 p-3">
-                    <div className="font-bold text-lg mr-1 mb-1 text-cyan-950">
+            <div className="mt-3">
+                <div>{description}</div>
+                <div className="mt-4 rounded-lg bg-blue-50 p-3">
+                    <div className="font-medium text-base mr-1 mb-1 text-blue-800">
                         <TipsAndUpdates
                             fontSize="inherit"
                             className="-mt-1 mr-2"
@@ -238,7 +236,7 @@ export default function PageIntro({ description, tourSteps = [] }) {
                         throughout the page and hover over it for more details
                         on specific terms. You can also hover over certain{" "}
                         <Tooltip title="Like this!">
-                            <span className="text-purple-900">
+                            <span className="text-blue-700">
                                 selections, numbers and text
                             </span>
                         </Tooltip>{" "}
@@ -247,14 +245,14 @@ export default function PageIntro({ description, tourSteps = [] }) {
                 </div>
                 {tourSteps.length > 0 && (
                     <Button
-                        size="large"
+                        size="middle"
                         type="primary"
                         onClick={() => setTourOpen(true)}
                         className="mt-5"
                         block
                     >
                         <AutoAwesome fontSize="inherit" />
-                        <b>Guide me!</b>
+                        <span>Start page tour</span>
                     </Button>
                 )}
             </div>
@@ -265,12 +263,11 @@ export default function PageIntro({ description, tourSteps = [] }) {
         <>
             <Alert
                 className="mb-5"
-                width="50%"
                 message={
                     <>
-                        <span className="font-bold text-2xl text-cyan-900">
-                            <Info fontSize="large" className="-mt-1" />
-                            <span className="ml-2">Get Started</span>
+                        <span className="font-medium text-lg text-blue-800">
+                            <Info fontSize="inherit" className="-mt-1" />
+                            <span className="ml-2">Get started</span>
                         </span>
                     </>
                 }

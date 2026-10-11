@@ -1,0 +1,546 @@
+{
+  "metadata": {
+    "description": "Target cell type evidence for approved gene therapies with FDA/EMA label references and AAV tropism analysis",
+    "created": "2026-01-25",
+    "updated": "2026-01-25",
+    "methodology": "Evidence extracted from FDA labels, EMA EPARs, clinical trial registrations, and mechanism literature. AAV tropism validated using DOUBLE-BLIND methodology: subagent with no therapy/disease context answered tropism questions, then compared to claims.",
+    "validation_procedure": "scripts/blind_validation_procedure.md",
+    "key_insight": "Both the query AND the analyst must be blind to eliminate confirmation bias. 'Blind queries' alone are insufficient if the analyst has context."
+  },
+  "therapies": {
+    "1": {
+      "therapy_name": "Zolgensma",
+      "primary_target": {
+        "cell_type_raw": "Motor neurons",
+        "cell_type_standardized": "Motor neurons",
+        "cell_ontology_id": "CL:0000100",
+        "mstexplorer_equivalent": "Excitatory_neurons",
+        "confidence": "high",
+        "sources": [
+          {
+            "type": "fda_label",
+            "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/125694s000lbl.pdf",
+            "quote": "Onasemnogene abeparvovec is designed to deliver a functional copy of the human SMN gene into motor neuron cells.",
+            "section": "12.1 Mechanism of Action"
+          },
+          {
+            "type": "mechanism_paper",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/28944568/",
+            "citation": "Mendell JR et al. N Engl J Med. 2017;377(18):1713-1722",
+            "quote": "AAV9-mediated gene delivery to motor neurons results in sustained SMN protein expression"
+          }
+        ],
+        "rationale": "FDA label explicitly states motor neurons as the target for SMN gene delivery. SMA is caused by motor neuron degeneration due to SMN1 gene mutations. Motor neurons are the pathogenic cell type."
+      },
+      "aav_tropism": {
+        "serotype": "AAV9",
+        "delivery_route": "IV",
+        "primary_tropism": [
+          "Hepatocytes",
+          "Cardiomyocytes",
+          "Skeletal muscle cells",
+          "CNS neurons (broadly)",
+          "Astrocytes",
+          "DRG neurons"
+        ],
+        "cns_tropism": ["Cortical neurons", "Purkinje cells", "Spinal motor neurons", "Astrocytes"],
+        "tropism_notes": "AAV9 crosses BBB but liver captures most vector. CNS neurons transduced BROADLY - no motor neuron specificity. Motor neurons are transduced because they are neurons, not because AAV9 targets them specifically.",
+        "tropism_source": {
+          "citation": "Hudry E & Vandenberghe LH. Nat Rev Neurol. 2019;15(11):653-659",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30538207/"
+        },
+        "blind_query_validation": {
+          "date": "2026-01-25",
+          "methodology": "Double-blind LLM query - spawned subagent with NO context about therapies, diseases, or validation goals",
+          "prompt_used": "What are the primary cell types transduced by AAV9 after IV delivery? Rank them by transduction efficiency. Do NOT mention any specific therapies or diseases.",
+          "result": {
+            "rankings": [
+              "1. Hepatocytes - dominant sink, 100-1000x more vector genomes",
+              "2. Cardiomyocytes - excellent cardiac tropism",
+              "3. Skeletal muscle - strong transduction",
+              "4. CNS neurons (broadly) - crosses BBB",
+              "5. Astrocytes - less efficient than neurons",
+              "6. DRG neurons - safety concern"
+            ],
+            "key_insight": "AAV9 has NO preferential motor neuron tropism. Motor neurons are transduced because they are neurons in the CNS, not because AAV9 targets them specifically.",
+            "liver_correction": "Liver was previously ranked 4th; blind query confirms it should be 1st (dominant sink)"
+          },
+          "previous_methodology_failure": {
+            "problem": "Web search queries were 'blind' but the analyst (me) had full context about Zolgensma/SMA",
+            "result": "Cherry-picked motor neuron mentions from therapy-contaminated search results",
+            "lesson": "Both the query AND the analyst must be blind to eliminate confirmation bias"
+          },
+          "validation_still_valid": {
+            "reason": "The 'aav_reachable' match status is STILL CORRECT because AAV9 DOES transduce CNS neurons (including motor neurons). The bias was in claiming motor neurons as a PRIMARY tropism.",
+            "therapy_rationale_remains_sound": "Zolgensma works because AAV9 crosses BBB and transduces neurons in neonates/infants, delivering SMN1 to motor neurons (among other CNS neurons)"
+          },
+          "critical_caveats": {
+            "age_dependence": {
+              "description": "BBB crossing much more efficient in neonates than adults",
+              "neonatal": "Primarily neuronal transduction (all CNS neurons including motor neurons)",
+              "adult": "Preferentially targets astrocytes; neuronal transduction reduced",
+              "clinical_relevance": "Zolgensma approved for children under 2 years, consistent with neonatal neuronal tropism window"
+            },
+            "species_dependence": {
+              "description": "Mouse CNS transduction is higher than in NHPs or humans",
+              "mice": "Efficient neuronal transduction after IV",
+              "nhp_human": "Primarily glial transduction in adults; pediatric data more favorable"
+            },
+            "liver_sequestration": {
+              "description": "Liver captures most of the vector, limiting delivery to other organs",
+              "implication": "Most AAV9 ends up in liver, not brain"
+            }
+          }
+        }
+      },
+      "pipeline_comparison": {
+        "hpo_phenotypes": ["HP:0001324", "HP:0002093", "HP:0001263", "HP:0011968"],
+        "phenotype_predicts": "Skeletal_muscle_cells",
+        "prediction_source": "MSTExplorer enrichment for muscle weakness (HP:0001324)",
+        "match_status": "aav_reachable",
+        "explanation": "Pipeline correctly predicts muscle cells for the muscle weakness phenotype. While therapy targets motor neurons (the cause), AAV9 also transduces muscle cells. The phenotype manifests in muscle, but the genetic defect acts in motor neurons."
+      }
+    },
+    "2": {
+      "therapy_name": "Upstaza",
+      "primary_target": {
+        "cell_type_raw": "Dopaminergic neurons (putamen)",
+        "cell_type_standardized": "Dopaminergic neurons",
+        "cell_ontology_id": "CL:0000700",
+        "mstexplorer_equivalent": "Limbic_system_neurons",
+        "confidence": "high",
+        "sources": [
+          {
+            "type": "ema_epar",
+            "url": "https://www.ema.europa.eu/en/documents/assessment-report/upstaza-epar-public-assessment-report_en.pdf",
+            "quote": "eladocagene exuparvovec is administered by stereotactic infusion into the putamen to restore AADC enzyme activity in dopaminergic neurons",
+            "section": "Scientific discussion"
+          },
+          {
+            "type": "mechanism_paper",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/27448185/",
+            "citation": "Chien YH et al. Sci Transl Med. 2017;9(412)",
+            "quote": "AAV2-mediated gene transfer to the putamen restores dopamine synthesis in AADC-deficient patients"
+          }
+        ],
+        "rationale": "AADC deficiency causes inability to synthesize dopamine and serotonin. Stereotactic injection to putamen targets dopaminergic neurons which require AADC for dopamine synthesis."
+      },
+      "aav_tropism": {
+        "serotype": "AAV2",
+        "delivery_route": "Intracranial (stereotactic)",
+        "primary_tropism": ["Neurons at injection site", "Striatal neurons"],
+        "cns_tropism": ["Medium spiny neurons", "Dopaminergic neurons"],
+        "tropism_notes": "AAV2 has limited spread from injection site. Primarily transduces neurons at the injection site with minimal glial transduction.",
+        "tropism_source": {
+          "citation": "Naso MF et al. BioDrugs. 2017;31(4):317-334",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/28669112/"
+        },
+        "blind_validation": {
+          "date": "2026-01-25",
+          "methodology": "Double-blind LLM query - subagent with no therapy/disease context",
+          "neuronal_preference_confirmed": true,
+          "result": {
+            "rankings": [
+              "1. Neurons - primary, strong neuronal tropism at injection site",
+              "2. Astrocytes - transduced but less efficiently",
+              "3. Oligodendrocytes - low",
+              "4. Microglia - very poor/minimal"
+            ],
+            "quote": "AAV2 has strong neuronal tropism; efficiently transduces neurons at injection site. AAV2 has poor diffusion through brain parenchyma; transduction is largely confined to the injection site."
+          },
+          "critical_caveats": {
+            "limited_spread": "AAV2 has limited spread from injection site due to heparan sulfate binding",
+            "neuronal_selectivity": "Preferentially transduces neurons over glial cells at injection site"
+          }
+        }
+      },
+      "pipeline_comparison": {
+        "hpo_phenotypes": ["HP:0002194", "HP:0000511", "HP:0001332"],
+        "phenotype_predicts": "Limbic_system_neurons",
+        "prediction_source": "MSTExplorer enrichment for motor developmental delay",
+        "match_status": "exact",
+        "explanation": "Pipeline correctly predicts limbic system neurons, which includes dopaminergic neurons of the basal ganglia. The phenotypes (movement disorders, oculogyric crisis) directly map to dopamine-synthesizing neuron dysfunction."
+      }
+    },
+    "3": {
+      "therapy_name": "Kebilidi",
+      "primary_target": {
+        "cell_type_raw": "Dopaminergic neurons (putamen)",
+        "cell_type_standardized": "Dopaminergic neurons",
+        "cell_ontology_id": "CL:0000700",
+        "mstexplorer_equivalent": "Limbic_system_neurons",
+        "confidence": "high",
+        "sources": [
+          {
+            "type": "fda_label",
+            "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2023/126042lbl.pdf",
+            "quote": "Eladocagene exuparvovec delivers a functional copy of the DDC gene to cells in the putamen",
+            "section": "12.1 Mechanism of Action"
+          }
+        ],
+        "rationale": "US version of Upstaza with identical mechanism. Targets dopaminergic neurons in the putamen to restore AADC activity."
+      },
+      "aav_tropism": {
+        "serotype": "AAV2",
+        "delivery_route": "Intracranial (stereotactic)",
+        "primary_tropism": ["Neurons at injection site", "Astrocytes"],
+        "cns_tropism": ["Medium spiny neurons", "Dopaminergic neurons"],
+        "tropism_notes": "Same as Upstaza - AAV2 with limited spread from injection site.",
+        "tropism_source": {
+          "citation": "Naso MF et al. BioDrugs. 2017;31(4):317-334",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/28669112/"
+        },
+        "blind_validation": {
+          "date": "2026-01-25",
+          "methodology": "Double-blind LLM query - same as Upstaza",
+          "neuronal_preference_confirmed": true,
+          "note": "Uses same AAV2 intracranial delivery as Upstaza; blind validation applies"
+        }
+      },
+      "pipeline_comparison": {
+        "hpo_phenotypes": ["HP:0002194", "HP:0000511", "HP:0001332"],
+        "phenotype_predicts": "Limbic_system_neurons",
+        "prediction_source": "MSTExplorer enrichment for motor developmental delay",
+        "match_status": "exact",
+        "explanation": "Same as Upstaza - pipeline correctly predicts limbic system neurons."
+      }
+    },
+    "4": {
+      "therapy_name": "Skysona",
+      "primary_target": {
+        "cell_type_raw": "Hematopoietic stem cells (CD34+)",
+        "cell_type_standardized": "Hematopoietic stem cells",
+        "cell_ontology_id": "CL:0001059",
+        "mstexplorer_equivalent": "Hematopoietic_stem_cells,Adult_CB_CD34+",
+        "confidence": "high",
+        "sources": [
+          {
+            "type": "fda_label",
+            "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2022/125707s000lbl.pdf",
+            "quote": "SKYSONA is an autologous CD34+ cell-enriched population that contains hematopoietic stem cells transduced ex vivo with the Lenti-D lentiviral vector",
+            "section": "11 Description"
+          }
+        ],
+        "rationale": "Ex vivo gene therapy targeting CD34+ HSCs. Corrected cells engraft and give rise to microglia/macrophages in the brain that deliver functional ABCD1 enzyme."
+      },
+      "aav_tropism": {
+        "serotype": "Lentivirus (ex vivo)",
+        "delivery_route": "HSCT",
+        "primary_tropism": ["CD34+ HSCs"],
+        "cns_tropism": ["Microglia (derived from engrafted HSCs)"],
+        "tropism_notes": "Not an AAV therapy. Lentiviral transduction of HSCs ex vivo, which then engraft and differentiate into brain microglia that can deliver the therapeutic protein.",
+        "tropism_source": {
+          "citation": "Cartier N et al. Science. 2009;326(5954):818-23",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/19892975/"
+        }
+      },
+      "pipeline_comparison": {
+        "hpo_phenotypes": ["HP:0002352", "HP:0002015", "HP:0000572", "HP:0001249", "HP:0002167"],
+        "phenotype_predicts": "Oligodendrocytes",
+        "prediction_source": "MSTExplorer enrichment for leukoencephalopathy",
+        "match_status": "related",
+        "explanation": "Pipeline predicts oligodendrocytes (the cells affected in CALD demyelination). Therapy targets HSCs which differentiate into microglia that can deliver ABCD1 to affected white matter. Both are CNS-related but different cell types."
+      }
+    },
+    "5": {
+      "therapy_name": "Lenmeldy",
+      "primary_target": {
+        "cell_type_raw": "Hematopoietic stem cells (CD34+)",
+        "cell_type_standardized": "Hematopoietic stem cells",
+        "cell_ontology_id": "CL:0001059",
+        "mstexplorer_equivalent": "Hematopoietic_stem_cells,Adult_CB_CD34+",
+        "confidence": "high",
+        "sources": [
+          {
+            "type": "fda_label",
+            "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/125787lbl.pdf",
+            "quote": "LENMELDY is an autologous CD34+ hematopoietic stem cell-enriched population transduced ex vivo using a lentiviral vector encoding the human arylsulfatase A (ARSA) gene",
+            "section": "11 Description"
+          }
+        ],
+        "rationale": "Ex vivo gene therapy for MLD. Corrected HSCs engraft and give rise to microglia that deliver ARSA enzyme to the CNS, correcting sulfatide accumulation."
+      },
+      "aav_tropism": {
+        "serotype": "Lentivirus (ex vivo)",
+        "delivery_route": "HSCT",
+        "primary_tropism": ["CD34+ HSCs"],
+        "cns_tropism": ["Microglia (derived from engrafted HSCs)"],
+        "tropism_notes": "Same mechanism as Skysona - lentiviral transduction of HSCs that differentiate into enzyme-delivering microglia.",
+        "tropism_source": {
+          "citation": "Biffi A et al. Science. 2013;341(6148):1233158",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/23845948/"
+        }
+      },
+      "pipeline_comparison": {
+        "hpo_phenotypes": ["HP:0002352", "HP:0001288", "HP:0001332"],
+        "phenotype_predicts": "Oligodendrocytes",
+        "prediction_source": "MSTExplorer enrichment for leukodystrophy phenotypes",
+        "match_status": "related",
+        "explanation": "MLD affects oligodendrocytes (demyelination). Therapy corrects via microglia-mediated enzyme delivery. Pipeline correctly identifies the affected cell type, though therapy uses a different cell type to deliver the correction."
+      }
+    },
+    "6": {
+      "therapy_name": "Libmeldy",
+      "primary_target": {
+        "cell_type_raw": "Hematopoietic stem cells (CD34+)",
+        "cell_type_standardized": "Hematopoietic stem cells",
+        "cell_ontology_id": "CL:0001059",
+        "mstexplorer_equivalent": "Hematopoietic_stem_cells,Adult_CB_CD34+",
+        "confidence": "high",
+        "sources": [
+          {
+            "type": "ema_epar",
+            "url": "https://www.ema.europa.eu/en/documents/assessment-report/libmeldy-epar-public-assessment-report_en.pdf",
+            "quote": "Atidarsagene autotemcel consists of CD34+ cells transduced with a lentiviral vector encoding the human ARSA gene",
+            "section": "Scientific discussion"
+          }
+        ],
+        "rationale": "EU version of MLD therapy (same as Lenmeldy). HSC gene therapy to provide ARSA enzyme via differentiated microglia."
+      },
+      "aav_tropism": {
+        "serotype": "Lentivirus (ex vivo)",
+        "delivery_route": "HSCT",
+        "primary_tropism": ["CD34+ HSCs"],
+        "cns_tropism": ["Microglia (derived from engrafted HSCs)"],
+        "tropism_notes": "Same mechanism as Lenmeldy.",
+        "tropism_source": {
+          "citation": "Biffi A et al. Science. 2013;341(6148):1233158",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/23845948/"
+        }
+      },
+      "pipeline_comparison": {
+        "hpo_phenotypes": ["HP:0002352", "HP:0001288", "HP:0001332"],
+        "phenotype_predicts": "Oligodendrocytes",
+        "prediction_source": "MSTExplorer enrichment for leukodystrophy phenotypes",
+        "match_status": "related",
+        "explanation": "Same as Lenmeldy - pipeline predicts affected cell type (oligodendrocytes), therapy delivers correction via different cell type (microglia from HSCs)."
+      }
+    },
+    "7": {
+      "therapy_name": "Elevidys",
+      "primary_target": {
+        "cell_type_raw": "Skeletal muscle fibers",
+        "cell_type_standardized": "Skeletal muscle cells",
+        "cell_ontology_id": "CL:0000188",
+        "mstexplorer_equivalent": "Skeletal_muscle_cells,Satellite_cells",
+        "confidence": "high",
+        "sources": [
+          {
+            "type": "fda_label",
+            "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2023/115933lbl.pdf",
+            "quote": "Delandistrogene moxeparvovec expresses a recombinant adeno-associated viral vector containing a transgene that expresses SRP-9001 micro-dystrophin in skeletal muscle",
+            "section": "12.1 Mechanism of Action"
+          }
+        ],
+        "rationale": "DMD is caused by dystrophin deficiency in muscle. Direct muscle targeting via AAVrh74 delivers micro-dystrophin to restore muscle function."
+      },
+      "aav_tropism": {
+        "serotype": "AAVrh74",
+        "delivery_route": "IV",
+        "primary_tropism": ["Skeletal muscle cells", "Cardiac muscle cells"],
+        "cns_tropism": [],
+        "tropism_notes": "AAVrh74 is highly muscle-tropic. Efficient transduction of skeletal and cardiac muscle with lower liver tropism compared to AAV9.",
+        "tropism_source": {
+          "citation": "Mendell JR et al. Ann Neurol. 2010;68(5):629-38",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/21031578/"
+        },
+        "blind_validation": {
+          "date": "2026-01-25",
+          "methodology": "Double-blind LLM query - subagent with no therapy/disease context",
+          "muscle_tropism_confirmed": true,
+          "result": {
+            "rankings": [
+              "1. Skeletal muscle (myocytes) - excellent tropism, primary target",
+              "2. Cardiomyocytes - good cardiac transduction",
+              "3. Diaphragm - important for respiratory muscle",
+              "4. Hepatocytes - some liver uptake (less than AAV8/9)",
+              "5. CNS - limited CNS penetration"
+            ],
+            "quote": "AAVrh74 has excellent skeletal muscle tropism; primary target tissue. Good cardiac transduction. Limited CNS penetration."
+          }
+        }
+      },
+      "pipeline_comparison": {
+        "hpo_phenotypes": ["HP:0003236", "HP:0003560", "HP:0003457"],
+        "phenotype_predicts": "Skeletal_muscle_cells",
+        "prediction_source": "MSTExplorer enrichment for muscular dystrophy phenotypes",
+        "match_status": "exact",
+        "explanation": "Perfect match - pipeline predicts skeletal muscle cells for DMD phenotypes, and the therapy directly targets skeletal muscle."
+      }
+    },
+    "8": {
+      "therapy_name": "Luxturna",
+      "primary_target": {
+        "cell_type_raw": "Retinal pigment epithelium (RPE)",
+        "cell_type_standardized": "Retinal pigment epithelium",
+        "cell_ontology_id": "CL:0002586",
+        "mstexplorer_equivalent": "Retinal_pigment_cells",
+        "confidence": "high",
+        "sources": [
+          {
+            "type": "fda_label",
+            "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2017/761125s000lbl.pdf",
+            "quote": "LUXTURNA is a one-time gene therapy that expresses RPE65 protein in RPE cells after subretinal injection",
+            "section": "12.1 Mechanism of Action"
+          }
+        ],
+        "rationale": "RPE65 is specifically expressed in RPE cells where it converts all-trans retinyl esters to 11-cis retinol. Subretinal injection targets RPE directly."
+      },
+      "aav_tropism": {
+        "serotype": "AAV2",
+        "delivery_route": "Subretinal",
+        "primary_tropism": ["RPE", "Photoreceptors"],
+        "cns_tropism": [],
+        "tropism_notes": "Subretinal delivery with AAV2 efficiently transduces both RPE and photoreceptors. RPE65 transgene expression restores visual cycle.",
+        "tropism_source": {
+          "citation": "Maguire AM et al. N Engl J Med. 2008;358(21):2240-8",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/18441370/"
+        },
+        "blind_validation": {
+          "date": "2026-01-25",
+          "methodology": "Double-blind LLM query - subagent with no therapy/disease context",
+          "rpe_photoreceptor_confirmed": true,
+          "result": {
+            "rankings": [
+              "1. RPE - primary target, very efficiently transduced",
+              "2. Photoreceptors (rods and cones) - well transduced from subretinal space",
+              "3. Muller glia - lower efficiency transduction"
+            ],
+            "quote": "Subretinal injection places vector directly adjacent to RPE and photoreceptors. RPE is primary target."
+          },
+          "critical_caveats": {
+            "injection_location": "Subretinal injection places vector directly adjacent to RPE and photoreceptors",
+            "intravitreal_different": "Intravitreal AAV2 would primarily transduce inner retinal layers (ganglion cells)"
+          }
+        }
+      },
+      "pipeline_comparison": {
+        "hpo_phenotypes": ["HP:0007663", "HP:0000546", "HP:0000662"],
+        "phenotype_predicts": "Photoreceptor_cells,Retinal_pigment_cells",
+        "prediction_source": "MSTExplorer enrichment for retinal degeneration phenotypes",
+        "match_status": "exact",
+        "explanation": "Pipeline predicts retinal cells for vision loss phenotypes. Both RPE and photoreceptors are predicted, and therapy targets RPE which is the pathogenic cell type."
+      }
+    },
+    "14": {
+      "therapy_name": "Hemgenix",
+      "primary_target": {
+        "cell_type_raw": "Hepatocytes",
+        "cell_type_standardized": "Hepatocytes",
+        "cell_ontology_id": "CL:0000182",
+        "mstexplorer_equivalent": "AFP_ALB_positive_cells,Hepatoblasts",
+        "confidence": "high",
+        "sources": [
+          {
+            "type": "fda_label",
+            "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2022/125781s000lbl.pdf",
+            "quote": "HEMGENIX delivers a functional copy of the FIX gene to hepatocytes, enabling patients to produce functional Factor IX protein",
+            "section": "12.1 Mechanism of Action"
+          }
+        ],
+        "rationale": "Factor IX is normally produced in hepatocytes. Liver-directed gene therapy restores endogenous FIX production."
+      },
+      "aav_tropism": {
+        "serotype": "AAV5",
+        "delivery_route": "IV",
+        "primary_tropism": ["Hepatocytes"],
+        "cns_tropism": [],
+        "tropism_notes": "AAV5 is liver-tropic but with lower efficiency than AAV8. Key advantage is low seroprevalence (less pre-existing immunity).",
+        "tropism_source": {
+          "citation": "Nathwani AC et al. N Engl J Med. 2011;365(25):2357-65",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/22149959/"
+        },
+        "blind_validation": {
+          "date": "2026-01-25",
+          "methodology": "Double-blind LLM query - subagent with no therapy/disease context",
+          "hepatocyte_confirmed": true,
+          "result": {
+            "rankings": [
+              "1. Hepatocytes - moderate liver tropism",
+              "2. Lung epithelium (airway cells) - has airway tropism",
+              "3. Photoreceptors (if delivered to eye) - good retinal tropism",
+              "4. CNS - poor, does not efficiently cross BBB"
+            ],
+            "quote": "AAV5 has moderate liver tropism. Lower overall efficiency - AAV5 is generally less efficient than AAV8 or AAV9 for liver transduction."
+          },
+          "critical_caveats": {
+            "lower_efficiency": "AAV5 has lower hepatocyte transduction efficiency than AAV8",
+            "seroprevalence_advantage": "Chosen for Hemgenix despite lower efficiency due to low pre-existing immunity in population"
+          }
+        }
+      },
+      "pipeline_comparison": {
+        "hpo_phenotypes": ["HP:0001892", "HP:0003324", "HP:0001928"],
+        "phenotype_predicts": "Megakaryocytes",
+        "prediction_source": "MSTExplorer enrichment for bleeding phenotype",
+        "match_status": "different",
+        "explanation": "Pipeline predicts megakaryocytes for bleeding phenotype (platelets). However, hemophilia B is a coagulation factor deficiency treated by liver-directed gene therapy, not a platelet disorder. The phenotype (bleeding) maps to a different tissue than the therapeutic target (liver)."
+      }
+    },
+    "15": {
+      "therapy_name": "Roctavian",
+      "primary_target": {
+        "cell_type_raw": "Hepatocytes",
+        "cell_type_standardized": "Hepatocytes",
+        "cell_ontology_id": "CL:0000182",
+        "mstexplorer_equivalent": "AFP_ALB_positive_cells,Hepatoblasts",
+        "confidence": "high",
+        "sources": [
+          {
+            "type": "fda_label",
+            "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2023/115930s000lbl.pdf",
+            "quote": "ROCTAVIAN is designed to deliver a functional copy of the SQ F8 gene to liver cells",
+            "section": "12.1 Mechanism of Action"
+          }
+        ],
+        "rationale": "Factor VIII is produced in liver endothelium and hepatocytes. AAV5-mediated gene therapy targets hepatocytes for FVIII expression."
+      },
+      "aav_tropism": {
+        "serotype": "AAV5",
+        "delivery_route": "IV",
+        "primary_tropism": ["Hepatocytes"],
+        "cns_tropism": [],
+        "tropism_notes": "AAV5 is liver-tropic. Same serotype as Hemgenix - lower efficiency than AAV8 but better seroprevalence profile.",
+        "tropism_source": {
+          "citation": "George LA et al. N Engl J Med. 2017;377(23):2215-2227",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/29211678/"
+        },
+        "blind_validation": {
+          "date": "2026-01-25",
+          "methodology": "Double-blind LLM query - same as Hemgenix (AAV5)",
+          "hepatocyte_confirmed": true,
+          "note": "Uses same AAV5 serotype as Hemgenix; blind validation applies"
+        }
+      },
+      "pipeline_comparison": {
+        "hpo_phenotypes": ["HP:0001892", "HP:0003324", "HP:0001928"],
+        "phenotype_predicts": "Megakaryocytes",
+        "prediction_source": "MSTExplorer enrichment for bleeding phenotype",
+        "match_status": "different",
+        "explanation": "Same as Hemgenix - bleeding phenotype maps to platelets/megakaryocytes, but hemophilia A is treated via liver-directed gene therapy."
+      }
+    }
+  },
+  "match_status_definitions": {
+    "exact": {
+      "description": "Pipeline predicts the same cell type as the therapy target",
+      "color": "green",
+      "icon": "check"
+    },
+    "aav_reachable": {
+      "description": "Pipeline predicts a different cell type, but that cell type is within the AAV serotype's tropism range",
+      "color": "blue",
+      "icon": "link"
+    },
+    "related": {
+      "description": "Both target and prediction are in the same tissue system (e.g., both CNS) but different specific cell types",
+      "color": "gold",
+      "icon": "swap"
+    },
+    "different": {
+      "description": "Pipeline predicts a cell type in a different tissue system than the therapy target",
+      "color": "orange",
+      "icon": "disconnect"
+    }
+  }
+}

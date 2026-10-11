@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prebuild": "node ../scripts/publish_evidence_indexes.mjs",
+    "predev": "node ../scripts/publish_evidence_indexes.mjs"
   },
   "dependencies": {
     "@ant-design/plots": "^2.3.3",

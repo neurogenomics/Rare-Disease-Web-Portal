@@ -1,0 +1,477 @@
+[
+  {
+    "id": "SCN1A-1",
+    "gene": "SCN1A",
+    "disease": "Dravet syndrome — loss-of-function context",
+    "diseaseIds": [
+      "OMIM:607208",
+      "ORPHA:33069"
+    ],
+    "mechanism": "haploinsufficiency",
+    "sourceUrls": [
+      "https://pubmed.ncbi.nlm.nih.gov/32848094/",
+      "https://pubmed.ncbi.nlm.nih.gov/35696452/"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Disease-level research context; do not assign this mechanism to every variant in the gene.",
+    "notes": "SCN1A also has gain-of-function disorders. A patient-specific allele must be functionally classified before selecting RNA direction.",
+    "gates": {}
+  },
+  {
+    "id": "SCN1A-2",
+    "gene": "SCN1A",
+    "disease": "SCN1A early infantile encephalopathy — gain-of-function context",
+    "diseaseIds": [
+      "OMIM:619317"
+    ],
+    "mechanism": "gain_of_function",
+    "sourceUrls": [
+      "https://pubmed.ncbi.nlm.nih.gov/35696452/",
+      "https://pubmed.ncbi.nlm.nih.gov/36287100/"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Disease-level research context; do not assign this mechanism to every variant in the gene.",
+    "notes": "Gain-of-function evidence is variant-specific; increasing transcript is not assumed appropriate.",
+    "gates": {}
+  },
+  {
+    "id": "SYNGAP1-3",
+    "gene": "SYNGAP1",
+    "disease": "SYNGAP1-related intellectual disability",
+    "diseaseIds": [
+      "OMIM:612621",
+      "ORPHA:544254"
+    ],
+    "mechanism": "haploinsufficiency",
+    "sourceUrls": [
+      "https://pubmed.ncbi.nlm.nih.gov/23161826/",
+      "https://pubmed.ncbi.nlm.nih.gov/26079862/"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Disease-level research context; do not assign this mechanism to every variant in the gene.",
+    "notes": "Mechanistic rationale for increasing useful SynGAP does not establish delivery, safe dose, reversibility or rescue for an individual.",
+    "gates": {}
+  },
+  {
+    "id": "MECP2-4",
+    "gene": "MECP2",
+    "disease": "MECP2 duplication syndrome",
+    "diseaseIds": [
+      "OMIM:300260",
+      "ORPHA:85281"
+    ],
+    "mechanism": "dosage_gain",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC1226209/"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Disease-level research context; do not assign this mechanism to every variant in the gene.",
+    "notes": "The mechanism differs from Rett syndrome. Overexpression, linked genes and dosage control must be considered.",
+    "gates": {}
+  },
+  {
+    "id": "MECP2-5",
+    "gene": "MECP2",
+    "disease": "Rett syndrome — loss-of-function context",
+    "diseaseIds": [
+      "OMIM:312750",
+      "ORPHA:778"
+    ],
+    "mechanism": "loss_of_function",
+    "sourceUrls": [
+      "https://pubmed.ncbi.nlm.nih.gov/10508514/"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Disease-level research context; do not assign this mechanism to every variant in the gene.",
+    "notes": "Mosaic X-inactivation and harm from excess MeCP2 make cell-specific dosage control essential; functional-allele access cannot be assumed.",
+    "gates": {}
+  },
+  {
+    "id": "SMN1-6",
+    "gene": "SMN1",
+    "disease": "5q spinal muscular atrophy",
+    "diseaseIds": [
+      "OMIM:253300",
+      "OMIM:253400",
+      "OMIM:253550",
+      "OMIM:271150"
+    ],
+    "mechanism": "loss_of_function",
+    "sourceUrls": [
+      "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=dd70cd5f-b0fc-4ba4-a5ea-89a34778bd94"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Disease-level research context; do not assign this mechanism to every variant in the gene.",
+    "notes": "SMN2 modulation is paralog compensation. It is not generic stabilization of a deleted SMN1 allele.",
+    "gates": {}
+  },
+  {
+    "id": "RPE65-7",
+    "gene": "RPE65",
+    "disease": "Biallelic RPE65-associated retinal dystrophy",
+    "diseaseIds": [
+      "OMIM:204100",
+      "OMIM:613794"
+    ],
+    "mechanism": "loss_of_function",
+    "sourceUrls": [
+      "https://dailymed.nlm.nih.gov/dailymed/fda/fdaDrugXsl.cfm?setid=08313a24-e7ce-457a-bb3f-161bc45517ee"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Disease-level research context; do not assign this mechanism to every variant in the gene.",
+    "notes": "Requires eligible biallelic disease and viable retinal cells; no automatic generalization to dominant RPE65 variants.",
+    "gates": {}
+  },
+  {
+    "id": "DDC-8",
+    "gene": "DDC",
+    "disease": "AADC deficiency",
+    "diseaseIds": [
+      "OMIM:608643"
+    ],
+    "mechanism": "loss_of_function",
+    "sourceUrls": [
+      "https://www.fda.gov/media/183530/download?attachment="
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Disease-level research context; do not assign this mechanism to every variant in the gene.",
+    "notes": "Regional dopamine restoration need not rescue the original midbrain neuronal subtype.",
+    "gates": {}
+  },
+  {
+    "id": "ARSA-9",
+    "gene": "ARSA",
+    "disease": "Metachromatic leukodystrophy",
+    "diseaseIds": [
+      "OMIM:250100",
+      "ORPHA:309256",
+      "ORPHA:309263",
+      "ORPHA:309271"
+    ],
+    "mechanism": "loss_of_function",
+    "sourceUrls": [
+      "https://dailymed-beta.nlm.nih.gov/dailymed/fda/fdaDrugXsl.cfm?setid=b3e307a7-561b-43b6-a784-9cb1dcfc5196&type=display"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Disease-level research context; do not assign this mechanism to every variant in the gene.",
+    "notes": "HSC enzyme delivery can produce cross-correction; engrafted cells and disease-damaged cells are different roles.",
+    "gates": {}
+  },
+  {
+    "id": "TPP1-10",
+    "gene": "TPP1",
+    "disease": "CLN2 disease",
+    "diseaseIds": [
+      "OMIM:204500"
+    ],
+    "mechanism": "loss_of_function",
+    "sourceUrls": [
+      "https://dailymed.nlm.nih.gov/dailymed/fda/fdaDrugXsl.cfm?setid=485ab3c5-0359-4878-872f-2fe1e7df4047"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Disease-level research context; do not assign this mechanism to every variant in the gene.",
+    "notes": "Protein replacement requires functional distribution and lysosomal uptake; not simply expression in a predicted cell.",
+    "gates": {}
+  },
+  {
+    "id": "CFTR-11",
+    "gene": "CFTR",
+    "disease": "Cystic fibrosis",
+    "diseaseIds": [
+      "OMIM:219700",
+      "ORPHA:586"
+    ],
+    "mechanism": "loss_of_function",
+    "sourceUrls": [
+      "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0ab0c9f8-3eee-4e0f-9f3f-c1e16aaffe25"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Disease-level research context; do not assign this mechanism to every variant in the gene.",
+    "notes": "Drug response is variant-specific. A protein-null allele cannot be assumed responsive to a potentiator; some variants have no residual rescuable protein.",
+    "gates": {}
+  },
+  {
+    "id": "SOD1-12",
+    "gene": "SOD1",
+    "disease": "SOD1-associated ALS",
+    "diseaseIds": [
+      "OMIM:105400"
+    ],
+    "mechanism": "toxic_gain_of_function",
+    "sourceUrls": [
+      "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=81356b45-1cb7-4eef-88ea-e44cc18b47c5",
+      "https://jamanetwork.com/journals/jamaneurology/fullarticle/2843130"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Disease-level research context; do not assign this mechanism to every variant in the gene.",
+    "notes": "Mechanistic RNA lowering does not alone establish a clinical endpoint benefit. Biallelic SOD1-deficiency disease is a different context.",
+    "gates": {}
+  },
+  {
+    "id": "HTT-13",
+    "gene": "HTT",
+    "disease": "Huntington disease",
+    "diseaseIds": [
+      "OMIM:143100"
+    ],
+    "mechanism": "toxic_gain_of_function",
+    "sourceUrls": [
+      "https://www.nejm.org/doi/full/10.1056/NEJMc2300400"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Disease-level research context; do not assign this mechanism to every variant in the gene.",
+    "notes": "Tominersen illustrates that target lowering can coexist with poor clinical outcomes; wild-type HTT reduction and dose schedule require separate evidence.",
+    "gates": {}
+  },
+  {
+    "id": "DMD-14",
+    "gene": "DMD",
+    "disease": "Duchenne/Becker dystrophinopathy",
+    "diseaseIds": [
+      "OMIM:310200",
+      "ORPHA:98896",
+      "ORPHA:98895"
+    ],
+    "mechanism": "loss_of_function",
+    "sourceUrls": [
+      "https://dailymed.nlm.nih.gov/dailymed/fda/fdaDrugXsl.cfm?setid=33bff678-7829-479e-9110-b8e33a0bc0aa",
+      "https://pubmed.ncbi.nlm.nih.gov/39385046/"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Disease-level research context; do not assign this mechanism to every variant in the gene.",
+    "notes": "Exon-skipping eligibility requires the exact transcript and deletion. Full-length dystrophin cargo differs from engineered microdystrophin.",
+    "gates": {}
+  },
+  {
+    "id": "TTR-15",
+    "gene": "TTR",
+    "disease": "Hereditary ATTR amyloidosis",
+    "diseaseIds": [
+      "OMIM:105210",
+      "ORPHA:85447",
+      "ORPHA:85451"
+    ],
+    "mechanism": "toxic_gain_of_function",
+    "sourceUrls": [
+      "https://dailymed.nlm.nih.gov/dailymed/fda/fdaDrugXsl.cfm?setid=e87ec36f-b4b4-49d4-aea4-d4ffb09b0970"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Disease-level research context; do not assign this mechanism to every variant in the gene.",
+    "notes": "Hepatic TTR lowering acts upstream of peripheral neuropathy; predicted neural cell exposure is not required for benefit.",
+    "gates": {}
+  },
+  {
+    "id": "SLC6A1-haploinsufficiency",
+    "gene": "SLC6A1",
+    "disease": "SLC6A1-related neurodevelopmental disorder / myoclonic-atonic epilepsy — reviewed loss context",
+    "diseaseIds": [
+      "OMIM:616421"
+    ],
+    "mechanism": "haploinsufficiency",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC11179425/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC8418336/"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Functional disease-mechanism context based on tested heterozygous loss and missense variants; not a classification of every SLC6A1 allele.",
+    "notes": "A 213-variant GABA-uptake study supports a haploinsufficiency model and found no dominant-negative effect in its tested subset. Earlier astrocyte/neuron experiments reported possible dominant-negative effects for some variants, including R44Q. The exact allele, cell model, functional wild-type allele and developmental rescue window require separate evidence; gene constraint is not the mechanism evidence.",
+    "gates": {}
+  },
+  {
+    "id": "STXBP1-haploinsufficiency",
+    "gene": "STXBP1",
+    "disease": "STXBP1-related developmental and epileptic encephalopathy — deletion / reduced-dosage context",
+    "diseaseIds": [
+      "OMIM:612164",
+      "ORPHA:599373"
+    ],
+    "mechanism": "haploinsufficiency",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC4588304/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC13270418/",
+      "https://www.orpha.net/en/disease/detail/599373"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Reviewed deletion and transcript-degradation contexts; do not extend this mechanism to all missense alleles.",
+    "notes": "Isogenic heterozygous human neurons have impaired synaptic transmission. Patient-derived neurons carrying c.429+5G>A show exon-6 skipping, a premature stop, NMD and reduced STXBP1/MUNC18-1. These support dosage loss, not clinical RNA-upregulation efficacy. Protein co-aggregation has been demonstrated for other missense variants; increasing a harmful mutant transcript is not automatically appropriate.",
+    "gates": {}
+  },
+  {
+    "id": "STXBP1-dominant-negative-model",
+    "gene": "STXBP1",
+    "disease": "STXBP1-related developmental and epileptic encephalopathy — aggregating missense model context",
+    "diseaseIds": [
+      "OMIM:612164",
+      "ORPHA:599373"
+    ],
+    "mechanism": "dominant_negative",
+    "sourceUrls": [
+      "https://www.nature.com/articles/s41467-018-06507-4",
+      "https://www.orpha.net/en/disease/detail/599373"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Preclinical functional context for the tested aggregating missense variants; not every STXBP1 allele and not a clinically demonstrated treatment mechanism.",
+    "notes": "Disease-linked mutant MUNC18-1 co-aggregated wild-type protein in multiple model systems, depleting functional protein beyond hemizygous levels. Chemical chaperone rescue was preclinical. This alternative and the deletion/NMD loss context share disease identifiers, so a disease-only join must remain ambiguous until the selected allele is functionally resolved.",
+    "gates": {}
+  },
+  {
+    "id": "FOXG1-haploinsufficiency",
+    "gene": "FOXG1",
+    "disease": "FOXG1 syndrome — heterozygous loss context",
+    "diseaseIds": [
+      "OMIM:613454"
+    ],
+    "mechanism": "haploinsufficiency",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC2443837/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC11253142/",
+      "https://www.ncbi.nlm.nih.gov/gene/2290"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Reviewed heterozygous inactivating/deletion context; does not cover FOXG1 duplication or every DNA-binding missense variant.",
+    "notes": "Human truncating mutations and a heterozygous mouse model support reduced functional FOXG1. Early postnatal AAV9-FOXG1 rescued selected brain structural deficits in mice; this does not establish a human intervention window, safe overexpression range or reversal of every phenotype. The OMIM identifier is the FOXG1-disorder record, historically named congenital Rett variant.",
+    "gates": {}
+  },
+  {
+    "id": "SHANK3-haploinsufficiency",
+    "gene": "SHANK3",
+    "disease": "Phelan–McDermid syndrome — SHANK3 dosage-loss context",
+    "diseaseIds": [
+      "OMIM:606232"
+    ],
+    "mechanism": "haploinsufficiency",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC4901875/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC5822449/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC3923348/"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Reviewed SHANK3 dosage-loss component of Phelan–McDermid syndrome; does not attribute all multigene-deletion phenotypes to SHANK3.",
+    "notes": "Human isogenic and patient-derived neuronal studies support dosage-dependent functional defects; SHANK3 expression rescued selected cultured-neuron morphology. Mouse overexpression produces abnormal behavior and seizures, so more expression is not presumed safe. Isoform choice, other deleted genes, dosage, cell distribution and developmental timing remain unresolved for therapeutic design; schizophrenia susceptibility is not merged into this context.",
+    "gates": {}
+  },
+  {
+    "id": "TCF4-haploinsufficiency",
+    "gene": "TCF4",
+    "disease": "Pitt–Hopkins syndrome — deletion / inactivating-allele context",
+    "diseaseIds": [
+      "OMIM:610954"
+    ],
+    "mechanism": "haploinsufficiency",
+    "sourceUrls": [
+      "https://pubmed.ncbi.nlm.nih.gov/17478476/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC1852727/",
+      "https://elifesciences.org/articles/72290",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC12776099/"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Reviewed TCF4 deletion/inactivating context; excludes repeat-mediated corneal disease and does not classify every missense allele.",
+    "notes": "A human single-gene deletion with cDNA analysis supports haploinsufficiency. Embryonic/neonatal restoration rescued selected mouse outcomes. A December-2025 preprint reports that later juvenile restoration failed most outcomes while improving one cognitive measure; it is not peer-reviewed clinical evidence. Transcript isoforms, functional remaining allele, dose and treatment window require independent resolution.",
+    "gates": {}
+  },
+  {
+    "id": "TCF4-dominant-negative-model",
+    "gene": "TCF4",
+    "disease": "Pitt–Hopkins syndrome — DNA-binding missense model context",
+    "diseaseIds": [
+      "OMIM:610954"
+    ],
+    "mechanism": "dominant_negative",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC4736037/"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Variant-specific functional hypothesis from homologous substitutions in Drosophila; this does not establish dominant-negative action for every human TCF4 variant.",
+    "notes": "Some PTHS-linked DNA-binding substitutions introduced into daughterless acted dominantly negatively and failed developmental rescue; other substitutions differed. This model evidence and the human deletion-loss context share a disease ID but concern different variant subsets. Gene-level RNA direction remains unresolved without exact human allele evidence; increasing mutant protein or total dosage cannot be assumed beneficial.",
+    "gates": {}
+  },
+  {
+    "id": "CHD2-haploinsufficiency",
+    "gene": "CHD2",
+    "disease": "CHD2-related developmental and epileptic encephalopathy — reviewed loss context",
+    "diseaseIds": [
+      "OMIM:615369"
+    ],
+    "mechanism": "haploinsufficiency",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC3824114/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC3704157/",
+      "https://www.ncbi.nlm.nih.gov/clinvar/variation/60715/"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Reviewed de novo truncating/loss-of-function epilepsy context; missense effects require direct functional work.",
+    "notes": "Human de novo loss variants and zebrafish knockdown with electrophysiologic seizure-like discharges support dosage loss. A predicted missense consequence or high constraint alone is insufficient to assign this mechanism. No clinical RNA-upregulation benefit, safe dose, delivery, correct isoform or rescue window is established here. OMIM:615369 is currently DEE94; older publications used childhood-onset epileptic encephalopathy terminology.",
+    "gates": {}
+  },
+  {
+    "id": "SCN2A-gain-of-function",
+    "gene": "SCN2A",
+    "disease": "SCN2A developmental and epileptic encephalopathy — functionally resolved gain subset",
+    "diseaseIds": [
+      "OMIM:613721"
+    ],
+    "mechanism": "gain_of_function",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC10883610/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC11292900/",
+      "https://www.ncbi.nlm.nih.gov/clinvar/RCV000176763/"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Reviewed gain-of-function subset exemplified by R1882Q; this is not a mechanism assignment for all DEE11 alleles.",
+    "notes": "Patient-derived isogenic cortical-like neurons distinguish R1882Q gain from R853Q loss. Early seizure onset correlates with gain/mixed effects but cannot classify an untested variant. Opposite functional subsets share OMIM:613721, so a disease-only join intentionally remains ambiguous. The adult/neonatal channel splice form and net neuronal effects matter; increasing the mutant gain allele is not presumed appropriate.",
+    "gates": {}
+  },
+  {
+    "id": "SCN2A-loss-of-function",
+    "gene": "SCN2A",
+    "disease": "SCN2A developmental and epileptic encephalopathy — functionally resolved loss subset",
+    "diseaseIds": [
+      "OMIM:613721"
+    ],
+    "mechanism": "loss_of_function",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC10883610/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC11292900/"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Reviewed loss-of-function subset exemplified by R853Q; not every SCN2A-related epilepsy, autism or ataxia phenotype.",
+    "notes": "Direct patient-neuron and channel measurements support a loss subset. A larger cohort found loss, gain, mixed and wild-type-like effects, including splice-isoform-dependent classifications. Reduced channel activity is not interchangeable with reduced network excitability. The same disease ID contains opposite variant mechanisms; a useful wild-type allele, mutant-allele effect, isoform and rescue must be established before upregulation is judged.",
+    "gates": {}
+  },
+  {
+    "id": "SCN8A-gain-of-function",
+    "gene": "SCN8A",
+    "disease": "SCN8A developmental and epileptic encephalopathy — functionally resolved gain subset",
+    "diseaseIds": [
+      "OMIM:614558"
+    ],
+    "mechanism": "gain_of_function",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC7216308/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC11383174/",
+      "https://www.ncbi.nlm.nih.gov/gtr/genes/6334/"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Reviewed gain subset, including R850Q and N1768D; does not classify every SCN8A epilepsy allele.",
+    "notes": "Electrophysiology supports gain properties in specific disease variants. A systematic study shows multiple opposing biophysical changes and exon-5 isoform effects even in established gain variants. Net neuronal action, tissue/developmental isoform and selected allele require direct resolution; raising mutant gain-channel abundance is not presumed appropriate. Separate SCN8A loss phenotypes are not merged into this disease label.",
+    "gates": {}
+  },
+  {
+    "id": "SCN8A-loss-of-function",
+    "gene": "SCN8A",
+    "disease": "SCN8A cognitive impairment with or without cerebellar ataxia — reviewed loss subset",
+    "diseaseIds": [
+      "OMIM:614306"
+    ],
+    "mechanism": "loss_of_function",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC5499976/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC4413743/",
+      "https://www.ncbi.nlm.nih.gov/gtr/genes/6334/"
+    ],
+    "reviewedAt": "2026-10-11",
+    "scope": "Reviewed loss subset exemplified by G964R and E1218K; not every SCN8A variant or every related disease.",
+    "notes": "These two variants prevented sodium currents in transfected cells from patients with intellectual disability without seizures. This differs from the gain-channel DEE context, and loss cannot be inferred merely from annotation. Demonstrating a functional remaining allele, relevant cell activity, dose and rescue is still necessary; these studies do not prove an RNA-upregulation treatment effect.",
+    "gates": {}
+  }
+]

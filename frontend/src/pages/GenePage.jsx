@@ -1,4 +1,7 @@
-import React, { useState, useRef } from "react";
+import { portalFetch } from "../lib/portalAPI.js";
+import SnapshotScopeNotice from "../components/SnapshotScopeNotice.jsx";
+import EvidenceEntry from "../components/EvidenceEntry.jsx";
+import { useEffect, useState, useRef } from "react";
 import {
     Breadcrumb,
     Layout,
@@ -10,6 +13,7 @@ import {
     Collapse,
     InputNumber,
     ConfigProvider,
+    Alert,
 } from "antd";
 import PhenotypeTree from "../components/GeneTree.jsx";
 import PhenotypeTableDisease from "../components/GeneTable.jsx";
@@ -25,7 +29,7 @@ import PageIntro from "../components/PageIntro.jsx";
 import { urlParser, urlSetter } from "../scripts/urlHandlers.js";
 import ShareButton from "../components/utilities/ShareButton.jsx";
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 
 const items = [
     {
@@ -34,25 +38,27 @@ const items = [
         children: "Root of all terms in the Human Phenotype Ontology.",
     },
 ];
-export default function phenotypePage() {
+export default function GenePage() {
     // URL Parsing
         const { url_db_type } = urlParser("phenotype");
 
-    const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
     const [data, setData] = useState(null);
     const [gene, setGene] = useState(null);
+    const [sourceError, setSourceError] = useState(null);
     const [size, setSize] = useState(url_db_type || "DescartesHuman");
     const [decimalPoints, setDecimalPoints] = useState(3);
-    const handleSizeChange = async (e) => {
+    useEffect(() => {
+        document.title = "Genes · Rare Disease Celltyping Portal";
+    }, []);
+    const handleSizeChange = (e) => {
             const newSize = e.target.value;
             setSize(newSize);
             if (data) {
                 urlSetter({ jump: data.substring(9), db_type: newSize });
-                await onload(data);
             }
         };
     const [desItem, setDesItem] = useState(items);
@@ -107,11 +113,13 @@ export default function phenotypePage() {
     };
 
     const getData = (data, info) => {
-        if (!info.node.dataRef.id.includes("NCBIGene")) {
+        if (!info.node.dataRef.id?.startsWith("NCBIGene:")) {
             return false;
         }
 
         setData(info.node.dataRef.id);
+        setGene(info.node.dataRef.name || info.node.dataRef.title || info.node.dataRef.id);
+        setSourceError(null);
         urlSetter({ jump: info.node.dataRef.id.substring(9), db_type: size });
         let itemsTemp = [];
         itemsTemp.push({
@@ -120,12 +128,15 @@ export default function phenotypePage() {
             children: parseNCBIGeneID(info.node.dataRef.id),
         });
 
-        fetch(
+        portalFetch(
             `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id=${info.node.dataRef.id.substring(
                 9
             )}&retmode=json`
         )
-            .then((res) => res.json())
+            .then((res) => {
+                if (!res.ok) throw new Error("Gene definition source unavailable");
+                return res.json();
+            })
             .then(async (result) => {
                 for (const resultKey in result.result) {
                     if (resultKey === info.node.dataRef.id.substring(9)) {
@@ -136,7 +147,7 @@ export default function phenotypePage() {
                             if (resultKey1 === "maplocation") {
                                 itemsTemp.push({
                                     label: "Gene Location",
-                                    key: "3",
+                                    key: "gene-location",
                                     children:
                                         result.result[resultKey][resultKey1],
                                 });
@@ -144,7 +155,7 @@ export default function phenotypePage() {
                             if (resultKey1 === "otheraliases") {
                                 itemsTemp.push({
                                     label: "Synonyms",
-                                    key: "3",
+                                    key: "synonyms",
                                     children: result.result[resultKey][
                                         resultKey1
                                     ] || <NotFound />,
@@ -164,7 +175,7 @@ export default function phenotypePage() {
                 }
                 setDesItem(itemsTemp);
                 return false;
-            });
+            }).catch(() => setSourceError("The gene definition source could not be loaded. Definition and aliases remain unknown; recorded gene associations can still be explored."));
         setDesItem(items);
         return false;
     };
@@ -173,6 +184,7 @@ export default function phenotypePage() {
     const genExtra = () => <SettingsOutlined />; // Settings icon
     const advancedSettingsChildren = [
         <InputNumber
+            key="decimal-points"
             min={1}
             max={10}
             defaultValue={decimalPoints}
@@ -199,52 +211,43 @@ export default function phenotypePage() {
     return (
         <>
             <CustomHeader activePageKey="gene" />
-            <Layout
-                style={{
-                    minHeight: "100vh",
-                    backgroundColor: "#0F172AFF",
-                }}
-            >
-                <Sider
-                    style={{ background: "#0F172AFF", margin: 20 }}
-                    width={400}
-                    collapsed={collapsed}
-                    onCollapse={(value) => setCollapsed(value)}
-                >
+            <Layout className="portal-page portal-explorer">
+                <aside className="portal-sidebar" aria-label="Search and filters">
                     <div ref={tourRefAtlas} className="mb-4">
-                        <h1
+                        <h2
                             style={{
                                 fontSize: "1.1em",
                                 fontWeight: "bold",
-                                color: "#FFFFFF",
+                                color: "#262626",
                             }}
                         >
                             Cell Atlases <CellAtlasInfo />
-                        </h1>
+                        </h2>
                         <hr style={{ marginBottom: 7, border: "none" }} />
                         <ConfigProvider
                             theme={{
                                 components: {
                                     Radio: {
-                                        buttonSolidCheckedBg: "#7944f2",
-                                        buttonSolidCheckedHoverBg: "#8a5cf2",
+                                        buttonSolidCheckedBg: "#1677ff",
+                                        buttonSolidCheckedHoverBg: "#4096ff",
                                     },
                                 },
                             }}
                         >
                             <Radio.Group
+                                className="portal-atlas-options"
                                 buttonStyle="solid"
                                 value={size}
                                 onChange={handleSizeChange}
                             >
                                 <Radio.Button
-                                    style={{ width: 200 }}
+                                    className="portal-atlas-option"
                                     value="DescartesHuman"
                                 >
                                     <CellAtlasSelectionInfo atlasName="DescartesHuman" />
                                 </Radio.Button>
                                 <Radio.Button
-                                    style={{ width: 200 }}
+                                    className="portal-atlas-option"
                                     value="HumanCellLandscape"
                                 >
                                     <CellAtlasSelectionInfo atlasName="HumanCellLandscape" />
@@ -261,14 +264,9 @@ export default function phenotypePage() {
                         size="small"
                         style={{ background: colorBgContainer }}
                     />
-                </Sider>
-                <Layout>
-                    <Content
-                        style={{
-                            margin: "0 16px",
-                            minWidth: "50rem",
-                        }}
-                    >
+                </aside>
+                <Layout className="portal-content-layout">
+                    <Content className="portal-content">
                         <Breadcrumb
                             style={{
                                 margin: "16px 0",
@@ -277,21 +275,27 @@ export default function phenotypePage() {
                             <Breadcrumb.Item href={"/"}>Home</Breadcrumb.Item>
                             <Breadcrumb.Item>Search by Gene</Breadcrumb.Item>
                         </Breadcrumb>
+                        <EvidenceEntry />
+                        <SnapshotScopeNotice />
+                        {sourceError && <Alert className="mb-4" type="warning" showIcon message="Source evidence unavailable" description={sourceError} />}
                         <Card
                             style={{
                                 width: "100%",
                             }}
                         >
+                            <h1>Genes</h1>
                             <p>
-                                Genes are linked to cell types and phenotypes,
-                                revealing their role in rare diseases. This page
-                                provides visualizations of gene-cell type,
-                                gene-disease, and gene-phenotype relationships.
+                                Select a gene to explore source-associated phenotypes and diseases,
+                                and its expression specificity in the selected cell atlas. Follow
+                                a phenotype or cell to retain that context while reviewing variants
+                                and treatment evidence. Expression and enrichment alone do not
+                                establish an allele effect, cellular causality or clinical efficacy.
                             </p>
                         </Card>
                         <br />
                         {gene != null ? (
                             <div
+                                className="portal-results"
                                 style={{
                                     padding: 24,
                                     minHeight: 360,
@@ -299,12 +303,12 @@ export default function phenotypePage() {
                                     borderRadius: borderRadiusLG,
                                 }}
                             >
-                                <div className="flex flex-row items-center justify-between">
+                                <div className="portal-panel-heading">
                                     <h2
                                         style={{
                                             fontSize: 22,
                                             fontWeight: "bold",
-                                            color: "#6357d3",
+                                            color: "#262626",
                                         }}
                                     >
                                         {gene}
@@ -315,7 +319,7 @@ export default function phenotypePage() {
                                     column={1}
                                     size={"small"}
                                     labelStyle={{
-                                        color: "#0f172a",
+                                        color: "#262626",
                                         width: "200px",
                                     }}
                                     style={{

@@ -1,0 +1,252 @@
+[
+  {
+    "celltype": "Excitatory_neurons",
+    "tractability_score": 0.95,
+    "best_serotype": "AAV-PHP.eB",
+    "terminally_differentiated": true,
+    "aav9_score": 0.90,
+    "aavrh10_score": 0.85,
+    "aav_php_eb_score": 0.95,
+    "notes": "Excellent transduction with PHP.eB variant"
+  },
+  {
+    "celltype": "Inhibitory_neurons",
+    "tractability_score": 0.93,
+    "best_serotype": "AAV-PHP.eB",
+    "terminally_differentiated": true,
+    "aav9_score": 0.88,
+    "aavrh10_score": 0.83,
+    "aav_php_eb_score": 0.93,
+    "notes": "Excellent transduction with PHP.eB variant"
+  },
+  {
+    "celltype": "Astrocytes",
+    "tractability_score": 0.85,
+    "best_serotype": "AAV-PHP.eB",
+    "terminally_differentiated": true,
+    "aav9_score": 0.70,
+    "aavrh10_score": 0.60,
+    "aav_php_eb_score": 0.85,
+    "notes": "Good transduction, terminally differentiated in adults"
+  },
+  {
+    "celltype": "Oligodendrocytes",
+    "tractability_score": 0.60,
+    "best_serotype": "AAV9",
+    "terminally_differentiated": true,
+    "aav9_score": 0.60,
+    "aavrh10_score": 0.50,
+    "aav_php_eb_score": 0.55,
+    "notes": "Moderate transduction efficiency"
+  },
+  {
+    "celltype": "Oligodendrocyte_precursor_cells",
+    "tractability_score": 0.40,
+    "best_serotype": "AAV9",
+    "terminally_differentiated": false,
+    "aav9_score": 0.40,
+    "aavrh10_score": 0.35,
+    "aav_php_eb_score": 0.38,
+    "notes": "Dividing cells, limited durability"
+  },
+  {
+    "celltype": "Microglia",
+    "tractability_score": 0.15,
+    "best_serotype": "None standard",
+    "terminally_differentiated": false,
+    "aav9_score": 0.10,
+    "aavrh10_score": 0.12,
+    "aav_php_eb_score": 0.15,
+    "notes": "Difficult to transduce with current AAV serotypes"
+  },
+  {
+    "celltype": "Endothelial_cells",
+    "tractability_score": 0.50,
+    "best_serotype": "AAV9",
+    "terminally_differentiated": false,
+    "aav9_score": 0.50,
+    "aavrh10_score": 0.40,
+    "aav_php_eb_score": 0.45,
+    "notes": "Variable efficiency, some turnover"
+  },
+  {
+    "celltype": "Pericytes",
+    "tractability_score": 0.55,
+    "best_serotype": "AAV9",
+    "terminally_differentiated": true,
+    "aav9_score": 0.55,
+    "aavrh10_score": 0.45,
+    "aav_php_eb_score": 0.50,
+    "notes": "Moderate efficiency"
+  },
+  {
+    "celltype": "Smooth_muscle_cells",
+    "tractability_score": 0.65,
+    "best_serotype": "AAV9",
+    "terminally_differentiated": true,
+    "aav9_score": 0.65,
+    "aavrh10_score": 0.55,
+    "aav_php_eb_score": 0.50,
+    "notes": "Good transduction, minimal turnover"
+  },
+  {
+    "celltype": "Cardiomyocytes",
+    "tractability_score": 0.90,
+    "best_serotype": "AAV9",
+    "terminally_differentiated": true,
+    "aav9_score": 0.90,
+    "aavrh10_score": 0.80,
+    "aav_php_eb_score": 0.60,
+    "notes": "Excellent target, terminally differentiated"
+  },
+  {
+    "celltype": "Skeletal_muscle",
+    "tractability_score": 0.80,
+    "best_serotype": "AAVrh74",
+    "terminally_differentiated": true,
+    "aav9_score": 0.70,
+    "aavrh10_score": 0.75,
+    "aav_php_eb_score": 0.40,
+    "notes": "Good transduction, minimal turnover except after injury"
+  },
+  {
+    "celltype": "Hepatocytes",
+    "tractability_score": 0.85,
+    "best_serotype": "AAV8",
+    "terminally_differentiated": true,
+    "aav9_score": 0.60,
+    "aavrh10_score": 0.70,
+    "aav_php_eb_score": 0.30,
+    "notes": "Excellent liver tropism with AAV8, slow turnover"
+  },
+  {
+    "celltype": "Retinal_pigment_epithelium",
+    "tractability_score": 0.90,
+    "best_serotype": "AAV2",
+    "terminally_differentiated": true,
+    "aav9_score": 0.50,
+    "aavrh10_score": 0.40,
+    "aav_php_eb_score": 0.30,
+    "notes": "AAV2 standard for subretinal delivery"
+  },
+  {
+    "celltype": "Photoreceptors",
+    "tractability_score": 0.88,
+    "best_serotype": "AAV2/5",
+    "terminally_differentiated": true,
+    "aav9_score": 0.60,
+    "aavrh10_score": 0.50,
+    "aav_php_eb_score": 0.35,
+    "notes": "Good transduction via subretinal injection"
+  },
+  {
+    "celltype": "Epithelial_cells",
+    "tractability_score": 0.30,
+    "best_serotype": "AAV2/5",
+    "terminally_differentiated": false,
+    "aav9_score": 0.25,
+    "aavrh10_score": 0.20,
+    "aav_php_eb_score": 0.15,
+    "notes": "Rapid turnover limits durability"
+  },
+  {
+    "celltype": "Fibroblasts",
+    "tractability_score": 0.45,
+    "best_serotype": "AAV6",
+    "terminally_differentiated": false,
+    "aav9_score": 0.35,
+    "aavrh10_score": 0.30,
+    "aav_php_eb_score": 0.20,
+    "notes": "Dividing cells, variable efficiency"
+  },
+  {
+    "celltype": "T_cells",
+    "tractability_score": 0.20,
+    "best_serotype": "AAV6",
+    "terminally_differentiated": false,
+    "aav9_score": 0.10,
+    "aavrh10_score": 0.10,
+    "aav_php_eb_score": 0.05,
+    "notes": "Poor AAV transduction, lentivirus preferred for CAR-T"
+  },
+  {
+    "celltype": "B_cells",
+    "tractability_score": 0.15,
+    "best_serotype": "AAV6",
+    "terminally_differentiated": false,
+    "aav9_score": 0.08,
+    "aavrh10_score": 0.08,
+    "aav_php_eb_score": 0.05,
+    "notes": "Poor AAV transduction"
+  },
+  {
+    "celltype": "Hematopoietic_stem_cells",
+    "tractability_score": 0.10,
+    "best_serotype": "Lentivirus (ex vivo)",
+    "terminally_differentiated": false,
+    "aav9_score": 0.05,
+    "aavrh10_score": 0.05,
+    "aav_php_eb_score": 0.02,
+    "notes": "Lentivirus used for ex vivo gene therapy"
+  },
+  {
+    "celltype": "Ependymal_cells",
+    "tractability_score": 0.50,
+    "best_serotype": "AAV9",
+    "terminally_differentiated": true,
+    "aav9_score": 0.50,
+    "aavrh10_score": 0.40,
+    "aav_php_eb_score": 0.45,
+    "notes": "CSF-contacting cells, moderate transduction"
+  },
+  {
+    "celltype": "Purkinje_neurons",
+    "tractability_score": 0.90,
+    "best_serotype": "AAV-PHP.eB",
+    "terminally_differentiated": true,
+    "aav9_score": 0.85,
+    "aavrh10_score": 0.80,
+    "aav_php_eb_score": 0.90,
+    "notes": "Excellent cerebellar transduction"
+  },
+  {
+    "celltype": "Dopaminergic_neurons",
+    "tractability_score": 0.88,
+    "best_serotype": "AAV2",
+    "terminally_differentiated": true,
+    "aav9_score": 0.75,
+    "aavrh10_score": 0.70,
+    "aav_php_eb_score": 0.80,
+    "notes": "AAV2 commonly used for Parkinson's trials"
+  },
+  {
+    "celltype": "Motor_neurons",
+    "tractability_score": 0.92,
+    "best_serotype": "AAV9",
+    "terminally_differentiated": true,
+    "aav9_score": 0.92,
+    "aavrh10_score": 0.85,
+    "aav_php_eb_score": 0.88,
+    "notes": "AAV9 crosses BBB, excellent motor neuron transduction"
+  },
+  {
+    "celltype": "Sensory_neurons",
+    "tractability_score": 0.85,
+    "best_serotype": "AAV9",
+    "terminally_differentiated": true,
+    "aav9_score": 0.85,
+    "aavrh10_score": 0.78,
+    "aav_php_eb_score": 0.80,
+    "notes": "Good transduction via intrathecal or IV delivery"
+  },
+  {
+    "celltype": "Schwann_cells",
+    "tractability_score": 0.60,
+    "best_serotype": "AAV9",
+    "terminally_differentiated": true,
+    "aav9_score": 0.60,
+    "aavrh10_score": 0.50,
+    "aav_php_eb_score": 0.45,
+    "notes": "Moderate transduction, peripheral nervous system"
+  }
+]

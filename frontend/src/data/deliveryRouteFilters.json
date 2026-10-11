@@ -1,0 +1,558 @@
+{
+  "metadata": {
+    "description": "Delivery route accessibility filters for gene therapy targeting. AAV tropism defines POTENTIAL targets; delivery route FILTERS to ACTUAL targets.",
+    "created": "2026-01-26",
+    "methodology": "Double-blind LLM query methodology - subagent with no therapy/disease context answered accessibility questions",
+    "key_insight": "A serotype may have tropism for a cell type, but if the delivery route cannot physically access that cell type, transduction will not occur.",
+    "validation_procedure": "scripts/blind_route_validation.md"
+  },
+  "routes": {
+    "IV": {
+      "description": "Intravenous / systemic delivery",
+      "barriers": ["Blood-brain barrier (BBB)", "Blood-retinal barrier", "Hepatic first-pass effect"],
+      "accessible_cell_types": {
+        "Hepatocytes": {
+          "access": "yes",
+          "notes": "Primary target for IV AAV delivery. Fenestrated endothelium allows direct access. Liver acts as dominant 'sink' for most AAV serotypes."
+        },
+        "AFP_ALB_positive_cells": {
+          "access": "yes",
+          "notes": "MSTExplorer hepatocyte equivalent"
+        },
+        "Hepatoblasts": {
+          "access": "yes",
+          "notes": "MSTExplorer hepatocyte equivalent"
+        },
+        "Skeletal_muscle_cells": {
+          "access": "yes",
+          "notes": "Dose-dependent transduction. Good access for muscle-tropic serotypes (AAVrh74, AAV9)."
+        },
+        "Satellite_cells": {
+          "access": "limited",
+          "notes": "Muscle satellite cells accessible but only dividing cells well-transduced"
+        },
+        "Cardiomyocytes": {
+          "access": "yes",
+          "notes": "Good cardiac access for AAV9, AAVrh74. Heart among most efficiently transduced organs after liver."
+        },
+        "Excitatory_neurons": {
+          "access": "limited",
+          "notes": "CNS neurons accessible only with BBB-crossing serotypes (AAV9) and age-dependent. Neonates: yes. Adults: limited."
+        },
+        "Inhibitory_neurons": {
+          "access": "limited",
+          "notes": "Same BBB constraints as excitatory neurons"
+        },
+        "Limbic_system_neurons": {
+          "access": "limited",
+          "notes": "Deep brain structures poorly accessed via IV even with BBB-crossing serotypes"
+        },
+        "Purkinje_neurons": {
+          "access": "limited",
+          "notes": "AAV9 IV can reach Purkinje cells in cerebellum, but efficiency lower than direct injection"
+        },
+        "Granule_neurons": {
+          "access": "limited",
+          "notes": "Cerebellar granule neurons accessible via IV AAV9 but with lower efficiency"
+        },
+        "Astrocytes": {
+          "access": "limited",
+          "notes": "AAV9 preferentially transduces astrocytes in ADULTS (neuronal preference in neonates)"
+        },
+        "Oligodendrocytes": {
+          "access": "limited",
+          "notes": "Some oligodendrocyte transduction with AAV9 IV, less efficient than neurons/astrocytes"
+        },
+        "Microglia": {
+          "access": "no",
+          "notes": "Microglia are very difficult to transduce with any AAV serotype. Use ex vivo HSC approaches for microglia-targeted therapy."
+        },
+        "Photoreceptor_cells": {
+          "access": "no",
+          "notes": "Blood-retinal barrier blocks IV access to retina. Requires subretinal or intravitreal injection."
+        },
+        "Retinal_pigment_cells": {
+          "access": "no",
+          "notes": "Blood-retinal barrier blocks IV access. Requires subretinal injection."
+        },
+        "Bipolar_cells": {
+          "access": "no",
+          "notes": "Blood-retinal barrier blocks IV access"
+        },
+        "Amacrine_cells": {
+          "access": "no",
+          "notes": "Blood-retinal barrier blocks IV access"
+        },
+        "Hematopoietic_stem_cells": {
+          "access": "no",
+          "notes": "HSCs poorly transduced by AAV. Use ex vivo lentiviral transduction."
+        },
+        "Adult_CB_CD34+": {
+          "access": "no",
+          "notes": "CD34+ cells poorly transduced by AAV. Use ex vivo approaches."
+        },
+        "Thymocytes": {
+          "access": "no",
+          "notes": "Immune cells poorly transduced by AAV"
+        },
+        "Adult_T_cell": {
+          "access": "no",
+          "notes": "T cells poorly transduced by AAV. Use lentivirus or retrovirus for CAR-T."
+        },
+        "Erythroblasts": {
+          "access": "no",
+          "notes": "Erythroid cells poorly transduced by AAV"
+        }
+      },
+      "age_modifiers": {
+        "neonatal": {
+          "description": "BBB more permeable in neonates; better CNS access",
+          "Excitatory_neurons": "yes",
+          "Inhibitory_neurons": "yes",
+          "Astrocytes": "limited",
+          "Oligodendrocytes": "limited",
+          "therapeutic_window": "Zolgensma approved for <2 years; optimal CNS transduction in infants"
+        },
+        "pediatric": {
+          "description": "Intermediate BBB permeability",
+          "Excitatory_neurons": "limited",
+          "Inhibitory_neurons": "limited",
+          "Astrocytes": "limited"
+        },
+        "adult": {
+          "description": "Mature BBB significantly limits CNS access",
+          "Excitatory_neurons": "limited",
+          "Inhibitory_neurons": "limited",
+          "Astrocytes": "yes",
+          "note": "AAV9 IV in adults preferentially transduces astrocytes over neurons"
+        }
+      },
+      "serotype_modifiers": {
+        "AAV9": {
+          "description": "AAV9 crosses BBB, especially efficiently in neonates. The only AAV serotype with well-documented CNS penetration after IV delivery.",
+          "bbb_crossing": true,
+          "overrides": {
+            "Excitatory_neurons": "yes",
+            "Inhibitory_neurons": "yes",
+            "Astrocytes": "yes",
+            "Oligodendrocytes": "limited",
+            "Purkinje_neurons": "yes",
+            "Granule_neurons": "yes",
+            "Limbic_system_neurons": "limited"
+          },
+          "notes": "BBB crossing efficiency is age-dependent: neonates > infants > adults. In adults, astrocytes are preferentially transduced over neurons."
+        },
+        "AAV-PHP.eB": {
+          "description": "Engineered AAV9 variant with enhanced BBB crossing in mice. Note: BBB crossing NOT validated in humans or NHPs.",
+          "bbb_crossing": true,
+          "species_limitation": "mouse-specific",
+          "overrides": {
+            "Excitatory_neurons": "yes",
+            "Inhibitory_neurons": "yes",
+            "Astrocytes": "yes",
+            "Oligodendrocytes": "yes"
+          },
+          "notes": "PHP.eB relies on LY6A receptor which is absent in primates. Do not assume human translatability."
+        },
+        "AAVrh10": {
+          "description": "Some CNS penetration reported but less efficient than AAV9.",
+          "bbb_crossing": "limited",
+          "overrides": {
+            "Excitatory_neurons": "limited",
+            "Inhibitory_neurons": "limited",
+            "Astrocytes": "limited"
+          }
+        },
+        "AAV5": {
+          "description": "Primarily liver-tropic. Minimal CNS penetration after IV delivery.",
+          "bbb_crossing": false,
+          "overrides": {}
+        },
+        "AAV8": {
+          "description": "Primarily liver-tropic. Minimal CNS penetration after IV delivery.",
+          "bbb_crossing": false,
+          "overrides": {}
+        },
+        "AAVrh74": {
+          "description": "Muscle-tropic serotype. Does NOT cross BBB.",
+          "bbb_crossing": false,
+          "overrides": {}
+        },
+        "AAV1": {
+          "description": "Muscle-tropic serotype. Does NOT cross BBB.",
+          "bbb_crossing": false,
+          "overrides": {}
+        }
+      }
+    },
+    "intracranial": {
+      "description": "Direct brain injection (stereotactic surgery)",
+      "aliases": ["stereotactic", "intraparenchymal", "intracerebral"],
+      "barriers": [],
+      "accessible_cell_types": {
+        "Excitatory_neurons": {
+          "access": "yes",
+          "notes": "Excellent transduction at injection site (2-5mm radius). Can spread via axonal transport to connected regions."
+        },
+        "Inhibitory_neurons": {
+          "access": "yes",
+          "notes": "Excellent transduction at injection site"
+        },
+        "Limbic_system_neurons": {
+          "access": "yes",
+          "notes": "Direct injection to putamen/striatum efficiently transduces limbic neurons (used for Upstaza/Kebilidi)"
+        },
+        "Purkinje_neurons": {
+          "access": "yes",
+          "notes": "Cerebellar injection can target Purkinje neurons"
+        },
+        "Granule_neurons": {
+          "access": "yes",
+          "notes": "Cerebellar injection targets granule neurons"
+        },
+        "Astrocytes": {
+          "access": "yes",
+          "notes": "Astrocytes at injection site transduced, though less efficiently than neurons for most serotypes"
+        },
+        "Oligodendrocytes": {
+          "access": "yes",
+          "notes": "Oligodendrocytes at injection site can be transduced"
+        },
+        "Microglia": {
+          "access": "limited",
+          "notes": "Microglia very difficult to transduce even with direct injection. Use ex vivo HSC approaches."
+        },
+        "Hepatocytes": {
+          "access": "no",
+          "notes": "Compartmentalized - no systemic spread from brain injection"
+        },
+        "AFP_ALB_positive_cells": {
+          "access": "no",
+          "notes": "No liver access from intracranial route"
+        },
+        "Skeletal_muscle_cells": {
+          "access": "no",
+          "notes": "Compartmentalized - no peripheral muscle access"
+        },
+        "Cardiomyocytes": {
+          "access": "no",
+          "notes": "Compartmentalized - no cardiac access"
+        },
+        "Photoreceptor_cells": {
+          "access": "no",
+          "notes": "Retina not accessible from brain injection"
+        },
+        "Retinal_pigment_cells": {
+          "access": "no",
+          "notes": "Retina not accessible from brain injection"
+        }
+      },
+      "spread_characteristics": {
+        "diffusion_radius": "2-5mm from injection site",
+        "axonal_transport": "Can spread to connected brain regions via anterograde/retrograde transport",
+        "serotype_differences": {
+          "AAV2": "Limited spread due to heparan sulfate binding; highly localized",
+          "AAV9": "Better spread than AAV2; broader neuronal transduction",
+          "AAVrh10": "Good spread in brain parenchyma"
+        }
+      }
+    },
+    "intrathecal": {
+      "description": "Injection into cerebrospinal fluid (CSF) via lumbar puncture",
+      "aliases": ["IT", "lumbar puncture", "spinal"],
+      "barriers": ["Pia-glial membrane", "CSF turnover (replaced every 6-8 hours)", "Limited parenchymal penetration"],
+      "accessible_cell_types": {
+        "Excitatory_neurons": {
+          "access": "limited",
+          "notes": "Surface/superficial neurons accessible. Deep brain parenchyma poorly reached."
+        },
+        "Inhibitory_neurons": {
+          "access": "limited",
+          "notes": "Surface structures only"
+        },
+        "Limbic_system_neurons": {
+          "access": "limited",
+          "notes": "Deep basal ganglia structures poorly accessed via IT"
+        },
+        "DRG_neurons": {
+          "access": "yes",
+          "notes": "Dorsal root ganglia neurons excellently accessed via IT. However, this is a SAFETY CONCERN (DRG toxicity observed)."
+        },
+        "Astrocytes": {
+          "access": "limited",
+          "notes": "Superficial astrocytes accessible"
+        },
+        "Oligodendrocytes": {
+          "access": "limited",
+          "notes": "Spinal cord oligodendrocytes partially accessible"
+        },
+        "Ependymal_cells": {
+          "access": "yes",
+          "notes": "Ependymal cells lining ventricles and central canal directly exposed to CSF"
+        },
+        "Hepatocytes": {
+          "access": "no",
+          "notes": "CSF is compartmentalized from systemic circulation"
+        },
+        "Skeletal_muscle_cells": {
+          "access": "no",
+          "notes": "Peripheral tissues not accessible"
+        },
+        "Cardiomyocytes": {
+          "access": "no",
+          "notes": "Heart not accessible from CSF"
+        },
+        "Photoreceptor_cells": {
+          "access": "no",
+          "notes": "Retina not accessible via IT"
+        }
+      },
+      "spinal_cord_access": {
+        "motor_neurons": "yes",
+        "sensory_neurons": "yes",
+        "spinal_interneurons": "yes",
+        "notes": "Spinal cord surface structures well accessed; good for SMA-type applications"
+      }
+    },
+    "ICV": {
+      "description": "Intracerebroventricular - injection into brain ventricles",
+      "aliases": ["intracerebroventricular", "ventricular"],
+      "barriers": ["Ependymal layer", "Limited parenchymal diffusion"],
+      "accessible_cell_types": {
+        "Ependymal_cells": {
+          "access": "yes",
+          "notes": "Primary target - cells lining the ventricles directly exposed"
+        },
+        "Excitatory_neurons": {
+          "access": "limited",
+          "notes": "Periventricular neurons accessible; deep cortex poorly reached"
+        },
+        "Inhibitory_neurons": {
+          "access": "limited",
+          "notes": "Periventricular regions only"
+        },
+        "Astrocytes": {
+          "access": "limited",
+          "notes": "Periventricular astrocytes accessible"
+        },
+        "Choroid_plexus": {
+          "access": "yes",
+          "notes": "Choroid plexus directly exposed to ventricular CSF"
+        },
+        "Oligodendrocytes": {
+          "access": "limited",
+          "notes": "Periventricular white matter accessible"
+        },
+        "Hepatocytes": {
+          "access": "no",
+          "notes": "No systemic access"
+        },
+        "Skeletal_muscle_cells": {
+          "access": "no",
+          "notes": "No peripheral access"
+        }
+      }
+    },
+    "subretinal": {
+      "description": "Injection beneath the retina, between RPE and photoreceptors",
+      "aliases": ["sub-retinal"],
+      "barriers": ["Injection volume limits (typical 0.1-0.3mL)", "Retinal detachment risk"],
+      "accessible_cell_types": {
+        "Retinal_pigment_cells": {
+          "access": "yes",
+          "notes": "PRIMARY TARGET - RPE cells directly contacted by subretinal injection. Gold standard for RPE-targeted therapy (Luxturna)."
+        },
+        "Photoreceptor_cells": {
+          "access": "yes",
+          "notes": "Photoreceptor outer segments directly contact injection site. Well transduced for both rods and cones."
+        },
+        "Bipolar_cells": {
+          "access": "limited",
+          "notes": "Inner nuclear layer less accessible than outer retina"
+        },
+        "Amacrine_cells": {
+          "access": "limited",
+          "notes": "Inner retina partially accessible"
+        },
+        "Retinal_ganglion_cells": {
+          "access": "no",
+          "notes": "Inner retina/ganglion cell layer NOT accessible from subretinal space. Use intravitreal for RGCs."
+        },
+        "Excitatory_neurons": {
+          "access": "no",
+          "notes": "CNS neurons not accessible from retinal injection"
+        },
+        "Hepatocytes": {
+          "access": "no",
+          "notes": "No systemic access"
+        },
+        "Skeletal_muscle_cells": {
+          "access": "no",
+          "notes": "No peripheral access"
+        }
+      },
+      "coverage_notes": {
+        "bleb_formation": "Creates a retinal detachment bleb; transduction limited to bleb area",
+        "bilateral_treatment": "Requires separate injection for each eye",
+        "surgical_risk": "Requires vitrectomy; more invasive than intravitreal"
+      }
+    },
+    "intravitreal": {
+      "description": "Injection into vitreous humor of the eye",
+      "aliases": ["IVT"],
+      "barriers": ["Inner limiting membrane (ILM)", "Vitreous diffusion"],
+      "accessible_cell_types": {
+        "Retinal_ganglion_cells": {
+          "access": "yes",
+          "notes": "PRIMARY TARGET for intravitreal. Ganglion cell layer most accessible from vitreous."
+        },
+        "Bipolar_cells": {
+          "access": "limited",
+          "notes": "Inner retina partially accessible"
+        },
+        "Amacrine_cells": {
+          "access": "limited",
+          "notes": "Inner nuclear layer partially accessible"
+        },
+        "Muller_glia": {
+          "access": "limited",
+          "notes": "Muller cell bodies span retina; endfeet accessible from vitreous"
+        },
+        "Photoreceptor_cells": {
+          "access": "no",
+          "notes": "Outer retina NOT accessible from vitreous. ILM and retinal layers block penetration. Use subretinal for photoreceptors."
+        },
+        "Retinal_pigment_cells": {
+          "access": "no",
+          "notes": "RPE at opposite side of retina from vitreous. Not accessible. Use subretinal."
+        },
+        "Excitatory_neurons": {
+          "access": "no",
+          "notes": "CNS not accessible"
+        },
+        "Hepatocytes": {
+          "access": "no",
+          "notes": "No systemic access"
+        }
+      },
+      "advantages": {
+        "less_invasive": "Office procedure; no vitrectomy required",
+        "repeatable": "Can be repeated more easily than subretinal"
+      }
+    },
+    "intramuscular": {
+      "description": "Direct injection into muscle tissue",
+      "aliases": ["IM"],
+      "barriers": ["Muscle fascia", "Basal lamina", "Limited systemic spread"],
+      "accessible_cell_types": {
+        "Skeletal_muscle_cells": {
+          "access": "yes",
+          "notes": "Primary target - myofibers at injection site efficiently transduced"
+        },
+        "Satellite_cells": {
+          "access": "limited",
+          "notes": "Muscle satellite cells partially accessible; only dividing cells well transduced"
+        },
+        "Excitatory_neurons": {
+          "access": "limited",
+          "notes": "Motor neurons can be reached via RETROGRADE AXONAL TRANSPORT only"
+        },
+        "Cardiomyocytes": {
+          "access": "no",
+          "notes": "Different compartment - cardiac muscle not accessible from skeletal muscle injection"
+        },
+        "Hepatocytes": {
+          "access": "no",
+          "notes": "Minimal systemic spread from IM injection"
+        },
+        "Astrocytes": {
+          "access": "no",
+          "notes": "CNS not accessible"
+        }
+      },
+      "spread_characteristics": {
+        "local_only": "Transduction largely confined to injection site muscle group",
+        "retrograde_transport": "Some motor neuron transduction via retrograde axonal transport",
+        "systemic_leakage": "Minimal - most vector stays local"
+      }
+    },
+    "HSCT": {
+      "description": "Hematopoietic stem cell transplantation (ex vivo gene therapy)",
+      "aliases": ["ex vivo", "autologous transplant", "bone marrow transplant"],
+      "barriers": ["Requires myeloablative conditioning", "Engraftment efficiency"],
+      "accessible_cell_types": {
+        "Hematopoietic_stem_cells": {
+          "access": "yes",
+          "notes": "Primary target for ex vivo transduction. Cells are collected, transduced ex vivo with lentivirus, then re-infused."
+        },
+        "Adult_CB_CD34+": {
+          "access": "yes",
+          "notes": "CD34+ cells isolated and transduced ex vivo"
+        },
+        "Microglia": {
+          "access": "yes",
+          "notes": "Microglia are derived from engrafted HSCs. This is how Skysona/Lenmeldy/Libmeldy deliver enzyme to CNS."
+        },
+        "Thymocytes": {
+          "access": "yes",
+          "notes": "T cell progenitors derived from engrafted HSCs"
+        },
+        "Erythroblasts": {
+          "access": "yes",
+          "notes": "Erythroid cells derived from engrafted HSCs (Casgevy, Lyfgenia for SCD)"
+        },
+        "Excitatory_neurons": {
+          "access": "no",
+          "notes": "Neurons not derived from HSCs"
+        },
+        "Hepatocytes": {
+          "access": "no",
+          "notes": "Liver cells not derived from HSCs"
+        },
+        "Skeletal_muscle_cells": {
+          "access": "no",
+          "notes": "Muscle not derived from HSCs"
+        }
+      },
+      "mechanism_notes": {
+        "cns_delivery": "HSC-derived microglia migrate to brain and can deliver therapeutic enzymes to CNS (used for CALD, MLD)",
+        "conditioning": "Requires chemotherapy conditioning to create 'space' for engraftment",
+        "durability": "Engrafted cells are self-renewing - potentially lifelong correction"
+      }
+    }
+  },
+  "effective_tropism_calculation": {
+    "description": "Effective tropism = Serotype tropism AND Route accessibility",
+    "formula": "For each cell type: if serotype_tropism[cell] >= threshold AND route_access[cell] in ['yes', 'limited'], then cell is effectively targetable",
+    "example": {
+      "serotype": "AAV9",
+      "route": "IV",
+      "serotype_tropism": ["Hepatocytes", "Cardiomyocytes", "Skeletal_muscle_cells", "CNS_neurons", "Astrocytes"],
+      "route_accessible": ["Hepatocytes", "Cardiomyocytes", "Skeletal_muscle_cells", "CNS_neurons (limited)"],
+      "effective_tropism": ["Hepatocytes", "Cardiomyocytes", "Skeletal_muscle_cells", "CNS_neurons (neonates only)"]
+    }
+  },
+  "match_status_with_route": {
+    "exact": {
+      "description": "Pipeline predicts the same cell type as therapy target",
+      "color": "green"
+    },
+    "aav_reachable": {
+      "description": "Different prediction, but predicted cell is in AAV tropism range AND accessible via delivery route",
+      "color": "cyan"
+    },
+    "route_unreachable": {
+      "description": "AAV has tropism for predicted cell, BUT delivery route cannot access it",
+      "color": "red",
+      "example": "If AAVrh74 IV predicts CNS neurons - AAVrh74 has minimal CNS tropism AND IV doesn't help"
+    },
+    "related": {
+      "description": "Same tissue system (e.g., both CNS neurons) but different specific cell type",
+      "color": "gold"
+    },
+    "different": {
+      "description": "Prediction is different tissue/system from target",
+      "color": "orange"
+    }
+  }
+}

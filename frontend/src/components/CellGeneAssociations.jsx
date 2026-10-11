@@ -1,10 +1,12 @@
+import { portalFetch } from "../lib/portalAPI.js";
 import { useEffect, useState } from "react";
-import { Button, Modal, Tooltip, Alert } from "antd";
+import { Button, Modal, Tooltip, Alert, Table } from "antd";
 import { Column } from "@ant-design/plots";
 import { TbDna2 } from "react-icons/tb";
 import formatText from "../scripts/formatText";
 import { ONTOLOGY_API_URL, BASE_API_URL } from "../../config";
 import { InboxOutlined } from "@mui/icons-material";
+import { legacyExplorerHref } from '../lib/legacyExplorerLink.js';
 
 function GeneAssociationGraph({ data }) {
     const config = {
@@ -62,8 +64,8 @@ function GeneAssociationGraph({ data }) {
                                 );
                             })}
                             <div className="italic">
-                                A higher value indicates that the gene likely
-                                plays a more important role in the cell type.
+                                Expression specificity is a source expression metric,
+                                not evidence of gene function, variant effect or causality.
                             </div>
                         </div>
                     );
@@ -83,12 +85,12 @@ export default function CellGeneAssociations({ hpID, hpName, cell, dbType }) {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
+    const [sourceError, setSourceError] = useState(null);
 
     const ModalCloseButton = () => {
         return (
             <Button
-                variant="solid"
-                color="purple"
+                type="primary"
                 onClick={() => setModalVisible(false)}
             >
                 Close
@@ -98,13 +100,14 @@ export default function CellGeneAssociations({ hpID, hpName, cell, dbType }) {
 
     async function fetchData({ hpID, cell }) {
         setLoading(true);
+        setSourceError(null);
         Promise.all([
-            fetch(`${ONTOLOGY_API_URL}/api/network/annotation/${hpID}`),
-            fetch(`${BASE_API_URL}/gene1/${cell}/${dbType}`),
+            portalFetch(`${ONTOLOGY_API_URL}/api/network/annotation/${hpID}`),
+            portalFetch(`${BASE_API_URL}/gene1/${cell}/${dbType}`),
         ])
             .then((responses) => {
                 return Promise.all(
-                    responses.map((response) => response.json())
+                    responses.map((response) => { if (!response.ok) throw new Error('Source unavailable'); return response.json(); })
                 );
             })
             .then(([cellGenesAllData, phenoGenes]) => {
@@ -122,7 +125,7 @@ export default function CellGeneAssociations({ hpID, hpName, cell, dbType }) {
 
                 setData(phenoGenesFiltered);
                 setLoading(false);
-            });
+            }).catch(error => { setData([]); setSourceError(error.message); setLoading(false); });
     }
 
     useEffect(() => {
@@ -172,23 +175,30 @@ export default function CellGeneAssociations({ hpID, hpName, cell, dbType }) {
                     }
                 />
             )}
-            {data?.length === 0 ? (
+            {sourceError ? <Alert type="warning" showIcon message="Source unavailable; common gene associations remain unknown" description={sourceError} /> : data?.length === 0 ? (
                 <div className="text-center text-xl text-gray-400 bg-gray-50 rounded-lg py-32">
                     <InboxOutlined fontSize="large" />
                     <div className="mt-2">
-                    No Common Genes Found
+                    No common gene rows in the available source panel
                     </div>
                 </div>
             ) : (
-                <GeneAssociationGraph data={data} />
+                <>
+                    <GeneAssociationGraph data={data} />
+                    <Table size="small" rowKey="gene" dataSource={data} columns={[
+                        { title: 'Gene', dataIndex: 'gene', render: value => <a href={legacyExplorerHref('gene', value, { hpo: hpID, cell, atlas: dbType })}>{value}</a> },
+                        { title: 'Expression specificity', dataIndex: 'expression_specificity', render: value => Number.isFinite(value) ? value.toPrecision(4) : 'Unknown' },
+                    ]} pagination={{ pageSize: 10 }} />
+                </>
             )}
             <div className="bg-purple-50 p-2 px-4 rounded-lg">
                 Expression specificity shows how selectively a gene is expressed
                 in this cell type. Values range from 0 to 1, where 1 means the
                 gene is expressed almost exclusively in this cell type, and
-                lower values indicate the gene is expressed more broadly across
-                multiple cell types. Genes with high specificity often play
-                important roles in that cell type's unique functions.
+                lower values indicate broader source expression. The intersection
+                combines disease-context phenotype annotation with expression;
+                it does not establish which variants affect this cell or whether
+                a treatment reaches it.
             </div>
         </div>
     );
@@ -199,7 +209,7 @@ export default function CellGeneAssociations({ hpID, hpName, cell, dbType }) {
                 title="Gene Associations for This Cell Type and Phenotype"
                 open={modalVisible}
                 centered
-                footer={(_) => (
+                footer={() => (
                     <>
                         <ModalCloseButton />
                     </>
@@ -214,12 +224,13 @@ export default function CellGeneAssociations({ hpID, hpName, cell, dbType }) {
                 title="Click to view genes associated with both this cell type and the selected phenotype"
                 placement="right"
             >
-                <span
+                <Button type="text"
+                    aria-label={`Explore genes for ${hpName || hpID} in ${formatText(cell)}`}
                     onClick={() => setModalVisible(true)}
                     className="cursor-pointer text-xl hover:text-blue-600 text-blue-950 rotate-[40deg]"
                 >
                     <TbDna2 />
-                </span>
+                </Button>
             </Tooltip>
         </>
     );

@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import { legacyExplorerHref } from "../lib/legacyExplorerLink.js";
+import { portalFetch } from "../lib/portalAPI.js";
+import { useEffect, useRef, useState } from "react";
 import { DownloadOutlined, SearchOutlined } from "@ant-design/icons";
-import { Spin, Button, Input, Space, Table } from "antd";
+import { Alert, Spin, Button, Input, Space, Table } from "antd";
 import Highlighter from "react-highlight-words";
 import { Column } from "@ant-design/plots";
 import { BASE_API_URL } from "../../config.js";
@@ -74,8 +76,8 @@ const DemoColumn = (data) => {
                                 );
                             })}
                             <div className="italic">
-                                A higher value indicates that the gene likely
-                                plays a more important role in the cell type.
+                                Expression specificity is a source expression metric,
+                                not evidence of gene function or causality.
                             </div>
                         </div>
                     );
@@ -91,12 +93,14 @@ const PhenotypeTableDisease = (hpid) => {
     const [searchedColumn, setSearchedColumn] = useState(null);
     const searchInput = useRef(null);
     const [loading, setLoading] = useState(false);
+    const [sourceError, setSourceError] = useState(null);
 
     const fetchData = () => {
         setLoading(true);
+        setSourceError(null);
         let hppp = hpid.hpid;
-        fetch(`${BASE_API_URL}/gene/${hppp}/${hpid.dbType}`)
-            .then((res) => res.json())
+        portalFetch(`${BASE_API_URL}/gene/${hppp}/${hpid.dbType}`)
+            .then((res) => { if (!res.ok) throw new Error("Source unavailable"); return res.json(); })
             .then((results) => {
                 results = results.filter(
                     (item) => item.expression_specificity > 0.00001
@@ -106,7 +110,7 @@ const PhenotypeTableDisease = (hpid) => {
                 });
                 setData(results);
                 setLoading(false);
-            });
+            }).catch(error => { setData([]); setSourceError(error.message); setLoading(false); });
     };
 
     useEffect(() => {
@@ -241,7 +245,7 @@ const PhenotypeTableDisease = (hpid) => {
             sorter: (a, b) => a.celltype.localeCompare(b.celltype),
             sortDirections: ["ascend", "descend"],
             ...getColumnSearchProps("celltype"),
-            render: (text) => formatText(text),
+            render: (text) => <a href={legacyExplorerHref("celltype", text, { gene: hpid.hpid, atlas: hpid.dbType })}>{formatText(text)}</a>,
         },
         {
             title: (
@@ -293,6 +297,7 @@ const PhenotypeTableDisease = (hpid) => {
 
     return (
         <Spin spinning={loading}>
+            {sourceError && <Alert type="warning" showIcon message="Source unavailable; associations remain unknown" description={sourceError} style={{ marginBottom: 12 }} />}
             {data && data.length > 0 && (
                 <>
                     <Button
@@ -312,6 +317,8 @@ const PhenotypeTableDisease = (hpid) => {
             <Table
                 columns={columns}
                 dataSource={data}
+                rowKey={record => record.id || record.celltype || record.hpo_id}
+                locale={{ emptyText: sourceError ? "Source unavailable; associations remain unknown." : "No rows in this source view; review the published coverage limits." }}
                 sortDirections={["descend", "ascend"]}
                 showSorterTooltip={true}
             />
