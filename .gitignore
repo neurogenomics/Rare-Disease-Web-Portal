@@ -374,3 +374,9 @@ TODOs.md
 ###### CUSTOM ##################################################################
 launch_*.sh
 .vite
+# --- Engineering standards: data stays out of git (see AGENTS.md) ---
+# Evidence datasets are published as release assets / Zenodo and fetched by manifest.
+data/evidence/published/
+*.ndjson.gz
+*.parquet
+*.h5ad
